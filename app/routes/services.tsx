@@ -8,7 +8,7 @@ export function meta({}: Route.MetaArgs) {
     { name: "keywords", content: "строительные услуги, монтажные работы, подготовительные работы, монтаж металлоконструкций, отделочные работы, строительство СПб, монтажные работы Ленинградская область, услуги строительной компании, услуги монтажной бригады" },
     { name: "author", content: "ООО «ЛЕГИОН»" },
     { name: "email", content: "l-legion@bk.ru" },
-    { rel: "canonical", href: "https://xn--78-glchqprh.xn--p1ai/rvices" }, // https://легион.рф/services
+    { rel: "canonical", href: "https://xn--78-glchqprh.xn--p1ai/services" }, // https://легион.рф/services
     { property: "og:type", content: "website" },
     { property: "og:url", content: "https://xn--78-glchqprh.xn--p1ai/services" }, // https://легион.рф/services
     { property: "og:title", content: "Услуги - ООО «ЛЕГИОН» - Строительные и монтажные работы в Санкт-Петербурге и Ленинградской области" },
