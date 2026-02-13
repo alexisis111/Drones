@@ -1,19 +1,15 @@
 import express from 'express';
-import { createRequestHandler } from '@react-router/node';
-import { installGlobals } from '@react-router/node';
+import { createRequestListener } from '@react-router/node';
 import path from 'path';
 import { fileURLToPath } from 'url';
-
-// Setup global variables
-installGlobals();
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // Create Express server
 const app = express();
 
-// Serve static files (including robots.txt and sitemap.xml) from the public directory
-app.use(express.static(path.join(__dirname, 'public')));
+// Serve static files from the build/client directory
+app.use(express.static(path.join(__dirname, 'build', 'client')));
 
 // Redirect old domain to new domain
 app.use((req, res, next) => {
@@ -28,8 +24,8 @@ app.use((req, res, next) => {
 // Handle all other routes with React Router
 app.all(
   '*',
-  createRequestHandler({
-    build: await import('./build/index.js'),
+  createRequestListener({
+    build: await import('./build/server/server-build.js'),
   })
 );
 
