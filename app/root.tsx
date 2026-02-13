@@ -6,11 +6,8 @@ import {
   Scripts,
   ScrollRestoration,
 } from "react-router";
-import { ThemeProvider } from "./contexts/ThemeContext";
-import Header from "./components/Header";
-import FixedMobileTabs from "./components/FixedMobileTabs";
-import Footer from "./components/Footer";
 import AppWrapper from "./AppWrapper";
+import { OrganizationSchema } from "./components/SchemaOrg";
 
 import type { Route } from "./+types/root";
 import "./app.css";
@@ -30,16 +27,31 @@ export const links: Route.LinksFunction = () => [
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="ru">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>ЛЕГИОН, строительная компания</title>
+        <title>Строительная компания ЛЕГИОН</title>
         <link rel="icon" href="/Logo-1.png" sizes="any" />
         <Meta />
         <Links />
+        <OrganizationSchema
+          name="ООО «ЛЕГИОН»"
+          description="ООО «ЛЕГИОН» - профессиональные строительно-монтажные работы. Комплексные решения для строительства и монтажа в СПб и ЛО. Гарантия качества и соблюдение сроков."
+          url="https://xn--78-glchqprh.xn--p1ai/" // https://легион.рф/
+          logo="/Logo-1.png"
+          address="Ленинградская область"
+          telephone="+79312470888"
+          email="l-legion@bk.ru"
+          openingHours={["Mo-Fr 09:00-18:00"]}
+          sameAs={[
+            "https://vk.com/legion__78",
+            "https://max.ru/join/VSfgaLaU34O8mOpcRQMbEUcHlhFA62rS5LSpmhy0K5M",
+            'https://t.me/+XaGL8WXjVwQwYjVi'
+          ]}
+        />
         {/* Yandex.Metrika counter */}
-        <script 
+        <script
           dangerouslySetInnerHTML={{
             __html: `
               (function(m,e,t,r,i,k,a){
@@ -50,7 +62,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
               })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=106789634', 'ym');
 
               ym(106789634, 'init', {defer: true, ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
-              
+
               // Логирование инициализации для отладки
               if (typeof console !== 'undefined') {
                 console.log('Yandex Metrika initialized with ID: 106789634');

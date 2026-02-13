@@ -1,8 +1,9 @@
-import { useTheme } from "../contexts/ThemeContext";
 import { useState, useEffect } from 'react';
+import { useTheme } from "../contexts/ThemeContext";
 import { motion } from 'framer-motion';
 import { Link } from 'react-router';
 import { ChevronRight, ArrowRight, Shield, Building2, Target, Zap, Award, Clock, Users, CheckCircle } from 'lucide-react';
+import { LocalBusinessSchema, ServiceSchema } from "../components/SchemaOrg";
 
 
 
@@ -22,9 +23,61 @@ export function Welcome() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Данные для схемы
+  const businessData = {
+    name: "ООО «ЛЕГИОН»",
+    description: "ООО «ЛЕГИОН» - профессиональные строительно-монтажные работы с 2012 года. Комплексные решения для строительства и монтажа в СПб и ЛО. Гарантия качества и соблюдение сроков.",
+    url: "https://xn--78-glchqprh.xn--p1ai/", // https://легион.рф/
+    logo: "/Logo-1.png",
+    address: "Ленинградская область",
+    telephone: "+79312470888",
+    email: "l-legion@bk.ru",
+    openingHours: ["Mo-Fr 09:00-18:00"],
+    sameAs: [
+      "https://vk.com/legion__78",
+      "https://max.ru/join/VSfgaLaU34O8mOpcRQMbEUcHlhFA62rS5LSpmhy0K5M",
+      'https://t.me/+XaGL8WXjVwQwYjVi'
+    ],
+    priceRange: "$$$"
+  };
+
+  const services = [
+    {
+      name: "Строительство зданий",
+      description: "Возведение промышленных и гражданских объектов под ключ",
+      serviceType: "Строительные работы"
+    },
+    {
+      name: "Монтаж металлоконструкций",
+      description: "Изготовление и монтаж металлических конструкций любой сложности",
+      serviceType: "Монтажные работы"
+    },
+    {
+      name: "Защита от БПЛА",
+      description: "Современные системы защиты периметра от беспилотников",
+      serviceType: "Системы безопасности"
+    },
+    {
+      name: "Подготовительные работы",
+      description: "Полный комплекс подготовительных работ для начала строительства",
+      serviceType: "Подготовительные работы"
+    }
+  ];
+
   return (
       <div className="relative overflow-hidden">
         <main className="relative">
+          {/* Schema.org structured data */}
+          <LocalBusinessSchema {...businessData} />
+          {services.map((service, index) => (
+            <ServiceSchema 
+              key={index}
+              name={service.name}
+              description={service.description}
+              serviceType={service.serviceType}
+              provider={businessData}
+            />
+          ))}
           {/* Hero Section - Redesigned */}
           <section className="relative min-h-screen flex items-center overflow-hidden">
             {/* Background with parallax effect */}
@@ -80,7 +133,7 @@ export function Welcome() {
                       transition={{ delay: 0.4 }}
                       className="text-xl text-gray-300 max-w-2xl"
                   >
-                    Профессиональные строительно-монтажные работы любой сложности.
+                    Профессиональные строительно-монтажные работы любой сложности в Санкт-Петербурге и Ленинградской области.
                     От проектирования до сдачи объекта «под ключ».
                   </motion.p>
 
@@ -228,22 +281,22 @@ export function Welcome() {
                   {
                     icon: <Clock className="w-8 h-8" />,
                     title: "Соблюдение сроков",
-                    description: "Строгое соблюдение договорных обязательств и этапов строительства"
+                    description: "Строгое соблюдение договорных обязательств и этапов строительства в СПб и ЛО"
                   },
                   {
                     icon: <CheckCircle className="w-8 h-8" />,
                     title: "Качество работ",
-                    description: "Использование только проверенных материалов и технологий"
+                    description: "Использование только проверенных материалов и технологий в СПб и ЛО"
                   },
                   {
                     icon: <Users className="w-8 h-8" />,
                     title: "Опытная команда",
-                    description: "Квалифицированные специалисты с многолетним опытом"
+                    description: "Квалифицированные специалисты с многолетним опытом работы в СПб и ЛО"
                   },
                   {
                     icon: <Shield className="w-8 h-8" />,
                     title: "Гарантия",
-                    description: "Гарантия на все виды работ от 2 до 5 лет"
+                    description: "Гарантия на все виды работ от 2 до 5 лет в Санкт-Петербурге и Ленинградской области"
                   }
                 ].map((item, i) => (
                     <motion.div
@@ -293,37 +346,37 @@ export function Welcome() {
                 {[
                   {
                     title: "Подготовительные работы",
-                    description: "Полный комплекс подготовительных работ для начала строительства",
+                    description: "Полный комплекс подготовительных работ для начала строительства в Санкт-Петербурге и Ленинградской области",
                     features: ["Демонтаж конструкций", "Подготовка участка", "Устройство лесов", "Благоустройство"],
                     color: "from-blue-500 to-cyan-500"
                   },
                   {
                     title: "Строительство зданий",
-                    description: "Возведение промышленных и гражданских объектов под ключ",
+                    description: "Возведение промышленных и гражданских объектов под ключ в Санкт-Петербурге и Ленинградской области",
                     features: ["Фундаментные работы", "Монтаж конструкций", "Кровельные работы", "Отделка"],
                     color: "from-purple-500 to-pink-500"
                   },
                   {
                     title: "Металлоконструкции",
-                    description: "Изготовление и монтаж металлических конструкций любой сложности",
+                    description: "Изготовление и монтаж металлических конструкций любой сложности в Санкт-Петербурге и Ленинградской области",
                     features: ["Проектирование", "Изготовление", "Монтаж", "Антикоррозийная защита"],
                     color: "from-orange-500 to-red-500"
                   },
                   {
                     title: "Теплоизоляция",
-                    description: "Работы по теплоизоляции оборудования и трубопроводов",
+                    description: "Работы по теплоизоляции оборудования и трубопроводов в Санкт-Петербурге и Ленинградской области",
                     features: ["Теплоизоляция труб", "Энергосбережение", "Защита оборудования", "Монтаж"],
                     color: "from-green-500 to-emerald-500"
                   },
                   {
                     title: "Защита от БПЛА",
-                    description: "Современные системы защиты периметра от беспилотников",
+                    description: "Современные системы защиты периметра от беспилотников в Санкт-Петербурге и Ленинградской области",
                     features: ["Установка систем", "Настройка", "Обслуживание", "Консультации"],
                     color: "from-indigo-500 to-blue-500"
                   },
                   {
                     title: "Дополнительные услуги",
-                    description: "Широкий спектр дополнительных строительных услуг",
+                    description: "Широкий спектр дополнительных строительных услуг в Санкт-Петербурге и Ленинградской области",
                     features: ["Земляные работы", "Грузоперевозки", "Огнезащита", "Ремонтные работы"],
                     color: "from-yellow-500 to-orange-500"
                   }

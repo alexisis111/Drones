@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://xn--80afglc.xn--p1ai/</loc> <!-- https://легион.рф/ -->
+    <lastmod>2026-02-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://xn--80afglc.xn--p1ai/company</loc> <!-- https://легион.рф/company -->
+    <lastmod>2026-02-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://xn--80afglc.xn--p1ai/services</loc> <!-- https://легион.рф/services -->
+    <lastmod>2026-02-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://xn--80afglc.xn--p1ai/portfolio</loc> <!-- https://легион.рф/portfolio -->
+    <lastmod>2026-02-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://xn--80afglc.xn--p1ai/contacts</loc> <!-- https://легион.рф/contacts -->
+    <lastmod>2026-02-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://xn--80afglc.xn--p1ai/vacancies</loc> <!-- https://легион.рф/vacancies -->
+    <lastmod>2026-02-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://xn--80afglc.xn--p1ai/proposal</loc> <!-- https://легион.рф/proposal -->
+    <lastmod>2026-02-13</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://xn--80afglc.xn--p1ai/drone-defense</loc> <!-- https://легион.рф/drone-defense -->
+    <lastmod>2026-02-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://xn--80afglc.xn--p1ai/privacy</loc> <!-- https://легион.рф/privacy -->
+    <lastmod>2026-02-13</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://xn--80afglc.xn--p1ai/terms</loc> <!-- https://легион.рф/terms -->
+    <lastmod>2026-02-13</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+</urlset>
