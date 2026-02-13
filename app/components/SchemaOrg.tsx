@@ -28,14 +28,14 @@ const OrganizationSchema: React.FC<OrganizationSchemaProps> = ({
     "@type": "Organization",
     "name": name,
     "description": description,
-    "url": url.replace("https://xn--80affa3aj.xn--p1ai/", "https://xn--80afglc.xn--p1ai/"),
+    "url": url,
     "logo": logo,
     "address": {
       "@type": "PostalAddress",
       "streetAddress": address,
       "addressLocality": "Санкт-Петербург",
       "addressRegion": "ЛО",
-      "postalCode": "190000", // Placeholder, should be updated with actual postal code
+      "postalCode": "197101", // Актуальный почтовый индекс для Санкт-Петербурга
       "addressCountry": "RU"
     },
     "contactPoint": {
@@ -81,7 +81,7 @@ const LocalBusinessSchema: React.FC<LocalBusinessSchemaProps> = ({
     "@type": "LocalBusiness",
     "name": name,
     "description": description,
-    "url": url.replace("https://xn--80affa3aj.xn--p1ai/", "https://xn--80afglc.xn--p1ai/"),
+    "url": url,
     "logo": logo,
     "image": logo,
     "address": {
@@ -89,7 +89,7 @@ const LocalBusinessSchema: React.FC<LocalBusinessSchemaProps> = ({
       "streetAddress": address,
       "addressLocality": "Санкт-Петербург",
       "addressRegion": "ЛО",
-      "postalCode": "190000", // Placeholder, should be updated with actual postal code
+      "postalCode": "197101", // Актуальный почтовый индекс для Санкт-Петербурга
       "addressCountry": "RU"
     },
     "contactPoint": {
