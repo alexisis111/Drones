@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fde30c11-94c5-4884-96a6-cf984ad02720" name="Changes" comment="init SEO">
+    <list default="true" id="fde30c11-94c5-4884-96a6-cf984ad02720" name="Changes" comment="init SEO1">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -85,15 +85,7 @@
       <workItem from="1770825433961" duration="350000" />
       <workItem from="1770873668838" duration="2502000" />
       <workItem from="1770934651260" duration="777000" />
-      <workItem from="1770971475236" duration="6580000" />
-    </task>
-    <task id="LOCAL-00005" summary="netlify">
-      <option name="closed" value="true" />
-      <created>1769286058520</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1769286058520</updated>
+      <workItem from="1770971475236" duration="7885000" />
     </task>
     <task id="LOCAL-00006" summary="netlify">
       <option name="closed" value="true" />
@@ -479,7 +471,15 @@
       <option name="project" value="LOCAL" />
       <updated>1770976311602</updated>
     </task>
-    <option name="localTasksCounter" value="54" />
+    <task id="LOCAL-00054" summary="init SEO1">
+      <option name="closed" value="true" />
+      <created>1770978256289</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1770978256289</updated>
+    </task>
+    <option name="localTasksCounter" value="55" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -530,6 +530,7 @@
     <MESSAGE value="YaMetrics" />
     <MESSAGE value="YaMetrics2" />
     <MESSAGE value="init SEO" />
-    <option name="LAST_COMMIT_MESSAGE" value="init SEO" />
+    <MESSAGE value="init SEO1" />
+    <option name="LAST_COMMIT_MESSAGE" value="init SEO1" />
   </component>
 </project>
