@@ -86,6 +86,69 @@ Email: ${email || 'Не указан'}
   }
 });
 
+// Create a route for ordering services
+app.post('/api/order-service', async (req, res) => {
+  try {
+    const { name, phone, email, company, message, serviceName, serviceId } = req.body;
+
+    // Validate required fields
+    if (!name || !phone || !email) {
+      return res.status(400).json({
+        success: false,
+        message: 'Имя, телефон и email обязательны для заполнения'
+      });
+    }
+
+    // Format message for Telegram
+    const telegramMessage = `
+Новый заказ услуги:
+
+Имя: ${name}
+Телефон: ${phone}
+Email: ${email}
+Компания: ${company || 'Не указана'}
+Сообщение: ${message || 'Не указано'}
+
+Услуга: ${serviceName}
+ID услуги: ${serviceId || 'Не указан'}
+
+Время получения: ${new Date().toLocaleString('ru-RU')}
+    `.trim();
+
+    // Send message to Telegram bot
+    if (TELEGRAM_BOT_TOKEN && TELEGRAM_CHAT_ID) {
+      const telegramApiUrl = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+
+      await axios.post(telegramApiUrl, {
+        chat_id: TELEGRAM_CHAT_ID,
+        text: telegramMessage,
+        parse_mode: 'HTML'
+      });
+
+      res.json({
+        success: true,
+        message: 'Заявка на услугу успешно отправлена! Мы свяжемся с вами в ближайшее время.'
+      });
+    } else {
+      // If Telegram credentials are not set, return error but also log the message
+      console.error('Telegram credentials are not set');
+      console.log('Message that would have been sent:', telegramMessage);
+
+      res.status(500).json({
+        success: false,
+        message: 'Ошибка настройки Telegram бота'
+      });
+    }
+  } catch (error) {
+    console.error('Ошибка при отправке заказа услуги в Telegram:', error);
+
+    res.status(500).json({
+      success: false,
+      message: 'Ошибка при отправке заявки'
+    });
+  }
+});
+
 const port = 3001;
 
 app.listen(port, () => {

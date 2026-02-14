@@ -6,6 +6,7 @@ import { Link, useSearchParams } from 'react-router';
 import OptimizedImage from './OptimizedImage';
 import LazyLoad from './LazyLoad';
 import { ServiceSchema } from './SchemaOrg';
+import ServiceOrderModal from './ServiceOrderModal';
 
 interface Service {
   id: number;
@@ -32,6 +33,10 @@ const ServicesCatalog: React.FC = () => {
     minutes: 0,
     seconds: 0
   });
+  
+  // State for modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedService, setSelectedService] = useState<Service | null>(null);
 
   // Прокручиваем к заголовку каталога услуг при загрузке с фильтром
   useEffect(() => {
@@ -188,6 +193,7 @@ const ServicesCatalog: React.FC = () => {
         "Монолитные фундаменты",
         "Ремонт фундаментов",
         "Фундаменты под оборудование",
+
         "Гидроизоляция фундаментов"
       ],
       imageUrl: "/img/services/img12.jpeg"
@@ -320,9 +326,36 @@ const ServicesCatalog: React.FC = () => {
                service.categoryEn?.toLowerCase().includes(selectedCategory.toLowerCase());
       });
 
-  const handleOrderService = (serviceName: string) => {
-    // Здесь будет логика для создания заявки на услугу
-    alert(`Заявка на услугу "${serviceName}" создана! Мы свяжемся с вами в ближайшее время.`);
+  const handleOrderService = (service: Service) => {
+    setSelectedService(service);
+    setIsModalOpen(true);
+  };
+
+  const handleModalSubmit = async (formData: any, serviceName: string) => {
+    // Здесь будет логика отправки формы
+    console.log('Отправка заявки на услугу:', serviceName);
+    console.log('Данные формы:', formData);
+    
+    // В реальном приложении здесь будет вызов API для отправки данных
+    const response = await fetch('http://localhost:3001/api/order-service', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        ...formData,
+        serviceName: serviceName,
+        serviceId: selectedService?.id
+      }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Ошибка при отправке заявки');
+    }
+
+    // Возвращаем результат успешной отправки
+    return response.json();
   };
 
   // Данные для схемы
@@ -649,7 +682,7 @@ const ServicesCatalog: React.FC = () => {
                       </Link>
 
                       <button
-                        onClick={() => handleOrderService(service.title)}
+                        onClick={() => handleOrderService(service)}
                         className="flex-1 py-3 px-4 rounded-lg font-medium transition-all bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700"
                       >
                         Заказать
@@ -662,6 +695,16 @@ const ServicesCatalog: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* Service Order Modal */}
+      {selectedService && (
+        <ServiceOrderModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          serviceName={selectedService.title}
+          onSubmit={handleModalSubmit}
+        />
+      )}
 
       {/* CTA Section */}
       <section className="py-24 bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600">
