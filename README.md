@@ -97,7 +97,7 @@ Make sure to deploy the output of `npm run build`
 
 ## Telegram Bot Integration
 
-The application includes integration with Telegram bot for processing contact form submissions.
+The application includes integration with Telegram bot for processing contact form submissions and service orders.
 
 ### Setting up Telegram Bot
 
@@ -106,7 +106,16 @@ The application includes integration with Telegram bot for processing contact fo
 3. Find @userinfobot in Telegram to get your chat ID
 4. Add these values to your `.env` file as described above
 
-Once configured, form submissions will be sent to your Telegram bot.
+Once configured, form submissions and service orders will be sent to your Telegram bot.
+
+### Using the Service Order Feature
+
+The application provides two ways to order services:
+
+1. **From the Services Catalog Page**: Click the "Заказать" button on any service card to open a modal form
+2. **From Individual Service Pages**: Click the "Заказать услугу" button on any detailed service page
+
+Both methods will open a modal form where users can fill in their contact information and submit an order request. The request will be sent to your Telegram bot with information about the requested service.
 
 ## Styling
 

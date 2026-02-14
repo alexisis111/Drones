@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { useTheme } from '../contexts/ThemeContext';
 import { Shield, Building2, CheckCircle, ChevronRight, ArrowRight, Package, Hammer, Ruler, Percent } from 'lucide-react';
 import { Link } from 'react-router';
+import ServiceOrderModal from './ServiceOrderModal';
 
 interface Service {
   id: number;
@@ -28,6 +29,9 @@ const ServiceDetailPage: React.FC = () => {
     minutes: 0,
     seconds: 0
   });
+  
+  // State for modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -406,7 +410,29 @@ const ServiceDetailPage: React.FC = () => {
   }, [id, navigate]);
 
   const handleOrderService = (serviceName: string) => {
-    alert(`Заявка на услугу "${serviceName}" создана! Мы свяжемся с вами в ближайшее время.`);
+    setIsModalOpen(true);
+  };
+
+  const handleModalSubmit = async (formData: any, serviceName: string) => {
+    // Отправляем данные в тот же эндпоинт, что и форма контактов
+    const response = await fetch('/api/telegram-webhook', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        ...formData,
+        message: `${formData.message}${formData.message ? '\n\n' : ''}Заявка на услугу: ${serviceName}`
+      }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error || errorData.message || 'Ошибка при отправке заявки');
+    }
+
+    // Возвращаем результат успешной отправки
+    return response.json();
   };
 
   if (!service) {
@@ -513,6 +539,14 @@ const ServiceDetailPage: React.FC = () => {
                     <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                   </Link>
                 </motion.div>
+                
+                {/* Service Order Modal */}
+                <ServiceOrderModal
+                  isOpen={isModalOpen}
+                  onClose={() => setIsModalOpen(false)}
+                  service={service}
+                  onSubmit={handleModalSubmit}
+                />
               </motion.div>
 
               {/* Right column - Feature cards */}
