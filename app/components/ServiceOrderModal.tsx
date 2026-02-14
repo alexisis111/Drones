@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X } from 'lucide-react';
+import { X, RefreshCw } from 'lucide-react';
 
 interface Service {
   id: number;
@@ -35,16 +35,44 @@ const ServiceOrderModal: React.FC<ServiceOrderModalProps> = ({
     name: '',
     email: '',
     phone: '',
-    consent: ''
+    consent: '',
+    captcha: ''
   });
   const [submitStatus, setSubmitStatus] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [progress, setProgress] = useState(0);
   const [countdown, setCountdown] = useState(3);
 
+  // Капча
+  const [captcha, setCaptcha] = useState({ num1: 0, num2: 0, operator: '+', result: 0 });
+  const [captchaAnswer, setCaptchaAnswer] = useState('');
+  const [captchaError, setCaptchaError] = useState('');
+
+  // Генерация новой капчи
+  const generateCaptcha = () => {
+    const operators = ['+', '-'];
+    const operator = operators[Math.floor(Math.random() * operators.length)];
+    let num1, num2, result;
+
+    if (operator === '+') {
+      num1 = Math.floor(Math.random() * 10) + 1; // 1-10
+      num2 = Math.floor(Math.random() * 10) + 1; // 1-10
+      result = num1 + num2;
+    } else {
+      num1 = Math.floor(Math.random() * 10) + 5; // 5-15
+      num2 = Math.floor(Math.random() * 5) + 1;  // 1-5
+      result = num1 - num2;
+    }
+
+    setCaptcha({ num1, num2, operator, result });
+    setCaptchaAnswer('');
+    setCaptchaError('');
+  };
+
   // Сброс состояния при открытии модалки
   useEffect(() => {
     if (isOpen) {
+      generateCaptcha();
       setProgress(0);
       setCountdown(3);
     }
@@ -200,7 +228,7 @@ const ServiceOrderModal: React.FC<ServiceOrderModalProps> = ({
     }
 
     if (field === 'email' && formData.email && !validateEmail(formData.email)) {
-      setErrors(prev ({
+      setErrors(prev => ({
         ...prev,
         email: 'Введите корректный email адрес'
       }));
@@ -221,8 +249,24 @@ const ServiceOrderModal: React.FC<ServiceOrderModalProps> = ({
     }
   };
 
+  // Проверка капчи
+  const validateCaptcha = (): boolean => {
+    const answer = parseInt(captchaAnswer);
+    if (isNaN(answer) || answer !== captcha.result) {
+      setCaptchaError('Неверный ответ. Пожалуйста, решите пример правильно.');
+      generateCaptcha(); // Генерируем новый пример
+      return false;
+    }
+    return true;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Проверка капчи
+    if (!validateCaptcha()) {
+      return;
+    }
 
     // Проверка согласия на обработку данных
     const consentCheckbox = document.getElementById('consent') as HTMLInputElement;
@@ -236,7 +280,7 @@ const ServiceOrderModal: React.FC<ServiceOrderModalProps> = ({
 
     // Валидация всех полей перед отправкой
     let hasErrors = false;
-    const newErrors = { name: '', email: '', phone: '', consent: '' };
+    const newErrors = { name: '', email: '', phone: '', consent: '', captcha: '' };
 
     // Проверка имени
     if (!formData.name) {
@@ -256,7 +300,7 @@ const ServiceOrderModal: React.FC<ServiceOrderModalProps> = ({
       hasErrors = true;
     }
 
-    // Проверка телефона (теперь обязательное поле)
+    // Проверка телефона (обязательное поле)
     if (!formData.phone || formData.phone === '+7') {
       newErrors.phone = 'Телефон обязателен для заполнения';
       hasErrors = true;
@@ -288,7 +332,7 @@ const ServiceOrderModal: React.FC<ServiceOrderModalProps> = ({
         message: response.message || 'Заявка успешно отправлена! Мы свяжемся с вами в ближайшее время.'
       });
 
-      // Reset form
+      // Сброс формы
       setFormData({
         name: '',
         email: '',
@@ -296,7 +340,8 @@ const ServiceOrderModal: React.FC<ServiceOrderModalProps> = ({
         message: ''
       });
 
-      setErrors({ name: '', email: '', phone: '', consent: '' });
+      setErrors({ name: '', email: '', phone: '', consent: '', captcha: '' });
+      setCaptchaAnswer('');
 
       const consentCheckbox = document.getElementById('consent') as HTMLInputElement;
       if (consentCheckbox) {
@@ -422,6 +467,46 @@ const ServiceOrderModal: React.FC<ServiceOrderModalProps> = ({
                     className="w-full px-4 py-3 rounded-lg bg-gray-50 text-gray-900 border-gray-300 dark:bg-gray-700 dark:text-white dark:border-gray-600 border focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
                     placeholder="Дополнительная информация"
                 ></textarea>
+              </div>
+
+              {/* Капча */}
+              <div className="mt-4 p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Проверка (защита от ботов) *
+                </label>
+
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="flex-1 bg-white dark:bg-gray-800 p-3 rounded-lg text-center text-xl font-bold text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600">
+                    {captcha.num1} {captcha.operator} {captcha.num2} = ?
+                  </div>
+                  <button
+                      type="button"
+                      onClick={generateCaptcha}
+                      className="p-3 bg-gray-200 dark:bg-gray-600 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-500 transition-colors"
+                      title="Обновить пример"
+                  >
+                    <RefreshCw className="w-5 h-5 text-gray-700 dark:text-gray-300" />
+                  </button>
+                </div>
+
+                <input
+                    type="number"
+                    value={captchaAnswer}
+                    onChange={(e) => {
+                      setCaptchaAnswer(e.target.value);
+                      setCaptchaError('');
+                    }}
+                    className={`w-full px-4 py-3 rounded-lg ${
+                        captchaError
+                            ? 'border-red-500 bg-red-50 dark:bg-red-900/20'
+                            : 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800'
+                    } border focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors`}
+                    placeholder="Введите ответ"
+                />
+
+                {captchaError && (
+                    <p className="mt-1 text-sm text-red-600 dark:text-red-400">{captchaError}</p>
+                )}
               </div>
 
               <div className="flex items-start">
