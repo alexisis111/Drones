@@ -115,14 +115,6 @@ const DroneDefensePage: React.FC = () => {
                   <span>Заказать систему</span>
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </Link>
-
-                <Link
-                  to="/proposal"
-                  className="group inline-flex items-center gap-3 bg-white/10 backdrop-blur-sm text-white px-8 py-4 rounded-xl font-semibold border border-white/20 hover:bg-white/20 transition-all duration-300"
-                >
-                  <span>Получить консультацию</span>
-                  <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </Link>
               </motion.div>
             </motion.div>
 

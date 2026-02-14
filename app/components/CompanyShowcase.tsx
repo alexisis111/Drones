@@ -225,81 +225,219 @@ const CompanyShowcase: React.FC = () => {
       </section>
 
       {/* Company History Section */}
-      <section id="history" className="py-24 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-black">
-        <div className="container mx-auto px-4">
+      {/* Company History Section */}
+      <section id="history" className="py-24 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-black relative overflow-hidden">
+        {/* Декоративные элементы фона */}
+        <div className="absolute inset-0 opacity-30">
+          <div className="absolute top-20 left-10 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-20 right-10 w-72 h-72 bg-purple-500/10 rounded-full blur-3xl"></div>
+        </div>
+
+        <div className="container mx-auto px-4 relative z-10">
           <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-16"
           >
-            <div className="inline-flex items-center gap-2 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-full px-4 py-2 mb-4">
+            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full px-6 py-2 mb-4 shadow-lg">
               <Clock className="w-4 h-4" />
-              <span className="text-sm font-medium">Наша история</span>
+              <span className="text-sm font-medium tracking-wider">НАША ИСТОРИЯ</span>
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
-              История компании
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-6">
+              Путь к успеху
             </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-              ООО «ЛЕГИОН» - строительно-монтажная организация, занимающаяся строительством, реконструкцией и ремонтом промышленных, коммерческих и жилых объектов в Выборгском районе Ленинградской области.
-            </p>
           </motion.div>
 
-          <div className="max-w-4xl mx-auto">
-            <div className="relative">
-              {/* Timeline line */}
-              <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-blue-500 to-purple-500"></div>
-
-              {/* Timeline items */}
+          <div className="max-w-5xl mx-auto">
+            {/* Мобильная версия (до md) - вертикальная хронология */}
+            <div className="block md:hidden space-y-6">
               {[
                 {
                   year: "2012",
                   title: "Основание компании",
-                  description: "Компания начала свою деятельность 12 ноября 2012 года, специализируясь на строительно-монтажных работах в Выборгском районе Ленинградской области и Санкт-Петербурге."
+                  description: "Компания начала свою деятельность 12 ноября 2012 года, специализируясь на строительно-монтажных работах в Выборгском районе Ленинградской области и Санкт-Петербурге.",
+                  icon: "🏢",
+                  color: "from-blue-500 to-cyan-500"
                 },
                 {
                   year: "2017",
                   title: "Членство в СРО",
-                  description: "Компания стала членом саморегулируемой организации - Ассоциации «СК ЛО» (СРО-С-280-20062017), что позволило расширить спектр предоставляемых услуг в Санкт-Петербурге и Ленинградской области."
+                  description: "Компания стала членом саморегулируемой организации - Ассоциация \"Строительный комплекс Ленинградской области\" (Ассоциация \"СК ЛО\"), и Ассоциация СРО \"ОсноваПроект\", что позволило расширить спектр предоставляемых услуг в Санкт-Петербурге и Ленинградской области.",
+                  icon: "📋",
+                  color: "from-purple-500 to-pink-500"
                 },
                 {
                   year: "2020",
                   title: "Рост объемов",
-                  description: "За 6 лет объемы производства выросли на 60 процентов, что подтверждает высокий уровень доверия со стороны клиентов в Санкт-Петербурге и Ленинградской области и качество выполняемых работ."
+                  description: "За 6 лет объемы производства выросли на 60 процентов, что подтверждает высокий уровень доверия со стороны клиентов в Санкт-Петербурге и Ленинградской области и качество выполняемых работ.",
+                  icon: "📈",
+                  color: "from-orange-500 to-red-500"
                 },
                 {
                   year: "2023",
                   title: "Расширение направлений",
-                  description: "Компания расширила спектр услуг, включив в себя современные системы защиты от беспилотников, что позволило занять нишу в сфере обеспечения безопасности объектов в Санкт-Петербурге и Ленинградской области."
+                  description: "Компания расширила спектр услуг, включив в себя современные системы защиты от беспилотников, что позволило занять нишу в сфере обеспечения безопасности объектов в Санкт-Петербурге и Ленинградской области.",
+                  icon: "🛡️",
+                  color: "from-green-500 to-emerald-500"
                 }
               ].map((item, i) => (
+                  <motion.div
+                      key={i}
+                      initial={{ opacity: 0, y: 30 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: i * 0.1 }}
+                      className="relative"
+                  >
+                    <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300 border-l-4 border-transparent hover:border-blue-500 group">
+                      <div className="flex items-start gap-4">
+                        <div className={`w-16 h-16 rounded-xl bg-gradient-to-br ${item.color} flex items-center justify-center text-2xl shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                          {item.icon}
+                        </div>
+                        <div className="flex-1">
+                          <div className="flex items-center gap-3 mb-2">
+                    <span className={`text-2xl font-bold bg-gradient-to-r ${item.color} bg-clip-text text-transparent`}>
+                      {item.year}
+                    </span>
+                          </div>
+                          <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
+                            {item.title}
+                          </h3>
+                          <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
+                            {item.description}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+              ))}
+            </div>
+
+            {/* Десктопная версия (md и выше) - горизонтальная хронология */}
+            <div className="hidden md:block relative">
+              {/* Прогресс-бар с анимацией */}
+              <div className="absolute top-24 left-0 right-0 h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
                 <motion.div
-                  key={i}
+                    initial={{ width: "0%" }}
+                    whileInView={{ width: "100%" }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 2, ease: "easeInOut" }}
+                    className="h-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-full"
+                />
+              </div>
+
+              {/* Timeline items */}
+              <div className="grid grid-cols-4 gap-6 mt-32">
+                {[
+                  {
+                    year: "2012",
+                    title: "Основание",
+                    description: "Начало деятельности компании",
+                    icon: "🏢",
+                    color: "from-blue-500 to-cyan-500",
+                    details: "Компания начала свою деятельность 12 ноября 2012 года, специализируясь на строительно-монтажных работах в Выборгском районе Ленинградской области и Санкт-Петербурге."
+                  },
+                  {
+                    year: "2017",
+                    title: "Членство в СРО",
+                    description: "Вступление в ассоциацию",
+                    icon: "📋",
+                    color: "from-purple-500 to-pink-500",
+                    details: "Компания стала членом саморегулируемой организации - Ассоциация \"Строительный комплекс Ленинградской области\" (Ассоциация \"СК ЛО\"), и Ассоциация СРО \"ОсноваПроект\", что позволило расширить спектр предоставляемых услуг в Санкт-Петербурге и Ленинградской области.",
+                  },
+                  {
+                    year: "2020",
+                    title: "Рост объемов",
+                    description: "+60% к объемам производства",
+                    icon: "📈",
+                    color: "from-orange-500 to-red-500",
+                    details: "За 6 лет объемы производства выросли на 60 процентов, что подтверждает высокий уровень доверия со стороны клиентов в Санкт-Петербурге и Ленинградской области и качество выполняемых работ."
+                  },
+                  {
+                    year: "2023",
+                    title: "Новые направления",
+                    description: "Системы защиты от БПЛА",
+                    icon: "🛡️",
+                    color: "from-green-500 to-emerald-500",
+                    details: "Компания расширила спектр услуг, включив в себя современные системы защиты от беспилотников, что позволило занять нишу в сфере обеспечения безопасности объектов в Санкт-Петербурге и Ленинградской области."
+                  }
+                ].map((item, i) => (
+                    <motion.div
+                        key={i}
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: i * 0.2 }}
+                        className="relative group"
+                    >
+                      {/* Year marker */}
+                      <div className="absolute -top-16 left-1/2 transform -translate-x-1/2">
+                        <div className="relative">
+                          <motion.div
+                              initial={{ scale: 0 }}
+                              whileInView={{ scale: 1 }}
+                              viewport={{ once: true }}
+                              transition={{ delay: i * 0.2 + 0.5, type: "spring" }}
+                              className={`w-14 h-14 rounded-full bg-gradient-to-br ${item.color} flex items-center justify-center text-white font-bold text-lg shadow-xl z-20 group-hover:scale-110 transition-transform duration-300`}
+                          >
+                            {item.year}
+                          </motion.div>
+                        </div>
+                      </div>
+
+                      {/* Content card */}
+                      <motion.div
+                          whileHover={{ y: -10 }}
+                          className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer group-hover:border-t-4 border-blue-500"
+                      >
+                        <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${item.color} flex items-center justify-center text-2xl mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                          {item.icon}
+                        </div>
+                        <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">
+                          {item.title}
+                        </h3>
+                        <p className="text-sm text-gray-600 dark:text-gray-300 mb-3">
+                          {item.description}
+                        </p>
+
+                        {/* Hidden details that appear on hover */}
+                        <div className="absolute inset-0 bg-white dark:bg-gray-800 rounded-2xl p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-2xl z-30 overflow-auto">
+                          <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${item.color} flex items-center justify-center text-2xl mb-4`}>
+                            {item.icon}
+                          </div>
+                          <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">
+                            {item.year} - {item.title}
+                          </h3>
+                          <p className="text-sm text-gray-600 dark:text-gray-300">
+                            {item.details}
+                          </p>
+                        </div>
+                      </motion.div>
+                    </motion.div>
+                ))}
+              </div>
+
+              {/* Дополнительная информация о компании */}
+              <motion.div
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 }}
-                  className={`mb-12 flex ${i % 2 === 0 ? 'flex-row' : 'flex-row-reverse'} items-center`}
-                >
-                  <div className={`w-1/2 ${i % 2 === 0 ? 'pr-12 text-right' : 'pl-12 text-left'}`}>
-                    <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg">
-                      <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">{item.title}</h3>
-                      <p className="text-gray-600 dark:text-gray-300">{item.description}</p>
-                    </div>
-                  </div>
-                  <div className="w-1/2 flex justify-center">
-                    <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center text-white font-bold text-lg shadow-lg">
-                      {item.year}
-                    </div>
-                  </div>
-                  <div className="w-1/2"></div>
-                </motion.div>
-              ))}
+                  transition={{ delay: 0.8 }}
+                  className="mt-20 text-center"
+              >
+                <div className="inline-flex items-center gap-4 bg-white dark:bg-gray-800 rounded-full px-6 py-3 shadow-lg">
+                  <span className="text-gray-600 dark:text-gray-300">За более чем</span>
+                  <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">10 лет</span>
+                  <span className="text-gray-600 dark:text-gray-300">реализовано</span>
+                  <span className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">100+</span>
+                  <span className="text-gray-600 dark:text-gray-300">проектов</span>
+                </div>
+              </motion.div>
             </div>
           </div>
         </div>
       </section>
-
       {/* Our Mission Section */}
       <section className="py-24">
         <div className="container mx-auto px-4">
@@ -468,12 +606,12 @@ const CompanyShowcase: React.FC = () => {
 
                     <Link
                         to={
-                          service.title === "Подготовительные работы" ? "/services.jpeg?category=Подготовительные работы" :
-                              service.title === "Металлоконструкции" ? "/services.jpeg?category=Монтаж металлических конструкций" :
-                                  service.title === "Теплоизоляция" ? "/services.jpeg?category=Теплоизоляционные работы" :
-                                      service.title === "Защита от БПЛА" ? "/services.jpeg?category=Дополнительные услуги" :
-                                          service.title === "Дополнительные услуги" ? "/services.jpeg?category=Дополнительные услуги" :
-                                              service.title === "Строительство зданий" ? "/services.jpeg?category=Устройство монолитных и сборных бетонных и железобетонных конструкций" :
+                          service.title === "Подготовительные работы" ? "/services?category=Подготовительные работы" :
+                              service.title === "Металлоконструкции" ? "/services?category=Монтаж металлических конструкций" :
+                                  service.title === "Теплоизоляция" ? "/services?category=Теплоизоляционные работы" :
+                                      service.title === "Защита от БПЛА" ? "/drone-defense" :
+                                          service.title === "Дополнительные услуги" ? "/services?category=Дополнительные услуги" :
+                                              service.title === "Строительство зданий" ? "/services?category=Устройство монолитных и сборных бетонных и железобетонных конструкций" :
                                                   "/services"
                         }
                         className="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 font-semibold group/link"
@@ -572,7 +710,7 @@ const CompanyShowcase: React.FC = () => {
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
-                  href="#contact"
+                  href="/contacts"
                   className="group inline-flex items-center justify-center gap-3 bg-white text-gray-900 px-8 py-4 rounded-xl font-semibold hover:shadow-2xl hover:scale-105 transition-all duration-300"
               >
                 <span>Обсудить проект</span>

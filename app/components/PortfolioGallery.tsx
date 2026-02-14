@@ -217,7 +217,7 @@ const PortfolioGallery: React.FC = () => {
                 </Link>
 
                 <Link
-                  to="/proposal"
+                  to="/contacts"
                   className="group inline-flex items-center gap-3 bg-white/10 backdrop-blur-sm text-white px-8 py-4 rounded-xl font-semibold border border-white/20 hover:bg-white/20 transition-all duration-300"
                 >
                   <span>Оставить заявку</span>
@@ -482,7 +482,7 @@ const PortfolioGallery: React.FC = () => {
               </Link>
 
               <Link
-                to="/proposal"
+                to="/contacts"
                 className="group inline-flex items-center justify-center gap-3 bg-transparent text-white px-8 py-4 rounded-xl font-semibold border-2 border-white hover:bg-white/10 transition-all duration-300"
               >
                 <span>Оставить заявку</span>

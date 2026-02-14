@@ -33,26 +33,22 @@ const ServicesCatalog: React.FC = () => {
     seconds: 0
   });
 
-  // Функция для извлечения числового значения из строки цены
-  const extractNumericValue = (priceStr: string) => {
-    if (!priceStr) return 0;
-    const numericStr = priceStr.replace(/[^\d.-]/g, '');
-    return parseFloat(numericStr) || 0;
-  };
-
-  // Функция для расчета цены со скидкой
-  const calculateDiscountedPrice = (priceStr: string) => {
-    const numericPrice = extractNumericValue(priceStr);
-    const discountAmount = numericPrice * 0.25; // 25% скидка
-    const discountedPrice = numericPrice - discountAmount;
-
-    // Извлекаем единицы измерения из строки цены (руб/м², руб/п.м., руб/т и т.д.)
-    const unitMatch = priceStr.match(/(руб\/[а-яё]+|руб|р\.)/gi);
-    const unit = unitMatch ? unitMatch[0] : 'руб';
-
-    // Форматируем результат с сохранением текста
-    return `${Math.round(discountedPrice).toLocaleString('ru-RU')} ${unit}`;
-  };
+  // Прокручиваем к заголовку каталога услуг при загрузке с фильтром
+  useEffect(() => {
+    const categoryParam = searchParams.get('category');
+    if (categoryParam && categoryParam !== 'all') {
+      // Небольшая задержка для обеспечения загрузки компонента
+      setTimeout(() => {
+        const catalogHeader = document.getElementById('catalog-header');
+        if (catalogHeader) {
+          catalogHeader.scrollIntoView({ 
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      }, 100);
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -62,37 +58,6 @@ const ServicesCatalog: React.FC = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  // Устанавливаем таймер обратного отсчета (24 часа от текущего времени)
-  useEffect(() => {
-    if (searchParams.get('discount') === 'true') {
-      const calculateTimeLeft = () => {
-        const now = new Date();
-        const tomorrow = new Date(now);
-        tomorrow.setDate(tomorrow.getDate() + 1);
-        tomorrow.setHours(0, 0, 0, 0); // Устанавливаем на полночь следующего дня
-
-        const difference = tomorrow.getTime() - now.getTime();
-
-        if (difference <= 0) {
-          return { hours: 0, minutes: 0, seconds: 0 };
-        }
-
-        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-
-        return { hours, minutes, seconds };
-      };
-
-      const timer = setInterval(() => {
-        const timeLeftObj = calculateTimeLeft();
-        setTimeLeft(timeLeftObj);
-      }, 1000);
-
-      return () => clearInterval(timer);
-    }
-  }, [searchParams]);
 
 
   // Данные услуг на основе информации с сайта legion78.ru
@@ -487,7 +452,7 @@ const ServicesCatalog: React.FC = () => {
                 </Link>
 
                 <Link
-                  to="/proposal"
+                  to="/contacts"
                   className="group inline-flex items-center gap-3 bg-white/10 backdrop-blur-sm text-white px-8 py-4 rounded-xl font-semibold border border-white/20 hover:bg-white/20 transition-all duration-300"
                 >
                   <span>Оставить заявку</span>
@@ -561,6 +526,7 @@ const ServicesCatalog: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="text-center mb-16"
+            id="catalog-header"
           >
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
               Каталог услуг
@@ -651,44 +617,11 @@ const ServicesCatalog: React.FC = () => {
 
                     <div className="mb-4">
                       {service.price && (
-                        <div className={`rounded-lg p-3 ${
-                          searchParams.get('discount') === 'true' && [1, 2, 3].includes(service.id)
-                            ? 'bg-gradient-to-r from-red-500/20 to-orange-500/20 backdrop-blur-sm'
-                            : 'bg-white/10 backdrop-blur-sm'
-                        }`}>
+                        <div className="rounded-lg p-3 bg-white/10 backdrop-blur-sm">
                           <div className="flex justify-between items-center">
                             <span className="text-sm text-gray-500 dark:text-gray-400">Цена:</span>
                             <span className="font-medium text-gray-900 dark:text-white">{service.price}</span>
                           </div>
-
-                          {searchParams.get('discount') === 'true' && [1, 2, 3].includes(service.id) && (
-                            <div className="mt-2 pt-2 border-t border-gray-200 dark:border-gray-700">
-                              <div className="flex justify-between items-center">
-                                <span className="text-sm text-green-600 dark:text-green-400">Со скидкой:</span>
-                                <span className="font-bold text-green-600 dark:text-green-400">
-                                  {calculateDiscountedPrice(service.price)}
-                                </span>
-                              </div>
-                              <div className="mt-1 text-xs text-yellow-600 dark:text-yellow-400 flex items-center">
-                                <Percent className="w-3 h-3 mr-1" />
-                                Специальное предложение
-                              </div>
-                              <div className="mt-2 grid grid-cols-3 gap-1">
-                                <div className="text-center bg-gradient-to-b from-white/20 to-white/5 rounded p-1.5 shadow-inner">
-                                  <div className="text-sm font-bold text-white">{timeLeft.hours.toString().padStart(2, '0')}</div>
-                                  <div className="text-[0.6rem] text-gray-300 uppercase tracking-wide">Ч</div>
-                                </div>
-                                <div className="text-center bg-gradient-to-b from-white/20 to-white/5 rounded p-1.5 shadow-inner">
-                                  <div className="text-sm font-bold text-white">{timeLeft.minutes.toString().padStart(2, '0')}</div>
-                                  <div className="text-[0.6rem] text-gray-300 uppercase tracking-wide">М</div>
-                                </div>
-                                <div className="text-center bg-gradient-to-b from-white/20 to-white/5 rounded p-1.5 shadow-inner">
-                                  <div className="text-sm font-bold text-white">{timeLeft.seconds.toString().padStart(2, '0')}</div>
-                                  <div className="text-[0.6rem] text-gray-300 uppercase tracking-wide">С</div>
-                                </div>
-                              </div>
-                            </div>
-                          )}
                         </div>
                       )}
                     </div>
@@ -709,11 +642,7 @@ const ServicesCatalog: React.FC = () => {
 
                     <div className="flex gap-3">
                       <Link
-                        to={
-                          [1, 2, 3].includes(service.id)
-                            ? `/service/${service.id}?discount=true&serviceId=${service.id}`
-                            : `/service/${service.id}`
-                        }
+                        to={`/service/${service.id}`}
                         className="flex-1 text-center py-3 px-4 rounded-lg font-medium transition-all bg-white/10 backdrop-blur-sm text-white border border-white/20 hover:bg-white/20"
                       >
                         Подробнее
@@ -761,13 +690,6 @@ const ServicesCatalog: React.FC = () => {
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
 
-              <Link
-                to="/proposal"
-                className="group inline-flex items-center justify-center gap-3 bg-transparent text-white px-8 py-4 rounded-xl font-semibold border-2 border-white hover:bg-white/10 transition-all duration-300"
-              >
-                <span>Отправить заявку</span>
-                <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </Link>
             </div>
 
           </motion.div>

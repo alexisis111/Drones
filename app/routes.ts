@@ -8,8 +8,8 @@ export default [
   route("/vacancies", "routes/vacancies.tsx"),
   route("/services", "routes/services.tsx"),
   route("/service/:id", "routes/service-detail.tsx"),
-  route("/proposal", "routes/proposal.tsx"),
   route("/drone-defense", "routes/drone-defense.tsx"),
   route("/privacy", "routes/privacy.tsx"),
-  route("/terms", "routes/terms.tsx")
+  route("/terms", "routes/terms.tsx"),
+  route("/*", "$.tsx")
 ] satisfies RouteConfig;

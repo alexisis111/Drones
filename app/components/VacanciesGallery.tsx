@@ -490,13 +490,6 @@ const VacanciesGallery: React.FC = () => {
                   <span>Отправить резюме</span>
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </Link>
-                <a
-                  href="mailto:l-legion@bk.ru"
-                  className="group inline-flex items-center justify-center gap-3 bg-white dark:bg-gray-800 text-gray-900 dark:text-white px-8 py-4 rounded-xl font-semibold border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-300"
-                >
-                  <Mail className="w-5 h-5" />
-                  <span>l-legion@bk.ru</span>
-                </a>
               </div>
             </motion.div>
           </div>
