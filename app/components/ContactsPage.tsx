@@ -717,7 +717,7 @@ const ContactForm: React.FC<{ theme: string }> = ({ theme }) => {
   }, [fetcher.state, fetcher.data, fetcher.formMethod]);
 
   return (
-      <div className={`rounded-3xl overflow-hidden shadow-2xl ${theme === 'dark' ? 'bg-gray-800/90 backdrop-blur-sm' : 'bg-white/90 backdrop-blur-sm'}`}>
+      <div className={`rounded-3xl overflow-hidden shadow-2xl bg-gray-800/90 backdrop-blur-sm`}>
         <div className="p-8 md:p-12">
           <div className="flex items-center gap-3 mb-6">
             <div className="p-3 rounded-xl bg-gradient-to-br from-blue-500 to-purple-500 text-white">

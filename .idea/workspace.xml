@@ -4,12 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fde30c11-94c5-4884-96a6-cf984ad02720" name="Changes" comment="fixModallAllCapcha">
+    <list default="true" id="fde30c11-94c5-4884-96a6-cf984ad02720" name="Changes" comment="fixContactsCapcha">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/CompanyShowcase.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/CompanyShowcase.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/components/ContactsPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ContactsPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/ServicesCatalog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ServicesCatalog.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/welcome/welcome.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/welcome/welcome.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -90,14 +87,6 @@
       <workItem from="1770873668838" duration="2502000" />
       <workItem from="1770934651260" duration="777000" />
       <workItem from="1770971475236" duration="22233000" />
-    </task>
-    <task id="LOCAL-00014" summary="tg">
-      <option name="closed" value="true" />
-      <created>1769975910247</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1769975910247</updated>
     </task>
     <task id="LOCAL-00015" summary="tg">
       <option name="closed" value="true" />
@@ -483,7 +472,15 @@
       <option name="project" value="LOCAL" />
       <updated>1771078422567</updated>
     </task>
-    <option name="localTasksCounter" value="63" />
+    <task id="LOCAL-00063" summary="fixContactsCapcha">
+      <option name="closed" value="true" />
+      <created>1771079636136</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1771079636136</updated>
+    </task>
+    <option name="localTasksCounter" value="64" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -513,7 +510,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="sales" />
     <MESSAGE value="fix closed" />
     <MESSAGE value="fixxx" />
     <MESSAGE value="fix forms in TG" />
@@ -538,6 +534,7 @@
     <MESSAGE value="allFix" />
     <MESSAGE value="fixModallAll" />
     <MESSAGE value="fixModallAllCapcha" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixModallAllCapcha" />
+    <MESSAGE value="fixContactsCapcha" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixContactsCapcha" />
   </component>
 </project>
