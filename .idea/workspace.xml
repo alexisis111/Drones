@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fde30c11-94c5-4884-96a6-cf984ad02720" name="Changes" comment="allFix">
+    <list default="true" id="fde30c11-94c5-4884-96a6-cf984ad02720" name="Changes" comment="fixModallAll">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/ServiceDetailPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ServiceDetailPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/ServiceOrderModal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ServiceOrderModal.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,14 +86,6 @@
       <workItem from="1770873668838" duration="2502000" />
       <workItem from="1770934651260" duration="777000" />
       <workItem from="1770971475236" duration="22233000" />
-    </task>
-    <task id="LOCAL-00011" summary="tg">
-      <option name="closed" value="true" />
-      <created>1769975424316</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1769975424316</updated>
     </task>
     <task id="LOCAL-00012" summary="tg">
       <option name="closed" value="true" />
@@ -481,7 +471,15 @@
       <option name="project" value="LOCAL" />
       <updated>1771069872460</updated>
     </task>
-    <option name="localTasksCounter" value="60" />
+    <task id="LOCAL-00060" summary="fixModallAll">
+      <option name="closed" value="true" />
+      <created>1771075226440</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1771075226440</updated>
+    </task>
+    <option name="localTasksCounter" value="61" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -511,7 +509,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="upgrade" />
     <MESSAGE value="img services" />
     <MESSAGE value="sales" />
     <MESSAGE value="fix closed" />
@@ -536,6 +533,7 @@
     <MESSAGE value="fixTGinLoc" />
     <MESSAGE value="fixContactsForms" />
     <MESSAGE value="allFix" />
-    <option name="LAST_COMMIT_MESSAGE" value="allFix" />
+    <MESSAGE value="fixModallAll" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixModallAll" />
   </component>
 </project>

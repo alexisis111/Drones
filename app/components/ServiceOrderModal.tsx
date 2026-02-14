@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 
 interface Service {
@@ -19,12 +19,12 @@ interface ServiceOrderModalProps {
   onSubmit: (formData: any, serviceName: string) => Promise<any>;
 }
 
-const ServiceOrderModal: React.FC<ServiceOrderModalProps> = ({ 
-  isOpen, 
-  onClose, 
-  service, 
-  onSubmit 
-}) => {
+const ServiceOrderModal: React.FC<ServiceOrderModalProps> = ({
+                                                               isOpen,
+                                                               onClose,
+                                                               service,
+                                                               onSubmit
+                                                             }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -39,6 +39,58 @@ const ServiceOrderModal: React.FC<ServiceOrderModalProps> = ({
   });
   const [submitStatus, setSubmitStatus] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [countdown, setCountdown] = useState(3);
+
+  // Сброс состояния при открытии модалки
+  useEffect(() => {
+    if (isOpen) {
+      setProgress(0);
+      setCountdown(3);
+    }
+  }, [isOpen]);
+
+  // Таймер для автоматического закрытия при успехе
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    let progressInterval: NodeJS.Timeout;
+
+    if (submitStatus?.type === 'success') {
+      // Сброс прогресса
+      setProgress(0);
+      setCountdown(3);
+
+      // Обновление прогресс-бара
+      progressInterval = setInterval(() => {
+        setProgress(prev => {
+          if (prev >= 100) {
+            clearInterval(progressInterval);
+            return 100;
+          }
+          return prev + (100 / 30); // 30 шагов за 3 секунды
+        });
+      }, 100);
+
+      // Таймер для закрытия
+      timer = setTimeout(() => {
+        onClose();
+        setSubmitStatus(null);
+        setProgress(0);
+        setCountdown(3);
+      }, 3000);
+
+      // Обновление счетчика
+      const countdownInterval = setInterval(() => {
+        setCountdown(prev => Math.max(0, prev - 1));
+      }, 1000);
+
+      return () => {
+        clearTimeout(timer);
+        clearInterval(progressInterval);
+        clearInterval(countdownInterval);
+      };
+    }
+  }, [submitStatus, onClose]);
 
   if (!isOpen || !service) return null;
 
@@ -56,9 +108,6 @@ const ServiceOrderModal: React.FC<ServiceOrderModalProps> = ({
 
   // Валидация телефона (формат: +7XXX-XXX-XX-XX)
   const validatePhone = (phone: string): boolean => {
-    // Если поле пустое или только +7 - пропускаем (необязательное поле)
-    if (phone === '' || phone === '+7') return true;
-
     const phoneRegex = /^\+7\d{3}-\d{3}-\d{2}-\d{2}$/;
     return phoneRegex.test(phone);
   };
@@ -127,7 +176,7 @@ const ServiceOrderModal: React.FC<ServiceOrderModalProps> = ({
       const formattedPhone = formatPhone(value);
       setFormData(prev => ({ ...prev, [id]: formattedPhone }));
 
-      // Проверяем валидность при вводе (если поле не пустое)
+      // Проверяем валидность при вводе
       if (formattedPhone && formattedPhone !== '+7') {
         if (!validatePhone(formattedPhone)) {
           setErrors(prev => ({
@@ -151,14 +200,19 @@ const ServiceOrderModal: React.FC<ServiceOrderModalProps> = ({
     }
 
     if (field === 'email' && formData.email && !validateEmail(formData.email)) {
-      setErrors(prev => ({
+      setErrors(prev ({
         ...prev,
         email: 'Введите корректный email адрес'
       }));
     }
 
-    if (field === 'phone' && formData.phone && formData.phone !== '+7') {
-      if (!validatePhone(formData.phone)) {
+    if (field === 'phone' && formData.phone) {
+      if (formData.phone === '+7') {
+        setErrors(prev => ({
+          ...prev,
+          phone: 'Телефон обязателен для заполнения'
+        }));
+      } else if (!validatePhone(formData.phone)) {
         setErrors(prev => ({
           ...prev,
           phone: 'Неверный формат телефона. Пример: +7999-999-99-99'
@@ -202,8 +256,11 @@ const ServiceOrderModal: React.FC<ServiceOrderModalProps> = ({
       hasErrors = true;
     }
 
-    // Проверка телефона (если заполнен)
-    if (formData.phone && formData.phone !== '+7' && !validatePhone(formData.phone)) {
+    // Проверка телефона (теперь обязательное поле)
+    if (!formData.phone || formData.phone === '+7') {
+      newErrors.phone = 'Телефон обязателен для заполнения';
+      hasErrors = true;
+    } else if (!validatePhone(formData.phone)) {
       newErrors.phone = 'Неверный формат телефона. Пример: +7999-999-99-99';
       hasErrors = true;
     }
@@ -219,11 +276,11 @@ const ServiceOrderModal: React.FC<ServiceOrderModalProps> = ({
       if (!service) {
         throw new Error('Услуга не выбрана');
       }
-      
-      // Отправляем форму, название услуги будет добавлено в ServicesCatalog.tsx
+
+      // Отправляем форму
       const response = await onSubmit({
         ...formData,
-        message: formData.message  // Не добавляем название услуги здесь, это делается в ServicesCatalog.tsx
+        message: formData.message
       }, service.title);
 
       setSubmitStatus({
@@ -256,166 +313,187 @@ const ServiceOrderModal: React.FC<ServiceOrderModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4" onClick={onClose}>
-      <div
-        className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto"
-        onClick={(e) => e.stopPropagation()}
-      >
-        {/* Header */}
-        <div className="flex justify-between items-center p-6 border-b border-gray-200 dark:border-gray-700">
-          <h3 className="text-xl font-bold text-gray-900 dark:text-white">
-            Заказать услугу
-          </h3>
-          <button 
-            onClick={onClose}
-            className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
-          >
-            <X className="w-6 h-6" />
-          </button>
-        </div>
-
-        {/* Service Info */}
-        <div className="p-6 border-b border-gray-200 dark:border-gray-700">
-          <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-            {service?.title || 'Услуга'}
-          </h4>
-          <p className="text-gray-600 dark:text-gray-300 text-sm">
-            {service?.description || 'Выбранная вами услуга'}
-          </p>
-        </div>
-
-        {/* Form */}
-        <form onSubmit={handleSubmit} className="p-6">
-          <div className="space-y-4">
-            <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                Ваше имя *
-              </label>
-              <input
-                type="text"
-                id="name"
-                value={formData.name}
-                onChange={handleChange}
-                onBlur={() => handleBlur('name')}
-                className={`w-full px-4 py-3 rounded-lg ${
-                  errors.name 
-                    ? 'border-red-500 bg-red-50 dark:bg-red-900/20' 
-                    : 'border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700'
-                } border focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
-                placeholder="Введите ваше имя"
-              />
-              {errors.name && (
-                <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.name}</p>
-              )}
-            </div>
-
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                Email *
-              </label>
-              <input
-                type="email"
-                id="email"
-                value={formData.email}
-                onChange={handleChange}
-                onBlur={() => handleBlur('email')}
-                className={`w-full px-4 py-3 rounded-lg ${
-                  errors.email 
-                    ? 'border-red-500 bg-red-50 dark:bg-red-900/20' 
-                    : 'border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700'
-                } border focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
-                placeholder="Введите ваш email"
-              />
-              {errors.email && (
-                <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.email}</p>
-              )}
-            </div>
-
-            <div>
-              <label htmlFor="phone" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                Телефон
-              </label>
-              <input
-                type="tel"
-                id="phone"
-                value={formData.phone}
-                onChange={handleChange}
-                onBlur={() => handleBlur('phone')}
-                className={`w-full px-4 py-3 rounded-lg ${
-                  errors.phone 
-                    ? 'border-red-500 bg-red-50 dark:bg-red-900/20' 
-                    : 'border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700'
-                } border focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
-                placeholder="+7 (___) ___-__-__"
-              />
-              {errors.phone && (
-                <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.phone}</p>
-              )}
-            </div>
-
-            <div>
-              <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                Сообщение
-              </label>
-              <textarea
-                id="message"
-                value={formData.message}
-                onChange={handleChange}
-                rows={4}
-                className={`w-full px-4 py-3 rounded-lg ${
-                  'bg-gray-50 text-gray-900 border-gray-300 dark:bg-gray-700 dark:text-white dark:border-gray-600'
-                } border focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
-                placeholder="Дополнительная информация"
-              ></textarea>
-            </div>
-
-            <div className="flex items-start">
-              <input
-                type="checkbox"
-                id="consent"
-                className="mt-1 mr-2 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-              />
-              <label htmlFor="consent" className="text-sm text-gray-600 dark:text-gray-400">
-                Я даю согласие на обработку персональных данных в соответствии с{' '}
-                <a href="#" className="text-blue-600 hover:underline">политикой конфиденциальности</a>
-              </label>
-            </div>
-            {errors.consent && (
-              <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.consent}</p>
-            )}
-
-            {submitStatus && (
-              <div className={`p-4 rounded-lg ${
-                submitStatus.type === 'success'
-                  ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300'
-                  : 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300'
-              }`}>
-                {submitStatus.message}
-              </div>
-            )}
-
+      <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4" onClick={onClose}>
+        <div
+            className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+        >
+          {/* Header */}
+          <div className="flex justify-between items-center p-6 border-b border-gray-200 dark:border-gray-700">
+            <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+              Заказать услугу
+            </h3>
             <button
-              type="submit"
-              disabled={isLoading}
-              className={`w-full py-4 px-6 rounded-xl font-bold text-lg transition-all ${
-                isLoading
-                  ? 'opacity-70 cursor-not-allowed'
-                  : 'hover:opacity-90 hover:shadow-lg'
-              } bg-gradient-to-r from-blue-600 to-purple-600 text-white`}
+                onClick={onClose}
+                className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors"
             >
-              {isLoading ? (
-                <div className="flex items-center justify-center">
-                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
-                  Отправка...
-                </div>
-              ) : (
-                'Отправить заявку'
-              )}
+              <X className="w-6 h-6" />
             </button>
           </div>
-        </form>
+
+          {/* Service Info */}
+          <div className="p-6 border-b border-gray-200 dark:border-gray-700">
+            <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+              {service?.title || 'Услуга'}
+            </h4>
+            <p className="text-gray-600 dark:text-gray-300 text-sm">
+              {service?.description || 'Выбранная вами услуга'}
+            </p>
+          </div>
+
+          {/* Form */}
+          <form onSubmit={handleSubmit} className="p-6">
+            <div className="space-y-4">
+              <div>
+                <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  Ваше имя *
+                </label>
+                <input
+                    type="text"
+                    id="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    onBlur={() => handleBlur('name')}
+                    className={`w-full px-4 py-3 rounded-lg ${
+                        errors.name
+                            ? 'border-red-500 bg-red-50 dark:bg-red-900/20'
+                            : 'border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700'
+                    } border focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors`}
+                    placeholder="Введите ваше имя"
+                />
+                {errors.name && (
+                    <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.name}</p>
+                )}
+              </div>
+
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  Email *
+                </label>
+                <input
+                    type="email"
+                    id="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    onBlur={() => handleBlur('email')}
+                    className={`w-full px-4 py-3 rounded-lg ${
+                        errors.email
+                            ? 'border-red-500 bg-red-50 dark:bg-red-900/20'
+                            : 'border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700'
+                    } border focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors`}
+                    placeholder="Введите ваш email"
+                />
+                {errors.email && (
+                    <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.email}</p>
+                )}
+              </div>
+
+              <div>
+                <label htmlFor="phone" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  Телефон *
+                </label>
+                <input
+                    type="tel"
+                    id="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    onBlur={() => handleBlur('phone')}
+                    className={`w-full px-4 py-3 rounded-lg ${
+                        errors.phone
+                            ? 'border-red-500 bg-red-50 dark:bg-red-900/20'
+                            : 'border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700'
+                    } border focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors`}
+                    placeholder="+7 (___) ___-__-__"
+                />
+                {errors.phone && (
+                    <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.phone}</p>
+                )}
+              </div>
+
+              <div>
+                <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                  Сообщение
+                </label>
+                <textarea
+                    id="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    rows={4}
+                    className="w-full px-4 py-3 rounded-lg bg-gray-50 text-gray-900 border-gray-300 dark:bg-gray-700 dark:text-white dark:border-gray-600 border focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+                    placeholder="Дополнительная информация"
+                ></textarea>
+              </div>
+
+              <div className="flex items-start">
+                <input
+                    type="checkbox"
+                    id="consent"
+                    className="mt-1 mr-2 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                />
+                <label htmlFor="consent" className="text-sm text-gray-600 dark:text-gray-400">
+                  Я даю согласие на обработку персональных данных в соответствии с{' '}
+                  <a href="/privacy" className="text-blue-600 hover:underline">политикой конфиденциальности</a>
+                </label>
+              </div>
+              {errors.consent && (
+                  <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.consent}</p>
+              )}
+
+              {submitStatus && (
+                  <div className="relative overflow-hidden">
+                    <div className={`p-4 rounded-lg ${
+                        submitStatus.type === 'success'
+                            ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300'
+                            : 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300'
+                    }`}>
+                      <div className="flex items-center justify-between mb-2">
+                        <span>{submitStatus.message}</span>
+                        {submitStatus.type === 'success' && (
+                            <span className="text-sm font-medium bg-green-200 dark:bg-green-800 px-2 py-1 rounded">
+                        {countdown}с
+                      </span>
+                        )}
+                      </div>
+
+                      {/* Progress bar */}
+                      {submitStatus.type === 'success' && (
+                          <div className="w-full h-1 bg-green-200 dark:bg-green-800 rounded-full overflow-hidden">
+                            <div
+                                className="h-full bg-green-600 dark:bg-green-400 transition-all duration-100 ease-linear"
+                                style={{ width: `${progress}%` }}
+                            />
+                          </div>
+                      )}
+                    </div>
+                  </div>
+              )}
+
+              <button
+                  type="submit"
+                  disabled={isLoading || submitStatus?.type === 'success'}
+                  className={`w-full py-4 px-6 rounded-xl font-bold text-lg transition-all ${
+                      isLoading || submitStatus?.type === 'success'
+                          ? 'opacity-70 cursor-not-allowed'
+                          : 'hover:opacity-90 hover:shadow-lg'
+                  } bg-gradient-to-r from-blue-600 to-purple-600 text-white`}
+              >
+                {isLoading ? (
+                    <div className="flex items-center justify-center">
+                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                      Отправка...
+                    </div>
+                ) : submitStatus?.type === 'success' ? (
+                    <div className="flex items-center justify-center">
+                      <span>✓ Отправлено</span>
+                    </div>
+                ) : (
+                    'Отправить заявку'
+                )}
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
-    </div>
   );
 };
 
