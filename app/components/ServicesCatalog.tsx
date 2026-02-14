@@ -399,7 +399,7 @@ const ServicesCatalog: React.FC = () => {
 
         {/* Content */}
         <div className="relative container mx-auto px-4 z-10">
-          <div className="grid lg:grid-cols-2 gap-12 items-center py-32">
+          <div className="grid lg:grid-cols-2 gap-12 items-center py-8">
             {/* Left column - Main content */}
             <motion.div
               initial={{ opacity: 0, x: -50 }}

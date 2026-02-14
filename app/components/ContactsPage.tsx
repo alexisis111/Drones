@@ -1,7 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useTheme } from '../contexts/ThemeContext';
-import { Shield, Building2, Target, Zap, Award, Clock, Users, CheckCircle, ChevronRight, ArrowRight, Mail, Phone, MapPin, MessageSquare, Send } from 'lucide-react';
+import {
+  Shield,
+  Building2,
+  Target,
+  Zap,
+  Award,
+  Clock,
+  Users,
+  CheckCircle,
+  ChevronRight,
+  ArrowRight,
+  Mail,
+  Phone,
+  MapPin,
+  MessageSquare,
+  Send,
+  RefreshCw
+} from 'lucide-react';
 import { useFetcher } from 'react-router';
 
 const ContactsPage: React.FC = () => {
@@ -39,7 +56,7 @@ const ContactsPage: React.FC = () => {
 
           {/* Content */}
           <div className="relative container mx-auto px-4 z-10">
-            <div className="grid lg:grid-cols-2 gap-12 items-center py-32">
+            <div className="grid lg:grid-cols-2 gap-12 items-center py-8">
               {/* Left column - Main content */}
               <motion.div
                   initial={{opacity: 0, x: -50}}
@@ -370,9 +387,41 @@ const ContactForm: React.FC<{ theme: string }> = ({ theme }) => {
     name: '',
     email: '',
     phone: '',
-    consent: ''
+    consent: '',
+    captcha: ''
   });
   const [submitStatus, setSubmitStatus] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
+
+  // Капча
+  const [captcha, setCaptcha] = useState({ num1: 0, num2: 0, operator: '+', result: 0 });
+  const [captchaAnswer, setCaptchaAnswer] = useState('');
+  const [captchaError, setCaptchaError] = useState('');
+
+  // Генерация новой капчи
+  const generateCaptcha = () => {
+    const operators = ['+', '-'];
+    const operator = operators[Math.floor(Math.random() * operators.length)];
+    let num1, num2, result;
+
+    if (operator === '+') {
+      num1 = Math.floor(Math.random() * 10) + 1; // 1-10
+      num2 = Math.floor(Math.random() * 10) + 1; // 1-10
+      result = num1 + num2;
+    } else {
+      num1 = Math.floor(Math.random() * 10) + 5; // 5-15
+      num2 = Math.floor(Math.random() * 5) + 1;  // 1-5
+      result = num1 - num2;
+    }
+
+    setCaptcha({ num1, num2, operator, result });
+    setCaptchaAnswer('');
+    setCaptchaError('');
+  };
+
+  // Генерация капчи при монтировании компонента
+  useEffect(() => {
+    generateCaptcha();
+  }, []);
 
   // Валидация имени (только русские и английские буквы)
   const validateName = (name: string): boolean => {
@@ -499,8 +548,24 @@ const ContactForm: React.FC<{ theme: string }> = ({ theme }) => {
     }
   };
 
+  // Проверка капчи
+  const validateCaptcha = (): boolean => {
+    const answer = parseInt(captchaAnswer);
+    if (isNaN(answer) || answer !== captcha.result) {
+      setCaptchaError('Неверный ответ. Пожалуйста, решите пример правильно.');
+      generateCaptcha(); // Генерируем новый пример
+      return false;
+    }
+    return true;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Проверка капчи
+    if (!validateCaptcha()) {
+      return;
+    }
 
     // Проверка согласия на обработку данных
     const consentCheckbox = document.getElementById('consent') as HTMLInputElement;
@@ -514,7 +579,7 @@ const ContactForm: React.FC<{ theme: string }> = ({ theme }) => {
 
     // Валидация всех полей перед отправкой
     let hasErrors = false;
-    const newErrors = { name: '', email: '', phone: '', consent: '' };
+    const newErrors = { name: '', email: '', phone: '', consent: '', captcha: '' };
 
     // Проверка имени
     if (!formData.name) {
@@ -571,7 +636,10 @@ const ContactForm: React.FC<{ theme: string }> = ({ theme }) => {
           message: ''
         });
 
-        setErrors({ name: '', email: '', phone: '', consent: '' });
+        setCaptchaAnswer('');
+        generateCaptcha(); // Генерируем новую капчу для следующей отправки
+
+        setErrors({ name: '', email: '', phone: '', consent: '', captcha: '' });
 
         const consentCheckbox = document.getElementById('consent') as HTMLInputElement;
         if (consentCheckbox) {
@@ -610,7 +678,10 @@ const ContactForm: React.FC<{ theme: string }> = ({ theme }) => {
           message: ''
         });
 
-        setErrors({ name: '', email: '', phone: '', consent: '' });
+        setCaptchaAnswer('');
+        generateCaptcha();
+
+        setErrors({ name: '', email: '', phone: '', consent: '', captcha: '' });
 
         const consentCheckbox = document.getElementById('consent') as HTMLInputElement;
         if (consentCheckbox) {
@@ -732,6 +803,44 @@ const ContactForm: React.FC<{ theme: string }> = ({ theme }) => {
                   className="w-full px-4 py-3 rounded-lg bg-white/10 text-white border border-white/20 focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-white/50"
                   placeholder="Введите ваше сообщение"
               ></textarea>
+            </div>
+
+            {/* Капча */}
+            <div className="p-4 bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg">
+              <label className="block mb-2 font-medium text-white">
+                Проверка (защита от ботов) *
+              </label>
+
+              <div className="flex items-center gap-3 mb-2">
+                <div className="flex-1 bg-white/20 backdrop-blur-sm p-3 rounded-lg text-center text-xl font-bold text-white border border-white/20">
+                  {captcha.num1} {captcha.operator} {captcha.num2} = ?
+                </div>
+                <button
+                    type="button"
+                    onClick={generateCaptcha}
+                    className="p-3 bg-white/10 backdrop-blur-sm rounded-lg hover:bg-white/20 transition-colors border border-white/20"
+                    title="Обновить пример"
+                >
+                  <RefreshCw className="w-5 h-5 text-white" />
+                </button>
+              </div>
+
+              <input
+                  type="number"
+                  value={captchaAnswer}
+                  onChange={(e) => {
+                    setCaptchaAnswer(e.target.value);
+                    setCaptchaError('');
+                  }}
+                  className={`w-full px-4 py-3 rounded-lg bg-white/10 text-white border ${
+                      captchaError ? 'border-red-400' : 'border-white/20'
+                  } focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-white/50`}
+                  placeholder="Введите ответ"
+              />
+
+              {captchaError && (
+                  <p className="mt-1 text-sm text-red-300">{captchaError}</p>
+              )}
             </div>
 
             <div className="flex items-start">
