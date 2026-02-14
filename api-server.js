@@ -1,11 +1,10 @@
 import express from 'express';
-import { createRequestListener } from '@react-router/node';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import axios from 'axios';
+import dotenv from 'dotenv';
 
 // Load environment variables from .env file
-import dotenv from 'dotenv';
 dotenv.config();
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -28,7 +27,7 @@ if (!TELEGRAM_CHAT_ID) {
   console.error('Ошибка: Не установлен переменная окружения TELEGRAM_CHAT_ID');
 }
 
-// Create a route for the Telegram webhook BEFORE React Router handles all routes
+// Create a route for the Telegram webhook
 app.post('/api/telegram-webhook', async (req, res) => {
   try {
     const { name, email, phone, message } = req.body;
@@ -87,29 +86,8 @@ Email: ${email || 'Не указан'}
   }
 });
 
-// Serve static files from the build/client directory
-app.use(express.static(path.join(__dirname, 'build', 'client')));
-
-// Redirect old domain to new domain
-app.use((req, res, next) => {
-  if (req.headers.host.includes('xn--80affa3aj.xn--p1ai')) {
-    const newPath = req.protocol + '://' + 'xn--80afglc.xn--p1ai' + req.originalUrl;
-    res.redirect(301, newPath);
-  } else {
-    next();
-  }
-});
-
-// Handle all other routes with React Router
-app.all(
-  '*',
-  createRequestListener({
-    build: await import('./build/server/index.js'),
-  })
-);
-
-const port = process.env.PORT || 3000;
+const port = 3001;
 
 app.listen(port, () => {
-  console.log(`Server listening on port ${port}`);
+  console.log(`API Server listening on port ${port}`);
 });

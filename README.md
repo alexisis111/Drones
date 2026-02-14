@@ -12,6 +12,7 @@ A modern, production-ready template for building full-stack React applications u
 - 🔄 Data loading and mutations
 - 🔒 TypeScript by default
 - 🎉 TailwindCSS for styling
+- 💬 Integration with Telegram bot for contact form notifications
 - 📖 [React Router docs](https://reactrouter.com/)
 
 ## Getting Started
@@ -22,6 +23,22 @@ Install the dependencies:
 
 ```bash
 npm install
+```
+
+### Environment Variables
+
+Create a `.env` file in the root directory with the following variables:
+
+```env
+# Telegram Bot Configuration
+# Get your bot token from @BotFather on Telegram
+TELEGRAM_BOT_TOKEN=your_bot_token_here
+
+# Get your chat ID from @userinfobot on Telegram
+TELEGRAM_CHAT_ID=your_chat_id_here
+
+# Server Port (default: 3000)
+PORT=3001
 ```
 
 ### Development
@@ -77,6 +94,19 @@ Make sure to deploy the output of `npm run build`
 │   ├── client/    # Static assets
 │   └── server/    # Server-side code
 ```
+
+## Telegram Bot Integration
+
+The application includes integration with Telegram bot for processing contact form submissions.
+
+### Setting up Telegram Bot
+
+1. Find @BotFather in Telegram and create a new bot using `/newbot` command
+2. Get your bot token from @BotFather
+3. Find @userinfobot in Telegram to get your chat ID
+4. Add these values to your `.env` file as described above
+
+Once configured, form submissions will be sent to your Telegram bot.
 
 ## Styling
 

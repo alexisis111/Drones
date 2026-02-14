@@ -1,20 +1,6 @@
-import express from 'express';
-import { createRequestListener } from '@react-router/node';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import type { ActionFunctionArgs } from "@react-router/node";
+import { json } from "@react-router/node";
 import axios from 'axios';
-
-// Load environment variables from .env file
-import dotenv from 'dotenv';
-dotenv.config();
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
-// Create Express server
-const app = express();
-
-// Middleware to parse JSON bodies
-app.use(express.json());
 
 // Telegram bot configuration
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
@@ -28,17 +14,17 @@ if (!TELEGRAM_CHAT_ID) {
   console.error('Ошибка: Не установлен переменная окружения TELEGRAM_CHAT_ID');
 }
 
-// Create a route for the Telegram webhook BEFORE React Router handles all routes
-app.post('/api/telegram-webhook', async (req, res) => {
+export const action = async ({ request }: ActionFunctionArgs) => {
   try {
-    const { name, email, phone, message } = req.body;
+    const formData = await request.json();
+    const { name, email, phone, message } = formData;
 
     // Validate required fields
     if (!name || !message) {
-      return res.status(400).json({
+      return json({
         success: false,
         error: 'Имя и сообщение обязательны для заполнения'
-      });
+      }, { status: 400 });
     }
 
     // Format message for Telegram
@@ -63,7 +49,7 @@ Email: ${email || 'Не указан'}
         parse_mode: 'HTML'
       });
 
-      res.json({
+      return json({
         success: true,
         message: 'Сообщение успешно отправлено!'
       });
@@ -72,44 +58,22 @@ Email: ${email || 'Не указан'}
       console.error('Telegram credentials are not set');
       console.log('Message that would have been sent:', telegramMessage);
 
-      res.status(500).json({
+      return json({
         success: false,
         error: 'Ошибка настройки Telegram бота'
-      });
+      }, { status: 500 });
     }
   } catch (error) {
     console.error('Ошибка при отправке сообщения в Telegram:', error);
 
-    res.status(500).json({
+    return json({
       success: false,
-      error: 'Ошибка при отправке сообщения'
-    });
+      error: 'Ошибка при отправки сообщения'
+    }, { status: 500 });
   }
-});
+};
 
-// Serve static files from the build/client directory
-app.use(express.static(path.join(__dirname, 'build', 'client')));
-
-// Redirect old domain to new domain
-app.use((req, res, next) => {
-  if (req.headers.host.includes('xn--80affa3aj.xn--p1ai')) {
-    const newPath = req.protocol + '://' + 'xn--80afglc.xn--p1ai' + req.originalUrl;
-    res.redirect(301, newPath);
-  } else {
-    next();
-  }
-});
-
-// Handle all other routes with React Router
-app.all(
-  '*',
-  createRequestListener({
-    build: await import('./build/server/index.js'),
-  })
-);
-
-const port = process.env.PORT || 3000;
-
-app.listen(port, () => {
-  console.log(`Server listening on port ${port}`);
-});
+// Экспортируем пустой loader, чтобы избежать ошибки
+export const loader = async () => {
+  return json({ message: "Telegram webhook endpoint" });
+};
