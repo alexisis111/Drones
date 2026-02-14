@@ -404,12 +404,12 @@ const ContactForm: React.FC<{ theme: string }> = ({ theme }) => {
     let num1, num2, result;
 
     if (operator === '+') {
-      num1 = Math.floor(Math.random() * 10) + 1; // 1-10
-      num2 = Math.floor(Math.random() * 10) + 1; // 1-10
+      num1 = Math.floor(Math.random() * 10) + 1;
+      num2 = Math.floor(Math.random() * 10) + 1;
       result = num1 + num2;
     } else {
-      num1 = Math.floor(Math.random() * 10) + 5; // 5-15
-      num2 = Math.floor(Math.random() * 5) + 1;  // 1-5
+      num1 = Math.floor(Math.random() * 10) + 5;
+      num2 = Math.floor(Math.random() * 5) + 1;
       result = num1 - num2;
     }
 
@@ -437,34 +437,27 @@ const ContactForm: React.FC<{ theme: string }> = ({ theme }) => {
 
   // Валидация телефона (формат: +7XXX-XXX-XX-XX)
   const validatePhone = (phone: string): boolean => {
-    // Если поле пустое или только +7 - пропускаем (необязательное поле)
     if (phone === '' || phone === '+7') return true;
-
     const phoneRegex = /^\+7\d{3}-\d{3}-\d{2}-\d{2}$/;
     return phoneRegex.test(phone);
   };
 
   // Форматирование телефона
   const formatPhone = (value: string): string => {
-    // Удаляем все нецифровые символы, кроме +
     let cleaned = value.replace(/[^\d+]/g, '');
 
-    // Если начинается с 8, заменяем на +7
     if (cleaned.startsWith('8')) {
       cleaned = '+7' + cleaned.slice(1);
     }
 
-    // Если нет + в начале, добавляем
     if (!cleaned.startsWith('+')) {
       cleaned = '+7' + cleaned;
     }
 
-    // Ограничиваем длину (код страны + 10 цифр)
     if (cleaned.length > 12) {
       cleaned = cleaned.slice(0, 12);
     }
 
-    // Форматируем: +7XXX-XXX-XX-XX
     if (cleaned.length > 1) {
       let formatted = '+7';
       const numbers = cleaned.slice(2).replace(/\D/g, '');
@@ -490,11 +483,9 @@ const ContactForm: React.FC<{ theme: string }> = ({ theme }) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { id, value } = e.target;
 
-    // Очищаем ошибку для текущего поля
     setErrors(prev => ({ ...prev, [id]: '' }));
 
     if (id === 'name') {
-      // Проверяем имя на валидность при вводе
       if (value && !validateName(value)) {
         setErrors(prev => ({
           ...prev,
@@ -504,11 +495,9 @@ const ContactForm: React.FC<{ theme: string }> = ({ theme }) => {
       setFormData(prev => ({ ...prev, [id]: value }));
     }
     else if (id === 'phone') {
-      // Применяем форматирование для телефона
       const formattedPhone = formatPhone(value);
       setFormData(prev => ({ ...prev, [id]: formattedPhone }));
 
-      // Проверяем валидность при вводе (если поле не пустое)
       if (formattedPhone && formattedPhone !== '+7') {
         if (!validatePhone(formattedPhone)) {
           setErrors(prev => ({
@@ -553,7 +542,7 @@ const ContactForm: React.FC<{ theme: string }> = ({ theme }) => {
     const answer = parseInt(captchaAnswer);
     if (isNaN(answer) || answer !== captcha.result) {
       setCaptchaError('Неверный ответ. Пожалуйста, решите пример правильно.');
-      generateCaptcha(); // Генерируем новый пример
+      generateCaptcha();
       return false;
     }
     return true;
@@ -562,12 +551,10 @@ const ContactForm: React.FC<{ theme: string }> = ({ theme }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Проверка капчи
     if (!validateCaptcha()) {
       return;
     }
 
-    // Проверка согласия на обработку данных
     const consentCheckbox = document.getElementById('consent') as HTMLInputElement;
     if (!consentCheckbox.checked) {
       setErrors(prev => ({
@@ -577,11 +564,9 @@ const ContactForm: React.FC<{ theme: string }> = ({ theme }) => {
       return;
     }
 
-    // Валидация всех полей перед отправкой
     let hasErrors = false;
     const newErrors = { name: '', email: '', phone: '', consent: '', captcha: '' };
 
-    // Проверка имени
     if (!formData.name) {
       newErrors.name = 'Имя обязательно для заполнения';
       hasErrors = true;
@@ -590,7 +575,6 @@ const ContactForm: React.FC<{ theme: string }> = ({ theme }) => {
       hasErrors = true;
     }
 
-    // Проверка email
     if (!formData.email) {
       newErrors.email = 'Email обязателен для заполнения';
       hasErrors = true;
@@ -599,7 +583,6 @@ const ContactForm: React.FC<{ theme: string }> = ({ theme }) => {
       hasErrors = true;
     }
 
-    // Проверка телефона (если заполнен)
     if (formData.phone && formData.phone !== '+7' && !validatePhone(formData.phone)) {
       newErrors.phone = 'Неверный формат телефона. Пример: +7999-999-99-99';
       hasErrors = true;
@@ -611,7 +594,6 @@ const ContactForm: React.FC<{ theme: string }> = ({ theme }) => {
     }
 
     try {
-      // Submit form to VPS server endpoint
       const response = await fetch('/api/telegram-webhook', {
         method: 'POST',
         headers: {
@@ -628,7 +610,6 @@ const ContactForm: React.FC<{ theme: string }> = ({ theme }) => {
           message: result.message || 'Сообщение успешно отправлено!'
         });
 
-        // Reset form
         setFormData({
           name: '',
           email: '',
@@ -637,7 +618,7 @@ const ContactForm: React.FC<{ theme: string }> = ({ theme }) => {
         });
 
         setCaptchaAnswer('');
-        generateCaptcha(); // Генерируем новую капчу для следующей отправки
+        generateCaptcha();
 
         setErrors({ name: '', email: '', phone: '', consent: '', captcha: '' });
 
@@ -670,7 +651,6 @@ const ContactForm: React.FC<{ theme: string }> = ({ theme }) => {
           message: fetcher.data.message || 'Сообщение успешно отправлено!'
         });
 
-        // Reset form
         setFormData({
           name: '',
           email: '',
@@ -717,18 +697,20 @@ const ContactForm: React.FC<{ theme: string }> = ({ theme }) => {
   }, [fetcher.state, fetcher.data, fetcher.formMethod]);
 
   return (
-      <div className={`rounded-3xl overflow-hidden shadow-2xl bg-gray-800/90 backdrop-blur-sm`}>
-        <div className="p-8 md:p-12">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="p-3 rounded-xl bg-gradient-to-br from-blue-500 to-purple-500 text-white">
-              <MessageSquare className="w-6 h-6" />
+      <div className={`rounded-2xl overflow-hidden shadow-2xl bg-gray-800/90 backdrop-blur-sm max-w-md mx-auto`}>
+        <div className="p-6 md:p-8">
+          {/* Header с уменьшенными отступами */}
+          <div className="flex items-center gap-2 mb-4">
+            <div className="p-2 rounded-xl bg-gradient-to-br from-blue-500 to-purple-500 text-white">
+              <MessageSquare className="w-5 h-5" />
             </div>
-            <h3 className="text-2xl font-bold text-white">Оставить заявку</h3>
+            <h3 className="text-xl font-bold text-white">Оставить заявку</h3>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-3">
+            {/* Поле имени - компактнее */}
             <div>
-              <label htmlFor="name" className="block mb-2 font-medium text-white">
+              <label htmlFor="name" className="block mb-1 text-xs font-medium text-white/80">
                 Ваше имя *
               </label>
               <input
@@ -738,18 +720,19 @@ const ContactForm: React.FC<{ theme: string }> = ({ theme }) => {
                   onChange={handleChange}
                   onBlur={() => handleBlur('name')}
                   required
-                  className={`w-full px-4 py-3 rounded-lg bg-white/10 text-white border ${
+                  className={`w-full px-3 py-2 text-sm rounded-lg bg-white/10 text-white border ${
                       errors.name ? 'border-red-400' : 'border-white/20'
                   } focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-white/50`}
-                  placeholder="Введите ваше имя"
+                  placeholder="Иван Иванов"
               />
               {errors.name && (
-                  <p className="mt-1 text-sm text-red-300">{errors.name}</p>
+                  <p className="mt-0.5 text-xs text-red-300">{errors.name}</p>
               )}
             </div>
 
+            {/* Поле email - компактнее */}
             <div>
-              <label htmlFor="email" className="block mb-2 font-medium text-white">
+              <label htmlFor="email" className="block mb-1 text-xs font-medium text-white/80">
                 Email *
               </label>
               <input
@@ -759,18 +742,19 @@ const ContactForm: React.FC<{ theme: string }> = ({ theme }) => {
                   onChange={handleChange}
                   onBlur={() => handleBlur('email')}
                   required
-                  className={`w-full px-4 py-3 rounded-lg bg-white/10 text-white border ${
+                  className={`w-full px-3 py-2 text-sm rounded-lg bg-white/10 text-white border ${
                       errors.email ? 'border-red-400' : 'border-white/20'
                   } focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-white/50`}
-                  placeholder="Введите ваш email"
+                  placeholder="ivan@example.com"
               />
               {errors.email && (
-                  <p className="mt-1 text-sm text-red-300">{errors.email}</p>
+                  <p className="mt-0.5 text-xs text-red-300">{errors.email}</p>
               )}
             </div>
 
+            {/* Поле телефона - компактнее */}
             <div>
-              <label htmlFor="phone" className="block mb-2 font-medium text-white">
+              <label htmlFor="phone" className="block mb-1 text-xs font-medium text-white/80">
                 Телефон
               </label>
               <input
@@ -779,19 +763,20 @@ const ContactForm: React.FC<{ theme: string }> = ({ theme }) => {
                   value={formData.phone}
                   onChange={handleChange}
                   onBlur={() => handleBlur('phone')}
-                  className={`w-full px-4 py-3 rounded-lg bg-white/10 text-white border ${
+                  className={`w-full px-3 py-2 text-sm rounded-lg bg-white/10 text-white border ${
                       errors.phone ? 'border-red-400' : 'border-white/20'
                   } focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-white/50`}
-                  placeholder="+7"
+                  placeholder="+7 (999) 999-99-99"
               />
               {errors.phone && (
-                  <p className="mt-1 text-sm text-red-300">{errors.phone}</p>
+                  <p className="mt-0.5 text-xs text-red-300">{errors.phone}</p>
               )}
-              <p className="mt-1 text-xs text-white/50">Формат: +7999-999-99-99</p>
+              <p className="mt-0.5 text-xs text-white/40">Формат: +7999-999-99-99</p>
             </div>
 
+            {/* Поле сообщения - чуть меньше высота */}
             <div>
-              <label htmlFor="message" className="block mb-2 font-medium text-white">
+              <label htmlFor="message" className="block mb-1 text-xs font-medium text-white/80">
                 Сообщение *
               </label>
               <textarea
@@ -799,29 +784,29 @@ const ContactForm: React.FC<{ theme: string }> = ({ theme }) => {
                   value={formData.message}
                   onChange={handleChange}
                   required
-                  rows={4}
-                  className="w-full px-4 py-3 rounded-lg bg-white/10 text-white border border-white/20 focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-white/50"
-                  placeholder="Введите ваше сообщение"
+                  rows={3}
+                  className="w-full px-3 py-2 text-sm rounded-lg bg-white/10 text-white border border-white/20 focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-white/50"
+                  placeholder="Ваше сообщение..."
               ></textarea>
             </div>
 
-            {/* Капча */}
-            <div className="p-4 bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg">
-              <label className="block mb-2 font-medium text-white">
+            {/* Капча - компактнее */}
+            <div className="p-3 bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg">
+              <label className="block mb-1 text-xs font-medium text-white/80">
                 Проверка (защита от ботов) *
               </label>
 
-              <div className="flex items-center gap-3 mb-2">
-                <div className="flex-1 bg-white/20 backdrop-blur-sm p-3 rounded-lg text-center text-xl font-bold text-white border border-white/20">
+              <div className="flex items-center gap-2 mb-1">
+                <div className="flex-1 bg-white/20 backdrop-blur-sm p-2 rounded-lg text-center text-base font-bold text-white border border-white/20">
                   {captcha.num1} {captcha.operator} {captcha.num2} = ?
                 </div>
                 <button
                     type="button"
                     onClick={generateCaptcha}
-                    className="p-3 bg-white/10 backdrop-blur-sm rounded-lg hover:bg-white/20 transition-colors border border-white/20"
+                    className="p-2 bg-white/10 backdrop-blur-sm rounded-lg hover:bg-white/20 transition-colors border border-white/20"
                     title="Обновить пример"
                 >
-                  <RefreshCw className="w-5 h-5 text-white" />
+                  <RefreshCw className="w-4 h-4 text-white" />
                 </button>
               </div>
 
@@ -832,46 +817,49 @@ const ContactForm: React.FC<{ theme: string }> = ({ theme }) => {
                     setCaptchaAnswer(e.target.value);
                     setCaptchaError('');
                   }}
-                  className={`w-full px-4 py-3 rounded-lg bg-white/10 text-white border ${
+                  className={`w-full px-3 py-2 text-sm rounded-lg bg-white/10 text-white border ${
                       captchaError ? 'border-red-400' : 'border-white/20'
                   } focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-white/50`}
                   placeholder="Введите ответ"
               />
 
               {captchaError && (
-                  <p className="mt-1 text-sm text-red-300">{captchaError}</p>
+                  <p className="mt-1 text-xs text-red-300">{captchaError}</p>
               )}
             </div>
 
+            {/* Чекбокс согласия - компактнее */}
             <div className="flex items-start">
               <input
                   type="checkbox"
                   id="consent"
-                  className="mt-1 mr-2 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                  className="mt-0.5 mr-2 h-3.5 w-3.5 text-blue-600 focus:ring-blue-500 border-gray-300 rounded flex-shrink-0"
               />
-              <label htmlFor="consent" className="text-sm text-white/80">
+              <label htmlFor="consent" className="text-xs text-white/70">
                 Я даю согласие на обработку персональных данных в соответствии с{' '}
                 <a href="/privacy" className="text-blue-300 hover:underline">политикой конфиденциальности</a>
               </label>
             </div>
             {errors.consent && (
-                <p className="text-sm text-red-300">{errors.consent}</p>
+                <p className="text-xs text-red-300">{errors.consent}</p>
             )}
 
+            {/* Статус отправки - компактнее */}
             {submitStatus && (
-                <div className={`p-4 rounded-lg ${
+                <div className={`p-3 rounded-lg ${
                     submitStatus.type === 'success'
                         ? 'bg-green-500/20 text-green-300'
                         : 'bg-red-500/20 text-red-300'
                 }`}>
-                  {submitStatus.message}
+                  <p className="text-xs">{submitStatus.message}</p>
                 </div>
             )}
 
+            {/* Кнопка отправки - компактнее */}
             <button
                 type="submit"
                 disabled={fetcher.state !== 'idle'}
-                className={`w-full py-4 px-6 rounded-xl font-bold text-lg transition-all flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white ${
+                className={`w-full py-3 px-4 rounded-xl font-semibold text-sm transition-all flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white ${
                     fetcher.state !== 'idle'
                         ? 'opacity-70 cursor-not-allowed'
                         : 'hover:opacity-90 hover:shadow-lg'
@@ -879,12 +867,12 @@ const ContactForm: React.FC<{ theme: string }> = ({ theme }) => {
             >
               {fetcher.state !== 'idle' ? (
                   <>
-                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
                     Отправка...
                   </>
               ) : (
                   <>
-                    <Send className="w-5 h-5" />
+                    <Send className="w-4 h-4" />
                     Отправить заявку
                   </>
               )}
