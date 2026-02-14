@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fde30c11-94c5-4884-96a6-cf984ad02720" name="Changes" comment="fixContactsCapcha">
+    <list default="true" id="fde30c11-94c5-4884-96a6-cf984ad02720" name="Changes" comment="fixContactsSize">
       <change beforePath="$PROJECT_DIR$/app/components/ContactsPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ContactsPage.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -86,14 +86,6 @@
       <workItem from="1770873668838" duration="2502000" />
       <workItem from="1770934651260" duration="777000" />
       <workItem from="1770971475236" duration="22233000" />
-    </task>
-    <task id="LOCAL-00016" summary="tg">
-      <option name="closed" value="true" />
-      <created>1769976412276</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1769976412276</updated>
     </task>
     <task id="LOCAL-00017" summary="tg">
       <option name="closed" value="true" />
@@ -479,7 +471,15 @@
       <option name="project" value="LOCAL" />
       <updated>1771079844278</updated>
     </task>
-    <option name="localTasksCounter" value="65" />
+    <task id="LOCAL-00065" summary="fixContactsSize">
+      <option name="closed" value="true" />
+      <created>1771080111674</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1771080111674</updated>
+    </task>
+    <option name="localTasksCounter" value="66" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -509,7 +509,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fix closed" />
     <MESSAGE value="fixxx" />
     <MESSAGE value="fix forms in TG" />
     <MESSAGE value="fix bpla" />
@@ -534,6 +533,7 @@
     <MESSAGE value="fixModallAll" />
     <MESSAGE value="fixModallAllCapcha" />
     <MESSAGE value="fixContactsCapcha" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixContactsCapcha" />
+    <MESSAGE value="fixContactsSize" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixContactsSize" />
   </component>
 </project>

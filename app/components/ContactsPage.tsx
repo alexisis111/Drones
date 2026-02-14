@@ -374,6 +374,7 @@ const ContactsPage: React.FC = () => {
   );
 };
 
+
 // Contact Form Component
 const ContactForm: React.FC<{ theme: string }> = ({ theme }) => {
   const fetcher = useFetcher();
@@ -391,6 +392,9 @@ const ContactForm: React.FC<{ theme: string }> = ({ theme }) => {
     captcha: ''
   });
   const [submitStatus, setSubmitStatus] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [countdown, setCountdown] = useState(3);
 
   // Капча
   const [captcha, setCaptcha] = useState({ num1: 0, num2: 0, operator: '+', result: 0 });
@@ -423,6 +427,47 @@ const ContactForm: React.FC<{ theme: string }> = ({ theme }) => {
     generateCaptcha();
   }, []);
 
+  // Таймер для автоматического закрытия при успехе
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    let progressInterval: NodeJS.Timeout;
+
+    if (submitStatus?.type === 'success') {
+      // Сброс прогресса
+      setProgress(0);
+      setCountdown(3);
+
+      // Обновление прогресс-бара
+      progressInterval = setInterval(() => {
+        setProgress(prev => {
+          if (prev >= 100) {
+            clearInterval(progressInterval);
+            return 100;
+          }
+          return prev + (100 / 30); // 30 шагов за 3 секунды
+        });
+      }, 100);
+
+      // Таймер для сброса статуса (но не закрываем форму, просто убираем сообщение)
+      timer = setTimeout(() => {
+        setSubmitStatus(null);
+        setProgress(0);
+        setCountdown(3);
+      }, 3000);
+
+      // Обновление счетчика
+      const countdownInterval = setInterval(() => {
+        setCountdown(prev => Math.max(0, prev - 1));
+      }, 1000);
+
+      return () => {
+        clearTimeout(timer);
+        clearInterval(progressInterval);
+        clearInterval(countdownInterval);
+      };
+    }
+  }, [submitStatus]);
+
   // Валидация имени (только русские и английские буквы)
   const validateName = (name: string): boolean => {
     const nameRegex = /^[A-Za-zА-Яа-яЁё\s]*$/;
@@ -437,7 +482,9 @@ const ContactForm: React.FC<{ theme: string }> = ({ theme }) => {
 
   // Валидация телефона (формат: +7XXX-XXX-XX-XX)
   const validatePhone = (phone: string): boolean => {
-    if (phone === '' || phone === '+7') return true;
+    // Проверяем, что поле не пустое и не равно только +7
+    if (!phone || phone === '+7') return false;
+
     const phoneRegex = /^\+7\d{3}-\d{3}-\d{2}-\d{2}$/;
     return phoneRegex.test(phone);
   };
@@ -498,6 +545,7 @@ const ContactForm: React.FC<{ theme: string }> = ({ theme }) => {
       const formattedPhone = formatPhone(value);
       setFormData(prev => ({ ...prev, [id]: formattedPhone }));
 
+      // Проверяем валидность при вводе
       if (formattedPhone && formattedPhone !== '+7') {
         if (!validatePhone(formattedPhone)) {
           setErrors(prev => ({
@@ -527,8 +575,13 @@ const ContactForm: React.FC<{ theme: string }> = ({ theme }) => {
       }));
     }
 
-    if (field === 'phone' && formData.phone && formData.phone !== '+7') {
-      if (!validatePhone(formData.phone)) {
+    if (field === 'phone') {
+      if (!formData.phone || formData.phone === '+7') {
+        setErrors(prev => ({
+          ...prev,
+          phone: 'Телефон обязателен для заполнения'
+        }));
+      } else if (!validatePhone(formData.phone)) {
         setErrors(prev => ({
           ...prev,
           phone: 'Неверный формат телефона. Пример: +7999-999-99-99'
@@ -551,10 +604,12 @@ const ContactForm: React.FC<{ theme: string }> = ({ theme }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    // Проверка капчи
     if (!validateCaptcha()) {
       return;
     }
 
+    // Проверка согласия на обработку данных
     const consentCheckbox = document.getElementById('consent') as HTMLInputElement;
     if (!consentCheckbox.checked) {
       setErrors(prev => ({
@@ -564,9 +619,11 @@ const ContactForm: React.FC<{ theme: string }> = ({ theme }) => {
       return;
     }
 
+    // Валидация всех полей перед отправкой
     let hasErrors = false;
     const newErrors = { name: '', email: '', phone: '', consent: '', captcha: '' };
 
+    // Проверка имени
     if (!formData.name) {
       newErrors.name = 'Имя обязательно для заполнения';
       hasErrors = true;
@@ -575,6 +632,7 @@ const ContactForm: React.FC<{ theme: string }> = ({ theme }) => {
       hasErrors = true;
     }
 
+    // Проверка email
     if (!formData.email) {
       newErrors.email = 'Email обязателен для заполнения';
       hasErrors = true;
@@ -583,7 +641,11 @@ const ContactForm: React.FC<{ theme: string }> = ({ theme }) => {
       hasErrors = true;
     }
 
-    if (formData.phone && formData.phone !== '+7' && !validatePhone(formData.phone)) {
+    // Проверка телефона (теперь обязательное поле)
+    if (!formData.phone || formData.phone === '+7') {
+      newErrors.phone = 'Телефон обязателен для заполнения';
+      hasErrors = true;
+    } else if (!validatePhone(formData.phone)) {
       newErrors.phone = 'Неверный формат телефона. Пример: +7999-999-99-99';
       hasErrors = true;
     }
@@ -592,6 +654,8 @@ const ContactForm: React.FC<{ theme: string }> = ({ theme }) => {
       setErrors(newErrors);
       return;
     }
+
+    setIsLoading(true);
 
     try {
       const response = await fetch('/api/telegram-webhook', {
@@ -610,6 +674,7 @@ const ContactForm: React.FC<{ theme: string }> = ({ theme }) => {
           message: result.message || 'Сообщение успешно отправлено!'
         });
 
+        // Reset form
         setFormData({
           name: '',
           email: '',
@@ -637,14 +702,18 @@ const ContactForm: React.FC<{ theme: string }> = ({ theme }) => {
         type: 'error',
         message: 'Ошибка соединения. Пожалуйста, проверьте подключение к интернету.'
       });
+    } finally {
+      setIsLoading(false);
     }
   };
 
   // Handle submission status based on fetcher state
   useEffect(() => {
     if (fetcher.state === 'submitting') {
+      setIsLoading(true);
       setSubmitStatus(null);
     } else if (fetcher.state === 'idle' && fetcher.data) {
+      setIsLoading(false);
       if (fetcher.data.success) {
         setSubmitStatus({
           type: 'success',
@@ -689,6 +758,7 @@ const ContactForm: React.FC<{ theme: string }> = ({ theme }) => {
         });
       }
     } else if (fetcher.state === 'idle' && fetcher.data === undefined && fetcher.formMethod === 'POST') {
+      setIsLoading(false);
       setSubmitStatus({
         type: 'error',
         message: 'Ошибка соединения. Пожалуйста, проверьте подключение к интернету.'
@@ -699,7 +769,7 @@ const ContactForm: React.FC<{ theme: string }> = ({ theme }) => {
   return (
       <div className={`rounded-2xl overflow-hidden shadow-2xl bg-gray-800/90 backdrop-blur-sm max-w-md mx-auto`}>
         <div className="p-6 md:p-8">
-          {/* Header с уменьшенными отступами */}
+          {/* Header */}
           <div className="flex items-center gap-2 mb-4">
             <div className="p-2 rounded-xl bg-gradient-to-br from-blue-500 to-purple-500 text-white">
               <MessageSquare className="w-5 h-5" />
@@ -708,7 +778,7 @@ const ContactForm: React.FC<{ theme: string }> = ({ theme }) => {
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-3">
-            {/* Поле имени - компактнее */}
+            {/* Поле имени */}
             <div>
               <label htmlFor="name" className="block mb-1 text-xs font-medium text-white/80">
                 Ваше имя *
@@ -730,7 +800,7 @@ const ContactForm: React.FC<{ theme: string }> = ({ theme }) => {
               )}
             </div>
 
-            {/* Поле email - компактнее */}
+            {/* Поле email */}
             <div>
               <label htmlFor="email" className="block mb-1 text-xs font-medium text-white/80">
                 Email *
@@ -752,10 +822,10 @@ const ContactForm: React.FC<{ theme: string }> = ({ theme }) => {
               )}
             </div>
 
-            {/* Поле телефона - компактнее */}
+            {/* Поле телефона - теперь обязательное */}
             <div>
               <label htmlFor="phone" className="block mb-1 text-xs font-medium text-white/80">
-                Телефон
+                Телефон *
               </label>
               <input
                   type="tel"
@@ -774,7 +844,7 @@ const ContactForm: React.FC<{ theme: string }> = ({ theme }) => {
               <p className="mt-0.5 text-xs text-white/40">Формат: +7999-999-99-99</p>
             </div>
 
-            {/* Поле сообщения - чуть меньше высота */}
+            {/* Поле сообщения */}
             <div>
               <label htmlFor="message" className="block mb-1 text-xs font-medium text-white/80">
                 Сообщение *
@@ -790,7 +860,7 @@ const ContactForm: React.FC<{ theme: string }> = ({ theme }) => {
               ></textarea>
             </div>
 
-            {/* Капча - компактнее */}
+            {/* Капча */}
             <div className="p-3 bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg">
               <label className="block mb-1 text-xs font-medium text-white/80">
                 Проверка (защита от ботов) *
@@ -828,7 +898,7 @@ const ContactForm: React.FC<{ theme: string }> = ({ theme }) => {
               )}
             </div>
 
-            {/* Чекбокс согласия - компактнее */}
+            {/* Чекбокс согласия */}
             <div className="flex items-start">
               <input
                   type="checkbox"
@@ -844,31 +914,54 @@ const ContactForm: React.FC<{ theme: string }> = ({ theme }) => {
                 <p className="text-xs text-red-300">{errors.consent}</p>
             )}
 
-            {/* Статус отправки - компактнее */}
+            {/* Статус отправки с прогресс-баром */}
             {submitStatus && (
-                <div className={`p-3 rounded-lg ${
-                    submitStatus.type === 'success'
-                        ? 'bg-green-500/20 text-green-300'
-                        : 'bg-red-500/20 text-red-300'
-                }`}>
-                  <p className="text-xs">{submitStatus.message}</p>
+                <div className="relative overflow-hidden">
+                  <div className={`p-3 rounded-lg ${
+                      submitStatus.type === 'success'
+                          ? 'bg-green-500/20 text-green-300'
+                          : 'bg-red-500/20 text-red-300'
+                  }`}>
+                    <div className="flex items-center justify-between mb-1">
+                      <p className="text-xs">{submitStatus.message}</p>
+                      {submitStatus.type === 'success' && (
+                          <span className="text-xs font-medium bg-green-500/30 px-1.5 py-0.5 rounded">
+                      {countdown}с
+                    </span>
+                      )}
+                    </div>
+
+                    {/* Progress bar */}
+                    {submitStatus.type === 'success' && (
+                        <div className="w-full h-1 bg-green-500/30 rounded-full overflow-hidden">
+                          <div
+                              className="h-full bg-green-400 transition-all duration-100 ease-linear"
+                              style={{ width: `${progress}%` }}
+                          />
+                        </div>
+                    )}
+                  </div>
                 </div>
             )}
 
-            {/* Кнопка отправки - компактнее */}
+            {/* Кнопка отправки */}
             <button
                 type="submit"
-                disabled={fetcher.state !== 'idle'}
+                disabled={isLoading || submitStatus?.type === 'success'}
                 className={`w-full py-3 px-4 rounded-xl font-semibold text-sm transition-all flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white ${
-                    fetcher.state !== 'idle'
+                    isLoading || submitStatus?.type === 'success'
                         ? 'opacity-70 cursor-not-allowed'
                         : 'hover:opacity-90 hover:shadow-lg'
                 }`}
             >
-              {fetcher.state !== 'idle' ? (
+              {isLoading ? (
                   <>
                     <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
                     Отправка...
+                  </>
+              ) : submitStatus?.type === 'success' ? (
+                  <>
+                    <span>✓ Отправлено</span>
                   </>
               ) : (
                   <>
