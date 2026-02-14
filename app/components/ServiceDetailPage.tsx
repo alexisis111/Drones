@@ -29,9 +29,10 @@ const ServiceDetailPage: React.FC = () => {
     minutes: 0,
     seconds: 0
   });
-  
+
   // State for modal
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedService, setSelectedService] = useState<Service | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -409,8 +410,18 @@ const ServiceDetailPage: React.FC = () => {
     }
   }, [id, navigate]);
 
-  const handleOrderService = (serviceName: string) => {
+  const handleOrderService = (service: Service) => {
+    setSelectedService(service);
     setIsModalOpen(true);
+    // Блокируем прокрутку body при открытии модалки
+    document.body.style.overflow = 'hidden';
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedService(null);
+    // Возвращаем прокрутку body
+    document.body.style.overflow = 'unset';
   };
 
   const handleModalSubmit = async (formData: any, serviceName: string) => {
@@ -524,7 +535,7 @@ const ServiceDetailPage: React.FC = () => {
                     className="flex flex-wrap gap-4"
                 >
                   <button
-                      onClick={() => handleOrderService(service.title)}
+                      onClick={() => handleOrderService(service)}
                       className="group inline-flex items-center gap-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-xl hover:scale-105 transition-all duration-300"
                   >
                     <span>Заказать услугу</span>
@@ -539,14 +550,6 @@ const ServiceDetailPage: React.FC = () => {
                     <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                   </Link>
                 </motion.div>
-                
-                {/* Service Order Modal */}
-                <ServiceOrderModal
-                  isOpen={isModalOpen}
-                  onClose={() => setIsModalOpen(false)}
-                  service={service}
-                  onSubmit={handleModalSubmit}
-                />
               </motion.div>
 
               {/* Right column - Feature cards */}
@@ -784,7 +787,7 @@ const ServiceDetailPage: React.FC = () => {
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <button
-                    onClick={() => handleOrderService(service.title)}
+                    onClick={() => handleOrderService(service)}
                     className="group inline-flex items-center justify-center gap-3 bg-white text-gray-900 px-8 py-4 rounded-xl font-semibold hover:shadow-2xl hover:scale-105 transition-all duration-300"
                 >
                   <span>Заказать услугу</span>
@@ -802,6 +805,14 @@ const ServiceDetailPage: React.FC = () => {
             </motion.div>
           </div>
         </section>
+
+        {/* Service Order Modal - вынесен на верхний уровень */}
+        <ServiceOrderModal
+            isOpen={isModalOpen}
+            onClose={handleCloseModal}
+            service={selectedService}
+            onSubmit={handleModalSubmit}
+        />
       </div>
   );
 };

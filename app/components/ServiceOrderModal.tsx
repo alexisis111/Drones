@@ -216,6 +216,10 @@ const ServiceOrderModal: React.FC<ServiceOrderModalProps> = ({
     setIsLoading(true);
 
     try {
+      if (!service) {
+        throw new Error('Услуга не выбрана');
+      }
+      
       // Отправляем форму, название услуги будет добавлено в ServicesCatalog.tsx
       const response = await onSubmit({
         ...formData,
@@ -252,8 +256,8 @@ const ServiceOrderModal: React.FC<ServiceOrderModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      <div 
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4" onClick={onClose}>
+      <div
         className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
@@ -273,10 +277,10 @@ const ServiceOrderModal: React.FC<ServiceOrderModalProps> = ({
         {/* Service Info */}
         <div className="p-6 border-b border-gray-200 dark:border-gray-700">
           <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-            {service.title}
+            {service?.title || 'Услуга'}
           </h4>
           <p className="text-gray-600 dark:text-gray-300 text-sm">
-            {service.description}
+            {service?.description || 'Выбранная вами услуга'}
           </p>
         </div>
 
