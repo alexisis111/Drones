@@ -332,26 +332,21 @@ const ServicesCatalog: React.FC = () => {
   };
 
   const handleModalSubmit = async (formData: any, serviceName: string) => {
-    // Здесь будет логика отправки формы
-    console.log('Отправка заявки на услугу:', serviceName);
-    console.log('Данные формы:', formData);
-    
-    // В реальном приложении здесь будет вызов API для отправки данных
-    const response = await fetch('http://localhost:3001/api/order-service', {
+    // Отправляем данные в тот же эндпоинт, что и форма контактов
+    const response = await fetch('/api/telegram-webhook', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         ...formData,
-        serviceName: serviceName,
-        serviceId: selectedService?.id
+        message: `${formData.message}${formData.message ? '\n\n' : ''}Заявка на услугу: ${serviceName}`
       }),
     });
 
     if (!response.ok) {
       const errorData = await response.json();
-      throw new Error(errorData.message || 'Ошибка при отправке заявки');
+      throw new Error(errorData.error || errorData.message || 'Ошибка при отправке заявки');
     }
 
     // Возвращаем результат успешной отправки
@@ -697,14 +692,12 @@ const ServicesCatalog: React.FC = () => {
       </section>
 
       {/* Service Order Modal */}
-      {selectedService && (
-        <ServiceOrderModal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          serviceName={selectedService.title}
-          onSubmit={handleModalSubmit}
-        />
-      )}
+      <ServiceOrderModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        service={selectedService}
+        onSubmit={handleModalSubmit}
+      />
 
       {/* CTA Section */}
       <section className="py-24 bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600">

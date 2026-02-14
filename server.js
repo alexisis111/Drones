@@ -42,7 +42,7 @@ app.post('/api/telegram-webhook', async (req, res) => {
     }
 
     // Format message for Telegram
-    const telegramMessage = `
+    let telegramMessage = `
 Новое сообщение с формы обратной связи:
 
 Имя: ${name}
