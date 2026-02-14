@@ -442,8 +442,8 @@ const ContactForm: React.FC<{ theme: string }> = ({ theme }) => {
     }
 
     try {
-      // Submit form directly to Netlify function
-      const response = await fetch('/.netlify/functions/telegram-webhook', {
+      // Submit form to VPS server endpoint
+      const response = await fetch('/api/telegram-webhook', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

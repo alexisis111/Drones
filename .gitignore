@@ -7,4 +7,8 @@
 /.react-router/
 /build/
 
+# Documentation files
+ENV_SETUP.md
+TELEGRAM_SETUP.md
+
 main.yml

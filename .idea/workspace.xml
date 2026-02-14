@@ -4,8 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fde30c11-94c5-4884-96a6-cf984ad02720" name="Changes" comment="init SEO1">
+    <list default="true" id="fde30c11-94c5-4884-96a6-cf984ad02720" name="Changes" comment="OptimizedImgs">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.netlify/v1/functions/react-router-server.mjs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/ContactsPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ContactsPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/server.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vite.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/vite.config.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,15 +91,7 @@
       <workItem from="1770825433961" duration="350000" />
       <workItem from="1770873668838" duration="2502000" />
       <workItem from="1770934651260" duration="777000" />
-      <workItem from="1770971475236" duration="7885000" />
-    </task>
-    <task id="LOCAL-00006" summary="netlify">
-      <option name="closed" value="true" />
-      <created>1769286149545</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1769286149545</updated>
+      <workItem from="1770971475236" duration="9631000" />
     </task>
     <task id="LOCAL-00007" summary="netlify">
       <option name="closed" value="true" />
@@ -479,7 +477,15 @@
       <option name="project" value="LOCAL" />
       <updated>1770978256289</updated>
     </task>
-    <option name="localTasksCounter" value="55" />
+    <task id="LOCAL-00055" summary="OptimizedImgs">
+      <option name="closed" value="true" />
+      <created>1770979831531</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1770979831531</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -531,6 +537,7 @@
     <MESSAGE value="YaMetrics2" />
     <MESSAGE value="init SEO" />
     <MESSAGE value="init SEO1" />
-    <option name="LAST_COMMIT_MESSAGE" value="init SEO1" />
+    <MESSAGE value="OptimizedImgs" />
+    <option name="LAST_COMMIT_MESSAGE" value="OptimizedImgs" />
   </component>
 </project>
