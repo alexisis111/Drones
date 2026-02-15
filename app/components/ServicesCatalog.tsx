@@ -384,7 +384,7 @@ const ServicesCatalog: React.FC = () => {
       ))}
       
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center overflow-hidden">
+      <section className="relative min-h-[60vh] flex items-center overflow-hidden">
         {/* Background with parallax effect */}
         {/* Optimized background with parallax effect */}
         <div

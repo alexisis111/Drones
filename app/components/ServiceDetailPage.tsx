@@ -473,7 +473,7 @@ const ServiceDetailPage: React.FC = () => {
         </div>
 
         {/* Hero Section */}
-        <section className="relative min-h-screen flex items-center overflow-hidden">
+        <section className="relative min-h-[60vh] flex items-center overflow-hidden">
           {/* Background with parallax effect */}
           <motion.div
               className="absolute inset-0 bg-gradient-to-br from-blue-900 via-gray-900 to-purple-900"
@@ -488,7 +488,7 @@ const ServiceDetailPage: React.FC = () => {
 
           {/* Content */}
           <div className="relative container mx-auto px-4 z-10">
-            <div className="grid lg:grid-cols-2 gap-12 items-center py-32">
+            <div className="grid lg:grid-cols-2 gap-12 items-center py-4">
               {/* Left column - Main content */}
               <motion.div
                   initial={{ opacity: 0, x: -50 }}

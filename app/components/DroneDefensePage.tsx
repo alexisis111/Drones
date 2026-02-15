@@ -23,7 +23,7 @@ const DroneDefensePage: React.FC = () => {
   return (
     <div className="relative overflow-hidden">
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center overflow-hidden">
+      <section className="relative min-h-[60vh] flex items-center overflow-hidden">
         {/* Optimized background with parallax effect */}
         <div
           className="absolute inset-0 bg-gradient-to-br from-blue-900 via-gray-900 to-purple-900"
@@ -37,7 +37,7 @@ const DroneDefensePage: React.FC = () => {
 
         {/* Content */}
         <div className="relative container mx-auto px-4 z-10">
-          <div className="grid lg:grid-cols-2 gap-12 items-center py-32">
+          <div className="grid lg:grid-cols-2 gap-12 items-center py-4">
             {/* Left column - Main content */}
             <motion.div
               initial={{ opacity: 0, x: -50 }}
@@ -63,11 +63,24 @@ const DroneDefensePage: React.FC = () => {
                 transition={{ delay: 0.3 }}
                 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight text-white"
               >
-                <span className="block">Защита от</span>
+                <span className="block">Антидроновая защита промышленных объектов</span>
                 <span className="block bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                  Беспилотников
+                  согласно <br/>
+                  <a 
+                    href="https://protect.gost.ru/v.aspx?control=8&baseC=101&page=4&month=-1&year=-1&search=&RegNum=54&DocOnPageCount=100&id=253478" 
+                    className="inline-flex items-center gap-1 hover:underline"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    СП 542.1325800.2024
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                      <polyline points="15 3 21 3 21 9"></polyline>
+                      <line x1="10" y1="14" x2="21" y2="3"></line>
+                    </svg>
+                  </a>
                 </span>
-                <span className="block">и дронов</span>
+                <span className="block text-xl">Мы предлагаем комплексную антидроновую защиту для промышленных объектов: ТЭЦ, резервуары, производственные здания и другие стратегически важные сооружения.</span>
               </motion.h1>
 
               {/* Subtitle */}
@@ -77,8 +90,7 @@ const DroneDefensePage: React.FC = () => {
                 transition={{ delay: 0.4 }}
                 className="text-xl text-gray-300 max-w-2xl"
               >
-                Современные системы защиты периметра от беспилотных летательных аппаратов. 
-                Многоуровневая система защиты. Надежность конструкции. Гарантия качества.
+                Наши специалисты обеспечивают проектирование и монтаж защитных сеток, экранирующих конструкций и систем перехвата, предотвращающих проникновение беспилотных летательных аппаратов (БПЛА) и дронов-камикадзе. Работаем по всей России, гарантируем высокое качество, соблюдение сроков и индивидуальный подход к каждому проекту.
               </motion.p>
 
               {/* Stats */}

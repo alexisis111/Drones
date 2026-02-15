@@ -37,7 +37,7 @@ const ContactsPage: React.FC = () => {
   return (
       <div className="relative overflow-hidden">
         {/* Hero Section */}
-        <section className="relative min-h-screen flex items-center overflow-hidden">
+        <section className="relative min-h-[60vh] flex items-center overflow-hidden">
           {/* Smooth parallax background effect */}
           <div
               className="absolute inset-0 bg-gradient-to-br from-blue-900 via-gray-900 to-purple-900"

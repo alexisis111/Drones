@@ -55,7 +55,7 @@ const CompanyShowcase: React.FC = () => {
       <LocalBusinessSchema {...businessData} />
       
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center overflow-hidden">
+      <section className="relative min-h-[60vh] flex items-center overflow-hidden">
         {/* Background with parallax effect */}
         <motion.div
           className="absolute inset-0 bg-gradient-to-br from-blue-900 via-gray-900 to-purple-900"
