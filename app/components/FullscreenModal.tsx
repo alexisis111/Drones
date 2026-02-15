@@ -49,10 +49,6 @@ const FullscreenModal: React.FC<FullscreenModalProps> = ({ isOpen, onClose, chil
             <div className="w-full h-full flex items-center justify-center p-4">
               {children}
             </div>
-            
-            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white text-sm bg-black/50 px-4 py-2 rounded-full">
-              Поворачивайте модель для просмотра со всех сторон
-            </div>
           </motion.div>
         </motion.div>
       )}

@@ -65,7 +65,7 @@ const DroneDefensePage: React.FC = () => {
                 transition={{ delay: 0.3 }}
                 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight text-white"
               >
-                <span className="block">Антидроновая защита промышленных объектов</span>
+                <span className="block">Антидроновая защита </span>
                 <span className="block bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
                   согласно <br/>
                   <a 
@@ -82,7 +82,7 @@ const DroneDefensePage: React.FC = () => {
                     </svg>
                   </a>
                 </span>
-                <span className="block text-xl">Мы предлагаем комплексную антидроновую защиту для промышленных объектов: ТЭЦ, резервуары, производственные здания и другие стратегически важные сооружения.</span>
+                <span className="block text-xl">промышленных объектов и предприятий</span>
               </motion.h1>
 
               {/* Subtitle */}
@@ -92,7 +92,7 @@ const DroneDefensePage: React.FC = () => {
                 transition={{ delay: 0.4 }}
                 className="text-xl text-gray-300 max-w-2xl"
               >
-                Наши специалисты обеспечивают проектирование и монтаж защитных сеток, экранирующих конструкций и систем перехвата, предотвращающих проникновение беспилотных летательных аппаратов (БПЛА) и дронов-камикадзе. Работаем по всей России, гарантируем высокое качество, соблюдение сроков и индивидуальный подход к каждому проекту.
+                Мы предлагаем комплексную антидроновую защиту для промышленных объектов: ТЭЦ, резервуары, производственные здания и другие стратегически важные сооружения.
               </motion.p>
 
               {/* Stats */}
@@ -149,7 +149,8 @@ const DroneDefensePage: React.FC = () => {
           </motion.div>
 
           <div className="max-w-6xl mx-auto rounded-3xl overflow-hidden shadow-2xl relative">
-            <ZOKVisualization enableControls={false}/>
+            {/*<ZOKVisualization enableControls={false}/>*/}
+            <img src="/ZOK.gif" alt="#s"/>
             <button
                 onClick={() => setIsModalOpen(true)}
                 className="absolute top-4 right-4 z-10 p-3 rounded-full bg-white/80 backdrop-blur-sm text-gray-800 hover:bg-white transition-all shadow-lg"
@@ -159,7 +160,8 @@ const DroneDefensePage: React.FC = () => {
             </button>
 
             <FullscreenModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-              <ZOKVisualization enableControls={true}/>
+              {/*<ZOKVisualization enableControls={true}/>*/}
+              <img src="/ZOK.gif" alt="#s"/>
             </FullscreenModal>
           </div>
 
@@ -169,13 +171,6 @@ const DroneDefensePage: React.FC = () => {
               viewport={{once: true}}
               className="text-center pt-16"
           >
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto flex items-center justify-center gap-2">
-              Нажмите на иконку
-              <span className="inline-flex items-center justify-center p-1 rounded border border-gray-300 dark:border-gray-600">
-                <Maximize2 className="w-5 h-5"/>
-              </span>
-              чтобы посмотреть объект в 3D
-            </p>
           </motion.div>
         </div>
       </section>
@@ -358,14 +353,6 @@ const DroneDefensePage: React.FC = () => {
               >
                 <span>Заказать систему</span>
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </Link>
-
-              <Link
-                to="/proposal"
-                className="group inline-flex items-center justify-center gap-3 bg-transparent text-white px-8 py-4 rounded-xl font-semibold border-2 border-white hover:bg-white/10 transition-all duration-300"
-              >
-                <span>Получить консультацию</span>
-                <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>
 

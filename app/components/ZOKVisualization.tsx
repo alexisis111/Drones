@@ -879,34 +879,69 @@ const DayClouds = () => {
     );
 };
 
-// ——— КОМПОНЕНТ АВТОПОВОРОТА ———
-const AutoRotate = ({ children, speed = 0.5 }: { children: React.ReactNode; speed?: number }) => {
-    const groupRef = useRef<THREE.Group>(null);
+// ============= ИСПРАВЛЕНИЕ ДЛЯ МОДАЛЬНОГО ОКНА =============
 
-    useFrame((state, delta) => {
-        if (groupRef.current) {
-            groupRef.current.rotation.y += delta * speed;
+// Компонент-обертка для корректного отображения в модальном окне
+const ModalCanvasWrapper = ({ children }: { children: React.ReactNode }) => {
+    const containerRef = useRef<HTMLDivElement>(null);
+    const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+
+    useEffect(() => {
+        const updateDimensions = () => {
+            if (containerRef.current) {
+                const rect = containerRef.current.getBoundingClientRect();
+                setDimensions({
+                    width: rect.width,
+                    height: rect.height
+                });
+            }
+        };
+
+        updateDimensions();
+
+        // Используем ResizeObserver для отслеживания изменений размера
+        const observer = new ResizeObserver(updateDimensions);
+        if (containerRef.current) {
+            observer.observe(containerRef.current);
         }
-    });
 
-    return <group ref={groupRef}>{children}</group>;
+        // Также обновляем при изменении видимости (для модальных окон)
+        const visibilityHandler = () => {
+            setTimeout(updateDimensions, 100); // Небольшая задержка для завершения анимации модального окна
+        };
+
+        document.addEventListener('visibilitychange', visibilityHandler);
+
+        return () => {
+            observer.disconnect();
+            document.removeEventListener('visibilitychange', visibilityHandler);
+        };
+    }, []);
+
+    return (
+        <div
+            ref={containerRef}
+            className="w-full h-full absolute inset-0"
+            style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                overflow: 'hidden'
+            }}
+        >
+            {dimensions.width > 0 && dimensions.height > 0 && (
+                <div style={{ width: dimensions.width, height: dimensions.height }}>
+                    {children}
+                </div>
+            )}
+        </div>
+    );
 };
 
-// ——— ОСНОВНОЙ КОМПОНЕНТ ———
-const ZOKVisualization = ({ enableControls = true, autoRotate = true }) => {
-    const [rotationSpeed, setRotationSpeed] = useState(0.3);
-
-    // Эффект для плавного изменения скорости вращения
-    useEffect(() => {
-        if (autoRotate) {
-            // Можно добавить логику изменения скорости со временем
-            const interval = setInterval(() => {
-                setRotationSpeed(prev => 0.2 + Math.random() * 0.3);
-            }, 5000);
-            return () => clearInterval(interval);
-        }
-    }, [autoRotate]);
-
+// ——— ОСНОВНОЙ КОМПОНЕНТ (с поддержкой модального окна) ———
+const ZOKVisualization = ({ enableControls = true, isModal = false }) => {
     const canvasStyle = enableControls ?
         {} :
         {
@@ -914,109 +949,119 @@ const ZOKVisualization = ({ enableControls = true, autoRotate = true }) => {
             pointerEvents: 'none' as const
         };
 
+    // Для модального окна используем абсолютное позиционирование
+    const containerClassName = isModal
+        ? "w-full h-full absolute inset-0 rounded-xl overflow-hidden bg-gray-900"
+        : "w-full h-[600px] rounded-xl overflow-hidden bg-gray-900 relative";
+
+    const CanvasContent = () => (
+        <Canvas
+            style={canvasStyle}
+            camera={{ position: [25, 15, 25], fov: 45 }}
+            gl={{
+                antialias: true,
+                alpha: false,
+                powerPreference: "high-performance",
+                preserveDrawingBuffer: true // Важно для модальных окон
+            }}
+            shadows
+            onCreated={({ gl }) => {
+                gl.setClearColor('#0a0a1a');
+                // Принудительно обновляем размер при создании
+                setTimeout(() => {
+                    gl.setSize(
+                        gl.domElement.clientWidth,
+                        gl.domElement.clientHeight
+                    );
+                }, 100);
+            }}
+        >
+            <color attach="background" args={['#0a0a1a']} />
+            <fog attach="fog" args={['#0a0a1a', 40, 120]} />
+
+            <Sky
+                distance={450000}
+                sunPosition={[100, 20, 50]}
+                turbidity={8}
+                rayleigh={1.5}
+                mieCoefficient={0.005}
+                mieDirectionalG={0.8}
+            />
+
+            {/* Освещение */}
+            <ambientLight intensity={0.3} />
+            <hemisphereLight args={['#446688', '#223322', 0.6]} />
+            <directionalLight
+                position={[50, 30, 20]}
+                intensity={2.5}
+                color="#fff0dd"
+                castShadow
+                shadow-mapSize={[2048, 2048]}
+                shadow-camera-near={5}
+                shadow-camera-far={150}
+                shadow-camera-left={-50}
+                shadow-camera-right={50}
+                shadow-camera-top={50}
+                shadow-camera-bottom={-50}
+            />
+
+            {/* Дополнительные источники света для индустриальной атмосферы */}
+            <pointLight position={[0, 10, 0]} intensity={0.5} color="#4466aa" />
+            <pointLight position={[-15, 5, -15]} intensity={0.8} color="#ffaa44" />
+            <pointLight position={[15, 5, 15]} intensity={0.8} color="#ffaa44" />
+
+            {/* Грунт (промышленная площадка) */}
+            <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.1, 0]} receiveShadow>
+                <planeGeometry args={[60, 60]} />
+                <meshStandardMaterial color="#2a2a2a" roughness={0.9} metalness={0.1} />
+            </mesh>
+
+            {/* Защитное заграждение */}
+            <CageProtection />
+
+            {/* Защищаемое здание */}
+            <ProtectedObject />
+
+            {/* Промышленное окружение */}
+            <IndustrialEnvironment />
+
+            {/* Дроны */}
+            <DroneAttackLoop />
+
+            {/* Облака */}
+            <DayClouds />
+
+            <OrbitControls
+                enabled={enableControls}
+                enablePan={true}
+                enableZoom={true}
+                enableRotate={true}
+                minDistance={15}
+                maxDistance={60}
+                autoRotate={false}
+                rotateSpeed={0.8}
+                makeDefault
+            />
+
+            {/* Легкая подсветка снизу для эффекта */}
+            <pointLight position={[0, -5, 0]} intensity={0.2} color="#335588" />
+        </Canvas>
+    );
+
     return (
         <div
-            className="w-full h-[600px] rounded-xl overflow-hidden bg-gray-900 relative"
+            className={containerClassName}
             style={{
                 touchAction: enableControls ? 'none' : 'auto',
                 boxShadow: '0 20px 40px rgba(0,0,0,0.4)'
             }}
         >
-            {/* Индикатор автоповорота */}
-            {autoRotate && (
-                <div className="absolute top-4 right-4 z-10 bg-black/50 text-white px-4 py-2 rounded-full backdrop-blur-sm flex items-center gap-2">
-                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                    <span className="text-sm font-medium">Auto-rotate • {rotationSpeed.toFixed(1)}x</span>
-                </div>
-            )}
-
-            <Canvas
-                style={canvasStyle}
-                camera={{ position: [25, 15, 25], fov: 45 }}
-                gl={{ antialias: true, alpha: false, powerPreference: "high-performance" }}
-                shadows
-                onCreated={({ gl }) => {
-                    gl.setClearColor('#0a0a1a');
-                }}
-            >
-                <color attach="background" args={['#0a0a1a']} />
-                <fog attach="fog" args={['#0a0a1a', 40, 120]} />
-
-                <Sky
-                    distance={450000}
-                    sunPosition={[100, 20, 50]}
-                    turbidity={8}
-                    rayleigh={1.5}
-                    mieCoefficient={0.005}
-                    mieDirectionalG={0.8}
-                />
-
-                {/* Освещение */}
-                <ambientLight intensity={0.3} />
-                <hemisphereLight args={['#446688', '#223322', 0.6]} />
-                <directionalLight
-                    position={[50, 30, 20]}
-                    intensity={2.5}
-                    color="#fff0dd"
-                    castShadow
-                    shadow-mapSize={[2048, 2048]}
-                    shadow-camera-near={5}
-                    shadow-camera-far={150}
-                    shadow-camera-left={-50}
-                    shadow-camera-right={50}
-                    shadow-camera-top={50}
-                    shadow-camera-bottom={-50}
-                />
-
-                {/* Дополнительные источники света для индустриальной атмосферы */}
-                <pointLight position={[0, 10, 0]} intensity={0.5} color="#4466aa" />
-                <pointLight position={[-15, 5, -15]} intensity={0.8} color="#ffaa44" />
-                <pointLight position={[15, 5, 15]} intensity={0.8} color="#ffaa44" />
-
-                {/* Грунт (промышленная площадка) */}
-                <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.1, 0]} receiveShadow>
-                    <planeGeometry args={[60, 60]} />
-                    <meshStandardMaterial color="#2a2a2a" roughness={0.9} metalness={0.1} />
-                </mesh>
-
-                {/* Контейнер для автоповорота */}
-                <AutoRotate speed={rotationSpeed}>
-                    {/* Защитное заграждение */}
-                    <CageProtection />
-
-                    {/* Защищаемое здание */}
-                    <ProtectedObject />
-
-                    {/* Промышленное окружение */}
-                    <IndustrialEnvironment />
-
-                    {/* Дроны (внутри вращающейся группы) */}
-                    <DroneAttackLoop />
-                </AutoRotate>
-
-                {/* Облака (вне вращения, чтобы создавать глубину) */}
-                <DayClouds />
-
-                <OrbitControls
-                    enabled={enableControls}
-                    enablePan={true}
-                    enableZoom={true}
-                    enableRotate={true}
-                    minDistance={15}
-                    maxDistance={60}
-                    autoRotate={false} // Отключаем встроенный autoRotate, используем наш
-                    rotateSpeed={0.8}
-                />
-
-                {/* Легкая подсветка снизу для эффекта */}
-                <pointLight position={[0, -5, 0]} intensity={0.2} color="#335588" />
-            </Canvas>
-
-            {/* Управление скоростью вращения (hover-эффект) */}
-            {autoRotate && (
-                <div className="absolute bottom-4 left-4 z-10 bg-black/30 text-white/70 px-3 py-1 rounded-full text-xs backdrop-blur-sm">
-                    Скорость вращения меняется динамически
-                </div>
+            {isModal ? (
+                <ModalCanvasWrapper>
+                    <CanvasContent />
+                </ModalCanvasWrapper>
+            ) : (
+                <CanvasContent />
             )}
         </div>
     );
