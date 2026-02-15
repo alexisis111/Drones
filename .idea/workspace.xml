@@ -5,19 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fde30c11-94c5-4884-96a6-cf984ad02720" name="Changes" comment="fix3D">
+      <change afterPath="$PROJECT_DIR$/app/components/ContactForm.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/CompanyShowcase.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/CompanyShowcase.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/ContactsPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ContactsPage.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/components/DroneDefensePage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/DroneDefensePage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/root.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/root.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/routes/company.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/company.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/routes/contacts.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/contacts.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/routes/drone-defense.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/drone-defense.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/routes/home.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/home.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/routes/portfolio.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/portfolio.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/routes/service-detail.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/service-detail.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/routes/services.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/services.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/routes/vacancies.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/vacancies.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/welcome/welcome.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/welcome/welcome.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

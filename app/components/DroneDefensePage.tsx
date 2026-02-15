@@ -6,6 +6,7 @@ import { Link } from 'react-router';
 import ZOKVisualization from '../components/ZOKVisualization';
 import FullscreenModal from './FullscreenModal';
 import FaqSection from './FaqSection';
+import ContactForm from "~/components/ContactForm";
 
 const DroneDefensePage: React.FC = () => {
   const { theme } = useTheme();
@@ -121,69 +122,11 @@ const DroneDefensePage: React.FC = () => {
                 transition={{ delay: 0.6 }}
                 className="flex flex-wrap gap-4"
               >
-                <Link
-                  to="/contacts"
-                  className="group inline-flex items-center gap-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-xl hover:scale-105 transition-all duration-300"
-                >
-                  <span>Заказать систему</span>
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </Link>
               </motion.div>
             </motion.div>
 
             {/* Right column - Feature cards */}
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className="space-y-6"
-            >
-              {[
-                {
-                  icon: <Radio className="w-6 h-6" />,
-                  title: "Защита периметра",
-                  description: "Многоуровневая защита",
-                  color: "from-blue-500 to-cyan-500"
-                },
-                {
-                  icon: <Eye className="w-6 h-6" />,
-                  title: "Современный подход",
-                  description: "Качественные материалы",
-                  color: "from-purple-500 to-pink-500"
-                },
-                {
-                  icon: <AlertTriangle className="w-6 h-6" />,
-                  title: "Гарантия качества",
-                  description: "Гарантируем долговечность",
-                  color: "from-orange-500 to-red-500"
-                },
-                {
-                  icon: <Lock className="w-6 h-6" />,
-                  title: "Закрывающие документы",
-                  description: "Вся сопутствующая документация",
-                  color: "from-green-500 to-emerald-500"
-                }
-              ].map((feature, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, x: 30 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.4 + i * 0.1 }}
-                  whileHover={{ x: -10 }}
-                  className="group bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-all duration-300 cursor-pointer"
-                >
-                  <div className="flex items-start gap-4">
-                    <div className={`p-3 rounded-xl bg-gradient-to-br ${feature.color}`}>
-                      {feature.icon}
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold text-white mb-2">{feature.title}</h3>
-                      <p className="text-gray-400">{feature.description}</p>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </motion.div>
+           <ContactForm  />
           </div>
         </div>
       </section>
