@@ -1,7 +1,7 @@
-import { useMemo, useRef, useState } from 'react';
+import { useMemo, useRef, useState, useEffect } from 'react';
 import type { ReactElement } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, Box, Sky } from '@react-three/drei';
+import { OrbitControls, Box, Sky, useAnimations, Html } from '@react-three/drei';
 import * as THREE from 'three';
 
 // ——— ПОМОЩНИК: МЕТАЛЛИЧЕСКАЯ БАЛКА ———
@@ -102,11 +102,11 @@ const CageProtection = () => {
     });
 
     // ——— СЕТКА (3 уровня сверху + 4 стены) ———
-    // Важно: слишком мелкая ячейка (типа 0.1) создаёт тысячи мешей и может сильно просадить FPS.
     const meshLines: ReactElement[] = [];
     const meshCellSize = 0.1;
     const wireThickness = 0.01;
     const wireMat = <meshStandardMaterial color="#9ca3af" metalness={0.6} roughness={0.5} />;
+
     // Крыша: XZ плоскость на каждом уровне
     levels.forEach((y, levelIdx) => {
         // Линии вдоль Z (фиксируем X)
@@ -206,8 +206,6 @@ const CageProtection = () => {
         );
     }
 
-
-
     return (
         <group>
             {verticalBeams}
@@ -216,6 +214,7 @@ const CageProtection = () => {
         </group>
     );
 };
+
 // ——— ЗДАНИЕ (защищаемый объект) ———
 const ProtectedObject = () => {
     return (
@@ -314,7 +313,7 @@ const AnimatedDrone = ({ position, rotationOffset = 0, speed = 1 }: AnimatedDron
                 <cylinderGeometry args={[0.03, 0.03, 0.6, 8]} />
                 <meshStandardMaterial color="#444444" metalness={0.6} roughness={0.4} />
             </mesh>
-           , [28.01.2026 22:19]
+
             {/* Задняя правая рама */}
             <mesh position={[0.18, 0, -0.18]} rotation={[0, -3*Math.PI/4, 0]}>
                 <cylinderGeometry args={[0.03, 0.03, 0.6, 8]} />
@@ -567,195 +566,272 @@ const DroneAttackLoop = () => {
     );
 };
 
-// ——— ДЕТЕРМИНИРОВАННЫЙ "ШАМ" (без Math.random в рендере) ———
+// ——— ДЕТЕРМИНИРОВАННЫЙ "ХЕШ" (без Math.random в рендере) ———
 function hash01(x: number, z: number) {
     // простая хеш‑функция -> [0..1)
     const s = Math.sin(x * 12.9898 + z * 78.233) * 43758.5453;
     return s - Math.floor(s);
 }
 
-// ——— ОКРУЖЕНИЕ: ДЕРЕВЬЯ, ТРАВА, КАМНИ, КУСТЫ, ЦВЕТЫ ———
-const Environment = () => {
-    // Создаем массив позиций для деревьев
-    const treePositions = [
-        [-10, 0, -10], [8, 0, -12], [-12, 0, 8], [10, 0, 10],
-        [-15, 0, -5], [12, 0, -8], [-8, 0, 12], [15, 0, 5],
-        [-5, 0, -15], [5, 0, -15], [-15, 0, 5], [15, 0, -15]
+// ============= ПРОМЫШЛЕННОЕ ОКРУЖЕНИЕ =============
+
+// Компонент дороги
+const Road = () => {
+    return (
+        <group>
+            {/* Основное дорожное полотно */}
+            <mesh position={[0, 0.01, 0]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
+                <planeGeometry args={[30, 30]} />
+                <meshStandardMaterial color="#2a2a2a" roughness={0.8} metalness={0.2} />
+            </mesh>
+
+            {/* Разметка - горизонтальные линии */}
+            {[-12, -8, -4, 0, 4, 8, 12].map((x) => (
+                <mesh key={`road-mark-h-${x}`} position={[x, 0.02, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+                    <planeGeometry args={[0.3, 2]} />
+                    <meshStandardMaterial color="#ffff00" emissive="#ffff00" emissiveIntensity={0.3} />
+                </mesh>
+            ))}
+
+            {/* Разметка - вертикальные линии */}
+            {[-12, -8, -4, 0, 4, 8, 12].map((z) => (
+                <mesh key={`road-mark-v-${z}`} position={[0, 0.02, z]} rotation={[-Math.PI / 2, 0, 0]}>
+                    <planeGeometry args={[2, 0.3]} />
+                    <meshStandardMaterial color="#ffff00" emissive="#ffff00" emissiveIntensity={0.3} />
+                </mesh>
+            ))}
+
+            {/* Круговая разметка вокруг здания */}
+            <mesh position={[0, 0.02, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+                <ringGeometry args={[8, 8.2, 64]} />
+                <meshStandardMaterial color="#ffff00" emissive="#ffff00" emissiveIntensity={0.3} />
+            </mesh>
+
+            {/* Бордюры */}
+            {[-15, 15].map((x) => (
+                <mesh key={`curb-x-${x}`} position={[x, 0.15, 0]}>
+                    <boxGeometry args={[0.2, 0.3, 30]} />
+                    <meshStandardMaterial color="#666666" roughness={0.7} metalness={0.1} />
+                </mesh>
+            ))}
+            {[-15, 15].map((z) => (
+                <mesh key={`curb-z-${z}`} position={[0, 0.15, z]}>
+                    <boxGeometry args={[30, 0.3, 0.2]} />
+                    <meshStandardMaterial color="#666666" roughness={0.7} metalness={0.1} />
+                </mesh>
+            ))}
+        </group>
+    );
+};
+
+// Компонент фонарного столба
+const StreetLight = ({ position }: { position: Vec3 }) => {
+    return (
+        <group position={position}>
+            {/* Столб */}
+            <mesh position={[0, 2.5, 0]}>
+                <cylinderGeometry args={[0.15, 0.2, 5, 8]} />
+                <meshStandardMaterial color="#555555" metalness={0.8} roughness={0.3} />
+            </mesh>
+
+            {/* Основание */}
+            <mesh position={[0, 0.2, 0]}>
+                <cylinderGeometry args={[0.3, 0.4, 0.4, 8]} />
+                <meshStandardMaterial color="#444444" metalness={0.7} roughness={0.4} />
+            </mesh>
+
+            {/* Кронштейн */}
+            <mesh position={[0.5, 4.2, 0]} rotation={[0, 0, -Math.PI/6]}>
+                <boxGeometry args={[1, 0.1, 0.1]} />
+                <meshStandardMaterial color="#666666" metalness={0.8} roughness={0.3} />
+            </mesh>
+
+            {/* Фонарь */}
+            <mesh position={[1.2, 4.5, 0]}>
+                <sphereGeometry args={[0.2, 16, 16]} />
+                <meshStandardMaterial color="#fffacd" emissive="#ffaa00" emissiveIntensity={0.8} />
+            </mesh>
+
+            {/* Свет от фонаря (невидимый источник) */}
+            <pointLight position={[1.2, 4.5, 0]} intensity={0.8} color="#ffaa00" distance={8} />
+        </group>
+    );
+};
+
+// Компонент промышленного здания/ангара
+const IndustrialBuilding = ({ position, scale = 1 }: { position: Vec3; scale?: number }) => {
+    return (
+        <group position={position} scale={scale}>
+            {/* Основное здание */}
+            <mesh position={[0, 1.5, 0]} castShadow receiveShadow>
+                <boxGeometry args={[4, 3, 4]} />
+                <meshStandardMaterial color="#8b8b8b" metalness={0.6} roughness={0.4} />
+            </mesh>
+
+            {/* Крыша */}
+            <mesh position={[0, 3.2, 0]} rotation={[0, 0, 0]} castShadow>
+                <coneGeometry args={[2.5, 0.8, 4]} />
+                <meshStandardMaterial color="#666666" metalness={0.7} roughness={0.5} />
+            </mesh>
+
+            {/* Дымоход/труба */}
+            <mesh position={[1.2, 4, 1.2]} castShadow>
+                <cylinderGeometry args={[0.3, 0.4, 2, 8]} />
+                <meshStandardMaterial color="#444444" metalness={0.9} roughness={0.3} />
+            </mesh>
+
+            {/* Окна */}
+            {[-1.2, 1.2].map((x) => (
+                <mesh key={`window-${x}`} position={[x, 1.5, 2.05]} castShadow>
+                    <boxGeometry args={[1, 1, 0.1]} />
+                    <meshStandardMaterial color="#87CEEB" emissive="#1E90FF" emissiveIntensity={0.3} />
+                </mesh>
+            ))}
+        </group>
+    );
+};
+
+// Компонент контейнера
+const Container = ({ position, color = "#2E8B57" }: { position: Vec3; color?: string }) => {
+    return (
+        <group position={position}>
+            <mesh castShadow receiveShadow>
+                <boxGeometry args={[2, 1.2, 2]} />
+                <meshStandardMaterial color={color} metalness={0.3} roughness={0.6} />
+            </mesh>
+
+            {/* Угловые усиления */}
+            {[-0.9, 0.9].map((x) =>
+                [-0.9, 0.9].map((z) => (
+                    <mesh key={`corner-${x}-${z}`} position={[x, 0.5, z]}>
+                        <boxGeometry args={[0.1, 0.8, 0.1]} />
+                        <meshStandardMaterial color="#AAAAAA" metalness={0.8} roughness={0.2} />
+                    </mesh>
+                ))
+            )}
+        </group>
+    );
+};
+
+// Компонент крана
+const Crane = ({ position }: { position: Vec3 }) => {
+    return (
+        <group position={position}>
+            {/* Башня */}
+            <mesh position={[0, 3, 0]} castShadow>
+                <boxGeometry args={[0.8, 6, 0.8]} />
+                <meshStandardMaterial color="#FF4500" metalness={0.5} roughness={0.4} />
+            </mesh>
+
+            {/* Стрела */}
+            <mesh position={[2, 5, 0]} rotation={[0, 0, 0]} castShadow>
+                <boxGeometry args={[6, 0.3, 0.5]} />
+                <meshStandardMaterial color="#FF6347" metalness={0.6} roughness={0.3} />
+            </mesh>
+
+            {/* Противовес */}
+            <mesh position={[-2, 5, 0]} castShadow>
+                <boxGeometry args={[2, 0.8, 1]} />
+                <meshStandardMaterial color="#555555" metalness={0.7} roughness={0.4} />
+            </mesh>
+
+            {/* Кабина */}
+            <mesh position={[0, 4, 0]} castShadow>
+                <boxGeometry args={[0.6, 0.6, 0.6]} />
+                <meshStandardMaterial color="#87CEEB" />
+            </mesh>
+
+            {/* Трос и крюк (декоративные) */}
+            <mesh position={[4, 4.8, 0]}>
+                <cylinderGeometry args={[0.05, 0.05, 1, 6]} />
+                <meshStandardMaterial color="#AAAAAA" metalness={1} roughness={0.1} />
+            </mesh>
+        </group>
+    );
+};
+
+// Компонент индустриального окружения
+const IndustrialEnvironment = () => {
+    // Позиции для промышленных объектов
+    const lightPositions = [
+        [-12, 0, -12], [12, 0, -12], [-12, 0, 12], [12, 0, 12],
+        [-18, 0, -8], [18, 0, -8], [-18, 0, 8], [18, 0, 8]
     ];
 
-    // Создаем массив позиций для камней
-    const rockPositions = [
-        [-14, 0, -14], [14, 0, -14], [-14, 0, 14], [14, 0, 14],
-        [-12, 0, 12], [12, 0, 12], [-10, 0, -14], [10, 0, -14]
+    const buildingPositions = [
+        [-14, 0, -14], [14, 0, -14], [-14, 0, 14], [14, 0, 14]
     ];
 
-
-// Создаем массив позиций для кустов
-    const bushPositions = [
-        [-16, 0, -16], [16, 0, -16], [-16, 0, 16], [16, 0, 16],
-        [-18, 0, -8], [18, 0, -8], [-18, 0, 8], [18, 0, 8],
-        [-8, 0, -18], [8, 0, -18], [-8, 0, 18], [8, 0, 18]
+    const containerPositions = [
+        [-18, 0, -18], [18, 0, -18], [-18, 0, 18], [18, 0, 18],
+        [-20, 0, -5], [20, 0, -5], [-20, 0, 5], [20, 0, 5],
+        [-5, 0, -20], [5, 0, -20], [-5, 0, 20], [5, 0, 20]
     ];
 
-    // Создаем массив позиций для цветов
-    const flowerPositions = [];
-    for (let i = -18; i <= 18; i += 3) {
-        for (let j = -18; j <= 18; j += 3) {
-            // Исключаем область вокруг здания и добавляем детерминированную "случайность"
-            if (!(i > -5 && i < 5 && j > -5 && j < 5) && hash01(i, j) > 0.72) {
-                flowerPositions.push([i, 0, j]);
-            }
-        }
-    }
-
-    // Создаем массив позиций для травы
-    const grassPositions = [];
-    for (let i = -20; i <= 20; i += 1.5) {
-        for (let j = -20; j <= 20; j += 1.5) {
-            // Исключаем небольшую область вокруг здания
-            if (!(i > -6 && i < 6 && j > -6 && j < 6)) {
-                grassPositions.push([i, 0, j]);
-            }
-        }
-    }
+    const cranePosition = [0, 0, -18];
 
     return (
         <group>
-            {/* Деревья */}
-            {treePositions.map((pos, idx) => (
-                <Tree key={`tree-${idx}`} position={pos as Vec3} />
+            {/* Дороги и разметка */}
+            <Road />
+
+            {/* Промышленные здания */}
+            {buildingPositions.map((pos, idx) => (
+                <IndustrialBuilding
+                    key={`ind-building-${idx}`}
+                    position={pos as Vec3}
+                    scale={0.8 + idx * 0.1}
+                />
             ))}
 
-            {/* Камни */}
-            {rockPositions.map((pos, idx) => (
-                <Rock key={`rock-${idx}`} position={pos as Vec3} />
+            {/* Контейнеры */}
+            {containerPositions.map((pos, idx) => (
+                <Container
+                    key={`container-${idx}`}
+                    position={pos as Vec3}
+                    color={idx % 3 === 0 ? "#2E8B57" : idx % 3 === 1 ? "#B22222" : "#1E90FF"}
+                />
             ))}
 
-            {/* Кусты */}
-            {bushPositions.map((pos, idx) => (
-                <Bush key={`bush-${idx}`} position={pos as Vec3} />
+            {/* Кран */}
+            <Crane position={cranePosition as Vec3} />
+
+            {/* Фонарные столбы */}
+            {lightPositions.map((pos, idx) => (
+                <StreetLight key={`light-${idx}`} position={pos as Vec3} />
             ))}
 
-            {/* Цветы */}
-            {flowerPositions.map((pos, idx) => (
-                <Flower key={`flower-${idx}`} position={pos as Vec3} />
+            {/* Небольшие индустриальные детали */}
+
+            {/* Вентиляционные трубы */}
+            {[-8, 8].map((x) => (
+                <mesh key={`vent-${x}`} position={[x, 0.5, -15]}>
+                    <cylinderGeometry args={[0.2, 0.2, 1, 8]} />
+                    <meshStandardMaterial color="#777777" metalness={0.8} roughness={0.3} />
+                </mesh>
             ))}
 
-            {/* Трава - оптимизированная с использованием InstancedMesh */}
-            <GrassField positions={grassPositions.slice(0, 700)} />
-        </group>
-    );
-};
+            {/* Ящики/паллеты */}
+            {[-16, -12, 16, 12].map((x, i) => (
+                <mesh key={`box-${i}`} position={[x, 0.3, 10]} castShadow>
+                    <boxGeometry args={[0.8, 0.6, 0.8]} />
+                    <meshStandardMaterial color="#8B4513" roughness={0.9} />
+                </mesh>
+            ))}
 
-// Оптимизированный компонент для травы с использованием InstancedMesh
-const GrassField = ({ positions }: { positions: number[][] }) => {
-    const ref = useRef<THREE.InstancedMesh>(null!);
-    const dummy = useRef<THREE.Object3D>(new THREE.Object3D());
-
-    useFrame((state) => {
-        if (!ref.current) return;
-
-        // Анимация травы
-        for (let i = 0; i < positions.length; i++) {
-            const [x, , z] = positions[i];
-            dummy.current.position.set(x, 0, z);
-            const n = hash01(x, z);
-            const baseH = 0.28 + n * 0.28;
-            dummy.current.rotation.y = n * Math.PI * 2;
-            dummy.current.scale.setScalar(0.9 + n * 0.35);
-            dummy.current.scale.y = baseH + Math.sin(state.clock.elapsedTime * 2.2 + x * 0.15 + z * 0.15) * 0.06;
-            dummy.current.updateMatrix();
-            ref.current.setMatrixAt(i, dummy.current.matrix);
-        }
-        ref.current.instanceMatrix.needsUpdate = true;
-    });
-
-    return (
-        <instancedMesh
-            ref={ref}
-            args={[undefined, undefined, positions.length]}
-            position={[0, 0, 0]}
-        >
-            <boxGeometry args={[0.05, 0.5, 0.03]} />
-            <meshStandardMaterial
-                color="#228B22"
-                roughness={0.9}
-                metalness={0.05}
-            />
-        </instancedMesh>
-    );
-};
-
-// Компонент дерева
-const Tree = ({ position }: { position: Vec3 }) => {
-    return (
-        <group position={position}>
-            {/* Ствол */}
-            <mesh position={[0, 1.5, 0]} castShadow>
-                <cylinderGeometry args={[0.16, 0.22, 3, 10]} />
-                <meshStandardMaterial color="#7c4a22" roughness={0.95} metalness={0.02} />
-            </mesh>
-            {/* Крона: несколько "шаров" для объёма */}
-            <mesh position={[0, 3.8, 0]} castShadow>
-                <sphereGeometry args={[1.15, 12, 12]} />
-                <meshStandardMaterial color="#1f7a3a" roughness={0.95} metalness={0.02} />
-            </mesh>
-            <mesh position={[0.7, 3.4, 0.3]} castShadow>
-                <sphereGeometry args={[0.85, 12, 12]} />
-                <meshStandardMaterial color="#1b6b33" roughness={0.95} metalness={0.02} />
-            </mesh>
-            <mesh position={[-0.6, 3.5, -0.2]} castShadow>
-                <sphereGeometry args={[0.9, 12, 12]} />
-                <meshStandardMaterial color="#207f3c" roughness={0.95} metalness={0.02} />
-            </mesh>
-        </group>
-    );
-};
-
-
-// Компонент камня
-const Rock = ({ position }: { position: Vec3 }) => {
-    return (
-        <mesh position={[position[0], position[1] + 0.22, position[2]]} castShadow>
-            <dodecahedronGeometry args={[0.5, 0]} />
-            <meshStandardMaterial color="#6b7280" roughness={0.98} metalness={0.02} />
-        </mesh>
-    );
-};
-
-// Компонент куста
-const Bush = ({ position }: { position: Vec3 }) => {
-    return (
-        <group position={position}>
-            <mesh position={[0, 0.35, 0]} castShadow>
-                <sphereGeometry args={[0.55, 12, 12]} />
-                <meshStandardMaterial color="#1b6b33" roughness={0.95} metalness={0.02} />
-            </mesh>
-            <mesh position={[0.45, 0.25, 0.25]} castShadow>
-                <sphereGeometry args={[0.4, 12, 12]} />
-                <meshStandardMaterial color="#1f7a3a" roughness={0.95} metalness={0.02} />
-            </mesh>
-        </group>
-    );
-};
-
-// Компонент цветка
-const Flower = ({ position }: { position: Vec3 }) => {
-    return (
-        <group position={position}>
-            {/* Стебель */}
-            <Box args={[0.05, 0.4, 0.05]} position={[0, 0.2, 0]}>
-                <meshStandardMaterial color="#2e8b57" roughness={0.9} metalness={0.1} />
-            </Box>
-            {/* Цветок */}
-            <mesh position={[0, 0.52, 0]} castShadow>
-                <sphereGeometry args={[0.09, 10, 10]} />
-                <meshStandardMaterial color="#f472b6" roughness={0.65} metalness={0.05} />
-            </mesh>
-            <mesh position={[0.08, 0.5, 0]} castShadow>
-                <sphereGeometry args={[0.06, 10, 10]} />
-                <meshStandardMaterial color="#fb7185" roughness={0.65} metalness={0.05} />
-            </mesh>
+            {/* Дым/пар из труб (декоративный) */}
+            {buildingPositions.slice(0, 2).map((pos, idx) => (
+                <group key={`smoke-${idx}`} position={[pos[0] + 1.2, pos[1] + 5, pos[2] + 1.2]}>
+                    <mesh>
+                        <sphereGeometry args={[0.5, 8, 8]} />
+                        <meshStandardMaterial color="#CCCCCC" transparent opacity={0.3} />
+                    </mesh>
+                    <mesh position={[0, 0.6, 0]}>
+                        <sphereGeometry args={[0.4, 8, 8]} />
+                        <meshStandardMaterial color="#DDDDDD" transparent opacity={0.4} />
+                    </mesh>
+                </group>
+            ))}
         </group>
     );
 };
@@ -803,88 +879,145 @@ const DayClouds = () => {
     );
 };
 
+// ——— КОМПОНЕНТ АВТОПОВОРОТА ———
+const AutoRotate = ({ children, speed = 0.5 }: { children: React.ReactNode; speed?: number }) => {
+    const groupRef = useRef<THREE.Group>(null);
+
+    useFrame((state, delta) => {
+        if (groupRef.current) {
+            groupRef.current.rotation.y += delta * speed;
+        }
+    });
+
+    return <group ref={groupRef}>{children}</group>;
+};
+
 // ——— ОСНОВНОЙ КОМПОНЕНТ ———
-const ZOKVisualization = ({ enableControls = true }) => {
-    // When controls are disabled, we want to allow scrolling on mobile
-    // We'll conditionally apply styles to the canvas to prevent it from capturing touch events
+const ZOKVisualization = ({ enableControls = true, autoRotate = true }) => {
+    const [rotationSpeed, setRotationSpeed] = useState(0.3);
+
+    // Эффект для плавного изменения скорости вращения
+    useEffect(() => {
+        if (autoRotate) {
+            // Можно добавить логику изменения скорости со временем
+            const interval = setInterval(() => {
+                setRotationSpeed(prev => 0.2 + Math.random() * 0.3);
+            }, 5000);
+            return () => clearInterval(interval);
+        }
+    }, [autoRotate]);
+
     const canvasStyle = enableControls ?
         {} :
         {
-            // When controls are disabled, allow touch events to pass through to parent elements
             touchAction: 'auto' as const,
-            // Disable pointer events to allow scrolling when controls are disabled
             pointerEvents: 'none' as const
         };
 
     return (
         <div
-            className="w-full h-[500px] rounded-xl overflow-hidden bg-gray-50 relative"
+            className="w-full h-[600px] rounded-xl overflow-hidden bg-gray-900 relative"
             style={{
-                // This ensures that when controls are disabled, touch events can scroll the page
-                touchAction: enableControls ? 'none' : 'auto'
+                touchAction: enableControls ? 'none' : 'auto',
+                boxShadow: '0 20px 40px rgba(0,0,0,0.4)'
             }}
         >
+            {/* Индикатор автоповорота */}
+            {autoRotate && (
+                <div className="absolute top-4 right-4 z-10 bg-black/50 text-white px-4 py-2 rounded-full backdrop-blur-sm flex items-center gap-2">
+                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                    <span className="text-sm font-medium">Auto-rotate • {rotationSpeed.toFixed(1)}x</span>
+                </div>
+            )}
+
             <Canvas
                 style={canvasStyle}
-                camera={{ position: [18, 12, 18], fov: 50 }}
-                gl={{ antialias: true, alpha: false }}
+                camera={{ position: [25, 15, 25], fov: 45 }}
+                gl={{ antialias: true, alpha: false, powerPreference: "high-performance" }}
                 shadows
+                onCreated={({ gl }) => {
+                    gl.setClearColor('#0a0a1a');
+                }}
             >
-                <color attach="background" args={['#bfe3ff']} />
-                <fog attach="fog" args={['#bfe3ff', 30, 95]} />
+                <color attach="background" args={['#0a0a1a']} />
+                <fog attach="fog" args={['#0a0a1a', 40, 120]} />
+
                 <Sky
                     distance={450000}
-                    sunPosition={[40, 30, 10]}
-                    turbidity={6}
-                    rayleigh={2.2}
-                    mieCoefficient={0.004}
-                    mieDirectionalG={0.9}
+                    sunPosition={[100, 20, 50]}
+                    turbidity={8}
+                    rayleigh={1.5}
+                    mieCoefficient={0.005}
+                    mieDirectionalG={0.8}
                 />
 
-                {/* Дневной свет */}
-                <ambientLight intensity={0.5} />
-                <hemisphereLight args={['#dbeafe', '#3b5b3b', 0.75]} />
+                {/* Освещение */}
+                <ambientLight intensity={0.3} />
+                <hemisphereLight args={['#446688', '#223322', 0.6]} />
                 <directionalLight
-                    position={[40, 30, 10]}
-                    intensity={3.2}
-                    color="#fff3d6"
+                    position={[50, 30, 20]}
+                    intensity={2.5}
+                    color="#fff0dd"
                     castShadow
                     shadow-mapSize={[2048, 2048]}
                     shadow-camera-near={5}
-                    shadow-camera-far={120}
-                    shadow-camera-left={-40}
-                    shadow-camera-right={40}
-                    shadow-camera-top={40}
-                    shadow-camera-bottom={-40}
+                    shadow-camera-far={150}
+                    shadow-camera-left={-50}
+                    shadow-camera-right={50}
+                    shadow-camera-top={50}
+                    shadow-camera-bottom={-50}
                 />
 
-                {/* Грунт */}
-                <Box args={[40, 0.02, 40]} position={[0, -0.1, 0]} receiveShadow>
-                    <meshStandardMaterial color="#5aa36a" roughness={1} metalness={0.02} />
-                </Box>
+                {/* Дополнительные источники света для индустриальной атмосферы */}
+                <pointLight position={[0, 10, 0]} intensity={0.5} color="#4466aa" />
+                <pointLight position={[-15, 5, -15]} intensity={0.8} color="#ffaa44" />
+                <pointLight position={[15, 5, 15]} intensity={0.8} color="#ffaa44" />
 
-                {/* Защитное заграждение */}
-                <CageProtection />
+                {/* Грунт (промышленная площадка) */}
+                <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.1, 0]} receiveShadow>
+                    <planeGeometry args={[60, 60]} />
+                    <meshStandardMaterial color="#2a2a2a" roughness={0.9} metalness={0.1} />
+                </mesh>
 
-                {/* Защищаемое здание */}
-                <ProtectedObject />
+                {/* Контейнер для автоповорота */}
+                <AutoRotate speed={rotationSpeed}>
+                    {/* Защитное заграждение */}
+                    <CageProtection />
 
-                {/* Окружение */}
-                <Environment />
+                    {/* Защищаемое здание */}
+                    <ProtectedObject />
+
+                    {/* Промышленное окружение */}
+                    <IndustrialEnvironment />
+
+                    {/* Дроны (внутри вращающейся группы) */}
+                    <DroneAttackLoop />
+                </AutoRotate>
+
+                {/* Облака (вне вращения, чтобы создавать глубину) */}
                 <DayClouds />
-
-                {/* Дроны */}
-                <DroneAttackLoop />
 
                 <OrbitControls
                     enabled={enableControls}
                     enablePan={true}
                     enableZoom={true}
                     enableRotate={true}
-                    minDistance={8}
-                    maxDistance={40}
+                    minDistance={15}
+                    maxDistance={60}
+                    autoRotate={false} // Отключаем встроенный autoRotate, используем наш
+                    rotateSpeed={0.8}
                 />
+
+                {/* Легкая подсветка снизу для эффекта */}
+                <pointLight position={[0, -5, 0]} intensity={0.2} color="#335588" />
             </Canvas>
+
+            {/* Управление скоростью вращения (hover-эффект) */}
+            {autoRotate && (
+                <div className="absolute bottom-4 left-4 z-10 bg-black/30 text-white/70 px-3 py-1 rounded-full text-xs backdrop-blur-sm">
+                    Скорость вращения меняется динамически
+                </div>
+            )}
         </div>
     );
 };
