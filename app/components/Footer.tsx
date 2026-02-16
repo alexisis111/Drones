@@ -11,10 +11,11 @@ import {
     Briefcase,
     Users,
     Star,
-    ChevronRight,
-    Facebook,
-    Instagram
+    ChevronRight
 } from 'lucide-react';
+import VkIcon from '../icons/VkIcon';
+import TelegramIcon from '../icons/TelegramIcon';
+import MaxIcon from '../icons/MaxIcon';
 
 const Footer: React.FC = () => {
     const {theme} = useTheme();
@@ -47,24 +48,34 @@ const Footer: React.FC = () => {
                         </p>
                         <div className="flex space-x-4">
                             <a
-                                href="#"
+                                href="https://vk.com/legion__78"
                                 className={`p-2 rounded-full ${
                                     theme === 'dark'
                                         ? 'bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white'
                                         : 'bg-white text-gray-700 hover:bg-gray-100 hover:text-gray-900'
                                 } shadow-md transition-all`}
                             >
-                                <Facebook className="w-5 h-5"/>
+                                <VkIcon className="w-11 h-12"/>
                             </a>
                             <a
-                                href="#"
+                                href="https://t.me/legion78rf"
                                 className={`p-2 rounded-full ${
                                     theme === 'dark'
                                         ? 'bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white'
                                         : 'bg-white text-gray-700 hover:bg-gray-100 hover:text-gray-900'
                                 } shadow-md transition-all`}
                             >
-                                <Instagram className="w-5 h-5"/>
+                                <TelegramIcon className="w-11 h-12"/>
+                            </a>
+                            <a
+                                href="https://web.max.ru/-71059766930090"
+                                className={`p-2 rounded-full ${
+                                    theme === 'dark'
+                                        ? 'bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white'
+                                        : 'bg-white text-gray-700 hover:bg-gray-100 hover:text-gray-900'
+                                } shadow-md transition-all`}
+                            >
+                                <MaxIcon className="w-11 h-12"/>
                             </a>
                         </div>
                     </motion.div>

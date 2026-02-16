@@ -4,13 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fde30c11-94c5-4884-96a6-cf984ad02720" name="Changes" comment="fixContactForm">
+    <list default="true" id="fde30c11-94c5-4884-96a6-cf984ad02720" name="Changes" comment="fixZOK">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/CompanyShowcase.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/CompanyShowcase.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/DroneDefensePage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/DroneDefensePage.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/components/Footer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/Footer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/FullscreenModal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/FullscreenModal.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/ZOKVisualization.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ZOKVisualization.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,15 +88,8 @@
       <workItem from="1770934651260" duration="777000" />
       <workItem from="1770971475236" duration="22233000" />
       <workItem from="1771156762912" duration="3797000" />
-      <workItem from="1771182501606" duration="4219000" />
-    </task>
-    <task id="LOCAL-00021" summary="img services">
-      <option name="closed" value="true" />
-      <created>1770069847323</created>
-      <option name="number" value="00021" />
-      <option name="presentableId" value="LOCAL-00021" />
-      <option name="project" value="LOCAL" />
-      <updated>1770069847323</updated>
+      <workItem from="1771182501606" duration="4381000" />
+      <workItem from="1771235555313" duration="2393000" />
     </task>
     <task id="LOCAL-00022" summary="fix">
       <option name="closed" value="true" />
@@ -486,7 +475,15 @@
       <option name="project" value="LOCAL" />
       <updated>1771172853383</updated>
     </task>
-    <option name="localTasksCounter" value="70" />
+    <task id="LOCAL-00070" summary="fixZOK">
+      <option name="closed" value="true" />
+      <created>1771187578006</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1771187578006</updated>
+    </task>
+    <option name="localTasksCounter" value="71" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -516,7 +513,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fix OPTIMIZED logo ico" />
     <MESSAGE value="fix send message русское уведомление" />
     <MESSAGE value="fix" />
     <MESSAGE value="fix кнопки заказать" />
@@ -541,6 +537,7 @@
     <MESSAGE value="fixSitemap" />
     <MESSAGE value="fix3D" />
     <MESSAGE value="fixContactForm" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixContactForm" />
+    <MESSAGE value="fixZOK" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixZOK" />
   </component>
 </project>
