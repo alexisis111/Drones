@@ -4,13 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fde30c11-94c5-4884-96a6-cf984ad02720" name="Changes" comment="fixIcons">
+    <list default="true" id="fde30c11-94c5-4884-96a6-cf984ad02720" name="Changes" comment="metaZen">
+      <change afterPath="$PROJECT_DIR$/app/icons/Dzenicon.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/Footer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/Footer.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="TypeScript File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -40,7 +49,7 @@
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "D:/chechlove_admin_copy",
+    "last_opened_file_path": "D:/DroneSite",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -90,14 +99,7 @@
       <workItem from="1771182501606" duration="4381000" />
       <workItem from="1771235555313" duration="2894000" />
       <workItem from="1771247051702" duration="13000" />
-    </task>
-    <task id="LOCAL-00024" summary="fix closed">
-      <option name="closed" value="true" />
-      <created>1770076530657</created>
-      <option name="number" value="00024" />
-      <option name="presentableId" value="LOCAL-00024" />
-      <option name="project" value="LOCAL" />
-      <updated>1770076530657</updated>
+      <workItem from="1771266684051" duration="1141000" />
     </task>
     <task id="LOCAL-00025" summary="fix closed">
       <option name="closed" value="true" />
@@ -483,7 +485,15 @@
       <option name="project" value="LOCAL" />
       <updated>1771240037636</updated>
     </task>
-    <option name="localTasksCounter" value="73" />
+    <task id="LOCAL-00073" summary="metaZen">
+      <option name="closed" value="true" />
+      <created>1771266745813</created>
+      <option name="number" value="00073" />
+      <option name="presentableId" value="LOCAL-00073" />
+      <option name="project" value="LOCAL" />
+      <updated>1771266745813</updated>
+    </task>
+    <option name="localTasksCounter" value="74" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -513,7 +523,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fix" />
     <MESSAGE value="fix кнопки заказать" />
     <MESSAGE value="fix imgs" />
     <MESSAGE value="fix optimized" />
@@ -538,6 +547,7 @@
     <MESSAGE value="fixContactForm" />
     <MESSAGE value="fixZOK" />
     <MESSAGE value="fixIcons" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixIcons" />
+    <MESSAGE value="metaZen" />
+    <option name="LAST_COMMIT_MESSAGE" value="metaZen" />
   </component>
 </project>

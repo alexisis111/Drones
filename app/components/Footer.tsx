@@ -16,6 +16,7 @@ import {
 import VkIcon from '../icons/VkIcon';
 import TelegramIcon from '../icons/TelegramIcon';
 import MaxIcon from '../icons/MaxIcon';
+import DzenIcon from '../icons/Dzenicon';
 
 const Footer: React.FC = () => {
     const {theme} = useTheme();
@@ -49,6 +50,8 @@ const Footer: React.FC = () => {
                         <div className="flex space-x-4">
                             <a
                                 href="https://vk.com/legion__78"
+                                target="_blank"
+                                rel="noopener noreferrer"
                                 className={`p-2 rounded-full ${
                                     theme === 'dark'
                                         ? 'bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white'
@@ -59,6 +62,8 @@ const Footer: React.FC = () => {
                             </a>
                             <a
                                 href="https://t.me/legion78rf"
+                                target="_blank"
+                                rel="noopener noreferrer"
                                 className={`p-2 rounded-full ${
                                     theme === 'dark'
                                         ? 'bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white'
@@ -69,6 +74,8 @@ const Footer: React.FC = () => {
                             </a>
                             <a
                                 href="https://max.ru/join/VSfgaLaU34O8mOpcRQMbEUcHlhFA62rS5LSpmhy0K5M"
+                                target="_blank"
+                                rel="noopener noreferrer"
                                 className={`p-2 rounded-full ${
                                     theme === 'dark'
                                         ? 'bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white'
@@ -76,6 +83,18 @@ const Footer: React.FC = () => {
                                 } shadow-md transition-all`}
                             >
                                 <MaxIcon className="w-11 h-12"/>
+                            </a>
+                            <a
+                                href="https://dzen.ru/legion78rf?share_to=link"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className={`p-2 rounded-full ${
+                                    theme === 'dark'
+                                        ? 'bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white'
+                                        : 'bg-white text-gray-700 hover:bg-gray-100 hover:text-gray-900'
+                                } shadow-md transition-all`}
+                            >
+                                <DzenIcon className="w-11 h-12"/>
                             </a>
                         </div>
                     </motion.div>
