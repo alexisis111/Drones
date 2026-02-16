@@ -68,7 +68,7 @@ const Footer: React.FC = () => {
                                 <TelegramIcon className="w-11 h-12"/>
                             </a>
                             <a
-                                href="https://web.max.ru/-71059766930090"
+                                href="https://max.ru/join/VSfgaLaU34O8mOpcRQMbEUcHlhFA62rS5LSpmhy0K5M"
                                 className={`p-2 rounded-full ${
                                     theme === 'dark'
                                         ? 'bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white'
