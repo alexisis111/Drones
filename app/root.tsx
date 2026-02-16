@@ -28,14 +28,15 @@ export const links: Route.LinksFunction = () => [
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ru">
-      <head>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Строительная компания ЛЕГИОН</title>
-        <link rel="icon" href="/Logo-1.png" sizes="any" />
-        <Meta />
-        <Links />
-        <OrganizationSchema
+    <head>
+      <meta charSet="utf-8"/>
+      <meta name="viewport" content="width=device-width, initial-scale=1"/>
+      <meta name="zen-verification" content="DqHQfN8uIAWDflvVe1nrseBbTEEDN94hVguAkw0IB4qnfok5Z5p2m0p7eUlBbyyY"/>
+      <title>Строительная компания ЛЕГИОН</title>
+      <link rel="icon" href="/Logo-1.png" sizes="any"/>
+      <Meta/>
+      <Links/>
+      <OrganizationSchema
           name="ООО «ЛЕГИОН»"
           description="ООО «ЛЕГИОН» - Мы предлагаем современные и надёжные решения для обеспечения безопасности и выполнения строительных задач на объектах любого типа. Наши услуги охватывают: - Антидроновую защиту — системы, предотвращающие проникновение беспилотных летательных аппаратов (БПЛА) на стратегически важные объекты. - Строительство и монтаж металлоконструкций — от проектирования до реализации, с учётом всех норм и требований. - Комплексные строительные услуги — под ключ, с гарантией качества и соблюдением сроков. Работаем по всей России. Индивидуальный подход, современные технологии, надёжность и безопасность."
           url="https://xn--78-glchqprh.xn--p1ai/" // https://легион.рф/
@@ -49,9 +50,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
             "https://max.ru/join/VSfgaLaU34O8mOpcRQMbEUcHlhFA62rS5LSpmhy0K5M",
             'https://t.me/+XaGL8WXjVwQwYjVi'
           ]}
-        />
-        {/* Yandex.Metrika counter */}
-        <script
+      />
+      {/* Yandex.Metrika counter */}
+      <script
           dangerouslySetInnerHTML={{
             __html: `
               (function(m,e,t,r,i,k,a){
@@ -69,12 +70,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
               }
             `
           }}
-        />
-      </head>
-      <body>
-        <div className="min-h-screen flex flex-col">
-          <main className="flex-grow">
-            {children}
+      />
+    </head>
+    <body>
+    <div className="min-h-screen flex flex-col">
+      <main className="flex-grow">
+      {children}
           </main>
         </div>
         <ScrollRestoration />
