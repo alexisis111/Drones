@@ -1,7 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useTheme } from '../contexts/ThemeContext';
-import { Shield, Building2, Target, Zap, Award, Clock, Users, CheckCircle, ChevronRight, ArrowRight, MapPin, Calendar } from 'lucide-react';
+import {
+  Shield,
+  Building2,
+  Target,
+  Zap,
+  Award,
+  Clock,
+  Users,
+  CheckCircle,
+  ChevronRight,
+  ArrowRight,
+  MapPin,
+  Calendar,
+  FileText, HardHat
+} from 'lucide-react';
 import { Link } from 'react-router';
 
 interface PortfolioItem {
@@ -287,16 +301,21 @@ const PortfolioGallery: React.FC = () => {
       <section className="py-24 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-black">
         <div className="container mx-auto px-4">
           <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
+              initial={{opacity: 0, y: 50}}
+              whileInView={{opacity: 1, y: 0}}
+              viewport={{once: true}}
+              className="text-center mb-16"
           >
+            <div
+                className="inline-flex items-center gap-2 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-full px-4 py-2 mb-4">
+              <HardHat className="w-4 h-4"/>
+              <span className="text-sm font-medium">Портфолио</span>
+            </div>
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
               Наши проекты
             </h2>
             <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-              Ознакомьтесь с нашими реализованными проектами. Каждый из них является примером 
+              Ознакомьтесь с нашими реализованными проектами. Каждый из них является примером
               высокого качества и профессионального подхода.
             </p>
           </motion.div>
@@ -304,9 +323,9 @@ const PortfolioGallery: React.FC = () => {
           {/* Category Filters */}
           <div className="flex flex-wrap justify-center gap-4 mb-16">
             {[
-              { id: 'all', label: 'Все проекты' },
-              { id: 'construction', label: 'Строительство' },
-              { id: 'maintenance', label: 'Обслуживание' },
+              {id: 'all', label: 'Все проекты'},
+              {id: 'construction', label: 'Строительство'},
+              {id: 'maintenance', label: 'Обслуживание' },
               { id: 'security', label: 'Безопасность' }
             ].map((filter) => (
               <button

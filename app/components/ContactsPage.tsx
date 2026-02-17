@@ -17,7 +17,7 @@ import {
   MapPin,
   MessageSquare,
   Send,
-  RefreshCw
+  RefreshCw, HardHat, Headset
 } from 'lucide-react';
 import { useFetcher } from 'react-router';
 import ContactForm from "~/components/ContactForm";
@@ -160,6 +160,11 @@ const ContactsPage: React.FC = () => {
                 viewport={{once: true}}
                 className="text-center mb-16"
             >
+              <div
+                  className="inline-flex items-center gap-2 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-full px-4 py-2 mb-4">
+                <Headset className="w-4 h-4"/>
+                <span className="text-sm font-medium">Связь</span>
+              </div>
               <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
                 Наши контактные данные
               </h2>

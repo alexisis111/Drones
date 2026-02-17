@@ -4,10 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fde30c11-94c5-4884-96a6-cf984ad02720" name="Changes" comment="metaZen">
-      <change afterPath="$PROJECT_DIR$/app/icons/Dzenicon.tsx" afterDir="false" />
+    <list default="true" id="fde30c11-94c5-4884-96a6-cf984ad02720" name="Changes" comment="addDzen">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/Footer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/Footer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.qwen/PROJECT_SUMMARY.md" beforeDir="false" afterPath="$PROJECT_DIR$/.qwen/PROJECT_SUMMARY.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/AppWrapper.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/AppWrapper.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/CompanyShowcase.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/CompanyShowcase.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/ContactsPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ContactsPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/DroneDefensePage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/DroneDefensePage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/PortfolioGallery.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/PortfolioGallery.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/ServicesCatalog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ServicesCatalog.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/VacanciesGallery.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/VacanciesGallery.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,21 +51,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "D:/DroneSite",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "terminal",
-    "ts.external.directory.path": "D:\\DroneSite\\node_modules\\typescript\\lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/DroneSite&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;terminal&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;D:\\DroneSite\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\DroneSite" />
@@ -99,15 +105,8 @@
       <workItem from="1771182501606" duration="4381000" />
       <workItem from="1771235555313" duration="2894000" />
       <workItem from="1771247051702" duration="13000" />
-      <workItem from="1771266684051" duration="1141000" />
-    </task>
-    <task id="LOCAL-00025" summary="fix closed">
-      <option name="closed" value="true" />
-      <created>1770076623507</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1770076623507</updated>
+      <workItem from="1771266684051" duration="1599000" />
+      <workItem from="1771314218219" duration="7395000" />
     </task>
     <task id="LOCAL-00026" summary="fix closed">
       <option name="closed" value="true" />
@@ -493,7 +492,15 @@
       <option name="project" value="LOCAL" />
       <updated>1771266745813</updated>
     </task>
-    <option name="localTasksCounter" value="74" />
+    <task id="LOCAL-00074" summary="addDzen">
+      <option name="closed" value="true" />
+      <created>1771270509522</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1771270509522</updated>
+    </task>
+    <option name="localTasksCounter" value="75" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -523,7 +530,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fix кнопки заказать" />
     <MESSAGE value="fix imgs" />
     <MESSAGE value="fix optimized" />
     <MESSAGE value="cookiesbannersadd" />
@@ -548,6 +554,7 @@
     <MESSAGE value="fixZOK" />
     <MESSAGE value="fixIcons" />
     <MESSAGE value="metaZen" />
-    <option name="LAST_COMMIT_MESSAGE" value="metaZen" />
+    <MESSAGE value="addDzen" />
+    <option name="LAST_COMMIT_MESSAGE" value="addDzen" />
   </component>
 </project>

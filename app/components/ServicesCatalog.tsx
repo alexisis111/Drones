@@ -1,7 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useTheme } from '../contexts/ThemeContext';
-import { Shield, Building2, Target, Zap, Award, Clock, Users, CheckCircle, ChevronRight, ArrowRight, Percent } from 'lucide-react';
+import {
+  Shield,
+  Building2,
+  Target,
+  Zap,
+  Award,
+  Clock,
+  Users,
+  CheckCircle,
+  ChevronRight,
+  ArrowRight,
+  Percent,
+  CirclePile, FileText
+} from 'lucide-react';
 import { Link, useSearchParams } from 'react-router';
 import OptimizedImage from './OptimizedImage';
 import LazyLoad from './LazyLoad';
@@ -550,12 +563,17 @@ const ServicesCatalog: React.FC = () => {
       <section className="py-24 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-black">
         <div className="container mx-auto px-4">
           <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-            id="catalog-header"
+              initial={{opacity: 0, y: 50}}
+              whileInView={{opacity: 1, y: 0}}
+              viewport={{once: true}}
+              className="text-center mb-16"
+              id="catalog-header"
           >
+            <div
+                className="inline-flex items-center gap-2 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-full px-4 py-2 mb-4">
+              <FileText className="w-4 h-4"/>
+              <span className="text-sm font-medium">Наши услуги</span>
+            </div>
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
               Каталог услуг
             </h2>
@@ -567,10 +585,10 @@ const ServicesCatalog: React.FC = () => {
           {/* Category Filters */}
           <div className="flex flex-wrap justify-center gap-4 mb-16">
             {categories.map((category) => (
-              <button
-                key={category}
-                onClick={() => setSelectedCategory(category)}
-                className={`px-6 py-3 rounded-full font-medium transition-all ${
+                <button
+                    key={category}
+                    onClick={() => setSelectedCategory(category)}
+                    className={`px-6 py-3 rounded-full font-medium transition-all ${
                   selectedCategory === category
                     ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg'
                     : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'

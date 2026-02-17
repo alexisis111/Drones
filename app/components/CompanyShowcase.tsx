@@ -15,7 +15,7 @@ import {
   ArrowRight,
   Globe2,
   Network,
-  Warehouse
+  Warehouse, AlertTriangle, CirclePile
 } from 'lucide-react';
 import { Link } from "react-router";
 import { LocalBusinessSchema } from './SchemaOrg';
@@ -234,14 +234,15 @@ const CompanyShowcase: React.FC = () => {
 
           <div className="container mx-auto px-4 relative z-10">
             <motion.div
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                initial={{opacity: 0, y: 50}}
+                whileInView={{opacity: 1, y: 0}}
+                viewport={{once: true}}
                 className="text-center mb-16"
             >
-              <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full px-6 py-2 mb-4 shadow-lg">
-                <Clock className="w-4 h-4" />
-                <span className="text-sm font-medium tracking-wider">НАША ИСТОРИЯ</span>
+              <div
+                  className="inline-flex items-center gap-2 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-full px-4 py-2 mb-4">
+                <CirclePile className="w-4 h-4"/>
+                <span className="text-sm font-medium">История компании</span>
               </div>
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-6">
                 Путь к успеху

@@ -12,14 +12,10 @@ const AppWrapper: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Имитация загрузки контента
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1000); // Задержка в 1 секунду для демонстрации процесса загрузки
+    // Мгновенная загрузка контента
+    setIsLoading(false);
 
-    // В реальном приложении здесь может быть логика загрузки данных
-
-    return () => clearTimeout(timer);
+    return () => {};
   }, []);
 
   return (
