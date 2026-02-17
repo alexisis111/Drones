@@ -17,24 +17,26 @@ if (!TELEGRAM_CHAT_ID) {
 export const action = async ({ request }: ActionFunctionArgs) => {
   try {
     const formData = await request.json();
-    const { name, email, phone, message } = formData;
+    const { name, email, phone, message, objectType, subject } = formData;
 
-    // Validate required fields
-    if (!name || !message) {
+    // Validate required fields - name is required for all forms
+    // For contact forms: message is required
+    // For estimate forms: objectType is required (message is optional)
+    if (!name) {
       return json({
         success: false,
-        error: 'Имя и сообщение обязательны для заполнения'
+        error: 'Имя обязательно для заполнения'
       }, { status: 400 });
     }
 
-    // Format message for Telegram
+    // Format message for Telegram based on form type
+    const isEstimateForm = !!objectType;
     const telegramMessage = `
-Новое сообщение с формы обратной связи:
-
+${subject ? `<b>${subject}</b>\n\n` : ''}${isEstimateForm ? '<b>Заявка на бесплатный расчет защиты от БПЛА</b>\n\n' : '<b>Новое сообщение с формы обратной связи:</b>\n\n'}
 Имя: ${name}
 Email: ${email || 'Не указан'}
 Телефон: ${phone || 'Не указан'}
-Сообщение: ${message}
+${isEstimateForm ? `Тип объекта: ${objectType}\n` : ''}Сообщение: ${message || 'Не указано'}
 
 Время получения: ${new Date().toLocaleString('ru-RU')}
     `.trim();

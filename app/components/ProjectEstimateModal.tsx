@@ -41,6 +41,7 @@ const ProjectEstimateModal: React.FC<ProjectEstimateModalProps> = ({
   const [isLoading, setIsLoading] = useState(false);
   const [progress, setProgress] = useState(0);
   const [countdown, setCountdown] = useState(3);
+  const [consentChecked, setConsentChecked] = useState(false);
 
   // Капча
   const [captcha, setCaptcha] = useState({ num1: 0, num2: 0, operator: '+', result: 0 });
@@ -267,8 +268,7 @@ const ProjectEstimateModal: React.FC<ProjectEstimateModalProps> = ({
       return;
     }
 
-    const consentCheckbox = document.getElementById('consent') as HTMLInputElement;
-    if (!consentCheckbox.checked) {
+    if (!consentChecked) {
       setErrors(prev => ({
         ...prev,
         consent: 'Необходимо дать согласие на обработку персональных данных'
@@ -316,10 +316,12 @@ const ProjectEstimateModal: React.FC<ProjectEstimateModalProps> = ({
     setIsLoading(true);
 
     try {
+      console.log('Calling onSubmit with:', { ...formData, subject: 'Бесплатный расчет стоимости защиты от БПЛА' });
       const response = await onSubmit({
         ...formData,
         subject: 'Бесплатный расчет стоимости защиты от БПЛА'
       });
+      console.log('onSubmit response:', response);
 
       setSubmitStatus({
         type: 'success',
@@ -336,11 +338,7 @@ const ProjectEstimateModal: React.FC<ProjectEstimateModalProps> = ({
 
       setErrors({ name: '', email: '', phone: '', objectType: '', consent: '', captcha: '' });
       setCaptchaAnswer('');
-
-      const consentCheckbox = document.getElementById('consent') as HTMLInputElement;
-      if (consentCheckbox) {
-        consentCheckbox.checked = false;
-      }
+      setConsentChecked(false);
     } catch (error: any) {
       setSubmitStatus({
         type: 'error',
@@ -352,13 +350,15 @@ const ProjectEstimateModal: React.FC<ProjectEstimateModalProps> = ({
   };
 
   return (
-    <div 
-      className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4" 
+    <div
+      className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[9999] flex items-center justify-center p-4"
       onClick={onClose}
+      style={{ pointerEvents: 'auto' }}
     >
       <div
         className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl max-w-md w-full max-h-[60vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
+        style={{ pointerEvents: 'auto' }}
       >
         {/* Header */}
         <div className="flex justify-between items-center p-6 border-b border-gray-200 dark:border-gray-700 sticky top-0 bg-white dark:bg-gray-800 z-10">
@@ -536,6 +536,13 @@ const ProjectEstimateModal: React.FC<ProjectEstimateModalProps> = ({
               <input
                 type="checkbox"
                 id="consent"
+                checked={consentChecked}
+                onChange={(e) => {
+                  setConsentChecked(e.target.checked);
+                  if (e.target.checked) {
+                    setErrors(prev => ({ ...prev, consent: '' }));
+                  }
+                }}
                 className="mt-1 mr-2 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
               />
               <label htmlFor="consent" className="text-sm text-gray-600 dark:text-gray-400">

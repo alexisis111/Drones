@@ -25,21 +25,28 @@ const DroneDefensePage: React.FC = () => {
   }, []);
 
   const handleEstimateSubmit = async (formData: any) => {
-    const response = await fetch('/api/telegram-webhook', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-    });
+    console.log('Submitting estimate form:', formData);
+    try {
+      const response = await fetch('/api/telegram-webhook', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
 
-    const result = await response.json();
+      const result = await response.json();
+      console.log('Submit result:', result);
 
-    if (!response.ok || !result.success) {
-      throw new Error(result.error || 'Ошибка при отправке заявки');
+      if (!response.ok || !result.success) {
+        throw new Error(result.error || 'Ошибка при отправке заявки');
+      }
+
+      return result;
+    } catch (error) {
+      console.error('Submit error:', error);
+      throw error;
     }
-
-    return result;
   };
 
   return (
@@ -401,7 +408,8 @@ const DroneDefensePage: React.FC = () => {
                     </div>
 
                     <button
-                        onClick={() => setIsEstimateModalOpen(true)}
+                        type="button"
+                        onClick={(e) => { e.preventDefault(); setIsEstimateModalOpen(true); }}
                         className="group/btn relative flex items-center justify-center gap-2 w-full py-4 rounded-xl font-bold overflow-hidden transition-all duration-300"
                     >
                       <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500"></div>
@@ -412,12 +420,6 @@ const DroneDefensePage: React.FC = () => {
                   </div>
                 </div>
               </motion.div>
-
-              <ProjectEstimateModal
-                isOpen={isEstimateModalOpen}
-                onClose={() => setIsEstimateModalOpen(false)}
-                onSubmit={handleEstimateSubmit}
-              />
 
               {/* Level 2 - Защита от БПЛА (Красная/Оранжевая) */}
               <motion.div
@@ -574,6 +576,11 @@ const DroneDefensePage: React.FC = () => {
         </div>
       </section>
 
+      <ProjectEstimateModal
+        isOpen={isEstimateModalOpen}
+        onClose={() => setIsEstimateModalOpen(false)}
+        onSubmit={handleEstimateSubmit}
+      />
 
       {/* Visualization Section */}
       <section className="py-24 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-black">
