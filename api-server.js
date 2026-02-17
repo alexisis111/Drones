@@ -30,24 +30,32 @@ if (!TELEGRAM_CHAT_ID) {
 // Create a route for the Telegram webhook
 app.post('/api/telegram-webhook', async (req, res) => {
   try {
-    const { name, email, phone, message } = req.body;
+    const { name, email, phone, message, objectType, subject } = req.body;
 
-    // Validate required fields
-    if (!name || !message) {
+    // Validate required fields - name is always required, and either message or objectType
+    if (!name) {
       return res.status(400).json({
         success: false,
-        error: 'Имя и сообщение обязательны для заполнения'
+        error: 'Имя обязательно для заполнения'
+      });
+    }
+
+    if (!message && !objectType) {
+      return res.status(400).json({
+        success: false,
+        error: 'Сообщение или тип объекта обязательны для заполнения'
       });
     }
 
     // Format message for Telegram
     let telegramMessage = `
-Новое сообщение с формы обратной связи:
+${subject ? subject : 'Новое сообщение с формы обратной связи'}
 
 Имя: ${name}
 Email: ${email || 'Не указан'}
 Телефон: ${phone || 'Не указан'}
-Сообщение: ${message}
+${objectType ? `Тип объекта: ${objectType}` : ''}
+${message ? `Сообщение: ${message}` : ''}
 
 Время получения: ${new Date().toLocaleString('ru-RU')}
     `.trim();
