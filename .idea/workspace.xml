@@ -4,16 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fde30c11-94c5-4884-96a6-cf984ad02720" name="Changes" comment="addDzen">
+    <list default="true" id="fde30c11-94c5-4884-96a6-cf984ad02720" name="Changes" comment="addZokForm">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.qwen/PROJECT_SUMMARY.md" beforeDir="false" afterPath="$PROJECT_DIR$/.qwen/PROJECT_SUMMARY.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/AppWrapper.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/AppWrapper.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/CompanyShowcase.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/CompanyShowcase.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/ContactsPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ContactsPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/DroneDefensePage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/DroneDefensePage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/PortfolioGallery.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/PortfolioGallery.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/ServicesCatalog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ServicesCatalog.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/VacanciesGallery.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/VacanciesGallery.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,15 +98,7 @@
       <workItem from="1771235555313" duration="2894000" />
       <workItem from="1771247051702" duration="13000" />
       <workItem from="1771266684051" duration="1599000" />
-      <workItem from="1771314218219" duration="7395000" />
-    </task>
-    <task id="LOCAL-00026" summary="fix closed">
-      <option name="closed" value="true" />
-      <created>1770076671133</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1770076671133</updated>
+      <workItem from="1771314218219" duration="9363000" />
     </task>
     <task id="LOCAL-00027" summary="fixxx">
       <option name="closed" value="true" />
@@ -500,7 +484,15 @@
       <option name="project" value="LOCAL" />
       <updated>1771270509522</updated>
     </task>
-    <option name="localTasksCounter" value="75" />
+    <task id="LOCAL-00075" summary="addZokForm">
+      <option name="closed" value="true" />
+      <created>1771329398149</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1771329398149</updated>
+    </task>
+    <option name="localTasksCounter" value="76" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -530,7 +522,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fix imgs" />
     <MESSAGE value="fix optimized" />
     <MESSAGE value="cookiesbannersadd" />
     <MESSAGE value="fixImgs" />
@@ -555,6 +546,7 @@
     <MESSAGE value="fixIcons" />
     <MESSAGE value="metaZen" />
     <MESSAGE value="addDzen" />
-    <option name="LAST_COMMIT_MESSAGE" value="addDzen" />
+    <MESSAGE value="addZokForm" />
+    <option name="LAST_COMMIT_MESSAGE" value="addZokForm" />
   </component>
 </project>

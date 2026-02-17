@@ -356,7 +356,7 @@ const ProjectEstimateModal: React.FC<ProjectEstimateModalProps> = ({
       style={{ pointerEvents: 'auto' }}
     >
       <div
-        className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl max-w-md w-full max-h-[60vh] overflow-y-auto"
+        className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl max-w-md w-full max-h-[90vh] md:max-h-[60vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
         style={{ pointerEvents: 'auto' }}
       >
