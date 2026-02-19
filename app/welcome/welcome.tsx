@@ -5,6 +5,7 @@ import { Link } from 'react-router';
 import { ChevronRight, ArrowRight, Shield, Building2, Target, Zap, Award, Clock, Users, CheckCircle } from 'lucide-react';
 import { LocalBusinessSchema, ServiceSchema } from "../components/SchemaOrg";
 import FaqSection from "../components/FaqSection";
+import Breadcrumbs, { type BreadcrumbItem } from "../components/Breadcrumbs";
 
 
 

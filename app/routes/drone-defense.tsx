@@ -1,5 +1,6 @@
 import type { Route } from "./+types/drone-defense";
 import DroneDefensePage from "../components/DroneDefensePage";
+import type { BreadcrumbItem } from "../components/BreadcrumbSchema";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -22,6 +23,11 @@ export function meta({}: Route.MetaArgs) {
   ];
 }
 
+const breadcrumbs: BreadcrumbItem[] = [
+  { position: 1, name: "Главная", item: "https://xn--78-glchqprh.xn--p1ai/" },
+  { position: 2, name: "Защита от БПЛА", item: "https://xn--78-glchqprh.xn--p1ai/drone-defense" }
+];
+
 export default function DroneDefenseRoute() {
-  return <DroneDefensePage />;
+  return <DroneDefensePage breadcrumbs={breadcrumbs} />;
 }

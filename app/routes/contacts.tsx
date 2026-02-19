@@ -1,5 +1,6 @@
 import type { Route } from "./+types/contacts";
 import ContactsPage from "../components/ContactsPage";
+import type { BreadcrumbItem } from "../components/BreadcrumbSchema";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -22,6 +23,11 @@ export function meta({}: Route.MetaArgs) {
   ];
 }
 
+const breadcrumbs: BreadcrumbItem[] = [
+  { position: 1, name: "Главная", item: "https://xn--78-glchqprh.xn--p1ai/" },
+  { position: 2, name: "Контакты", item: "https://xn--78-glchqprh.xn--p1ai/contacts" }
+];
+
 export default function ContactsRoute() {
-  return <ContactsPage />;
+  return <ContactsPage breadcrumbs={breadcrumbs} />;
 }

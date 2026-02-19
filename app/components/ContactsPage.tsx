@@ -21,8 +21,13 @@ import {
 } from 'lucide-react';
 import { useFetcher } from 'react-router';
 import ContactForm from "~/components/ContactForm";
+import Breadcrumbs, { type BreadcrumbItem } from './Breadcrumbs';
 
-const ContactsPage: React.FC = () => {
+interface ContactsPageProps {
+  breadcrumbs?: BreadcrumbItem[];
+}
+
+const ContactsPage: React.FC<ContactsPageProps> = ({ breadcrumbs }) => {
   const { theme } = useTheme();
   const [scrollY, setScrollY] = useState(0);
 
@@ -57,6 +62,13 @@ const ContactsPage: React.FC = () => {
 
           {/* Content */}
           <div className="relative container mx-auto px-4 z-10">
+            {/* Хлебные крошки */}
+            {breadcrumbs && (
+              <div className="py-4">
+                <Breadcrumbs breadcrumbs={breadcrumbs} className="text-white/80" />
+              </div>
+            )}
+            
             <div className="grid lg:grid-cols-2 gap-12 items-center py-8">
               {/* Left column - Main content */}
               <motion.div

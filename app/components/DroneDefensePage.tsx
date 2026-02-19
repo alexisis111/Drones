@@ -8,8 +8,13 @@ import FullscreenModal from './FullscreenModal';
 import FaqSection from './FaqSection';
 import ContactForm from "~/components/ContactForm";
 import ProjectEstimateModal from './ProjectEstimateModal';
+import Breadcrumbs, { type BreadcrumbItem } from './Breadcrumbs';
 
-const DroneDefensePage: React.FC = () => {
+interface DroneDefensePageProps {
+  breadcrumbs?: BreadcrumbItem[];
+}
+
+const DroneDefensePage: React.FC<DroneDefensePageProps> = ({ breadcrumbs }) => {
   const { theme } = useTheme();
   const [scrollY, setScrollY] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -66,6 +71,13 @@ const DroneDefensePage: React.FC = () => {
 
         {/* Content */}
         <div className="relative container mx-auto px-4 z-10">
+          {/* Хлебные крошки */}
+          {breadcrumbs && (
+            <div className="py-4">
+              <Breadcrumbs breadcrumbs={breadcrumbs} className="text-white/80" />
+            </div>
+          )}
+          
           <div className="grid lg:grid-cols-2 gap-12 items-center py-4">
             {/* Left column - Main content */}
             <motion.div

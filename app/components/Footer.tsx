@@ -119,8 +119,7 @@ const Footer: React.FC = () => {
                                 {to: "/portfolio", label: "Портфолио"},
                                 {to: "/contacts", label: "Контакты"},
                                 {to: "/vacancies", label: "Вакансии"},
-                                {to: "/drone-defense", label: "Защита от БПЛА"},
-                                {to: "/proposal", label: "Специальное предложение"}
+                                {to: "/drone-defense", label: "Защита от БПЛА"}
                             ].map((item, index) => (
                                 <motion.li
                                     key={item.to}

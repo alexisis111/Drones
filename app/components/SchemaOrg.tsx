@@ -168,3 +168,4 @@ const ServiceSchema: React.FC<ServiceSchemaProps> = ({
 };
 
 export { OrganizationSchema, LocalBusinessSchema, ServiceSchema };
+export type { BreadcrumbItem } from './BreadcrumbSchema';

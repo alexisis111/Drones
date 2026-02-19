@@ -4,7 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fde30c11-94c5-4884-96a6-cf984ad02720" name="Changes" comment="fixSEOFrendlyTitle" />
+    <list default="true" id="fde30c11-94c5-4884-96a6-cf984ad02720" name="Changes" comment="fixSEOFrendlyTitle">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/DroneDefensePage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/DroneDefensePage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/Footer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/Footer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/SchemaOrg.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/SchemaOrg.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/drone-defense.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/drone-defense.tsx" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -98,15 +104,8 @@
       <workItem from="1771266684051" duration="1599000" />
       <workItem from="1771314218219" duration="9922000" />
       <workItem from="1771428237439" duration="15000" />
-      <workItem from="1771495625174" duration="3372000" />
-    </task>
-    <task id="LOCAL-00032" summary="fix forms in TG">
-      <option name="closed" value="true" />
-      <created>1770099838313</created>
-      <option name="number" value="00032" />
-      <option name="presentableId" value="LOCAL-00032" />
-      <option name="project" value="LOCAL" />
-      <updated>1770099838313</updated>
+      <workItem from="1771495625174" duration="3667000" />
+      <workItem from="1771520072236" duration="4656000" />
     </task>
     <task id="LOCAL-00033" summary="fix forms in TG">
       <option name="closed" value="true" />
@@ -492,7 +491,15 @@
       <option name="project" value="LOCAL" />
       <updated>1771499051269</updated>
     </task>
-    <option name="localTasksCounter" value="81" />
+    <task id="LOCAL-00081" summary="fixSEOFrendlyTitle">
+      <option name="closed" value="true" />
+      <created>1771499214035</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1771499214035</updated>
+    </task>
+    <option name="localTasksCounter" value="82" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
