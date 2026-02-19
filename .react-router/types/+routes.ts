@@ -29,9 +29,9 @@ type Pages = {
   "/services": {
     params: {};
   };
-  "/service/:id": {
+  "/service/:slug": {
     params: {
-      "id": string;
+      "slug": string;
     };
   };
   "/drone-defense": {
@@ -53,7 +53,7 @@ type Pages = {
 type RouteFiles = {
   "root.tsx": {
     id: "root";
-    page: "/" | "/company" | "/portfolio" | "/contacts" | "/vacancies" | "/services" | "/service/:id" | "/drone-defense" | "/privacy" | "/terms" | "/*";
+    page: "/" | "/company" | "/portfolio" | "/contacts" | "/vacancies" | "/services" | "/service/:slug" | "/drone-defense" | "/privacy" | "/terms" | "/*";
   };
   "routes/home.tsx": {
     id: "routes/home";
@@ -81,7 +81,7 @@ type RouteFiles = {
   };
   "routes/service-detail.tsx": {
     id: "routes/service-detail";
-    page: "/service/:id";
+    page: "/service/:slug";
   };
   "routes/drone-defense.tsx": {
     id: "routes/drone-defense";
