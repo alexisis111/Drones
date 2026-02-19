@@ -17,7 +17,7 @@ export function meta({ data }: Route.MetaArgs) {
   const service = data?.service;
 
   return [
-    { title: `${serviceTitle} | ООО ЛЕГИОН — Строительная компания.` },
+    { title: `${serviceTitle} | Строительная компания ЛЕГИОН` },
     { name: "description", content: `${serviceTitle} от строительной компании ООО «ЛЕГИОН». Профессиональное выполнение строительных и монтажных работ. Консультация специалиста.` },
     { name: "keywords", content: `${serviceTitle}, строительная компания СПб, ООО ЛЕГИОН, строительные услуги, монтажные работы, строительство под ключ, Ленинградская область` },
     { name: "author", content: "Строительная компания ЛЕГИОН" },
@@ -25,11 +25,11 @@ export function meta({ data }: Route.MetaArgs) {
     { rel: "canonical", href: `https://xn--78-glchqprh.xn--p1ai/service/${data?.slug}` },
     { property: "og:type", content: "website" },
     { property: "og:url", content: `https://xn--78-glchqprh.xn--p1ai/service/${data?.slug}` },
-    { property: "og:title", content: `${serviceTitle} | ООО ЛЕГИОН — Строительная компания.` },
+    { property: "og:title", content: `${serviceTitle} | Строительная компания ЛЕГИОН` },
     { property: "og:description", content: `${serviceTitle} от строительной компании ООО «ЛЕГИОН». Профессиональное выполнение строительных и монтажных работ в СПб.` },
     { property: "og:image", content: service?.imageUrl || "/Logo-1.png" },
     { name: "twitter:card", content: "summary_large_image" },
-    { name: "twitter:title", content: `${serviceTitle} | ООО ЛЕГИОН — Строительная компания.` },
+    { name: "twitter:title", content: `${serviceTitle} | Строительная компания ЛЕГИОН` },
     { name: "twitter:description", content: `${serviceTitle} от строительной компании ООО «ЛЕГИОН». Профессиональное выполнение строительных и монтажных работ.` },
     { name: "twitter:image", content: service?.imageUrl || "/Logo-1.png" },
   ];
