@@ -4,8 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fde30c11-94c5-4884-96a6-cf984ad02720" name="Changes" comment="addZokForm">
+    <list default="true" id="fde30c11-94c5-4884-96a6-cf984ad02720" name="Changes" comment="fixZokFormSizeMobile">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/company.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/company.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/contacts.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/contacts.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/drone-defense.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/drone-defense.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/home.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/home.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/portfolio.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/portfolio.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/service-detail.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/service-detail.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/services.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/services.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/vacancies.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/vacancies.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,21 +51,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/DroneSite&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;terminal&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;D:\\DroneSite\\node_modules\\typescript\\lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "D:/DroneSite",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "terminal",
+    "ts.external.directory.path": "D:\\DroneSite\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\DroneSite" />
@@ -98,15 +106,9 @@
       <workItem from="1771235555313" duration="2894000" />
       <workItem from="1771247051702" duration="13000" />
       <workItem from="1771266684051" duration="1599000" />
-      <workItem from="1771314218219" duration="9363000" />
-    </task>
-    <task id="LOCAL-00027" summary="fixxx">
-      <option name="closed" value="true" />
-      <created>1770097707149</created>
-      <option name="number" value="00027" />
-      <option name="presentableId" value="LOCAL-00027" />
-      <option name="project" value="LOCAL" />
-      <updated>1770097707149</updated>
+      <workItem from="1771314218219" duration="9922000" />
+      <workItem from="1771428237439" duration="15000" />
+      <workItem from="1771495625174" duration="765000" />
     </task>
     <task id="LOCAL-00028" summary="fixxx">
       <option name="closed" value="true" />
@@ -492,7 +494,15 @@
       <option name="project" value="LOCAL" />
       <updated>1771329398149</updated>
     </task>
-    <option name="localTasksCounter" value="76" />
+    <task id="LOCAL-00076" summary="fixZokFormSizeMobile">
+      <option name="closed" value="true" />
+      <created>1771333243800</created>
+      <option name="number" value="00076" />
+      <option name="presentableId" value="LOCAL-00076" />
+      <option name="project" value="LOCAL" />
+      <updated>1771333243800</updated>
+    </task>
+    <option name="localTasksCounter" value="77" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -522,7 +532,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fix optimized" />
     <MESSAGE value="cookiesbannersadd" />
     <MESSAGE value="fixImgs" />
     <MESSAGE value="fixSales" />
@@ -547,6 +556,7 @@
     <MESSAGE value="metaZen" />
     <MESSAGE value="addDzen" />
     <MESSAGE value="addZokForm" />
-    <option name="LAST_COMMIT_MESSAGE" value="addZokForm" />
+    <MESSAGE value="fixZokFormSizeMobile" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixZokFormSizeMobile" />
   </component>
 </project>
