@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fde30c11-94c5-4884-96a6-cf984ad02720" name="Changes" comment="fixSlugServices">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/routes/company.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/company.tsx" afterDir="false" />
-    </list>
+    <list default="true" id="fde30c11-94c5-4884-96a6-cf984ad02720" name="Changes" comment="fixSEOFrendlyTitle" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -101,15 +98,7 @@
       <workItem from="1771266684051" duration="1599000" />
       <workItem from="1771314218219" duration="9922000" />
       <workItem from="1771428237439" duration="15000" />
-      <workItem from="1771495625174" duration="3028000" />
-    </task>
-    <task id="LOCAL-00031" summary="fix forms in TG">
-      <option name="closed" value="true" />
-      <created>1770099439486</created>
-      <option name="number" value="00031" />
-      <option name="presentableId" value="LOCAL-00031" />
-      <option name="project" value="LOCAL" />
-      <updated>1770099439486</updated>
+      <workItem from="1771495625174" duration="3372000" />
     </task>
     <task id="LOCAL-00032" summary="fix forms in TG">
       <option name="closed" value="true" />
@@ -495,7 +484,15 @@
       <option name="project" value="LOCAL" />
       <updated>1771498540179</updated>
     </task>
-    <option name="localTasksCounter" value="80" />
+    <task id="LOCAL-00080" summary="fixSEOFrendlyTitle">
+      <option name="closed" value="true" />
+      <created>1771499051269</created>
+      <option name="number" value="00080" />
+      <option name="presentableId" value="LOCAL-00080" />
+      <option name="project" value="LOCAL" />
+      <updated>1771499051269</updated>
+    </task>
+    <option name="localTasksCounter" value="81" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -525,7 +522,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fixSales" />
     <MESSAGE value="YaMetrics" />
     <MESSAGE value="YaMetrics2" />
     <MESSAGE value="init SEO" />
@@ -550,6 +546,7 @@
     <MESSAGE value="fixZokFormSizeMobile" />
     <MESSAGE value="fixTabsNames" />
     <MESSAGE value="fixSlugServices" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixSlugServices" />
+    <MESSAGE value="fixSEOFrendlyTitle" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixSEOFrendlyTitle" />
   </component>
 </project>
