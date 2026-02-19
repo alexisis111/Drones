@@ -4,7 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fde30c11-94c5-4884-96a6-cf984ad02720" name="Changes" comment="fixZokFormSizeMobile">
+    <list default="true" id="fde30c11-94c5-4884-96a6-cf984ad02720" name="Changes" comment="fixTabsNames">
+      <change afterPath="$PROJECT_DIR$/SEO_GUIDE.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/routes/company.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/company.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/routes/contacts.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/contacts.tsx" afterDir="false" />
@@ -14,6 +15,7 @@
       <change beforePath="$PROJECT_DIR$/app/routes/service-detail.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/service-detail.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/routes/services.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/services.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/routes/vacancies.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/vacancies.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/sitemap.xml" beforeDir="false" afterPath="$PROJECT_DIR$/public/sitemap.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,15 +110,7 @@
       <workItem from="1771266684051" duration="1599000" />
       <workItem from="1771314218219" duration="9922000" />
       <workItem from="1771428237439" duration="15000" />
-      <workItem from="1771495625174" duration="765000" />
-    </task>
-    <task id="LOCAL-00028" summary="fixxx">
-      <option name="closed" value="true" />
-      <created>1770098495044</created>
-      <option name="number" value="00028" />
-      <option name="presentableId" value="LOCAL-00028" />
-      <option name="project" value="LOCAL" />
-      <updated>1770098495044</updated>
+      <workItem from="1771495625174" duration="1308000" />
     </task>
     <task id="LOCAL-00029" summary="fix forms in TG">
       <option name="closed" value="true" />
@@ -502,7 +496,15 @@
       <option name="project" value="LOCAL" />
       <updated>1771333243800</updated>
     </task>
-    <option name="localTasksCounter" value="77" />
+    <task id="LOCAL-00077" summary="fixTabsNames">
+      <option name="closed" value="true" />
+      <created>1771496954005</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1771496954006</updated>
+    </task>
+    <option name="localTasksCounter" value="78" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -532,7 +534,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="cookiesbannersadd" />
     <MESSAGE value="fixImgs" />
     <MESSAGE value="fixSales" />
     <MESSAGE value="YaMetrics" />
@@ -557,6 +558,7 @@
     <MESSAGE value="addDzen" />
     <MESSAGE value="addZokForm" />
     <MESSAGE value="fixZokFormSizeMobile" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixZokFormSizeMobile" />
+    <MESSAGE value="fixTabsNames" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixTabsNames" />
   </component>
 </project>
