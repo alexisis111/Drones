@@ -6,17 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="fde30c11-94c5-4884-96a6-cf984ad02720" name="Changes" comment="fix">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.qwen/PROJECT_SUMMARY.md" beforeDir="false" afterPath="$PROJECT_DIR$/.qwen/PROJECT_SUMMARY.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/CompanyShowcase.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/CompanyShowcase.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/DroneDefensePage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/DroneDefensePage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/routes/company.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/company.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/routes/contacts.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/contacts.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/routes/drone-defense.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/drone-defense.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/routes/home.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/home.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/routes/portfolio.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/portfolio.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/routes/service-detail.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/service-detail.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/routes/services.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/services.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/routes/vacancies.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/vacancies.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -114,15 +103,8 @@
       <workItem from="1771495625174" duration="3667000" />
       <workItem from="1771520072236" duration="5616000" />
       <workItem from="1772002978362" duration="3637000" />
-      <workItem from="1772091349438" duration="2778000" />
-    </task>
-    <task id="LOCAL-00034" summary="fix forms in TG">
-      <option name="closed" value="true" />
-      <created>1770100460102</created>
-      <option name="number" value="00034" />
-      <option name="presentableId" value="LOCAL-00034" />
-      <option name="project" value="LOCAL" />
-      <updated>1770100460102</updated>
+      <workItem from="1772091349438" duration="2893000" />
+      <workItem from="1772104668307" duration="384000" />
     </task>
     <task id="LOCAL-00035" summary="fix forms in TG">
       <option name="closed" value="true" />
@@ -508,7 +490,15 @@
       <option name="project" value="LOCAL" />
       <updated>1771525486310</updated>
     </task>
-    <option name="localTasksCounter" value="83" />
+    <task id="LOCAL-00083" summary="fix">
+      <option name="closed" value="true" />
+      <created>1772094180356</created>
+      <option name="number" value="00083" />
+      <option name="presentableId" value="LOCAL-00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1772094180356</updated>
+    </task>
+    <option name="localTasksCounter" value="84" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

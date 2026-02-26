@@ -91,6 +91,7 @@ const DroneDefensePage: React.FC<DroneDefensePageProps> = ({ breadcrumbs }) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...callbackForm,
+          subject: '📞 Новое сообщение на обратный звонок',
           source: 'DroneDefensePage - обратный звонок',
           message: `📞 Заявка на обратный звонок\n\nИмя: ${callbackForm.name}\nТелефон: ${callbackForm.phone}\nКомментарий: ${callbackForm.message}`
         }),
