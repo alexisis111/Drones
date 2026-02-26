@@ -1,7 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useTheme } from '../contexts/ThemeContext';
-import { Shield, Building2, Target, Zap, Award, Clock, Users, CheckCircle, ChevronRight, ArrowRight, Radio, Eye, AlertTriangle, Lock, Maximize2 } from 'lucide-react';
+import {
+  Shield,
+  Building2,
+  Target,
+  Zap,
+  Award,
+  Clock,
+  Users,
+  CheckCircle,
+  ChevronRight,
+  ArrowRight,
+  Radio,
+  Eye,
+  AlertTriangle,
+  Lock,
+  Maximize2,
+  Trophy, Phone, MessageSquare
+} from 'lucide-react';
 import { Link } from 'react-router';
 // import ZOKVisualization from '../components/ZOKVisualization';
 import FullscreenModal from './FullscreenModal';
@@ -19,6 +36,78 @@ const DroneDefensePage: React.FC<DroneDefensePageProps> = ({ breadcrumbs }) => {
   const [scrollY, setScrollY] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEstimateModalOpen, setIsEstimateModalOpen] = useState(false);
+
+  // ----модалка для заказа звонка -----
+
+  // State для модального окна обратного звонка
+  const [isCallbackModalOpen, setIsCallbackModalOpen] = useState(false);
+  const [callbackForm, setCallbackForm] = useState({
+    name: '',
+    phone: '',
+    message: ''
+  });
+  const [isCallbackSubmitting, setIsCallbackSubmitting] = useState(false);
+  const [callbackSuccess, setCallbackSuccess] = useState(false);
+
+// Обработчик изменения полей формы
+  const handleCallbackChange = (field: string, value: string) => {
+    setCallbackForm(prev => ({ ...prev, [field]: value }));
+  };
+
+// Обработчик отправки формы обратного звонка
+  const handleCallbackSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsCallbackSubmitting(true);
+
+    try {
+      const response = await fetch('/api/telegram-webhook', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...callbackForm,
+          source: 'DroneDefensePage - обратный звонок',
+          message: `📞 Заявка на обратный звонок\n\nИмя: ${callbackForm.name}\nТелефон: ${callbackForm.phone}\nКомментарий: ${callbackForm.message}`
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Ошибка при отправке');
+      }
+
+      // Успех: показываем сообщение и закрываем через 3 сек
+      setCallbackSuccess(true);
+      setTimeout(() => {
+        setIsCallbackModalOpen(false);
+        setCallbackForm({ name: '', phone: '', message: '' });
+        setCallbackSuccess(false);
+      }, 3000);
+
+    } catch (error) {
+      console.error('Callback submit error:', error);
+      alert('Ошибка при отправке заявки. Попробуйте позже.');
+    } finally {
+      setIsCallbackSubmitting(false);
+    }
+  };
+
+  // Функция форматирования телефона
+  const formatPhone = (value: string) => {
+    const cleaned = value.replace(/\D/g, '');
+    const match = cleaned.match(/^(\d{0,1})(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})$/);
+    if (match) {
+      return [
+        match[1] ? '+7' : '',
+        match[2] ? ` (${match[2]}` : '',
+        match[3] ? `) ${match[3]}` : '',
+        match[4] ? `-${match[4]}` : '',
+        match[5] ? `-${match[5]}` : ''
+      ].filter(Boolean).join('');
+    }
+    return value;
+  };
+
+  // ---------------------------------------
 
   useEffect(() => {
     const handleScroll = () => {
@@ -73,114 +162,189 @@ const DroneDefensePage: React.FC<DroneDefensePageProps> = ({ breadcrumbs }) => {
         <div className="relative container mx-auto px-4 z-10">
           {/* Хлебные крошки */}
           {breadcrumbs && (
-            <div className="py-4">
-              <Breadcrumbs breadcrumbs={breadcrumbs} className="text-white/80" />
-            </div>
+              <div className="py-4">
+                <Breadcrumbs breadcrumbs={breadcrumbs} className="text-white/80"/>
+              </div>
           )}
-          
           <div className="grid lg:grid-cols-2 gap-12 items-center py-4">
             {/* Left column - Main content */}
             <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-              className="space-y-8"
+                initial={{opacity: 0, x: -50}}
+                animate={{opacity: 1, x: 0}}
+                transition={{duration: 0.8}}
+                className="space-y-8"
             >
-              {/* Badge */}
+              {/* Badge + Slogan */}
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 border border-white/20"
+                  initial={{opacity: 0, y: 20}}
+                  animate={{opacity: 1, y: 0}}
+                  transition={{delay: 0.2}}
+                  className="space-y-3"
               >
-                <Shield className="w-4 h-4" />
-                <span className="text-sm font-medium text-white">Системы защиты периметра</span>
+                <div
+                    className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 border border-white/20 mr-2">
+                  <Shield className="w-4 h-4"/>
+                  <span className="text-sm font-medium text-white">Системы защиты периметра</span>
+                </div>
+                <div
+                    className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600/20 to-purple-600/20 backdrop-blur-sm rounded-full px-4 py-2 border border-blue-400/30">
+                  <Trophy className="w-4 h-4 text-yellow-400"/>
+                  <span className="text-sm font-bold text-white">№1 в России по производству и установке ЗОК</span>
+                </div>
               </motion.div>
 
-              {/* Main heading */}
+              {/* Main heading - SEO Optimized H1 */}
               <motion.h1
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-                className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight text-white"
+                  initial={{opacity: 0, y: 30}}
+                  animate={{opacity: 1, y: 0}}
+                  transition={{delay: 0.3}}
+                  className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-white"
               >
-                <span className="block">Антидроновая защита </span>
+                <span className="block">Комплексная защита от БПЛА</span>
                 <span className="block bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                  согласно <br/>
-                  <a 
-                    href="https://protect.gost.ru/v.aspx?control=8&baseC=101&page=4&month=-1&year=-1&search=&RegNum=54&DocOnPageCount=100&id=253478" 
-                    className="inline-flex items-center gap-1 hover:underline"
+        любые виды объектов.
+      </span>
+                <span className="block text-lg md:text-xl text-gray-300 mt-2">
+        по <a
+                    href="https://protect.gost.ru/v.aspx?control=8&baseC=101&page=4&month=-1&year=-1&search=&RegNum=54&DocOnPageCount=100&id=253478"
+                    className="inline-flex items-center gap-1 hover:underline text-blue-400"
                     target="_blank"
                     rel="noopener noreferrer"
-                  >
-                    СП 542.1325800.2024
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                      <polyline points="15 3 21 3 21 9"></polyline>
-                      <line x1="10" y1="14" x2="21" y2="3"></line>
-                    </svg>
-                  </a>
-                </span>
-                <span className="block text-xl">промышленных объектов и предприятий</span>
+                >
+          СП 542.1325800.2024
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+            <polyline points="15 3 21 3 21 9"></polyline>
+            <line x1="10" y1="14" x2="21" y2="3"></line>
+          </svg>
+        </a>
+      </span>
               </motion.h1>
 
-              {/* Subtitle */}
+              {/* SEO-optimized subtitle with keywords */}
               <motion.p
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
-                className="text-xl text-gray-300 max-w-2xl"
+                  initial={{opacity: 0, y: 30}}
+                  animate={{opacity: 1, y: 0}}
+                  transition={{delay: 0.4}}
+                  className="text-lg md:text-xl text-gray-300 max-w-2xl"
               >
-                Мы предлагаем комплексную антидроновую защиту для промышленных объектов: ТЭЦ, резервуары, производственные здания и другие стратегически важные сооружения.
+                Установка антидроновых систем под ключ: ТЭК, заводы, склады и частные объекты. Решения для крупных, средних и малых предприятий.
               </motion.p>
+
+              {/* Protected objects list */}
+              <motion.div
+                  initial={{opacity: 0, y: 30}}
+                  animate={{opacity: 1, y: 0}}
+                  transition={{delay: 0.45}}
+                  className="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm"
+              >
+                {[
+                  {title: "🏭 Крупные", items: ["ТЭЦ", "НПЗ", "аэропорты", "морские порты", "ж/д узлы", "оборонные предприятия", "объекты критической инфраструктуры", "и др"]},
+                  {title: "🏢 Средние", items: ["Заводы", "склады,", "логистические хабы", ", агрокомплексы", "дата-центры", "торговые комплексы", "и др" ]},
+                  {title: "🏠 Малые", items: ["КНС","водозаборные станции", "ГРПШ", "Сотовые вышки", "модульные котельные","Узлы теплоснабжения", "и др"]},
+                ].map((cat, i) => (
+                    <div key={i} className="p-3 rounded-lg bg-white/5 backdrop-blur-sm border border-white/10">
+                      <div className="font-semibold text-white mb-2">{cat.title}</div>
+                      <div className="text-gray-400 space-y-1">
+                        {cat.items.map((item, j) => (
+                            <div key={j} className="flex items-center gap-2">
+                              <span className="w-1 h-1 bg-blue-400 rounded-full"></span>
+                              {item}
+                            </div>
+                        ))}
+                      </div>
+                    </div>
+                ))}
+              </motion.div>
 
               {/* Stats */}
               <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 }}
-                className="grid grid-cols-2 md:grid-cols-4 gap-4"
+                  initial={{opacity: 0, y: 30}}
+                  animate={{opacity: 1, y: 0}}
+                  transition={{delay: 0.5}}
+                  className="grid grid-cols-2 md:grid-cols-4 gap-4"
               >
                 {[
-                  { value: "99.9%", label: "Безопасность" },
-                  { value: "3", label: "Уровня защиты" },
-                  { value: "10 лет", label: "Гарантия" },
-                  { value: "100%", label: "Покрытие" },
+                  {value: "99.9%", label: "Эффективность"},
+                  {value: "3", label: "Уровня защиты"},
+                  {value: "10 лет", label: "Гарантия"},
+                  {value: "500+", label: "Объектов"},
                 ].map((stat, i) => (
-                  <div key={i} className="text-center p-4 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10">
-                    <div className="text-2xl font-bold text-white">{stat.value}</div>
-                    <div className="text-sm text-gray-400">{stat.label}</div>
-                  </div>
+                    <div key={i}
+                         className="text-center p-4 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-blue-400/50 transition-colors">
+                      <div className="text-2xl font-bold text-white">{stat.value}</div>
+                      <div className="text-xs text-gray-400">{stat.label}</div>
+                    </div>
                 ))}
               </motion.div>
 
               {/* CTA Buttons */}
               <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6 }}
-                className="flex flex-wrap gap-4"
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.6 }}
+                  className="flex flex-wrap gap-4"
               >
+                <a
+                    href="tel:+79312470888"
+                    className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-semibold rounded-xl transition-all shadow-lg shadow-blue-500/25 inline-flex items-center justify-center gap-2"
+                >
+                  <Phone className="w-4 h-4" />
+                  Позвонить
+                </a>
+
+                <button
+                    onClick={() => setIsCallbackModalOpen(true)}
+                    className="px-6 py-3 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-xl border border-white/20 transition-all inline-flex items-center gap-2"
+                >
+                  <MessageSquare className="w-4 h-4" />
+                  Заказать обратный звонок
+                </button>
+              </motion.div>
+
+              {/* Trust badges */}
+              <motion.div
+                  initial={{opacity: 0}}
+                  animate={{opacity: 1}}
+                  transition={{delay: 0.7}}
+                  className="flex flex-wrap gap-4 pt-4 border-t border-white/10"
+              >
+              <div className="flex items-center gap-2 text-sm text-gray-400">
+                  <CheckCircle className="w-4 h-4 text-green-400"/>
+                  Сертифицировано ФСТЭК
+                </div>
+                <div className="flex items-center gap-2 text-sm text-gray-400">
+                  <CheckCircle className="w-4 h-4 text-green-400"/>
+                  Монтаж по всей РФ
+                </div>
+                <div className="flex items-center gap-2 text-sm text-gray-400">
+                  <CheckCircle className="w-4 h-4 text-green-400"/>
+                  Сопровождение на всех этапах
+                </div>
               </motion.div>
             </motion.div>
 
-            {/* Right column - Feature cards */}
-           <ContactForm  />
+            {/* Right column - Feature cards / Contact Form */}
+            <ContactForm/>
           </div>
+
         </div>
       </section>
 
       {/* Regulatory Section */}
-      <section className="py-24 bg-gradient-to-br from-red-50 via-orange-50 to-yellow-50 dark:from-red-950/30 dark:via-orange-950/30 dark:to-yellow-950/30">
+      <section
+          className="py-24 bg-gradient-to-br from-red-50 via-orange-50 to-yellow-50 dark:from-red-950/30 dark:via-orange-950/30 dark:to-yellow-950/30">
         <div className="container mx-auto px-4">
           <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
+              initial={{opacity: 0, y: 50}}
+              whileInView={{opacity: 1, y: 0}}
+              viewport={{once: true}}
+              className="text-center mb-16"
           >
-            <div className="inline-flex items-center gap-2 bg-red-100 dark:bg-red-900/50 text-red-700 dark:text-red-300 px-4 py-2 rounded-full mb-6">
-              <AlertTriangle className="w-5 h-5" />
+            <div
+                className="inline-flex items-center gap-2 bg-red-100 dark:bg-red-900/50 text-red-700 dark:text-red-300 px-4 py-2 rounded-full mb-6">
+              <AlertTriangle className="w-5 h-5"/>
               <span className="font-semibold">Важная информация</span>
             </div>
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
@@ -194,10 +358,10 @@ const DroneDefensePage: React.FC<DroneDefensePageProps> = ({ breadcrumbs }) => {
           <div className="max-w-6xl mx-auto">
             {/* Warning Block */}
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="bg-gradient-to-br from-red-600 to-orange-600 rounded-3xl p-8 md:p-12 mb-12 shadow-2xl"
+                initial={{opacity: 0, y: 30}}
+                whileInView={{opacity: 1, y: 0}}
+                viewport={{once: true}}
+                className="bg-gradient-to-br from-red-600 to-orange-600 rounded-3xl p-8 md:p-12 mb-12 shadow-2xl"
             >
               <div className="grid lg:grid-cols-2 gap-8 items-center">
                 <div>
@@ -205,21 +369,22 @@ const DroneDefensePage: React.FC<DroneDefensePageProps> = ({ breadcrumbs }) => {
                     Обязанности руководителей
                   </h3>
                   <p className="text-white/90 text-lg mb-6">
-                    Руководители объектов ТЭК, промышленности и других критически важных сфер <strong>обязаны</strong> обеспечивать их антитеррористическую защищенность.
+                    Руководители объектов ТЭК, промышленности и других критически важных
+                    сфер <strong>обязаны</strong> обеспечивать их антитеррористическую защищенность.
                   </p>
                   <div className="flex flex-wrap gap-3">
                     <Link
-                      to="/contacts"
-                      className="inline-flex items-center gap-2 bg-white text-red-600 px-6 py-3 rounded-xl font-semibold hover:shadow-lg hover:scale-105 transition-all duration-300"
+                        to="/contacts"
+                        className="inline-flex items-center gap-2 bg-white text-red-600 px-6 py-3 rounded-xl font-semibold hover:shadow-lg hover:scale-105 transition-all duration-300"
                     >
                       <span>Получить консультацию</span>
-                      <ChevronRight className="w-5 h-5" />
+                      <ChevronRight className="w-5 h-5"/>
                     </Link>
                   </div>
                 </div>
                 <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6">
                   <h4 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                    <Lock className="w-6 h-6" />
+                    <Lock className="w-6 h-6"/>
                     Последствия несоответствия
                   </h4>
                   <ul className="space-y-3">
@@ -227,12 +392,13 @@ const DroneDefensePage: React.FC<DroneDefensePageProps> = ({ breadcrumbs }) => {
                       "Административные штрафы и приостановку деятельности",
                       "Персональную ответственность руководителей"
                     ].map((item, i) => (
-                      <li key={i} className="flex items-start gap-3 text-white">
-                        <span className="flex-shrink-0 w-6 h-6 rounded-full bg-white/20 flex items-center justify-center text-sm font-bold">
+                        <li key={i} className="flex items-start gap-3 text-white">
+                        <span
+                            className="flex-shrink-0 w-6 h-6 rounded-full bg-white/20 flex items-center justify-center text-sm font-bold">
                           {i + 1}
                         </span>
-                        <span>{item}</span>
-                      </li>
+                          <span>{item}</span>
+                        </li>
                     ))}
                   </ul>
                 </div>
@@ -271,26 +437,27 @@ const DroneDefensePage: React.FC<DroneDefensePageProps> = ({ breadcrumbs }) => {
                   color: "from-green-500 to-emerald-500"
                 }
               ].map((regulation, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 }}
-                  className="group relative bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden"
-                >
-                  <div className={`absolute top-0 left-0 w-2 h-full bg-gradient-to-b ${regulation.color}`} />
-                  <div className="flex items-start gap-4">
-                    <div className={`flex-shrink-0 w-14 h-14 rounded-xl bg-gradient-to-br ${regulation.color} flex items-center justify-center text-white font-bold text-xl shadow-lg`}>
-                      {regulation.number}
-                    </div>
-                    <div className="flex-1">
-                      <h4 className="text-lg font-bold text-gray-900 dark:text-white mb-1">
-                        {regulation.title}
-                      </h4>
-                      <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
-                        {regulation.date}
-                      </p>
+                  <motion.div
+                      key={i}
+                      initial={{opacity: 0, y: 30}}
+                      whileInView={{opacity: 1, y: 0}}
+                      viewport={{once: true}}
+                      transition={{delay: i * 0.1}}
+                      className="group relative bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden"
+                  >
+                    <div className={`absolute top-0 left-0 w-2 h-full bg-gradient-to-b ${regulation.color}`}/>
+                    <div className="flex items-start gap-4">
+                      <div
+                          className={`flex-shrink-0 w-14 h-14 rounded-xl bg-gradient-to-br ${regulation.color} flex items-center justify-center text-white font-bold text-xl shadow-lg`}>
+                        {regulation.number}
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="text-lg font-bold text-gray-900 dark:text-white mb-1">
+                          {regulation.title}
+                        </h4>
+                        <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
+                          {regulation.date}
+                        </p>
                       <p className="text-gray-600 dark:text-gray-300">
                         {regulation.description}
                       </p>
@@ -850,7 +1017,134 @@ const DroneDefensePage: React.FC<DroneDefensePageProps> = ({ breadcrumbs }) => {
         title="Часто задаваемые вопросы о защите от дронов"
         subtitle="Ответы на наиболее популярные вопросы о системах защиты периметра от беспилотников"
       />
+      {/* Callback Modal */}
+      {isCallbackModalOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            {/* Backdrop */}
+            <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+                onClick={() => !isCallbackSubmitting && setIsCallbackModalOpen(false)}
+            />
 
+            {/* Modal Content */}
+            <motion.div
+                initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95, y: 20 }}
+                className="relative w-full max-w-md bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-6 shadow-2xl border border-white/10"
+            >
+              {/* Close Button */}
+              {!isCallbackSubmitting && !callbackSuccess && (
+                  <button
+                      onClick={() => setIsCallbackModalOpen(false)}
+                      className="absolute top-4 right-4 p-2 rounded-lg hover:bg-white/10 transition-colors text-gray-400 hover:text-white"
+                      aria-label="Закрыть"
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+              )}
+
+              {/* Success State */}
+              {callbackSuccess ? (
+                  <div className="text-center py-8">
+                    <motion.div
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        className="w-16 h-16 mx-auto mb-4 rounded-full bg-green-500/20 flex items-center justify-center"
+                    >
+                      <CheckCircle className="w-8 h-8 text-green-400" />
+                    </motion.div>
+                    <h3 className="text-xl font-bold text-white mb-2">Заявка отправлена!</h3>
+                    <p className="text-gray-400">Мы перезвоним вам в ближайшее время</p>
+                  </div>
+              ) : (
+                  <>
+                    <h3 className="text-2xl font-bold text-white mb-6 text-center">
+                      Заказать обратный звонок
+                    </h3>
+
+                    <form onSubmit={handleCallbackSubmit} className="space-y-4">
+                      {/* Name Field */}
+                      <div>
+                        <label className="block text-sm font-medium text-gray-300 mb-2">
+                          Ваше имя *
+                        </label>
+                        <input
+                            type="text"
+                            required
+                            value={callbackForm.name}
+                            // Использование в onChange:
+                            onChange={(e) => handleCallbackChange('phone', formatPhone(e.target.value))}
+                            className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                            placeholder="Иван Иванов"
+                            disabled={isCallbackSubmitting}
+                        />
+                      </div>
+
+                      {/* Phone Field */}
+                      <div>
+                        <label className="block text-sm font-medium text-gray-300 mb-2">
+                          Телефон *
+                        </label>
+                        <input
+                            type="tel"
+                            required
+                            value={callbackForm.phone}
+                            onChange={(e) => handleCallbackChange('phone', e.target.value)}
+                            className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                            placeholder="+7 (___) ___-__-__"
+                            disabled={isCallbackSubmitting}
+                        />
+                      </div>
+
+                      {/* Message Field */}
+                      <div>
+                        <label className="block text-sm font-medium text-gray-300 mb-2">
+                          Дополнительная информация
+                        </label>
+                        <textarea
+                            value={callbackForm.message}
+                            onChange={(e) => handleCallbackChange('message', e.target.value)}
+                            rows={3}
+                            className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-none"
+                            placeholder="Расскажите подробнее о вашем объекте..."
+                            disabled={isCallbackSubmitting}
+                        />
+                      </div>
+
+                      {/* Submit Button */}
+                      <button
+                          type="submit"
+                          disabled={isCallbackSubmitting}
+                          className="w-full py-4 px-6 rounded-xl font-semibold bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white transition-all shadow-lg shadow-blue-500/25 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                      >
+                        {isCallbackSubmitting ? (
+                            <>
+                              <svg className="animate-spin w-5 h-5" viewBox="0 0 24 24">
+                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                              </svg>
+                              Отправка...
+                            </>
+                        ) : (
+                            'Оставить заявку'
+                        )}
+                      </button>
+                    </form>
+
+                    <p className="text-xs text-gray-500 text-center mt-4">
+                      Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности
+                    </p>
+                  </>
+              )}
+            </motion.div>
+          </div>
+      )}
     </div>
   );
 };

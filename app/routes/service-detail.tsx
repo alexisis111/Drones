@@ -17,20 +17,20 @@ export function meta({ data }: Route.MetaArgs) {
   const service = data?.service;
 
   return [
-    { title: `${serviceTitle} | Строительная компания ЛЕГИОН — Антидроновая защита и строительство.` },
-    { name: "description", content: `${serviceTitle} от строительной компании ООО «ЛЕГИОН». Профессиональное выполнение строительных и монтажных работ. Консультация специалиста.` },
-    { name: "keywords", content: `${serviceTitle}, строительная компания СПб, ООО ЛЕГИОН, строительные услуги, монтажные работы, строительство под ключ, Ленинградская область` },
+    { title: `${serviceTitle} | Работа по РФ | Цена, сроки | ЛЕГИОН` },
+    { name: "description", content: `${serviceTitle} от ООО «ЛЕГИОН». Офис в г. Светогорск (Ленинградская область), работаем по всей России. Профессиональный монтаж и строительство. Расчет сметы, гарантия качества. Закажите бесплатную консультацию!` },
+    { name: "keywords", content: `${serviceTitle}, строительная компания, ООО ЛЕГИОН, строительные услуги, монтажные работы, строительство под ключ, Ленинградская область, работа по России, цена, расчет сметы, гарантия` },
     { name: "author", content: "Строительная компания ЛЕГИОН" },
     { name: "email", content: "l-legion@bk.ru" },
     { rel: "canonical", href: `https://xn--78-glchqprh.xn--p1ai/service/${data?.slug}` },
     { property: "og:type", content: "website" },
     { property: "og:url", content: `https://xn--78-glchqprh.xn--p1ai/service/${data?.slug}` },
-    { property: "og:title", content: `${serviceTitle} | Строительная компания ЛЕГИОН` },
-    { property: "og:description", content: `${serviceTitle} от строительной компании ООО «ЛЕГИОН». Профессиональное выполнение строительных и монтажных работ в СПб.` },
+    { property: "og:title", content: `${serviceTitle} | Работа по РФ | Цена, сроки | ЛЕГИОН` },
+    { property: "og:description", content: `${serviceTitle} от ООО «ЛЕГИОН». Офис в г. Светогорск (ЛО), работаем по всей России. Расчет сметы, гарантия качества!` },
     { property: "og:image", content: service?.imageUrl || "/Logo-1.png" },
     { name: "twitter:card", content: "summary_large_image" },
-    { name: "twitter:title", content: `${serviceTitle} | Строительная компания ЛЕГИОН` },
-    { name: "twitter:description", content: `${serviceTitle} от строительной компании ООО «ЛЕГИОН». Профессиональное выполнение строительных и монтажных работ.` },
+    { name: "twitter:title", content: `${serviceTitle} | Работа по РФ | Цена, сроки | ЛЕГИОН` },
+    { name: "twitter:description", content: `${serviceTitle} от ООО «ЛЕГИОН». Офис в г. Светогорск (Ленинградская область), работа по России. Расчет сметы, гарантия!` },
     { name: "twitter:image", content: service?.imageUrl || "/Logo-1.png" },
   ];
 }
