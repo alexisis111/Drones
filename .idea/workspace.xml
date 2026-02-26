@@ -4,8 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fde30c11-94c5-4884-96a6-cf984ad02720" name="Changes" comment="fix">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="fde30c11-94c5-4884-96a6-cf984ad02720" name="Changes" comment="fixx">
+      <change beforePath="$PROJECT_DIR$/app/components/DroneDefensePage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/DroneDefensePage.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,15 +104,7 @@
       <workItem from="1771520072236" duration="5616000" />
       <workItem from="1772002978362" duration="3637000" />
       <workItem from="1772091349438" duration="2893000" />
-      <workItem from="1772104668307" duration="384000" />
-    </task>
-    <task id="LOCAL-00035" summary="fix forms in TG">
-      <option name="closed" value="true" />
-      <created>1770102165559</created>
-      <option name="number" value="00035" />
-      <option name="presentableId" value="LOCAL-00035" />
-      <option name="project" value="LOCAL" />
-      <updated>1770102165559</updated>
+      <workItem from="1772104668307" duration="615000" />
     </task>
     <task id="LOCAL-00036" summary="fix forms in TG">
       <option name="closed" value="true" />
@@ -498,7 +490,15 @@
       <option name="project" value="LOCAL" />
       <updated>1772094180356</updated>
     </task>
-    <option name="localTasksCounter" value="84" />
+    <task id="LOCAL-00084" summary="fixx">
+      <option name="closed" value="true" />
+      <created>1772105139401</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1772105139401</updated>
+    </task>
+    <option name="localTasksCounter" value="85" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -528,7 +528,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="init SEO" />
     <MESSAGE value="init SEO1" />
     <MESSAGE value="OptimizedImgs" />
     <MESSAGE value="fixTgForm" />
@@ -553,6 +552,7 @@
     <MESSAGE value="fixSEOFrendlyTitle" />
     <MESSAGE value="Breadcrumbs" />
     <MESSAGE value="fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix" />
+    <MESSAGE value="fixx" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixx" />
   </component>
 </project>
