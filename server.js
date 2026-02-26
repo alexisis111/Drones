@@ -98,6 +98,12 @@ ${message ? `Сообщение: ${message}` : ''}
 // Serve static files from the build/client directory
 app.use(express.static(path.join(__dirname, 'build', 'client')));
 
+// Serve YML feed for Yandex Direct
+app.get('/yml.xml', (req, res) => {
+  res.setHeader('Content-Type', 'application/xml');
+  res.sendFile(path.join(__dirname, 'public', 'yml.xml'));
+});
+
 // Redirect old domain to new domain
 app.use((req, res, next) => {
   if (req.headers.host.includes('xn--80affa3aj.xn--p1ai')) {

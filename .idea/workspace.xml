@@ -5,7 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fde30c11-94c5-4884-96a6-cf984ad02720" name="Changes" comment="fixx">
-      <change beforePath="$PROJECT_DIR$/app/components/DroneDefensePage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/DroneDefensePage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.qwen/PROJECT_SUMMARY.md" beforeDir="false" afterPath="$PROJECT_DIR$/.qwen/PROJECT_SUMMARY.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/server.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,23 +106,8 @@
       <workItem from="1771520072236" duration="5616000" />
       <workItem from="1772002978362" duration="3637000" />
       <workItem from="1772091349438" duration="2893000" />
-      <workItem from="1772104668307" duration="615000" />
-    </task>
-    <task id="LOCAL-00036" summary="fix forms in TG">
-      <option name="closed" value="true" />
-      <created>1770102592294</created>
-      <option name="number" value="00036" />
-      <option name="presentableId" value="LOCAL-00036" />
-      <option name="project" value="LOCAL" />
-      <updated>1770102592294</updated>
-    </task>
-    <task id="LOCAL-00037" summary="fix bpla">
-      <option name="closed" value="true" />
-      <created>1770103835612</created>
-      <option name="number" value="00037" />
-      <option name="presentableId" value="LOCAL-00037" />
-      <option name="project" value="LOCAL" />
-      <updated>1770103835612</updated>
+      <workItem from="1772104668307" duration="1003000" />
+      <workItem from="1772125309578" duration="417000" />
     </task>
     <task id="LOCAL-00038" summary="fix OPTIMIZED logo ico">
       <option name="closed" value="true" />
@@ -498,7 +485,23 @@
       <option name="project" value="LOCAL" />
       <updated>1772105139401</updated>
     </task>
-    <option name="localTasksCounter" value="85" />
+    <task id="LOCAL-00085" summary="fixx">
+      <option name="closed" value="true" />
+      <created>1772105306721</created>
+      <option name="number" value="00085" />
+      <option name="presentableId" value="LOCAL-00085" />
+      <option name="project" value="LOCAL" />
+      <updated>1772105306721</updated>
+    </task>
+    <task id="LOCAL-00086" summary="fixx">
+      <option name="closed" value="true" />
+      <created>1772105510597</created>
+      <option name="number" value="00086" />
+      <option name="presentableId" value="LOCAL-00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1772105510597</updated>
+    </task>
+    <option name="localTasksCounter" value="87" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
