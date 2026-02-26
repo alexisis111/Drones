@@ -2,25 +2,33 @@ The user wants me to create a comprehensive project summary based on the convers
 
 1. **Initial Context**: The user referenced a PROJECT_SUMMARY.md about previous SEO work done on the drone defense website
 
-2. **Main Task in This Session**: Fix the Telegram bot message title for the callback form on the DroneDefensePage component
+2. **Main Tasks in This Session**:
+   - Refactor the callback form logic into a reusable hook and component
+   - Add a callback button to the ContactsPage
+   - Add a new "БПЛА" (Drone) tab to the mobile navigation menu
 
 3. **What was accomplished**:
-   - Identified the issue: callback form was sending data without a `subject` field, causing the default title "Новое сообщение с формы обратной связи" to appear
-   - First attempt: Added `subject` field to the form submission
-   - Issue discovered: Data was being duplicated in the Telegram message (fields appeared twice)
-   - Final fix: Restructured the form data to avoid duplication by explicitly listing fields instead of spreading `callbackForm`
+   - Created `app/hooks/useCallbackForm.ts` - a reusable hook for callback form logic
+   - Created `app/components/CallbackModal.tsx` - a reusable modal component for callback forms
+   - Updated `app/components/DroneDefensePage.tsx` to use the new hook and component
+   - Updated `app/components/ContactsPage.tsx` to use the new hook and component, added a callback button
+   - Updated `app/components/FixedMobileTabs.tsx` to add a new "БПЛА" tab and reduce icon sizes
 
-4. **Key files modified**:
-   - `app/components/DroneDefensePage.tsx` - Updated the callback form submission to include `subject` field and fix data duplication
+4. **Key files modified/created**:
+   - Created: `app/hooks/useCallbackForm.ts`
+   - Created: `app/components/CallbackModal.tsx`
+   - Modified: `app/components/DroneDefensePage.tsx`
+   - Modified: `app/components/ContactsPage.tsx`
+   - Modified: `app/components/FixedMobileTabs.tsx`
 
 5. **Technology stack**: React, TypeScript, Tailwind CSS, Framer Motion, Vite, React Router (v7), Express.js for API server
 
-6. **Domain focus**: Construction company "ЛЕГИОН" specializing in drone/BPЛА protection systems
+6. **Domain focus**: Construction company "ЛЕГИОН" specializing in drone/БПЛА protection systems
 
-Now I'll create the summary in the required format.# Project Summary
+Now I'll create the summary in the required format in Russian (as per the project's language preference).# Project Summary
 
 ## Overall Goal
-Исправить формат сообщения в Telegram-боте для формы обратного звонка на странице защиты от БПЛА — изменить заголовок и убрать дублирование данных.
+Рефакторинг формы обратного звонка в переиспользуемый компонент и хук, добавление кнопки обратного звонка на страницу контактов и новой вкладки БПЛА в мобильное меню.
 
 ## Key Knowledge
 - **Проект**: Сайт строительной компании ООО "ЛЕГИОН" (г. Санкт-Петербург)
@@ -30,49 +38,56 @@ Now I'll create the summary in the required format.# Project Summary
 - **API сервер**: порт 3001, основной сервер: порт 3000
 - **Формат сообщений в боте**:
   - Поле `subject` определяет заголовок сообщения
-  - Если `subject` не передан — используется текст по умолчанию
   - Поля формы: `name`, `email`, `phone`, `message`, `subject`, `source`
 - **Конвенции**:
   - Избегать дублирования данных в сообщениях Telegram
-  - Для форм обратного звонка использовать отдельный `subject`
+  - Для форм обратного звонка использовать отдельный `subject`: "📞 Новое сообщение на обратный звонок"
+- **Новые компоненты**:
+  - `app/hooks/useCallbackForm.ts` — хук для управления формой обратного звонка
+  - `app/components/CallbackModal.tsx` — переиспользуемый компонент модального окна
+- **Мобильное меню**: 5 вкладок (Главная, Услуги, БПЛА, Вакансии, Контакты), размер иконок `h-4 w-4`
 
 ## Recent Actions
-1. **[DONE]** Выявлена проблема: при отправке формы обратного звонка в бот приходил заголовок "Новое сообщение с формы обратной связи" вместо "Новое сообщение на обратный звонок"
-2. **[DONE]** Добавлено поле `subject: '📞 Новое сообщение на обратный звонок'` в отправку формы
-3. **[DONE]** Исправлено дублирование данных: данные формы дублировались в полях и в тексте сообщения `message`
-4. **[DONE]** Финальное решение: явная передача полей (`name`, `phone`, `message`, `subject`, `source`) вместо spread-оператора с `callbackForm`
+1. **[DONE]** Создан хук `useCallbackForm` для логики формы обратного звонка (валидация телефона, форматирование, отправка в Telegram)
+2. **[DONE]** Создан компонент `CallbackModal` для отображения модального окна формы
+3. **[DONE]** Обновлён `DroneDefensePage.tsx` — использует новый хук и компонент вместо встроенной логики
+4. **[DONE]** Обновлён `ContactsPage.tsx` — добавлена кнопка "Заказать обратный звонок" рядом с кнопкой "Позвонить"
+5. **[DONE]** Обновлён `FixedMobileTabs.tsx` — добавлена вкладка "БПЛА" со ссылкой на `/drone-defense`, уменьшен размер иконок с `h-6 w-6` до `h-4 w-4`
+6. **[DONE]** Закоммичены изменения в мобильном меню (commit: `1bf685b`)
 
 ## Current Plan
 | # | Задача | Статус |
 |---|--------|--------|
-| 1 | Изменить заголовок для формы обратного звонка | ✅ DONE |
-| 2 | Убрать дублирование данных в сообщении | ✅ DONE |
-| 3 | Протестировать отправку формы | TODO |
+| 1 | Создать хук useCallbackForm | ✅ DONE |
+| 2 | Создать компонент CallbackModal | ✅ DONE |
+| 3 | Интегрировать в DroneDefensePage | ✅ DONE |
+| 4 | Интегрировать в ContactsPage | ✅ DONE |
+| 5 | Добавить вкладку БПЛА в мобильное меню | ✅ DONE |
+| 6 | Протестировать отправку формы | TODO |
 
-## Files Modified
+## Files Modified/Created
+- **Созданы**:
+  - `app/hooks/useCallbackForm.ts` — хук с логикой формы (состояние, валидация, отправка)
+  - `app/components/CallbackModal.tsx` — компонент модального окна
 - **Изменены**:
-  - `app/components/DroneDefensePage.tsx` — обновлена форма обратного звонка:
-    - Добавлено поле `subject` для заголовка сообщения
-    - Убрано дублирование данных (удалён текст сообщения с дублирующимися полями)
-    - Явная передача полей вместо spread-оператора
+  - `app/components/DroneDefensePage.tsx` — рефакторинг формы обратного звонка
+  - `app/components/ContactsPage.tsx` — добавлена кнопка обратного звонка
+  - `app/components/FixedMobileTabs.tsx` — добавлена вкладка БПЛА, уменьшены иконки
 
 ## Git History
-- Изменения ещё не закоммичены (требуют подтверждения пользователя)
-- Рекомендуемое сообщение коммита:
-  ```
-  fix: исправлен формат сообщения обратного звонка в Telegram
-  ```
+- Последний коммит: `1bf685b` — "feat: добавлена вкладка БПЛА в мобильное меню, уменьшен размер иконок"
+- Изменения в `DroneDefensePage.tsx` и `ContactsPage.tsx` требуют коммита
 
-## Telegram Message Format (After Fix)
+## Telegram Message Format (Callback Form)
 ```
 📞 Новое сообщение на обратный звонок
 
-Имя: Александр
+Имя: [имя]
 Email: Не указан
-Телефон: +7 (953) 340-21-41
-Сообщение: Позвонить
+Телефон: [телефон]
+Сообщение: [сообщение]
 
-Время получения: 26.02.2026, 11:30:13
+Время получения: [дата и время]
 ```
 
 ## Update Time
@@ -81,4 +96,9 @@ Email: Не указан
 ---
 
 ## Summary Metadata
-**Update time**: 2026-02-26T11:32:56.787Z 
+**Update time**: 2026-02-26T12:00:00.000Z
+
+---
+
+## Summary Metadata
+**Update time**: 2026-02-26T19:26:47.628Z 
