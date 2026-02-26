@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fde30c11-94c5-4884-96a6-cf984ad02720" name="Changes" comment="fixx">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.qwen/PROJECT_SUMMARY.md" beforeDir="false" afterPath="$PROJECT_DIR$/.qwen/PROJECT_SUMMARY.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/server.js" afterDir="false" />
-    </list>
+    <list default="true" id="fde30c11-94c5-4884-96a6-cf984ad02720" name="Changes" comment="ymlFeedYa" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -107,15 +103,7 @@
       <workItem from="1772002978362" duration="3637000" />
       <workItem from="1772091349438" duration="2893000" />
       <workItem from="1772104668307" duration="1003000" />
-      <workItem from="1772125309578" duration="417000" />
-    </task>
-    <task id="LOCAL-00038" summary="fix OPTIMIZED logo ico">
-      <option name="closed" value="true" />
-      <created>1770113883134</created>
-      <option name="number" value="00038" />
-      <option name="presentableId" value="LOCAL-00038" />
-      <option name="project" value="LOCAL" />
-      <updated>1770113883134</updated>
+      <workItem from="1772125309578" duration="749000" />
     </task>
     <task id="LOCAL-00039" summary="fix send message русское уведомление">
       <option name="closed" value="true" />
@@ -501,7 +489,15 @@
       <option name="project" value="LOCAL" />
       <updated>1772105510597</updated>
     </task>
-    <option name="localTasksCounter" value="87" />
+    <task id="LOCAL-00087" summary="ymlFeedYa">
+      <option name="closed" value="true" />
+      <created>1772126078166</created>
+      <option name="number" value="00087" />
+      <option name="presentableId" value="LOCAL-00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1772126078166</updated>
+    </task>
+    <option name="localTasksCounter" value="88" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -531,7 +527,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="init SEO1" />
     <MESSAGE value="OptimizedImgs" />
     <MESSAGE value="fixTgForm" />
     <MESSAGE value="fixTGinLoc" />
@@ -556,6 +551,7 @@
     <MESSAGE value="Breadcrumbs" />
     <MESSAGE value="fix" />
     <MESSAGE value="fixx" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixx" />
+    <MESSAGE value="ymlFeedYa" />
+    <option name="LAST_COMMIT_MESSAGE" value="ymlFeedYa" />
   </component>
 </project>

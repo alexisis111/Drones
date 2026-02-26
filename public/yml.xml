@@ -19,221 +19,239 @@
 
     <!-- Услуги -->
     <offers>
-      <offer id="1" available="true" type="service">
+      <offer id="1" available="true">
         <url>https://xn--80afglc.xn--p1ai/service/razborka-zdaniy-i-sooruzheniy</url>
-        <price>0</price>
+        <price>1000</price>
         <currencyId>RUB</currencyId>
         <categoryId>1</categoryId>
         <name>Разборка зданий и сооружений</name>
-        <description>Демонтажные работы любой сложности с соблюдением всех норм безопасности в Санкт-Петербурге и Ленинградской области</description>
+        <description>Демонтажные работы любой сложности. Цена по запросу. Звоните!</description>
         <picture>https://xn--80afglc.xn--p1ai/img/services/img1.jpeg</picture>
-        <service_type>Демонтажные работы</service_type>
         <vendor>ООО "ЛЕГИОН"</vendor>
+        <delivery>false</delivery>
+        <pickup>false</pickup>
       </offer>
 
-      <offer id="2" available="true" type="service">
+      <offer id="2" available="true">
         <url>https://xn--80afglc.xn--p1ai/service/sborka-lesov</url>
-        <price>0</price>
+        <price>1000</price>
         <currencyId>RUB</currencyId>
         <categoryId>1</categoryId>
         <name>Сборка лесов</name>
-        <description>Монтаж инвентарных и неинвентарных наружных и внутренних лесов в Санкт-Петербурге и Ленинградской области</description>
+        <description>Монтаж инвентарных и неинвентарных лесов. Цена по запросу. Звоните!</description>
         <picture>https://xn--80afglc.xn--p1ai/img/services/img2.jpeg</picture>
-        <service_type>Монтажные работы</service_type>
         <vendor>ООО "ЛЕГИОН"</vendor>
+        <delivery>false</delivery>
+        <pickup>false</pickup>
       </offer>
 
-      <offer id="3" available="true" type="service">
+      <offer id="3" available="true">
         <url>https://xn--80afglc.xn--p1ai/service/podgotovka-stroitelnogo-uchastka</url>
-        <price>0</price>
+        <price>1000</price>
         <currencyId>RUB</currencyId>
         <categoryId>1</categoryId>
         <name>Подготовка строительного участка</name>
-        <description>Комплекс мероприятий по подготовке территории к строительству в Санкт-Петербурге и Ленинградской области</description>
+        <description>Комплекс мероприятий по подготовке территории. Цена по запросу. Звоните!</description>
         <picture>https://xn--80afglc.xn--p1ai/img/services/img3.jpeg</picture>
-        <service_type>Подготовительные работы</service_type>
         <vendor>ООО "ЛЕГИОН"</vendor>
+        <delivery>false</delivery>
+        <pickup>false</pickup>
       </offer>
 
-      <offer id="4" available="true" type="service">
+      <offer id="4" available="true">
         <url>https://xn--80afglc.xn--p1ai/service/blagoustroystvo-territoriy</url>
-        <price>0</price>
+        <price>1000</price>
         <currencyId>RUB</currencyId>
         <categoryId>1</categoryId>
         <name>Благоустройство территорий</name>
-        <description>Комплекс работ по обустройству прилегающих территорий в Санкт-Петербурге и Ленинградской области</description>
+        <description>Комплекс работ по обустройству прилегающих территорий. Цена по запросу. Звоните!</description>
         <picture>https://xn--80afglc.xn--p1ai/img/services/img4.jpeg</picture>
-        <service_type>Благоустройство</service_type>
         <vendor>ООО "ЛЕГИОН"</vendor>
+        <delivery>false</delivery>
+        <pickup>false</pickup>
       </offer>
 
-      <offer id="5" available="true" type="service">
+      <offer id="5" available="true">
         <url>https://xn--80afglc.xn--p1ai/service/izgotovlenie-metallokonstruktsiy</url>
-        <price>0</price>
+        <price>1000</price>
         <currencyId>RUB</currencyId>
         <categoryId>2</categoryId>
         <name>Изготовление металлоконструкций</name>
-        <description>Производство металлических конструкций любой сложности в Санкт-Петербурге и Ленинградской области</description>
+        <description>Производство металлических конструкций любой сложности. Цена по запросу. Звоните!</description>
         <picture>https://xn--80afglc.xn--p1ai/img/services/img5.jpeg</picture>
-        <service_type>Производство</service_type>
         <vendor>ООО "ЛЕГИОН"</vendor>
+        <delivery>false</delivery>
+        <pickup>false</pickup>
       </offer>
 
-      <offer id="6" available="true" type="service">
+      <offer id="6" available="true">
         <url>https://xn--80afglc.xn--p1ai/service/montazh-tekhnologicheskikh-truboprovodov</url>
-        <price>0</price>
+        <price>1000</price>
         <currencyId>RUB</currencyId>
         <categoryId>2</categoryId>
         <name>Монтаж технологических трубопроводов</name>
-        <description>Установка и ремонт технологических трубопроводов в Санкт-Петербурге и Ленинградской области</description>
+        <description>Установка и ремонт технологических трубопроводов. Цена по запросу. Звоните!</description>
         <picture>https://xn--80afglc.xn--p1ai/img/services/img6.jpeg</picture>
-        <service_type>Монтажные работы</service_type>
         <vendor>ООО "ЛЕГИОН"</vendor>
+        <delivery>false</delivery>
+        <pickup>false</pickup>
       </offer>
 
-      <offer id="7" available="true" type="service">
+      <offer id="7" available="true">
         <url>https://xn--80afglc.xn--p1ai/service/montazh-tekhnologicheskikh-ploshchadok</url>
-        <price>0</price>
+        <price>1000</price>
         <currencyId>RUB</currencyId>
         <categoryId>2</categoryId>
         <name>Монтаж технологических площадок</name>
-        <description>Устройство площадок для обслуживания технологического оборудования в Санкт-Петербурге и Ленинградской области</description>
+        <description>Устройство площадок для обслуживания оборудования. Цена по запросу. Звоните!</description>
         <picture>https://xn--80afglc.xn--p1ai/img/services/img7.jpeg</picture>
-        <service_type>Монтажные работы</service_type>
         <vendor>ООО "ЛЕГИОН"</vendor>
+        <delivery>false</delivery>
+        <pickup>false</pickup>
       </offer>
 
-      <offer id="8" available="true" type="service">
+      <offer id="8" available="true">
         <url>https://xn--80afglc.xn--p1ai/service/antikorroziynaya-zashchita</url>
-        <price>0</price>
+        <price>1000</price>
         <currencyId>RUB</currencyId>
         <categoryId>2</categoryId>
         <name>Антикоррозийная защита</name>
-        <description>Защита металлических и бетонных конструкций от коррозии в Санкт-Петербурге и Ленинградской области</description>
+        <description>Защита металлических и бетонных конструкций от коррозии. Цена по запросу. Звоните!</description>
         <picture>https://xn--80afglc.xn--p1ai/img/services/img8.jpeg</picture>
-        <service_type>Защитные работы</service_type>
         <vendor>ООО "ЛЕГИОН"</vendor>
+        <delivery>false</delivery>
+        <pickup>false</pickup>
       </offer>
 
-      <offer id="9" available="true" type="service">
+      <offer id="9" available="true">
         <url>https://xn--80afglc.xn--p1ai/service/ustroystvo-kamennykh-konstruktsiy</url>
-        <price>0</price>
+        <price>1000</price>
         <currencyId>RUB</currencyId>
         <categoryId>3</categoryId>
         <name>Устройство каменных конструкций</name>
-        <description>Устройство конструкций из кирпича и строительных блоков в Санкт-Петербурге и Ленинградской области</description>
+        <description>Устройство конструкций из кирпича и блоков. Цена по запросу. Звоните!</description>
         <picture>https://xn--80afglc.xn--p1ai/img/services/img10.jpeg</picture>
-        <service_type>Каменные работы</service_type>
         <vendor>ООО "ЛЕГИОН"</vendor>
+        <delivery>false</delivery>
+        <pickup>false</pickup>
       </offer>
 
-      <offer id="10" available="true" type="service">
+      <offer id="10" available="true">
         <url>https://xn--80afglc.xn--p1ai/service/ustroystvo-fundamentov</url>
-        <price>0</price>
+        <price>1000</price>
         <currencyId>RUB</currencyId>
         <categoryId>4</categoryId>
         <name>Устройство фундаментов</name>
-        <description>Устройство и ремонт фундаментов зданий, сооружений и оборудования в Санкт-Петербурге и Ленинградской области</description>
+        <description>Устройство и ремонт фундаментов зданий. Цена по запросу. Звоните!</description>
         <picture>https://xn--80afglc.xn--p1ai/img/services/img12.jpeg</picture>
-        <service_type>Бетонные работы</service_type>
         <vendor>ООО "ЛЕГИОН"</vendor>
+        <delivery>false</delivery>
+        <pickup>false</pickup>
       </offer>
 
-      <offer id="11" available="true" type="service">
+      <offer id="11" available="true">
         <url>https://xn--80afglc.xn--p1ai/service/montazh-sbornogo-zhelezobetona</url>
-        <price>0</price>
+        <price>1000</price>
         <currencyId>RUB</currencyId>
         <categoryId>4</categoryId>
         <name>Монтаж сборного железобетона</name>
-        <description>Устройство монолитных бетонных и железобетонных конструкций в Санкт-Петербурге и Ленинградской области</description>
+        <description>Устройство монолитных бетонных конструкций. Цена по запросу. Звоните!</description>
         <picture>https://xn--80afglc.xn--p1ai/img/services/img13.jpeg</picture>
-        <service_type>Монтажные работы</service_type>
         <vendor>ООО "ЛЕГИОН"</vendor>
+        <delivery>false</delivery>
+        <pickup>false</pickup>
       </offer>
 
-      <offer id="12" available="true" type="service">
+      <offer id="12" available="true">
         <url>https://xn--80afglc.xn--p1ai/service/teploizolyatsiya-oborudovaniya</url>
-        <price>0</price>
+        <price>1000</price>
         <currencyId>RUB</currencyId>
         <categoryId>5</categoryId>
         <name>Теплоизоляция оборудования</name>
-        <description>Теплоизоляционные работы для технологического оборудования в Санкт-Петербурге и Ленинградской области</description>
+        <description>Теплоизоляционные работы для оборудования. Цена по запросу. Звоните!</description>
         <picture>https://xn--80afglc.xn--p1ai/img/services/img14.jpeg</picture>
-        <service_type>Теплоизоляционные работы</service_type>
         <vendor>ООО "ЛЕГИОН"</vendor>
+        <delivery>false</delivery>
+        <pickup>false</pickup>
       </offer>
 
-      <offer id="13" available="true" type="service">
+      <offer id="13" available="true">
         <url>https://xn--80afglc.xn--p1ai/service/teploizolyatsiya-truboprovodov</url>
-        <price>0</price>
+        <price>1000</price>
         <currencyId>RUB</currencyId>
         <categoryId>5</categoryId>
         <name>Теплоизоляция трубопроводов</name>
-        <description>Теплоизоляция технологических трубопроводов в Санкт-Петербурге и Ленинградской области</description>
+        <description>Теплоизоляция технологических трубопроводов. Цена по запросу. Звоните!</description>
         <picture>https://xn--80afglc.xn--p1ai/img/services/img15.jpeg</picture>
-        <service_type>Теплоизоляционные работы</service_type>
         <vendor>ООО "ЛЕГИОН"</vendor>
+        <delivery>false</delivery>
+        <pickup>false</pickup>
       </offer>
 
-      <offer id="14" available="true" type="service">
+      <offer id="14" available="true">
         <url>https://xn--80afglc.xn--p1ai/service/zemlyanye-raboty</url>
-        <price>0</price>
+        <price>1000</price>
         <currencyId>RUB</currencyId>
         <categoryId>6</categoryId>
         <name>Земляные работы</name>
-        <description>Земляные работы любой сложности в Санкт-Петербурге и Ленинградской области</description>
+        <description>Земляные работы любой сложности. Цена по запросу. Звоните!</description>
         <picture>https://xn--80afglc.xn--p1ai/img/services/img16.jpeg</picture>
-        <service_type>Земляные работы</service_type>
         <vendor>ООО "ЛЕГИОН"</vendor>
+        <delivery>false</delivery>
+        <pickup>false</pickup>
       </offer>
 
-      <offer id="15" available="true" type="service">
+      <offer id="15" available="true">
         <url>https://xn--80afglc.xn--p1ai/service/stroitelstvo-angarov</url>
-        <price>0</price>
+        <price>1000</price>
         <currencyId>RUB</currencyId>
         <categoryId>6</categoryId>
         <name>Строительство ангаров</name>
-        <description>Строительство ангаров для различных целей в Санкт-Петербурге и Ленинградской области</description>
+        <description>Строительство ангаров для различных целей. Цена по запросу. Звоните!</description>
         <picture>https://xn--80afglc.xn--p1ai/img/services/img17.jpeg</picture>
-        <service_type>Строительство</service_type>
         <vendor>ООО "ЛЕГИОН"</vendor>
+        <delivery>false</delivery>
+        <pickup>false</pickup>
       </offer>
 
-      <offer id="16" available="true" type="service">
+      <offer id="16" available="true">
         <url>https://xn--80afglc.xn--p1ai/service/gruzoperevozki</url>
-        <price>0</price>
+        <price>1000</price>
         <currencyId>RUB</currencyId>
         <categoryId>6</categoryId>
         <name>Грузоперевозки</name>
-        <description>Транспортировка материалов и оборудования в Санкт-Петербурге и Ленинградской области</description>
+        <description>Транспортировка материалов и оборудования. Цена по запросу. Звоните!</description>
         <picture>https://xn--80afglc.xn--p1ai/img/services/img18.jpeg</picture>
-        <service_type>Транспортные услуги</service_type>
         <vendor>ООО "ЛЕГИОН"</vendor>
+        <delivery>false</delivery>
+        <pickup>false</pickup>
       </offer>
 
-      <offer id="17" available="true" type="service">
+      <offer id="17" available="true">
         <url>https://xn--80afglc.xn--p1ai/service/ognezashchita-konstruktsiy</url>
-        <price>0</price>
+        <price>1000</price>
         <currencyId>RUB</currencyId>
         <categoryId>6</categoryId>
         <name>Огнезащита конструкций</name>
-        <description>Огнезащита металлических и деревянных конструкций в Санкт-Петербурге и Ленинградской области</description>
+        <description>Огнезащита металлических и деревянных конструкций. Цена по запросу. Звоните!</description>
         <picture>https://xn--80afglc.xn--p1ai/img/services/img19.jpeg</picture>
-        <service_type>Защитные работы</service_type>
         <vendor>ООО "ЛЕГИОН"</vendor>
+        <delivery>false</delivery>
+        <pickup>false</pickup>
       </offer>
 
       <!-- Защита от БПЛА -->
-      <offer id="100" available="true" type="service">
+      <offer id="100" available="true">
         <url>https://xn--80afglc.xn--p1ai/drone-defense</url>
-        <price>0</price>
+        <price>1000</price>
         <currencyId>RUB</currencyId>
         <categoryId>7</categoryId>
         <name>Защита от БПЛА под ключ</name>
-        <description>Комплексная защита объектов от беспилотных летательных аппаратов. Монтаж антидрон-сеток по СП 542. Проектирование, монтаж, обслуживание по всей России</description>
+        <description>Комплексная защита объектов от БПЛА. Монтаж антидрон-сеток по СП 542. Цена по запросу. Звоните!</description>
         <picture>https://xn--80afglc.xn--p1ai/img/homesImg/services.jpeg</picture>
-        <service_type>Защита от БПЛА</service_type>
         <vendor>ООО "ЛЕГИОН"</vendor>
+        <delivery>false</delivery>
+        <pickup>false</pickup>
       </offer>
     </offers>
   </shop>
