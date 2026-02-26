@@ -48,15 +48,41 @@ const DroneDefensePage: React.FC<DroneDefensePageProps> = ({ breadcrumbs }) => {
   });
   const [isCallbackSubmitting, setIsCallbackSubmitting] = useState(false);
   const [callbackSuccess, setCallbackSuccess] = useState(false);
+  const [phoneError, setPhoneError] = useState('');
 
 // Обработчик изменения полей формы
   const handleCallbackChange = (field: string, value: string) => {
     setCallbackForm(prev => ({ ...prev, [field]: value }));
+    // Очищаем ошибку при изменении поля телефона
+    if (field === 'phone') {
+      setPhoneError('');
+    }
+  };
+
+// Обработчик изменения поля телефона
+  const handlePhoneChange = (value: string) => {
+    const formatted = formatPhone(value);
+    setCallbackForm(prev => ({ ...prev, phone: formatted }));
+    setPhoneError('');
+  };
+
+// Обработчик потери фокуса поля телефона
+  const handlePhoneBlur = (value: string) => {
+    if (value && !isValidPhone(value)) {
+      setPhoneError('Введите корректный номер (11 цифр)');
+    }
   };
 
 // Обработчик отправки формы обратного звонка
   const handleCallbackSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Валидация телефона
+    if (!isValidPhone(callbackForm.phone)) {
+      setPhoneError('Введите корректный номер (11 цифр)');
+      return;
+    }
+    
     setIsCallbackSubmitting(true);
 
     try {
@@ -91,9 +117,24 @@ const DroneDefensePage: React.FC<DroneDefensePageProps> = ({ breadcrumbs }) => {
     }
   };
 
-  // Функция форматирования телефона
+  // Функция форматирования телефона с автоподстановкой +7
   const formatPhone = (value: string) => {
-    const cleaned = value.replace(/\D/g, '');
+    // Удаляем все нецифровые символы
+    let cleaned = value.replace(/\D/g, '');
+    
+    // Если номер начинается с 8, заменяем на 7
+    if (cleaned.startsWith('8')) {
+      cleaned = '7' + cleaned.slice(1);
+    }
+    
+    // Если цифр нет или первая цифра не 7, добавляем 7
+    if (!cleaned.startsWith('7') && cleaned.length > 0) {
+      cleaned = '7' + cleaned;
+    }
+    
+    // Ограничиваем 11 цифрами (7 + 10 цифр номера)
+    cleaned = cleaned.slice(0, 11);
+    
     const match = cleaned.match(/^(\d{0,1})(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})$/);
     if (match) {
       return [
@@ -105,6 +146,12 @@ const DroneDefensePage: React.FC<DroneDefensePageProps> = ({ breadcrumbs }) => {
       ].filter(Boolean).join('');
     }
     return value;
+  };
+
+  // Валидация телефона (ровно 11 цифр)
+  const isValidPhone = (phone: string): boolean => {
+    const cleaned = phone.replace(/\D/g, '');
+    return cleaned.length === 11 && cleaned.startsWith('7');
   };
 
   // ---------------------------------------
@@ -1078,8 +1125,7 @@ const DroneDefensePage: React.FC<DroneDefensePageProps> = ({ breadcrumbs }) => {
                             type="text"
                             required
                             value={callbackForm.name}
-                            // Использование в onChange:
-                            onChange={(e) => handleCallbackChange('phone', formatPhone(e.target.value))}
+                            onChange={(e) => handleCallbackChange('name', e.target.value)}
                             className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                             placeholder="Иван Иванов"
                             disabled={isCallbackSubmitting}
@@ -1095,11 +1141,21 @@ const DroneDefensePage: React.FC<DroneDefensePageProps> = ({ breadcrumbs }) => {
                             type="tel"
                             required
                             value={callbackForm.phone}
-                            onChange={(e) => handleCallbackChange('phone', e.target.value)}
-                            className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                            onChange={(e) => handlePhoneChange(e.target.value)}
+                            onBlur={(e) => handlePhoneBlur(e.target.value)}
+                            onFocus={(e) => {
+                              // При фокусе, если поле пустое, подставляем +7
+                              if (!e.target.value) {
+                                setCallbackForm(prev => ({ ...prev, phone: '+7' }));
+                              }
+                            }}
+                            className={`w-full px-4 py-3 rounded-xl bg-white/5 border ${phoneError ? 'border-red-500' : 'border-white/10'} text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all`}
                             placeholder="+7 (___) ___-__-__"
                             disabled={isCallbackSubmitting}
                         />
+                        {phoneError && (
+                            <p className="mt-1 text-sm text-red-400">{phoneError}</p>
+                        )}
                       </div>
 
                       {/* Message Field */}
