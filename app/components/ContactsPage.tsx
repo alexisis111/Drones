@@ -22,6 +22,8 @@ import {
 import { useFetcher } from 'react-router';
 import ContactForm from "~/components/ContactForm";
 import Breadcrumbs, { type BreadcrumbItem } from './Breadcrumbs';
+import { useCallbackForm } from '../hooks/useCallbackForm';
+import { CallbackModal } from './CallbackModal';
 
 interface ContactsPageProps {
   breadcrumbs?: BreadcrumbItem[];
@@ -30,6 +32,30 @@ interface ContactsPageProps {
 const ContactsPage: React.FC<ContactsPageProps> = ({ breadcrumbs }) => {
   const { theme } = useTheme();
   const [scrollY, setScrollY] = useState(0);
+
+  // Хук для формы обратного звонка
+  const {
+    callbackForm,
+    isCallbackSubmitting,
+    callbackSuccess,
+    phoneError,
+    isCallbackModalOpen,
+    setIsCallbackModalOpen,
+    handleCallbackChange,
+    handlePhoneChange,
+    handlePhoneBlur,
+    handlePhoneFocus,
+    handleCallbackSubmit
+  } = useCallbackForm('ContactsPage - обратный звонок');
+
+  // Обработчик отправки формы
+  const onCallbackSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    await handleCallbackSubmit(
+      'ContactsPage - обратный звонок',
+      '📞 Новое сообщение на обратный звонок'
+    );
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -116,6 +142,13 @@ const ContactsPage: React.FC<ContactsPageProps> = ({ breadcrumbs }) => {
                     <Phone className="w-5 h-5"/>
                     <span>Позвонить</span>
                   </a>
+                  <button
+                      onClick={() => setIsCallbackModalOpen(true)}
+                      className="group inline-flex items-center gap-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-xl hover:scale-105 transition-all duration-300"
+                  >
+                    <MessageSquare className="w-5 h-5"/>
+                    <span>Заказать обратный звонок</span>
+                  </button>
                 </motion.div>
 
                 {/* Subtitle */}
@@ -389,12 +422,23 @@ const ContactsPage: React.FC<ContactsPageProps> = ({ breadcrumbs }) => {
             </motion.div>
           </div>
         </section>
+
+        {/* Callback Modal */}
+        <CallbackModal
+          isOpen={isCallbackModalOpen}
+          onClose={() => setIsCallbackModalOpen(false)}
+          callbackForm={callbackForm}
+          isCallbackSubmitting={isCallbackSubmitting}
+          callbackSuccess={callbackSuccess}
+          phoneError={phoneError}
+          handleCallbackChange={handleCallbackChange}
+          handlePhoneChange={handlePhoneChange}
+          handlePhoneBlur={handlePhoneBlur}
+          handlePhoneFocus={handlePhoneFocus}
+          handleSubmit={onCallbackSubmit}
+        />
       </div>
   );
 };
-
-
-// Contact Form Component
-<ContactForm />
 
 export default ContactsPage;
