@@ -106,8 +106,8 @@ app.get('/yml.xml', (req, res) => {
 
 // Redirect old domain to new domain
 app.use((req, res, next) => {
-  if (req.headers.host.includes('xn--80affa3aj.xn--p1ai')) {
-    const newPath = req.protocol + '://' + 'xn--80afglc.xn--p1ai' + req.originalUrl;
+  if (req.headers.host.includes('legion78.ru')) {
+    const newPath = req.protocol + '://' + 'xn--78-glchqprh.xn--p1ai' + req.originalUrl;
     res.redirect(301, newPath);
   } else {
     next();

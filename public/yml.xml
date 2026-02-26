@@ -3,7 +3,7 @@
   <shop>
     <name>ООО "ЛЕГИОН"</name>
     <company>ООО "ЛЕГИОН"</company>
-    <url>https://xn--80afglc.xn--p1ai</url>
+    <url>https://xn--78-glchqprh.xn--p1ai/</url>
     <currencies>
       <currency id="RUB" rate="1"/>
     </currencies>
@@ -20,221 +20,221 @@
     <!-- Услуги -->
     <offers>
       <offer id="1" available="true">
-        <url>https://xn--80afglc.xn--p1ai/service/razborka-zdaniy-i-sooruzheniy</url>
+        <url>https://xn--78-glchqprh.xn--p1ai/service/razborka-zdaniy-i-sooruzheniy</url>
         <price>1000</price>
         <currencyId>RUB</currencyId>
         <categoryId>1</categoryId>
         <name>Разборка зданий и сооружений</name>
         <description>Демонтажные работы любой сложности. Цена по запросу. Звоните!</description>
-        <picture>https://xn--80afglc.xn--p1ai/img/services/img1.jpeg</picture>
+        <picture>https://xn--78-glchqprh.xn--p1ai/img/services/img1.jpeg</picture>
         <vendor>ООО "ЛЕГИОН"</vendor>
         <delivery>false</delivery>
         <pickup>false</pickup>
       </offer>
 
       <offer id="2" available="true">
-        <url>https://xn--80afglc.xn--p1ai/service/sborka-lesov</url>
+        <url>https://xn--78-glchqprh.xn--p1ai/service/sborka-lesov</url>
         <price>1000</price>
         <currencyId>RUB</currencyId>
         <categoryId>1</categoryId>
         <name>Сборка лесов</name>
         <description>Монтаж инвентарных и неинвентарных лесов. Цена по запросу. Звоните!</description>
-        <picture>https://xn--80afglc.xn--p1ai/img/services/img2.jpeg</picture>
+        <picture>https://xn--78-glchqprh.xn--p1ai/img/services/img2.jpeg</picture>
         <vendor>ООО "ЛЕГИОН"</vendor>
         <delivery>false</delivery>
         <pickup>false</pickup>
       </offer>
 
       <offer id="3" available="true">
-        <url>https://xn--80afglc.xn--p1ai/service/podgotovka-stroitelnogo-uchastka</url>
+        <url>https://xn--78-glchqprh.xn--p1ai/service/podgotovka-stroitelnogo-uchastka</url>
         <price>1000</price>
         <currencyId>RUB</currencyId>
         <categoryId>1</categoryId>
         <name>Подготовка строительного участка</name>
         <description>Комплекс мероприятий по подготовке территории. Цена по запросу. Звоните!</description>
-        <picture>https://xn--80afglc.xn--p1ai/img/services/img3.jpeg</picture>
+        <picture>https://xn--78-glchqprh.xn--p1ai/img/services/img3.jpeg</picture>
         <vendor>ООО "ЛЕГИОН"</vendor>
         <delivery>false</delivery>
         <pickup>false</pickup>
       </offer>
 
       <offer id="4" available="true">
-        <url>https://xn--80afglc.xn--p1ai/service/blagoustroystvo-territoriy</url>
+        <url>https://xn--78-glchqprh.xn--p1ai/service/blagoustroystvo-territoriy</url>
         <price>1000</price>
         <currencyId>RUB</currencyId>
         <categoryId>1</categoryId>
         <name>Благоустройство территорий</name>
         <description>Комплекс работ по обустройству прилегающих территорий. Цена по запросу. Звоните!</description>
-        <picture>https://xn--80afglc.xn--p1ai/img/services/img4.jpeg</picture>
+        <picture>https://xn--78-glchqprh.xn--p1ai/img/services/img4.jpeg</picture>
         <vendor>ООО "ЛЕГИОН"</vendor>
         <delivery>false</delivery>
         <pickup>false</pickup>
       </offer>
 
       <offer id="5" available="true">
-        <url>https://xn--80afglc.xn--p1ai/service/izgotovlenie-metallokonstruktsiy</url>
+        <url>https://xn--78-glchqprh.xn--p1ai/service/izgotovlenie-metallokonstruktsiy</url>
         <price>1000</price>
         <currencyId>RUB</currencyId>
         <categoryId>2</categoryId>
         <name>Изготовление металлоконструкций</name>
         <description>Производство металлических конструкций любой сложности. Цена по запросу. Звоните!</description>
-        <picture>https://xn--80afglc.xn--p1ai/img/services/img5.jpeg</picture>
+        <picture>https://xn--78-glchqprh.xn--p1ai/img/services/img5.jpeg</picture>
         <vendor>ООО "ЛЕГИОН"</vendor>
         <delivery>false</delivery>
         <pickup>false</pickup>
       </offer>
 
       <offer id="6" available="true">
-        <url>https://xn--80afglc.xn--p1ai/service/montazh-tekhnologicheskikh-truboprovodov</url>
+        <url>https://xn--78-glchqprh.xn--p1ai/service/montazh-tekhnologicheskikh-truboprovodov</url>
         <price>1000</price>
         <currencyId>RUB</currencyId>
         <categoryId>2</categoryId>
         <name>Монтаж технологических трубопроводов</name>
         <description>Установка и ремонт технологических трубопроводов. Цена по запросу. Звоните!</description>
-        <picture>https://xn--80afglc.xn--p1ai/img/services/img6.jpeg</picture>
+        <picture>https://xn--78-glchqprh.xn--p1ai/img/services/img6.jpeg</picture>
         <vendor>ООО "ЛЕГИОН"</vendor>
         <delivery>false</delivery>
         <pickup>false</pickup>
       </offer>
 
       <offer id="7" available="true">
-        <url>https://xn--80afglc.xn--p1ai/service/montazh-tekhnologicheskikh-ploshchadok</url>
+        <url>https://xn--78-glchqprh.xn--p1ai/service/montazh-tekhnologicheskikh-ploshchadok</url>
         <price>1000</price>
         <currencyId>RUB</currencyId>
         <categoryId>2</categoryId>
         <name>Монтаж технологических площадок</name>
         <description>Устройство площадок для обслуживания оборудования. Цена по запросу. Звоните!</description>
-        <picture>https://xn--80afglc.xn--p1ai/img/services/img7.jpeg</picture>
+        <picture>https://xn--78-glchqprh.xn--p1ai/img/services/img7.jpeg</picture>
         <vendor>ООО "ЛЕГИОН"</vendor>
         <delivery>false</delivery>
         <pickup>false</pickup>
       </offer>
 
       <offer id="8" available="true">
-        <url>https://xn--80afglc.xn--p1ai/service/antikorroziynaya-zashchita</url>
+        <url>https://xn--78-glchqprh.xn--p1ai/service/antikorroziynaya-zashchita</url>
         <price>1000</price>
         <currencyId>RUB</currencyId>
         <categoryId>2</categoryId>
         <name>Антикоррозийная защита</name>
         <description>Защита металлических и бетонных конструкций от коррозии. Цена по запросу. Звоните!</description>
-        <picture>https://xn--80afglc.xn--p1ai/img/services/img8.jpeg</picture>
+        <picture>https://xn--78-glchqprh.xn--p1ai/img/services/img8.jpeg</picture>
         <vendor>ООО "ЛЕГИОН"</vendor>
         <delivery>false</delivery>
         <pickup>false</pickup>
       </offer>
 
       <offer id="9" available="true">
-        <url>https://xn--80afglc.xn--p1ai/service/ustroystvo-kamennykh-konstruktsiy</url>
+        <url>https://xn--78-glchqprh.xn--p1ai/service/ustroystvo-kamennykh-konstruktsiy</url>
         <price>1000</price>
         <currencyId>RUB</currencyId>
         <categoryId>3</categoryId>
         <name>Устройство каменных конструкций</name>
         <description>Устройство конструкций из кирпича и блоков. Цена по запросу. Звоните!</description>
-        <picture>https://xn--80afglc.xn--p1ai/img/services/img10.jpeg</picture>
+        <picture>https://xn--78-glchqprh.xn--p1ai/img/services/img10.jpeg</picture>
         <vendor>ООО "ЛЕГИОН"</vendor>
         <delivery>false</delivery>
         <pickup>false</pickup>
       </offer>
 
       <offer id="10" available="true">
-        <url>https://xn--80afglc.xn--p1ai/service/ustroystvo-fundamentov</url>
+        <url>https://xn--78-glchqprh.xn--p1ai/service/ustroystvo-fundamentov</url>
         <price>1000</price>
         <currencyId>RUB</currencyId>
         <categoryId>4</categoryId>
         <name>Устройство фундаментов</name>
         <description>Устройство и ремонт фундаментов зданий. Цена по запросу. Звоните!</description>
-        <picture>https://xn--80afglc.xn--p1ai/img/services/img12.jpeg</picture>
+        <picture>https://xn--78-glchqprh.xn--p1ai/img/services/img12.jpeg</picture>
         <vendor>ООО "ЛЕГИОН"</vendor>
         <delivery>false</delivery>
         <pickup>false</pickup>
       </offer>
 
       <offer id="11" available="true">
-        <url>https://xn--80afglc.xn--p1ai/service/montazh-sbornogo-zhelezobetona</url>
+        <url>https://xn--78-glchqprh.xn--p1ai/service/montazh-sbornogo-zhelezobetona</url>
         <price>1000</price>
         <currencyId>RUB</currencyId>
         <categoryId>4</categoryId>
         <name>Монтаж сборного железобетона</name>
         <description>Устройство монолитных бетонных конструкций. Цена по запросу. Звоните!</description>
-        <picture>https://xn--80afglc.xn--p1ai/img/services/img13.jpeg</picture>
+        <picture>https://xn--78-glchqprh.xn--p1ai/img/services/img13.jpeg</picture>
         <vendor>ООО "ЛЕГИОН"</vendor>
         <delivery>false</delivery>
         <pickup>false</pickup>
       </offer>
 
       <offer id="12" available="true">
-        <url>https://xn--80afglc.xn--p1ai/service/teploizolyatsiya-oborudovaniya</url>
+        <url>https://xn--78-glchqprh.xn--p1ai/service/teploizolyatsiya-oborudovaniya</url>
         <price>1000</price>
         <currencyId>RUB</currencyId>
         <categoryId>5</categoryId>
         <name>Теплоизоляция оборудования</name>
         <description>Теплоизоляционные работы для оборудования. Цена по запросу. Звоните!</description>
-        <picture>https://xn--80afglc.xn--p1ai/img/services/img14.jpeg</picture>
+        <picture>https://xn--78-glchqprh.xn--p1ai/img/services/img14.jpeg</picture>
         <vendor>ООО "ЛЕГИОН"</vendor>
         <delivery>false</delivery>
         <pickup>false</pickup>
       </offer>
 
       <offer id="13" available="true">
-        <url>https://xn--80afglc.xn--p1ai/service/teploizolyatsiya-truboprovodov</url>
+        <url>https://xn--78-glchqprh.xn--p1ai/service/teploizolyatsiya-truboprovodov</url>
         <price>1000</price>
         <currencyId>RUB</currencyId>
         <categoryId>5</categoryId>
         <name>Теплоизоляция трубопроводов</name>
         <description>Теплоизоляция технологических трубопроводов. Цена по запросу. Звоните!</description>
-        <picture>https://xn--80afglc.xn--p1ai/img/services/img15.jpeg</picture>
+        <picture>https://xn--78-glchqprh.xn--p1ai/img/services/img15.jpeg</picture>
         <vendor>ООО "ЛЕГИОН"</vendor>
         <delivery>false</delivery>
         <pickup>false</pickup>
       </offer>
 
       <offer id="14" available="true">
-        <url>https://xn--80afglc.xn--p1ai/service/zemlyanye-raboty</url>
+        <url>https://xn--78-glchqprh.xn--p1ai/service/zemlyanye-raboty</url>
         <price>1000</price>
         <currencyId>RUB</currencyId>
         <categoryId>6</categoryId>
         <name>Земляные работы</name>
         <description>Земляные работы любой сложности. Цена по запросу. Звоните!</description>
-        <picture>https://xn--80afglc.xn--p1ai/img/services/img16.jpeg</picture>
+        <picture>https://xn--78-glchqprh.xn--p1ai/img/services/img16.jpeg</picture>
         <vendor>ООО "ЛЕГИОН"</vendor>
         <delivery>false</delivery>
         <pickup>false</pickup>
       </offer>
 
       <offer id="15" available="true">
-        <url>https://xn--80afglc.xn--p1ai/service/stroitelstvo-angarov</url>
+        <url>https://xn--78-glchqprh.xn--p1ai/service/stroitelstvo-angarov</url>
         <price>1000</price>
         <currencyId>RUB</currencyId>
         <categoryId>6</categoryId>
         <name>Строительство ангаров</name>
         <description>Строительство ангаров для различных целей. Цена по запросу. Звоните!</description>
-        <picture>https://xn--80afglc.xn--p1ai/img/services/img17.jpeg</picture>
+        <picture>https://xn--78-glchqprh.xn--p1ai/img/services/img17.jpeg</picture>
         <vendor>ООО "ЛЕГИОН"</vendor>
         <delivery>false</delivery>
         <pickup>false</pickup>
       </offer>
 
       <offer id="16" available="true">
-        <url>https://xn--80afglc.xn--p1ai/service/gruzoperevozki</url>
+        <url>https://xn--78-glchqprh.xn--p1ai/service/gruzoperevozki</url>
         <price>1000</price>
         <currencyId>RUB</currencyId>
         <categoryId>6</categoryId>
         <name>Грузоперевозки</name>
         <description>Транспортировка материалов и оборудования. Цена по запросу. Звоните!</description>
-        <picture>https://xn--80afglc.xn--p1ai/img/services/img18.jpeg</picture>
+        <picture>https://xn--78-glchqprh.xn--p1ai/img/services/img18.jpeg</picture>
         <vendor>ООО "ЛЕГИОН"</vendor>
         <delivery>false</delivery>
         <pickup>false</pickup>
       </offer>
 
       <offer id="17" available="true">
-        <url>https://xn--80afglc.xn--p1ai/service/ognezashchita-konstruktsiy</url>
+        <url>https://xn--78-glchqprh.xn--p1ai/service/ognezashchita-konstruktsiy</url>
         <price>1000</price>
         <currencyId>RUB</currencyId>
         <categoryId>6</categoryId>
         <name>Огнезащита конструкций</name>
         <description>Огнезащита металлических и деревянных конструкций. Цена по запросу. Звоните!</description>
-        <picture>https://xn--80afglc.xn--p1ai/img/services/img19.jpeg</picture>
+        <picture>https://xn--78-glchqprh.xn--p1ai/img/services/img19.jpeg</picture>
         <vendor>ООО "ЛЕГИОН"</vendor>
         <delivery>false</delivery>
         <pickup>false</pickup>
@@ -242,13 +242,13 @@
 
       <!-- Защита от БПЛА -->
       <offer id="100" available="true">
-        <url>https://xn--80afglc.xn--p1ai/drone-defense</url>
+        <url>https://xn--78-glchqprh.xn--p1ai/drone-defense</url>
         <price>1000</price>
         <currencyId>RUB</currencyId>
         <categoryId>7</categoryId>
         <name>Защита от БПЛА под ключ</name>
         <description>Комплексная защита объектов от БПЛА. Монтаж антидрон-сеток по СП 542. Цена по запросу. Звоните!</description>
-        <picture>https://xn--80afglc.xn--p1ai/img/homesImg/services.jpeg</picture>
+        <picture>https://xn--78-glchqprh.xn--p1ai/img/homesImg/services.jpeg</picture>
         <vendor>ООО "ЛЕГИОН"</vendor>
         <delivery>false</delivery>
         <pickup>false</pickup>

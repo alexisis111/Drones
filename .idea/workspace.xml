@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fde30c11-94c5-4884-96a6-cf984ad02720" name="Changes" comment="ymlFeedYa" />
+    <list default="true" id="fde30c11-94c5-4884-96a6-cf984ad02720" name="Changes" comment="fix_ymlFeedYa">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/yml.xml" beforeDir="false" afterPath="$PROJECT_DIR$/public/yml.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/server.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -103,15 +107,7 @@
       <workItem from="1772002978362" duration="3637000" />
       <workItem from="1772091349438" duration="2893000" />
       <workItem from="1772104668307" duration="1003000" />
-      <workItem from="1772125309578" duration="749000" />
-    </task>
-    <task id="LOCAL-00039" summary="fix send message русское уведомление">
-      <option name="closed" value="true" />
-      <created>1770114306337</created>
-      <option name="number" value="00039" />
-      <option name="presentableId" value="LOCAL-00039" />
-      <option name="project" value="LOCAL" />
-      <updated>1770114306337</updated>
+      <workItem from="1772125309578" duration="2129000" />
     </task>
     <task id="LOCAL-00040" summary="fix">
       <option name="closed" value="true" />
@@ -497,7 +493,15 @@
       <option name="project" value="LOCAL" />
       <updated>1772126078166</updated>
     </task>
-    <option name="localTasksCounter" value="88" />
+    <task id="LOCAL-00088" summary="fix_ymlFeedYa">
+      <option name="closed" value="true" />
+      <created>1772126390647</created>
+      <option name="number" value="00088" />
+      <option name="presentableId" value="LOCAL-00088" />
+      <option name="project" value="LOCAL" />
+      <updated>1772126390647</updated>
+    </task>
+    <option name="localTasksCounter" value="89" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -527,7 +531,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="OptimizedImgs" />
     <MESSAGE value="fixTgForm" />
     <MESSAGE value="fixTGinLoc" />
     <MESSAGE value="fixContactsForms" />
@@ -552,6 +555,7 @@
     <MESSAGE value="fix" />
     <MESSAGE value="fixx" />
     <MESSAGE value="ymlFeedYa" />
-    <option name="LAST_COMMIT_MESSAGE" value="ymlFeedYa" />
+    <MESSAGE value="fix_ymlFeedYa" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix_ymlFeedYa" />
   </component>
 </project>
