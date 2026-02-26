@@ -26,6 +26,8 @@ import FaqSection from './FaqSection';
 import ContactForm from "~/components/ContactForm";
 import ProjectEstimateModal from './ProjectEstimateModal';
 import Breadcrumbs, { type BreadcrumbItem } from './Breadcrumbs';
+import { useCallbackForm } from '../hooks/useCallbackForm';
+import { CallbackModal } from './CallbackModal';
 
 interface DroneDefensePageProps {
   breadcrumbs?: BreadcrumbItem[];
@@ -38,122 +40,27 @@ const DroneDefensePage: React.FC<DroneDefensePageProps> = ({ breadcrumbs }) => {
   const [isEstimateModalOpen, setIsEstimateModalOpen] = useState(false);
 
   // ----модалка для заказа звонка -----
+  const {
+    callbackForm,
+    isCallbackSubmitting,
+    callbackSuccess,
+    phoneError,
+    isCallbackModalOpen,
+    setIsCallbackModalOpen,
+    handleCallbackChange,
+    handlePhoneChange,
+    handlePhoneBlur,
+    handlePhoneFocus,
+    handleCallbackSubmit
+  } = useCallbackForm('DroneDefensePage - обратный звонок');
 
-  // State для модального окна обратного звонка
-  const [isCallbackModalOpen, setIsCallbackModalOpen] = useState(false);
-  const [callbackForm, setCallbackForm] = useState({
-    name: '',
-    phone: '',
-    message: ''
-  });
-  const [isCallbackSubmitting, setIsCallbackSubmitting] = useState(false);
-  const [callbackSuccess, setCallbackSuccess] = useState(false);
-  const [phoneError, setPhoneError] = useState('');
-
-// Обработчик изменения полей формы
-  const handleCallbackChange = (field: string, value: string) => {
-    setCallbackForm(prev => ({ ...prev, [field]: value }));
-    // Очищаем ошибку при изменении поля телефона
-    if (field === 'phone') {
-      setPhoneError('');
-    }
-  };
-
-// Обработчик изменения поля телефона
-  const handlePhoneChange = (value: string) => {
-    const formatted = formatPhone(value);
-    setCallbackForm(prev => ({ ...prev, phone: formatted }));
-    setPhoneError('');
-  };
-
-// Обработчик потери фокуса поля телефона
-  const handlePhoneBlur = (value: string) => {
-    if (value && !isValidPhone(value)) {
-      setPhoneError('Введите корректный номер (11 цифр)');
-    }
-  };
-
-// Обработчик отправки формы обратного звонка
-  const handleCallbackSubmit = async (e: React.FormEvent) => {
+  // Обработчик отправки формы (обёртка над хуком)
+  const onCallbackSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Валидация телефона
-    if (!isValidPhone(callbackForm.phone)) {
-      setPhoneError('Введите корректный номер (11 цифр)');
-      return;
-    }
-    
-    setIsCallbackSubmitting(true);
-
-    try {
-      const response = await fetch('/api/telegram-webhook', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: callbackForm.name,
-          phone: callbackForm.phone,
-          message: callbackForm.message,
-          subject: '📞 Новое сообщение на обратный звонок',
-          source: 'DroneDefensePage - обратный звонок'
-        }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Ошибка при отправке');
-      }
-
-      // Успех: показываем сообщение и закрываем через 3 сек
-      setCallbackSuccess(true);
-      setTimeout(() => {
-        setIsCallbackModalOpen(false);
-        setCallbackForm({ name: '', phone: '', message: '' });
-        setCallbackSuccess(false);
-      }, 3000);
-
-    } catch (error) {
-      console.error('Callback submit error:', error);
-      alert('Ошибка при отправке заявки. Попробуйте позже.');
-    } finally {
-      setIsCallbackSubmitting(false);
-    }
-  };
-
-  // Функция форматирования телефона с автоподстановкой +7
-  const formatPhone = (value: string) => {
-    // Удаляем все нецифровые символы
-    let cleaned = value.replace(/\D/g, '');
-    
-    // Если номер начинается с 8, заменяем на 7
-    if (cleaned.startsWith('8')) {
-      cleaned = '7' + cleaned.slice(1);
-    }
-    
-    // Если цифр нет или первая цифра не 7, добавляем 7
-    if (!cleaned.startsWith('7') && cleaned.length > 0) {
-      cleaned = '7' + cleaned;
-    }
-    
-    // Ограничиваем 11 цифрами (7 + 10 цифр номера)
-    cleaned = cleaned.slice(0, 11);
-    
-    const match = cleaned.match(/^(\d{0,1})(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})$/);
-    if (match) {
-      return [
-        match[1] ? '+7' : '',
-        match[2] ? ` (${match[2]}` : '',
-        match[3] ? `) ${match[3]}` : '',
-        match[4] ? `-${match[4]}` : '',
-        match[5] ? `-${match[5]}` : ''
-      ].filter(Boolean).join('');
-    }
-    return value;
-  };
-
-  // Валидация телефона (ровно 11 цифр)
-  const isValidPhone = (phone: string): boolean => {
-    const cleaned = phone.replace(/\D/g, '');
-    return cleaned.length === 11 && cleaned.startsWith('7');
+    await handleCallbackSubmit(
+      'DroneDefensePage - обратный звонок',
+      '📞 Новое сообщение на обратный звонок'
+    );
   };
 
   // ---------------------------------------
@@ -1067,142 +974,19 @@ const DroneDefensePage: React.FC<DroneDefensePageProps> = ({ breadcrumbs }) => {
         subtitle="Ответы на наиболее популярные вопросы о системах защиты периметра от беспилотников"
       />
       {/* Callback Modal */}
-      {isCallbackModalOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            {/* Backdrop */}
-            <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="absolute inset-0 bg-black/70 backdrop-blur-sm"
-                onClick={() => !isCallbackSubmitting && setIsCallbackModalOpen(false)}
-            />
-
-            {/* Modal Content */}
-            <motion.div
-                initial={{ opacity: 0, scale: 0.95, y: 20 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                className="relative w-full max-w-md bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-6 shadow-2xl border border-white/10"
-            >
-              {/* Close Button */}
-              {!isCallbackSubmitting && !callbackSuccess && (
-                  <button
-                      onClick={() => setIsCallbackModalOpen(false)}
-                      className="absolute top-4 right-4 p-2 rounded-lg hover:bg-white/10 transition-colors text-gray-400 hover:text-white"
-                      aria-label="Закрыть"
-                  >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                  </button>
-              )}
-
-              {/* Success State */}
-              {callbackSuccess ? (
-                  <div className="text-center py-8">
-                    <motion.div
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        className="w-16 h-16 mx-auto mb-4 rounded-full bg-green-500/20 flex items-center justify-center"
-                    >
-                      <CheckCircle className="w-8 h-8 text-green-400" />
-                    </motion.div>
-                    <h3 className="text-xl font-bold text-white mb-2">Заявка отправлена!</h3>
-                    <p className="text-gray-400">Мы перезвоним вам в ближайшее время</p>
-                  </div>
-              ) : (
-                  <>
-                    <h3 className="text-2xl font-bold text-white mb-6 text-center">
-                      Заказать обратный звонок
-                    </h3>
-
-                    <form onSubmit={handleCallbackSubmit} className="space-y-4">
-                      {/* Name Field */}
-                      <div>
-                        <label className="block text-sm font-medium text-gray-300 mb-2">
-                          Ваше имя *
-                        </label>
-                        <input
-                            type="text"
-                            required
-                            value={callbackForm.name}
-                            onChange={(e) => handleCallbackChange('name', e.target.value)}
-                            className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                            placeholder="Иван Иванов"
-                            disabled={isCallbackSubmitting}
-                        />
-                      </div>
-
-                      {/* Phone Field */}
-                      <div>
-                        <label className="block text-sm font-medium text-gray-300 mb-2">
-                          Телефон *
-                        </label>
-                        <input
-                            type="tel"
-                            required
-                            value={callbackForm.phone}
-                            onChange={(e) => handlePhoneChange(e.target.value)}
-                            onBlur={(e) => handlePhoneBlur(e.target.value)}
-                            onFocus={(e) => {
-                              // При фокусе, если поле пустое, подставляем +7
-                              if (!e.target.value) {
-                                setCallbackForm(prev => ({ ...prev, phone: '+7' }));
-                              }
-                            }}
-                            className={`w-full px-4 py-3 rounded-xl bg-white/5 border ${phoneError ? 'border-red-500' : 'border-white/10'} text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all`}
-                            placeholder="+7 (___) ___-__-__"
-                            disabled={isCallbackSubmitting}
-                        />
-                        {phoneError && (
-                            <p className="mt-1 text-sm text-red-400">{phoneError}</p>
-                        )}
-                      </div>
-
-                      {/* Message Field */}
-                      <div>
-                        <label className="block text-sm font-medium text-gray-300 mb-2">
-                          Дополнительная информация
-                        </label>
-                        <textarea
-                            value={callbackForm.message}
-                            onChange={(e) => handleCallbackChange('message', e.target.value)}
-                            rows={3}
-                            className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-none"
-                            placeholder="Расскажите подробнее о вашем объекте..."
-                            disabled={isCallbackSubmitting}
-                        />
-                      </div>
-
-                      {/* Submit Button */}
-                      <button
-                          type="submit"
-                          disabled={isCallbackSubmitting}
-                          className="w-full py-4 px-6 rounded-xl font-semibold bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white transition-all shadow-lg shadow-blue-500/25 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                      >
-                        {isCallbackSubmitting ? (
-                            <>
-                              <svg className="animate-spin w-5 h-5" viewBox="0 0 24 24">
-                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                              </svg>
-                              Отправка...
-                            </>
-                        ) : (
-                            'Оставить заявку'
-                        )}
-                      </button>
-                    </form>
-
-                    <p className="text-xs text-gray-500 text-center mt-4">
-                      Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности
-                    </p>
-                  </>
-              )}
-            </motion.div>
-          </div>
-      )}
+      <CallbackModal
+        isOpen={isCallbackModalOpen}
+        onClose={() => setIsCallbackModalOpen(false)}
+        callbackForm={callbackForm}
+        isCallbackSubmitting={isCallbackSubmitting}
+        callbackSuccess={callbackSuccess}
+        phoneError={phoneError}
+        handleCallbackChange={handleCallbackChange}
+        handlePhoneChange={handlePhoneChange}
+        handlePhoneBlur={handlePhoneBlur}
+        handlePhoneFocus={handlePhoneFocus}
+        handleSubmit={onCallbackSubmit}
+      />
     </div>
   );
 };

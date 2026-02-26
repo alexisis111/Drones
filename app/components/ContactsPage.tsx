@@ -102,6 +102,22 @@ const ContactsPage: React.FC<ContactsPageProps> = ({ breadcrumbs }) => {
                   <span className="block">Удобным способом</span>
                 </motion.h1>
 
+                {/* CTA Buttons */}
+                <motion.div
+                    initial={{opacity: 0, y: 30}}
+                    animate={{opacity: 1, y: 0}}
+                    transition={{delay: 0.6}}
+                    className="flex flex-wrap gap-4"
+                >
+                  <a
+                      href="tel:+78137840235"
+                      className="group inline-flex items-center gap-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-xl hover:scale-105 transition-all duration-300"
+                  >
+                    <Phone className="w-5 h-5"/>
+                    <span>Позвонить</span>
+                  </a>
+                </motion.div>
+
                 {/* Subtitle */}
                 <motion.p
                     initial={{opacity: 0, y: 30}}
@@ -134,21 +150,6 @@ const ContactsPage: React.FC<ContactsPageProps> = ({ breadcrumbs }) => {
                   ))}
                 </motion.div>
 
-                {/* CTA Buttons */}
-                <motion.div
-                    initial={{opacity: 0, y: 30}}
-                    animate={{opacity: 1, y: 0}}
-                    transition={{delay: 0.6}}
-                    className="flex flex-wrap gap-4"
-                >
-                  <a
-                      href="tel:+78137840235"
-                      className="group inline-flex items-center gap-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-xl hover:scale-105 transition-all duration-300"
-                  >
-                    <Phone className="w-5 h-5"/>
-                    <span>Позвонить</span>
-                  </a>
-                </motion.div>
               </motion.div>
 
               {/* Right column - Contact Form */}
