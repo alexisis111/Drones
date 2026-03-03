@@ -17,6 +17,7 @@ import {
   FileText, HardHat
 } from 'lucide-react';
 import { Link } from 'react-router';
+import Breadcrumbs, { type BreadcrumbItem } from './Breadcrumbs';
 
 interface PortfolioItem {
   id: number;
@@ -28,7 +29,11 @@ interface PortfolioItem {
   imageUrl?: string;
 }
 
-const PortfolioGallery: React.FC = () => {
+interface PortfolioGalleryProps {
+  breadcrumbs?: BreadcrumbItem[];
+}
+
+const PortfolioGallery: React.FC<PortfolioGalleryProps> = ({ breadcrumbs }) => {
   const { theme } = useTheme();
   const [scrollY, setScrollY] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
@@ -151,6 +156,13 @@ const PortfolioGallery: React.FC = () => {
 
         {/* Content */}
         <div className="relative container mx-auto px-4 z-10">
+          {/* Хлебные крошки */}
+          {breadcrumbs && (
+            <div className="py-4">
+              <Breadcrumbs breadcrumbs={breadcrumbs} className="text-white/80" />
+            </div>
+          )}
+
           <div className="grid lg:grid-cols-2 gap-12 items-center py-4">
             {/* Left column - Main content */}
             <motion.div

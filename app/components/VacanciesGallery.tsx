@@ -20,6 +20,7 @@ import {
   Headset, BriefcaseBusiness
 } from 'lucide-react';
 import { Link } from 'react-router';
+import Breadcrumbs, { type BreadcrumbItem } from './Breadcrumbs';
 
 interface Vacancy {
   id: number;
@@ -32,7 +33,11 @@ interface Vacancy {
   imageUrl: string;
 }
 
-const VacanciesGallery: React.FC = () => {
+interface VacanciesGalleryProps {
+  breadcrumbs?: BreadcrumbItem[];
+}
+
+const VacanciesGallery: React.FC<VacanciesGalleryProps> = ({ breadcrumbs }) => {
   const { theme } = useTheme();
   const [scrollY, setScrollY] = useState(0);
 
@@ -163,6 +168,13 @@ const VacanciesGallery: React.FC = () => {
 
         {/* Content */}
         <div className="relative container mx-auto px-4 z-10">
+          {/* Хлебные крошки */}
+          {breadcrumbs && (
+            <div className="py-4">
+              <Breadcrumbs breadcrumbs={breadcrumbs} className="text-white/80" />
+            </div>
+          )}
+
           <div className="grid lg:grid-cols-2 gap-12 items-center py-4">
             {/* Left column - Main content */}
             <motion.div

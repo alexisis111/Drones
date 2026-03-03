@@ -19,8 +19,13 @@ import {
 } from 'lucide-react';
 import { Link } from "react-router";
 import { LocalBusinessSchema } from './SchemaOrg';
+import Breadcrumbs, { type BreadcrumbItem } from './Breadcrumbs';
 
-const CompanyShowcase: React.FC = () => {
+interface CompanyShowcaseProps {
+  breadcrumbs?: BreadcrumbItem[];
+}
+
+const CompanyShowcase: React.FC<CompanyShowcaseProps> = ({ breadcrumbs }) => {
   const { theme } = useTheme();
   const [scrollY, setScrollY] = useState(0);
 
@@ -71,6 +76,13 @@ const CompanyShowcase: React.FC = () => {
 
           {/* Content */}
           <div className="relative container mx-auto px-4 z-10">
+            {/* Хлебные крошки */}
+            {breadcrumbs && (
+              <div className="py-4">
+                <Breadcrumbs breadcrumbs={breadcrumbs} className="text-white/80" />
+              </div>
+            )}
+
             <div className="grid lg:grid-cols-2 gap-12 items-center py-8">
               {/* Left column - Main content */}
               <motion.div

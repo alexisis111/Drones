@@ -1,5 +1,6 @@
 import type { Route } from "./+types/portfolio";
 import PortfolioGallery from "../components/PortfolioGallery";
+import type { BreadcrumbItem } from "../components/BreadcrumbSchema";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -22,6 +23,11 @@ export function meta({}: Route.MetaArgs) {
   ];
 }
 
+const breadcrumbs: BreadcrumbItem[] = [
+  { position: 1, name: "Главная", item: "https://xn--78-glchqprh.xn--p1ai/" },
+  { position: 2, name: "Портфолио", item: "https://xn--78-glchqprh.xn--p1ai/portfolio" }
+];
+
 export default function PortfolioPage() {
-  return <PortfolioGallery />;
+  return <PortfolioGallery breadcrumbs={breadcrumbs} />;
 }

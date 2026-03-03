@@ -21,8 +21,13 @@ import LazyLoad from './LazyLoad';
 import { ServiceSchema } from './SchemaOrg';
 import ServiceOrderModal from './ServiceOrderModal';
 import { services as servicesData, type Service } from '../data/services';
+import Breadcrumbs, { type BreadcrumbItem } from './Breadcrumbs';
 
-const ServicesCatalog: React.FC = () => {
+interface ServicesCatalogProps {
+  breadcrumbs?: BreadcrumbItem[];
+}
+
+const ServicesCatalog: React.FC<ServicesCatalogProps> = ({ breadcrumbs }) => {
   const { theme } = useTheme();
   const [searchParams, setSearchParams] = useSearchParams();
   const [scrollY, setScrollY] = useState(0);
@@ -177,6 +182,13 @@ const ServicesCatalog: React.FC = () => {
 
         {/* Content */}
         <div className="relative container mx-auto px-4 z-10">
+          {/* Хлебные крошки */}
+          {breadcrumbs && (
+            <div className="py-4">
+              <Breadcrumbs breadcrumbs={breadcrumbs} className="text-white/80" />
+            </div>
+          )}
+
           <div className="grid lg:grid-cols-2 gap-12 items-center py-8">
             {/* Left column - Main content */}
             <motion.div

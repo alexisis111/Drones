@@ -1,5 +1,6 @@
 import type { Route } from "./+types/vacancies";
 import VacanciesGallery from "../components/VacanciesGallery";
+import type { BreadcrumbItem } from "../components/BreadcrumbSchema";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -22,6 +23,11 @@ export function meta({}: Route.MetaArgs) {
   ];
 }
 
+const breadcrumbs: BreadcrumbItem[] = [
+  { position: 1, name: "Главная", item: "https://xn--78-glchqprh.xn--p1ai/" },
+  { position: 2, name: "Вакансии", item: "https://xn--78-glchqprh.xn--p1ai/vacancies" }
+];
+
 export default function VacanciesRoute() {
-  return <VacanciesGallery />;
+  return <VacanciesGallery breadcrumbs={breadcrumbs} />;
 }

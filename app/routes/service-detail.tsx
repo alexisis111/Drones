@@ -1,14 +1,24 @@
 import type { Route } from "./+types/service-detail";
 import ServiceDetailPage from "../components/ServiceDetailPage";
 import { services } from "../data/services";
+import type { BreadcrumbItem } from "../components/BreadcrumbSchema";
 
 export function loader({ params }: Route.LoaderArgs) {
   const slug = params.slug || '';
   const service = services.find(s => s.slug === slug);
+  
+  // Создаем breadcrumb для текущей услуги
+  const breadcrumbs: BreadcrumbItem[] = [
+    { position: 1, name: "Главная", item: "https://xn--78-glchqprh.xn--p1ai/" },
+    { position: 2, name: "Услуги", item: "https://xn--78-glchqprh.xn--p1ai/services" },
+    { position: 3, name: service?.title || 'Услуга', item: `https://xn--78-glchqprh.xn--p1ai/service/${slug}` }
+  ];
+  
   return {
     title: service?.title || 'Услуга',
     slug: params.slug,
-    service: service || null
+    service: service || null,
+    breadcrumbs
   };
 }
 
@@ -35,6 +45,6 @@ export function meta({ data }: Route.MetaArgs) {
   ];
 }
 
-export default function ServiceDetailRoute() {
-  return <ServiceDetailPage />;
+export default function ServiceDetailRoute({ loaderData }: { loaderData: any }) {
+  return <ServiceDetailPage breadcrumbs={loaderData.breadcrumbs} service={loaderData.service} />;
 }

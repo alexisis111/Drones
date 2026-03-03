@@ -1,22 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, Link, useRouteLoaderData } from 'react-router';
+import { useNavigate, Link } from 'react-router';
 import { motion } from 'framer-motion';
 import { useTheme } from '../contexts/ThemeContext';
 import { Shield, CheckCircle, ChevronRight, ArrowRight, Package, Hammer, Building2 } from 'lucide-react';
 import ServiceOrderModal from './ServiceOrderModal';
 import { services, type Service } from '../data/services';
+import Breadcrumbs, { type BreadcrumbItem } from './Breadcrumbs';
 
-interface LoaderData {
-  title: string;
-  slug: string;
-  service: Service | null;
+interface ServiceDetailPageProps {
+  breadcrumbs?: BreadcrumbItem[];
+  service?: Service | null;
 }
 
-const ServiceDetailPage: React.FC = () => {
+const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ breadcrumbs, service: propService }) => {
   const navigate = useNavigate();
   const { theme } = useTheme();
-  const data = useRouteLoaderData('routes/service-detail') as LoaderData | null;
-  
+
   const [scrollY, setScrollY] = useState(0);
 
   // State for modal
@@ -32,7 +31,7 @@ const ServiceDetailPage: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const service = data?.service;
+  const service = propService;
 
   useEffect(() => {
     if (!service) {
@@ -119,6 +118,13 @@ const ServiceDetailPage: React.FC = () => {
           </motion.div>
 
           <div className="relative container mx-auto px-4 z-10">
+            {/* Хлебные крошки */}
+            {breadcrumbs && (
+              <div className="py-4">
+                <Breadcrumbs breadcrumbs={breadcrumbs} className="text-white/80" />
+              </div>
+            )}
+
             <div className="grid lg:grid-cols-2 gap-12 items-center py-4">
               <motion.div
                   initial={{ opacity: 0, x: -50 }}

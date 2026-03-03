@@ -1,5 +1,6 @@
 import type { Route } from "./+types/company";
 import CompanyShowcase from "../components/CompanyShowcase";
+import type { BreadcrumbItem } from "../components/BreadcrumbSchema";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -22,6 +23,11 @@ export function meta({}: Route.MetaArgs) {
   ];
 }
 
+const breadcrumbs: BreadcrumbItem[] = [
+  { position: 1, name: "Главная", item: "https://xn--78-glchqprh.xn--p1ai/" },
+  { position: 2, name: "О компании", item: "https://xn--78-glchqprh.xn--p1ai/company" }
+];
+
 export default function Company() {
-  return <CompanyShowcase />;
+  return <CompanyShowcase breadcrumbs={breadcrumbs} />;
 }
