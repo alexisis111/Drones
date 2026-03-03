@@ -5,7 +5,6 @@ import { MessageSquare, Send, RefreshCw } from 'lucide-react';
 
 export interface ContactFormData {
     name: string;
-    email: string;
     phone: string;
     message: string;
 }
@@ -35,8 +34,6 @@ export interface ContactFormProps {
     phoneRequired?: boolean;
     /** Плейсхолдер для поля имени */
     namePlaceholder?: string;
-    /** Плейсхолдер для поля email */
-    emailPlaceholder?: string;
     /** Плейсхолдер для поля телефона */
     phonePlaceholder?: string;
     /** Плейсхолдер для поля сообщения */
@@ -60,7 +57,6 @@ const ContactForm: React.FC<ContactFormProps> = ({
                                                      showMessageField = true,
                                                      phoneRequired = true,
                                                      namePlaceholder = 'Иван Иванов',
-                                                     emailPlaceholder = 'ivan@example.com',
                                                      phonePlaceholder = '+7 (999) 999-99-99',
                                                      messagePlaceholder = 'Ваше сообщение...',
                                                      submitButtonText = 'Отправить заявку',
@@ -69,14 +65,12 @@ const ContactForm: React.FC<ContactFormProps> = ({
     const fetcher = useFetcher();
     const [formData, setFormData] = useState<ContactFormData>({
         name: initialData.name || '',
-        email: initialData.email || '',
         phone: initialData.phone || '+7',
         message: initialData.message || ''
     });
 
     const [errors, setErrors] = useState({
         name: '',
-        email: '',
         phone: '',
         consent: '',
         captcha: ''
@@ -159,12 +153,6 @@ const ContactForm: React.FC<ContactFormProps> = ({
     const validateName = (name: string): boolean => {
         const nameRegex = /^[A-Za-zА-Яа-яЁё\s]*$/;
         return nameRegex.test(name);
-    };
-
-    // Валидация email
-    const validateEmail = (email: string): boolean => {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email);
     };
 
     // Валидация телефона (формат: +7XXX-XXX-XX-XX)
@@ -253,13 +241,6 @@ const ContactForm: React.FC<ContactFormProps> = ({
             }));
         }
 
-        if (field === 'email' && formData.email && !validateEmail(formData.email)) {
-            setErrors(prev => ({
-                ...prev,
-                email: 'Введите корректный email адрес'
-            }));
-        }
-
         if (field === 'phone' && phoneRequired) {
             if (!formData.phone || formData.phone === '+7') {
                 setErrors(prev => ({
@@ -303,21 +284,13 @@ const ContactForm: React.FC<ContactFormProps> = ({
         }
 
         let hasErrors = false;
-        const newErrors = { name: '', email: '', phone: '', consent: '', captcha: '' };
+        const newErrors = { name: '', phone: '', consent: '', captcha: '' };
 
         if (!formData.name) {
             newErrors.name = 'Имя обязательно для заполнения';
             hasErrors = true;
         } else if (!validateName(formData.name)) {
             newErrors.name = 'Имя может содержать только буквы';
-            hasErrors = true;
-        }
-
-        if (!formData.email) {
-            newErrors.email = 'Email обязателен для заполнения';
-            hasErrors = true;
-        } else if (!validateEmail(formData.email)) {
-            newErrors.email = 'Введите корректный email адрес';
             hasErrors = true;
         }
 
@@ -359,14 +332,13 @@ const ContactForm: React.FC<ContactFormProps> = ({
 
                 setFormData({
                     name: '',
-                    email: '',
                     phone: '+7',
                     message: ''
                 });
 
                 setCaptchaAnswer('');
                 generateCaptcha();
-                setErrors({ name: '', email: '', phone: '', consent: '', captcha: '' });
+                setErrors({ name: '', phone: '', consent: '', captcha: '' });
 
                 const consentCheckbox = document.getElementById('consent') as HTMLInputElement;
                 if (consentCheckbox) {
@@ -440,26 +412,6 @@ const ContactForm: React.FC<ContactFormProps> = ({
                         />
                         {errors.name && (
                             <p className="mt-0.5 text-xs text-red-300">{errors.name}</p>
-                        )}
-                    </div>
-
-                    {/* Поле email */}
-                    <div>
-                        <label htmlFor="email" className="block mb-1 text-xs font-medium text-white/80">
-                            Email *
-                        </label>
-                        <input
-                            type="email"
-                            id="email"
-                            value={formData.email}
-                            onChange={handleChange}
-                            onBlur={() => handleBlur('email')}
-                            required
-                            className={getInputStyles(!!errors.email)}
-                            placeholder={emailPlaceholder}
-                        />
-                        {errors.email && (
-                            <p className="mt-0.5 text-xs text-red-300">{errors.email}</p>
                         )}
                     </div>
 

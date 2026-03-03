@@ -27,13 +27,11 @@ const ServiceOrderModal: React.FC<ServiceOrderModalProps> = ({
                                                              }) => {
   const [formData, setFormData] = useState({
     name: '',
-    email: '',
     phone: '+7',
     message: ''
   });
   const [errors, setErrors] = useState({
     name: '',
-    email: '',
     phone: '',
     consent: '',
     captcha: ''
@@ -126,12 +124,6 @@ const ServiceOrderModal: React.FC<ServiceOrderModalProps> = ({
   const validateName = (name: string): boolean => {
     const nameRegex = /^[A-Za-zА-Яа-яЁё\s]*$/;
     return nameRegex.test(name);
-  };
-
-  // Валидация email
-  const validateEmail = (email: string): boolean => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
   };
 
   // Валидация телефона (формат: +7XXX-XXX-XX-XX)
@@ -227,13 +219,6 @@ const ServiceOrderModal: React.FC<ServiceOrderModalProps> = ({
       }));
     }
 
-    if (field === 'email' && formData.email && !validateEmail(formData.email)) {
-      setErrors(prev => ({
-        ...prev,
-        email: 'Введите корректный email адрес'
-      }));
-    }
-
     if (field === 'phone' && formData.phone) {
       if (formData.phone === '+7') {
         setErrors(prev => ({
@@ -280,7 +265,7 @@ const ServiceOrderModal: React.FC<ServiceOrderModalProps> = ({
 
     // Валидация всех полей перед отправкой
     let hasErrors = false;
-    const newErrors = { name: '', email: '', phone: '', consent: '', captcha: '' };
+    const newErrors = { name: '', phone: '', consent: '', captcha: '' };
 
     // Проверка имени
     if (!formData.name) {
@@ -288,15 +273,6 @@ const ServiceOrderModal: React.FC<ServiceOrderModalProps> = ({
       hasErrors = true;
     } else if (!validateName(formData.name)) {
       newErrors.name = 'Имя может содержать только буквы';
-      hasErrors = true;
-    }
-
-    // Проверка email
-    if (!formData.email) {
-      newErrors.email = 'Email обязателен для заполнения';
-      hasErrors = true;
-    } else if (!validateEmail(formData.email)) {
-      newErrors.email = 'Введите корректный email адрес';
       hasErrors = true;
     }
 
@@ -335,12 +311,11 @@ const ServiceOrderModal: React.FC<ServiceOrderModalProps> = ({
       // Сброс формы
       setFormData({
         name: '',
-        email: '',
         phone: '+7',
         message: ''
       });
 
-      setErrors({ name: '', email: '', phone: '', consent: '', captcha: '' });
+      setErrors({ name: '', phone: '', consent: '', captcha: '' });
       setCaptchaAnswer('');
 
       const consentCheckbox = document.getElementById('consent') as HTMLInputElement;
@@ -408,28 +383,6 @@ const ServiceOrderModal: React.FC<ServiceOrderModalProps> = ({
                 />
                 {errors.name && (
                     <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.name}</p>
-                )}
-              </div>
-
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                  Email *
-                </label>
-                <input
-                    type="email"
-                    id="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    onBlur={() => handleBlur('email')}
-                    className={`w-full px-4 py-3 rounded-lg ${
-                        errors.email
-                            ? 'border-red-500 bg-red-50 dark:bg-red-900/20'
-                            : 'border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700'
-                    } border focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors`}
-                    placeholder="Введите ваш email"
-                />
-                {errors.email && (
-                    <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.email}</p>
                 )}
               </div>
 

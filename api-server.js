@@ -30,7 +30,7 @@ if (!TELEGRAM_CHAT_ID) {
 // Create a route for the Telegram webhook
 app.post('/api/telegram-webhook', async (req, res) => {
   try {
-    const { name, email, phone, message, objectType, subject } = req.body;
+    const { name, phone, message, objectType, subject } = req.body;
 
     // Validate required fields - name is always required, and either message or objectType
     if (!name) {
@@ -52,7 +52,6 @@ app.post('/api/telegram-webhook', async (req, res) => {
 ${subject ? subject : 'Новое сообщение с формы обратной связи'}
 
 Имя: ${name}
-Email: ${email || 'Не указан'}
 Телефон: ${phone || 'Не указан'}
 ${objectType ? `Тип объекта: ${objectType}` : ''}
 ${message ? `Сообщение: ${message}` : ''}
@@ -97,13 +96,13 @@ ${message ? `Сообщение: ${message}` : ''}
 // Create a route for ordering services
 app.post('/api/order-service', async (req, res) => {
   try {
-    const { name, phone, email, company, message, serviceName, serviceId } = req.body;
+    const { name, phone, company, message, serviceName, serviceId } = req.body;
 
     // Validate required fields
-    if (!name || !phone || !email) {
+    if (!name || !phone) {
       return res.status(400).json({
         success: false,
-        message: 'Имя, телефон и email обязательны для заполнения'
+        message: 'Имя и телефон обязательны для заполнения'
       });
     }
 
@@ -113,7 +112,6 @@ app.post('/api/order-service', async (req, res) => {
 
 Имя: ${name}
 Телефон: ${phone}
-Email: ${email}
 Компания: ${company || 'Не указана'}
 Сообщение: ${message || 'Не указано'}
 

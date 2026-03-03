@@ -31,7 +31,7 @@ if (!TELEGRAM_CHAT_ID) {
 // Create a route for the Telegram webhook BEFORE React Router handles all routes
 app.post('/api/telegram-webhook', async (req, res) => {
   try {
-    const { name, email, phone, message, objectType, subject } = req.body;
+    const { name, phone, message, objectType, subject } = req.body;
 
     // Validate required fields - name is always required, and either message or objectType
     if (!name) {
@@ -53,7 +53,6 @@ app.post('/api/telegram-webhook', async (req, res) => {
 ${subject ? subject : 'Новое сообщение с формы обратной связи'}
 
 Имя: ${name}
-Email: ${email || 'Не указан'}
 Телефон: ${phone || 'Не указан'}
 ${objectType ? `Тип объекта: ${objectType}` : ''}
 ${message ? `Сообщение: ${message}` : ''}
