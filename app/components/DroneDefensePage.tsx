@@ -101,7 +101,7 @@ const DroneDefensePage: React.FC<DroneDefensePageProps> = ({ breadcrumbs }) => {
   return (
     <div className="relative overflow-hidden">
       {/* Hero Section */}
-      <section className="relative min-h-[60vh] flex items-center overflow-hidden">
+      <section className="relative min-h-screen md:min-h-[60vh] flex items-center overflow-hidden">
         {/* Optimized background with parallax effect */}
         <div
           className="absolute inset-0 bg-gradient-to-br from-blue-900 via-gray-900 to-purple-900"
@@ -121,13 +121,13 @@ const DroneDefensePage: React.FC<DroneDefensePageProps> = ({ breadcrumbs }) => {
                 <Breadcrumbs breadcrumbs={breadcrumbs} className="text-white/80"/>
               </div>
           )}
-          <div className="grid lg:grid-cols-2 gap-12 items-center py-4">
+          <div className="grid lg:grid-cols-2 gap-8 md:gap-12 items-center py-4">
             {/* Left column - Main content */}
             <motion.div
                 initial={{opacity: 0, x: -50}}
                 animate={{opacity: 1, x: 0}}
                 transition={{duration: 0.8}}
-                className="space-y-8"
+                className="space-y-6 md:space-y-8"
             >
               {/* Badge + Slogan */}
               <motion.div
@@ -137,14 +137,14 @@ const DroneDefensePage: React.FC<DroneDefensePageProps> = ({ breadcrumbs }) => {
                   className="space-y-3"
               >
                 <div
-                    className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 border border-white/20 mr-2">
-                  <Shield className="w-4 h-4"/>
-                  <span className="text-sm font-medium text-white">Системы защиты периметра</span>
+                    className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-3 py-1.5 md:px-4 md:py-2 border border-white/20 mr-2">
+                  <Shield className="w-3 h-3 md:w-4 md:h-4"/>
+                  <span className="text-xs md:text-sm font-medium text-white">Системы защиты периметра</span>
                 </div>
                 <div
-                    className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600/20 to-purple-600/20 backdrop-blur-sm rounded-full px-4 py-2 border border-blue-400/30">
-                  <Trophy className="w-4 h-4 text-yellow-400"/>
-                  <span className="text-sm font-bold text-white">№1 в России по производству и установке ЗОК</span>
+                    className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600/20 to-purple-600/20 backdrop-blur-sm rounded-full px-3 py-1.5 md:px-4 md:py-2 border border-blue-400/30">
+                  <Trophy className="w-3 h-3 md:w-4 md:h-4 text-yellow-400"/>
+                  <span className="text-xs md:text-sm font-bold text-white">№1 в России по производству и установке ЗОК</span>
                 </div>
               </motion.div>
 
@@ -153,13 +153,13 @@ const DroneDefensePage: React.FC<DroneDefensePageProps> = ({ breadcrumbs }) => {
                   initial={{opacity: 0, y: 30}}
                   animate={{opacity: 1, y: 0}}
                   transition={{delay: 0.3}}
-                  className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-white"
+                  className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-white"
               >
                 <span className="block">Комплексная защита от БПЛА</span>
                 <span className="block bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
         любые виды объектов.
       </span>
-                <span className="block text-lg md:text-xl text-gray-300 mt-2">
+                <span className="block text-sm md:text-lg lg:text-xl text-gray-300 mt-2">
         по <a
                     href="https://protect.gost.ru/v.aspx?control=8&baseC=101&page=4&month=-1&year=-1&search=&RegNum=54&DocOnPageCount=100&id=253478"
                     className="inline-flex items-center gap-1 hover:underline text-blue-400"
@@ -167,8 +167,8 @@ const DroneDefensePage: React.FC<DroneDefensePageProps> = ({ breadcrumbs }) => {
                     rel="noopener noreferrer"
                 >
           СП 542.1325800.2024
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
-               stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="md:w-4 md:h-4">
             <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
             <polyline points="15 3 21 3 21 9"></polyline>
             <line x1="10" y1="14" x2="21" y2="3"></line>
@@ -182,7 +182,7 @@ const DroneDefensePage: React.FC<DroneDefensePageProps> = ({ breadcrumbs }) => {
                   initial={{opacity: 0, y: 30}}
                   animate={{opacity: 1, y: 0}}
                   transition={{delay: 0.4}}
-                  className="text-lg md:text-xl text-gray-300 max-w-2xl"
+                  className="text-sm md:text-lg text-gray-300 max-w-2xl"
               >
                 Установка антидроновых систем под ключ: ТЭК, заводы, склады и частные объекты. Решения для крупных, средних и малых предприятий.
               </motion.p>
@@ -192,7 +192,7 @@ const DroneDefensePage: React.FC<DroneDefensePageProps> = ({ breadcrumbs }) => {
                   initial={{opacity: 0, y: 30}}
                   animate={{opacity: 1, y: 0}}
                   transition={{delay: 0.45}}
-                  className="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm"
+                  className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs md:text-sm"
               >
                 {[
                   {title: "🏭 Крупные", items: ["ТЭЦ","НПЗ","аэропорты","морские порты","ж/д узлы","оборонные предприятия","объекты критической инфраструктуры","и пр"]},
@@ -218,7 +218,7 @@ const DroneDefensePage: React.FC<DroneDefensePageProps> = ({ breadcrumbs }) => {
                   initial={{opacity: 0, y: 30}}
                   animate={{opacity: 1, y: 0}}
                   transition={{delay: 0.5}}
-                  className="grid grid-cols-2 md:grid-cols-4 gap-4"
+                  className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4"
               >
                 {[
                   {value: "99.9%", label: "Эффективность"},
@@ -226,8 +226,8 @@ const DroneDefensePage: React.FC<DroneDefensePageProps> = ({ breadcrumbs }) => {
                   {value: "10 лет", label: "Гарантия"}
                 ].map((stat, i) => (
                     <div key={i}
-                         className="text-center p-4 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-blue-400/50 transition-colors">
-                      <div className="text-2xl font-bold text-white">{stat.value}</div>
+                         className="text-center p-3 md:p-4 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-blue-400/50 transition-colors">
+                      <div className="text-lg md:text-2xl font-bold text-white">{stat.value}</div>
                       <div className="text-xs text-gray-400">{stat.label}</div>
                     </div>
                 ))}
@@ -238,11 +238,11 @@ const DroneDefensePage: React.FC<DroneDefensePageProps> = ({ breadcrumbs }) => {
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.6 }}
-                  className="flex flex-wrap gap-4"
+                  className="flex flex-col sm:flex-row gap-3 md:gap-4"
               >
                 <a
                     href="tel:+79312470888"
-                    className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-semibold rounded-xl transition-all shadow-lg shadow-blue-500/25 inline-flex items-center justify-center gap-2"
+                    className="px-4 py-3 md:px-6 md:py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-semibold rounded-xl transition-all shadow-lg shadow-blue-500/25 inline-flex items-center justify-center gap-2 text-sm md:text-base"
                 >
                   <Phone className="w-4 h-4" />
                   Позвонить
@@ -250,7 +250,7 @@ const DroneDefensePage: React.FC<DroneDefensePageProps> = ({ breadcrumbs }) => {
 
                 <button
                     onClick={() => setIsCallbackModalOpen(true)}
-                    className="px-6 py-3 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-xl border border-white/20 transition-all inline-flex items-center gap-2"
+                    className="px-4 py-3 md:px-6 md:py-3 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-xl border border-white/20 transition-all inline-flex items-center justify-center gap-2 text-sm md:text-base"
                 >
                   <MessageSquare className="w-4 h-4" />
                   Заказать обратный звонок
@@ -262,18 +262,18 @@ const DroneDefensePage: React.FC<DroneDefensePageProps> = ({ breadcrumbs }) => {
                   initial={{opacity: 0}}
                   animate={{opacity: 1}}
                   transition={{delay: 0.7}}
-                  className="flex flex-wrap gap-4 pt-4 border-t border-white/10"
+                  className="flex flex-wrap gap-3 md:gap-4 pt-3 md:pt-4 border-t border-white/10"
               >
-              <div className="flex items-center gap-2 text-sm text-gray-400">
-                  <CheckCircle className="w-4 h-4 text-green-400"/>
+              <div className="flex items-center gap-2 text-xs md:text-sm text-gray-400">
+                  <CheckCircle className="w-3 h-3 md:w-4 md:h-4 text-green-400"/>
                   Сертифицировано ФСТЭК
                 </div>
-                <div className="flex items-center gap-2 text-sm text-gray-400">
-                  <CheckCircle className="w-4 h-4 text-green-400"/>
+                <div className="flex items-center gap-2 text-xs md:text-sm text-gray-400">
+                  <CheckCircle className="w-3 h-3 md:w-4 md:h-4 text-green-400"/>
                   Монтаж по всей РФ
                 </div>
-                <div className="flex items-center gap-2 text-sm text-gray-400">
-                  <CheckCircle className="w-4 h-4 text-green-400"/>
+                <div className="flex items-center gap-2 text-xs md:text-sm text-gray-400">
+                  <CheckCircle className="w-3 h-3 md:w-4 md:h-4 text-green-400"/>
                   Сопровождение на всех этапах
                 </div>
               </motion.div>

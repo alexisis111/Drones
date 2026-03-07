@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fde30c11-94c5-4884-96a6-cf984ad02720" name="Changes" comment="Fixxxx">
+    <list default="true" id="fde30c11-94c5-4884-96a6-cf984ad02720" name="Changes" comment="FixxxxNavLogo">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/CompanyShowcase.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/CompanyShowcase.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/ContactsPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ContactsPage.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,15 +110,7 @@
       <workItem from="1772125309578" duration="4799000" />
       <workItem from="1772131233716" duration="2996000" />
       <workItem from="1772521965770" duration="2088000" />
-      <workItem from="1772901389728" duration="9936000" />
-    </task>
-    <task id="LOCAL-00049" summary="fixSales">
-      <option name="closed" value="true" />
-      <created>1770660176214</created>
-      <option name="number" value="00049" />
-      <option name="presentableId" value="LOCAL-00049" />
-      <option name="project" value="LOCAL" />
-      <updated>1770660176214</updated>
+      <workItem from="1772901389728" duration="10865000" />
     </task>
     <task id="LOCAL-00050" summary="YaMetrics">
       <option name="closed" value="true" />
@@ -502,7 +496,15 @@
       <option name="project" value="LOCAL" />
       <updated>1772911078807</updated>
     </task>
-    <option name="localTasksCounter" value="98" />
+    <task id="LOCAL-00098" summary="FixxxxNavLogo">
+      <option name="closed" value="true" />
+      <created>1772911777613</created>
+      <option name="number" value="00098" />
+      <option name="presentableId" value="LOCAL-00098" />
+      <option name="project" value="LOCAL" />
+      <updated>1772911777613</updated>
+    </task>
+    <option name="localTasksCounter" value="99" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -532,7 +534,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fixContactsCapcha" />
     <MESSAGE value="fixContactsSize" />
     <MESSAGE value="fixSitemap" />
     <MESSAGE value="fix3D" />
@@ -557,6 +558,7 @@
     <MESSAGE value="FixWelcome" />
     <MESSAGE value="FixServices" />
     <MESSAGE value="Fixxxx" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixxxx" />
+    <MESSAGE value="FixxxxNavLogo" />
+    <option name="LAST_COMMIT_MESSAGE" value="FixxxxNavLogo" />
   </component>
 </project>

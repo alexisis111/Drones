@@ -175,23 +175,23 @@ const VacanciesGallery: React.FC<VacanciesGalleryProps> = ({ breadcrumbs }) => {
             </div>
           )}
 
-          <div className="grid lg:grid-cols-2 gap-12 items-center py-4">
+          <div className="grid lg:grid-cols-2 gap-8 md:gap-12 items-center py-4">
             {/* Left column - Main content */}
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
-              className="space-y-8"
+              className="space-y-6 md:space-y-8"
             >
               {/* Badge */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 border border-white/20"
+                className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-3 py-1.5 md:px-4 md:py-2 border border-white/20"
               >
-                <Briefcase className="w-4 h-4" />
-                <span className="text-sm font-medium text-white">Присоединяйтесь к нашей команде</span>
+                <Briefcase className="w-3 h-3 md:w-4 md:h-4" />
+                <span className="text-xs md:text-sm font-medium text-white">Присоединяйтесь к нашей команде</span>
               </motion.div>
 
               {/* Main heading */}
@@ -199,7 +199,7 @@ const VacanciesGallery: React.FC<VacanciesGalleryProps> = ({ breadcrumbs }) => {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
-                className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight text-white"
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight text-white"
               >
                 <span className="block">Открытые</span>
                 <span className="block bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
@@ -213,9 +213,9 @@ const VacanciesGallery: React.FC<VacanciesGalleryProps> = ({ breadcrumbs }) => {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
-                className="text-xl text-gray-300 max-w-2xl"
+                className="text-base md:text-xl text-gray-300 max-w-2xl"
               >
-                Мы всегда рады новым талантливым специалистам. Присоединяйтесь к нашей команде 
+                Мы всегда рады новым талантливым специалистам. Присоединяйтесь к нашей команде
                 профессионалов и развивайтесь вместе с нами.
               </motion.p>
 
@@ -224,7 +224,7 @@ const VacanciesGallery: React.FC<VacanciesGalleryProps> = ({ breadcrumbs }) => {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 }}
-                className="grid grid-cols-2 md:grid-cols-4 gap-4"
+                className="grid grid-cols-2 gap-3 md:gap-4"
               >
                 {[
                   { value: "50+", label: "Сотрудников" },
@@ -244,32 +244,32 @@ const VacanciesGallery: React.FC<VacanciesGalleryProps> = ({ breadcrumbs }) => {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6 }}
-                className="flex flex-wrap gap-4"
+                className="flex flex-col sm:flex-row gap-3 md:gap-4"
               >
                 <Link
                   to="/contacts"
-                  className="group inline-flex items-center gap-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-xl hover:scale-105 transition-all duration-300"
+                  className="group inline-flex items-center justify-center gap-2 md:gap-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 md:px-8 md:py-4 rounded-xl font-semibold hover:shadow-xl hover:scale-105 transition-all duration-300 text-sm md:text-base"
                 >
                   <span>Связаться с нами</span>
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" />
                 </Link>
 
                 <a
                   href="tel:+79215916506"
-                  className="group inline-flex items-center gap-3 bg-white/10 backdrop-blur-sm text-white px-8 py-4 rounded-xl font-semibold border border-white/20 hover:bg-white/20 transition-all duration-300"
+                  className="group inline-flex items-center justify-center gap-2 md:gap-3 bg-white/10 backdrop-blur-sm text-white px-6 py-3 md:px-8 md:py-4 rounded-xl font-semibold border border-white/20 hover:bg-white/20 transition-all duration-300 text-sm md:text-base"
                 >
-                  <Briefcase className="w-5 h-5" />
+                  <Briefcase className="w-4 h-4 md:w-5 md:h-5" />
                   <span>+7 921 591-65-06</span>
                 </a>
               </motion.div>
             </motion.div>
 
-            {/* Right column - Feature cards */}
+            {/* Right column - Feature cards (Desktop only) */}
             <motion.div
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="space-y-6"
+              className="hidden lg:block lg:space-y-6"
             >
               {[
                 {
