@@ -1,39 +1,46 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Outlet } from 'react-router';
 import { ThemeProvider } from './contexts/ThemeContext';
+import { LoadingProvider, useLoading } from './contexts/LoadingContext';
 import Header from './components/Header';
 import FixedMobileTabs from './components/FixedMobileTabs';
 import Footer from './components/Footer';
 import LoadingScreen from './components/LoadingScreen';
 import CookieConsentBanner from '../src/components/CookieConsentBanner';
 import YandexMetrika from './components/YandexMetrika';
+import NavigationLoader from './components/NavigationLoader';
 
-const AppWrapper: React.FC = () => {
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    // Мгновенная загрузка контента
-    setIsLoading(false);
-
-    return () => {};
-  }, []);
+const AppContent: React.FC = () => {
+  const { isLoading } = useLoading();
 
   return (
+      <>
+        {isLoading && (
+            <div className="fixed inset-0 z-[100] bg-gray-50 dark:bg-gray-900">
+              <LoadingScreen />
+            </div>
+        )}
+        <NavigationLoader />
+        <YandexMetrika />
+        <Header />
+        <main className="flex-grow">
+          <Outlet />
+        </main>
+        <Footer />
+        <FixedMobileTabs />
+        <CookieConsentBanner />
+      </>
+  );
+};
+
+const AppWrapper: React.FC = () => {
+  return (
       <ThemeProvider>
-        <div className="min-h-screen flex flex-col">
-          {isLoading ? <LoadingScreen /> : (
-              <>
-                <YandexMetrika />
-                <Header />
-                <main className="flex-grow">
-                  <Outlet />
-                </main>
-                <Footer />
-                <FixedMobileTabs />
-                <CookieConsentBanner />
-              </>
-          )}
-        </div>
+        <LoadingProvider>
+          <div className="min-h-screen flex flex-col">
+            <AppContent />
+          </div>
+        </LoadingProvider>
       </ThemeProvider>
   );
 };

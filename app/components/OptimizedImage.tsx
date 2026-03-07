@@ -21,7 +21,7 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
   fallbackSrc,
   style,
 }) => {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(!priority);
   const [hasError, setHasError] = useState(false);
   const imgRef = useRef<HTMLImageElement>(null);
 

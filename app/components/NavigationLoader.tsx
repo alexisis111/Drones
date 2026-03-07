@@ -11,10 +11,10 @@ const NavigationLoader: React.FC = () => {
     // Показываем лоадер при навигации
     setLoading(true);
 
-    // Скрываем лоадер через короткую задержку
+    // Скрываем лоадер сразу после загрузки
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 500); // Небольшая задержка для плавности
+    }, 50); // Минимальная задержка для плавности
 
     return () => clearTimeout(timer);
   }, [location.pathname, navigationType, setLoading]);
