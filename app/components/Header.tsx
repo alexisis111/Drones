@@ -22,12 +22,12 @@ const Header: React.FC = () => {
       <div className="container mx-auto px-4 py-4">
         <div className="flex justify-between items-center">
           <Link to="/" className="flex items-center space-x-2">
-            <div className="w-auto h-16 flex items-center justify-center">
+            <div className="w-auto h-10 flex items-center justify-center">
               <OptimizedImage
                 src="/Logo-1.png"
                 alt="Logo"
                 className="w-full h-full object-contain"
-                priority={true} // Logo should load immediately
+                priority={true}
               />
             </div>
           </Link>
@@ -102,9 +102,9 @@ const Header: React.FC = () => {
                 aria-label="Toggle menu"
               >
                 {isMenuOpen ? (
-                  <X className="w-6 h-6" />
+                  <X className="w-5 h-5" />
                 ) : (
-                  <Menu className="w-6 h-6" />
+                  <Menu className="w-5 h-5" />
                 )}
               </motion.button>
             </div>
@@ -132,14 +132,14 @@ const Header: React.FC = () => {
                 <Link
                   key={item.to}
                   to={item.to}
-                  className={`flex items-center px-4 py-3 rounded-lg font-medium ${
+                  className={`flex items-center px-4 py-2 rounded-lg font-medium text-sm ${
                     theme === 'dark'
                       ? 'text-gray-300 hover:bg-gray-800 hover:text-white'
                       : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900'
                   }`}
                   onClick={() => setIsMenuOpen(false)}
                 >
-                  <item.icon className="w-5 h-5 mr-3" />
+                  <item.icon className="w-4 h-4 mr-2" />
                   <span className="whitespace-nowrap">{item.label}</span>
                   {item.isSpecial && (
                     <span className={`ml-auto px-2 py-0.5 text-xs font-bold rounded-full animate-pulse ${
