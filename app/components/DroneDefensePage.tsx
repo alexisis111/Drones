@@ -224,8 +224,7 @@ const DroneDefensePage: React.FC<DroneDefensePageProps> = ({ breadcrumbs }) => {
                 {[
                   {value: "99.9%", label: "Эффективность"},
                   {value: "3", label: "Уровня защиты"},
-                  {value: "10 лет", label: "Гарантия"},
-                  {value: "500+", label: "Объектов"},
+                  {value: "10 лет", label: "Гарантия"}
                 ].map((stat, i) => (
                     <div key={i}
                          className="text-center p-4 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-blue-400/50 transition-colors">

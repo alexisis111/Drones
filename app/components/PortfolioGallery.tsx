@@ -217,7 +217,6 @@ const PortfolioGallery: React.FC<PortfolioGalleryProps> = ({ breadcrumbs }) => {
                 {[
                   { value: "100+", label: "Проектов" },
                   { value: "12+", label: "Лет опыта" },
-                  { value: "98%", label: "Удовлетворенность" },
                   { value: "2-5 лет", label: "Гарантия" },
                 ].map((stat, i) => (
                   <div key={i} className="text-center p-4 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10">
@@ -436,12 +435,6 @@ const PortfolioGallery: React.FC<PortfolioGalleryProps> = ({ breadcrumbs }) => {
                 title: "Безопасность",
                 value: "100%",
                 description: "Соблюдение всех норм безопасности"
-              },
-              {
-                icon: <Award className="w-8 h-8" />,
-                title: "Качество",
-                value: "98%",
-                description: "Удовлетворенность клиентов"
               },
               {
                 icon: <Clock className="w-8 h-8" />,

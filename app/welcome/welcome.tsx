@@ -2,10 +2,25 @@ import { useState, useEffect } from 'react';
 import { useTheme } from "../contexts/ThemeContext";
 import { motion } from 'framer-motion';
 import { Link } from 'react-router';
-import { ChevronRight, ArrowRight, Shield, Building2, Target, Zap, Award, Clock, Users, CheckCircle } from 'lucide-react';
+import {
+  ChevronRight,
+  ArrowRight,
+  Shield,
+  Building2,
+  Target,
+  Zap,
+  Award,
+  Clock,
+  Users,
+  CheckCircle,
+  Star,
+  Layers,
+  Phone
+} from 'lucide-react';
 import { LocalBusinessSchema, ServiceSchema } from "../components/SchemaOrg";
 import FaqSection from "../components/FaqSection";
 import Breadcrumbs, { type BreadcrumbItem } from "../components/Breadcrumbs";
+import HeroContacts from "../components/HeroContacts";
 
 
 
@@ -80,181 +95,245 @@ export function Welcome() {
               provider={businessData}
             />
           ))}
-          {/* Hero Section - Redesigned */}
-          <section className="relative min-h-[60vh] flex items-center overflow-hidden">
-            {/* Background with parallax effect */}
+          {/* Hero Section - Modern & Cool Design */}
+          <section className="relative flex items-center overflow-hidden">
+            {/* Animated Background */}
             <motion.div
-                className="absolute inset-0 bg-gradient-to-br from-blue-900 via-gray-900 to-purple-900"
+              className="absolute inset-0 bg-gradient-to-br from-gray-950 via-gray-900 to-black"
+              style={{ y: scrollY * 0.5 }}
             >
-              <div className="absolute inset-0">
-                <div className="absolute inset-0 bg-[url('/img/homesImg/home.jpeg')] bg-cover bg-center mix-blend-overlay opacity-20" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent" />
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 via-transparent to-purple-600/10" />
-              </div>
+              {/* Image Overlay */}
+              <div className="absolute inset-0 bg-[url('/img/homesImg/home.jpeg')] bg-cover bg-center mix-blend-overlay opacity-15" />
+
+              {/* Gradient Overlays */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 via-transparent to-purple-600/10" />
             </motion.div>
 
             {/* Content */}
-            <div className="relative container mx-auto px-4 z-10">
-              <div className="grid lg:grid-cols-2 gap-12 items-center py-8">
-                {/* Left column - Main content */}
+            <div className="relative container mx-auto px-4 z-10 py-8">
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.8 }}
+                className="grid lg:grid-cols-2 gap-6 lg:gap-12 items-center"
+              >
+                {/* Left Column - Main Content */}
                 <motion.div
-                    initial={{ opacity: 0, x: -50 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.8 }}
-                    className="space-y-8"
+                  initial={{ opacity: 0, x: -50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.8 }}
+                  className="space-y-4 sm:space-y-6 md:space-y-8"
                 >
-                  {/* Badge */}
+                  {/* Animated Badge */}
                   <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.2 }}
-                      className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 border border-white/20"
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.2 }}
+                    className="inline-flex items-center gap-1 sm:gap-2 bg-gradient-to-r from-blue-500/20 to-purple-500/20 backdrop-blur-xl rounded-full px-3 sm:px-6 py-2 sm:py-3 border border-blue-400/30"
                   >
-                    <Shield className="w-4 h-4" />
-                    <span className="text-sm font-medium text-white">С 2012 года на рынке</span>
+                    <motion.div
+                      transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                    >
+                      <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-blue-400" />
+                    </motion.div>
+                    <span className="text-xs sm:text-sm font-semibold text-white">С 2012 года на рынке</span>
+                    <div className="flex gap-0.5 sm:gap-1">
+                      {[...Array(5)].map((_, i) => (
+                        <motion.div
+                          key={i}
+                          initial={{ opacity: 0, scale: 0 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          transition={{ delay: 0.5 + i * 0.1 }}
+                        >
+                          <Star className="w-2 h-2 sm:w-3 sm:h-3 text-yellow-400 fill-yellow-400" />
+                        </motion.div>
+                      ))}
+                    </div>
                   </motion.div>
 
-                  {/* Main heading */}
-                  <motion.h1
-                      initial={{ opacity: 0, y: 30 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.3 }}
-                      className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight text-white"
+                  {/* Main Heading with Gradient Animation */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 }}
+                    className="space-y-1 sm:space-y-2"
                   >
-                    <span className="block">Строительная компания</span>
-                    <span className="block bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                    «ЛЕГИОН»
-                  </span>
-                    <span className="block">Строим в любом регионе</span>
-                  </motion.h1>
+                    <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black leading-tight text-white">
+                      <motion.span
+                        className="block"
+                        initial={{ opacity: 0, x: -30 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.4 }}
+                      >
+                        Строительная
+                      </motion.span>
+                      <motion.span
+                        className="block bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent bg-[length:200%_auto]"
+                        initial={{ opacity: 0, x: -30 }}
+                        animate={{
+                          opacity: 1,
+                          x: 0,
+                          backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"]
+                        }}
+                        transition={{
+                          delay: 0.5,
+                          backgroundPosition: { duration: 5, repeat: Infinity, ease: "linear" }
+                        }}
+                      >
+                        компания «ЛЕГИОН»
+                      </motion.span>
+                      <motion.span
+                        className="block text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold mt-2 sm:mt-3"
+                        initial={{ opacity: 0, x: -30 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.6 }}
+                      >
+                        Строим по всей России
+                      </motion.span>
+                    </h1>
+                  </motion.div>
 
-                  {/* Subtitle */}
+                  {/* Subtitle with Highlight */}
                   <motion.p
-                      initial={{ opacity: 0, y: 30 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.4 }}
-                      className="text-xl text-gray-300 max-w-2xl"
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.7 }}
+                    className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-300 max-w-2xl leading-relaxed"
                   >
-                    Полный цикл строительных работ: от подготовительных работ до сдачи объекта под ключ. 
-                    Строительство зданий, монтаж металлоконструкций и комплексные решения по всей России.
+                    <span className="text-white font-semibold">Полный цикл работ:</span> от
+                    подготовительных работ до сдачи объекта под ключ.{' '}
+                    <span className="text-blue-400">Строительство зданий</span>,{' '}
+                    <span className="text-purple-400">монтаж металлоконструкций</span> и{' '}
+                    <span className="text-pink-400">комплексные решения</span> для вашего бизнеса.
                   </motion.p>
 
-                  {/* Stats */}
+                  {/* Stats Row */}
                   <motion.div
-                      initial={{ opacity: 0, y: 30 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.5 }}
-                      className="grid grid-cols-2 md:grid-cols-4 gap-4"
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.8 }}
+                    className="grid grid-cols-2 gap-2 sm:gap-3 md:gap-4 lg:gap-6"
                   >
                     {[
-                      { value: "12+", label: "Лет опыта" },
-                      { value: "150+", label: "Проектов" },
-                      { value: "100%", label: "Гарантия" },
-                      { value: "24/7", label: "Поддержка" },
+                      { value: "12+", label: "Лет опыта", icon: <Award className="w-4 h-4 md:w-5 md:h-5" /> },
+                      { value: "100+", label: "Проектов", icon: <Building2 className="w-4 h-4 md:w-5 md:h-5" /> }
                     ].map((stat, i) => (
-                        <div key={i} className="text-center p-4 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10">
-                          <div className="text-2xl font-bold text-white">{stat.value}</div>
-                          <div className="text-sm text-gray-400">{stat.label}</div>
+                      <motion.div
+                        key={i}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.9 + i * 0.1 }}
+                        whileHover={{ scale: 1.05, y: -5 }}
+                        className="group bg-white/5 dark:bg-gray-800/50 backdrop-blur-xl border border-white/10 dark:border-gray-700 rounded-2xl p-3 md:p-4 hover:bg-white/10 dark:hover:bg-gray-800/70 hover:border-blue-400/50 transition-all duration-300"
+                      >
+                        <div className="flex items-center gap-2 mb-1 text-blue-400 group-hover:text-blue-300">
+                          {stat.icon}
                         </div>
+                        <div className="text-2xl md:text-3xl font-bold text-white">{stat.value}</div>
+                        <div className="text-xs md:text-sm text-gray-400">{stat.label}</div>
+                      </motion.div>
                     ))}
                   </motion.div>
 
                   {/* CTA Buttons */}
                   <motion.div
-                      initial={{ opacity: 0, y: 30 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.6 }}
-                      className="flex flex-wrap gap-4"
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 1 }}
+                    className="flex flex-col sm:flex-row gap-3 sm:gap-4"
                   >
                     <Link
-                        to="/contacts"
-                        className="group inline-flex items-center gap-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-xl hover:scale-105 transition-all duration-300"
+                      to="/contacts"
+                      className="group relative inline-flex items-center justify-center gap-2 sm:gap-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 sm:px-6 md:px-8 py-3 sm:py-4 rounded-lg sm:rounded-xl text-sm sm:text-base font-semibold overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-blue-500/50 hover:scale-105"
                     >
-                      <span>Начать проект</span>
-                      <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                      <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      <span className="relative z-10">Начать проект</span>
+                      <ChevronRight className="relative z-10 w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
                     </Link>
 
                     <Link
-                        to="/services"
-                        className="group inline-flex items-center gap-3 bg-white/10 backdrop-blur-sm text-white px-8 py-4 rounded-xl font-semibold border border-white/20 hover:bg-white/20 transition-all duration-300"
+                      to="/services"
+                      className="group inline-flex items-center justify-center gap-2 sm:gap-3 bg-white/10 dark:bg-gray-800/50 backdrop-blur-xl text-white px-4 sm:px-6 md:px-8 py-3 sm:py-4 rounded-lg sm:rounded-xl text-sm sm:text-base font-semibold border border-white/20 dark:border-gray-700 hover:bg-white/20 dark:hover:bg-gray-800/70 hover:border-white/30 transition-all duration-300"
                     >
-                      <span>Наши услуги</span>
-                      <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                      <Layers className="w-4 h-4 sm:w-5 sm:h-5" />
+                      <span>Услуги</span>
+                      <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
+                    </Link>
+                  </motion.div>
+
+                  {/* Trust Indicators */}
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 1.2 }}
+                    className="flex flex-wrap items-center gap-3 sm:gap-4 md:gap-6 pt-2 sm:pt-4"
+                  >
+                    <div className="flex items-center gap-1.5 sm:gap-2 text-gray-400">
+                      <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-green-400" />
+                      <span className="text-xs sm:text-sm">ГОСТ и СНиП</span>
+                    </div>
+                    <div className="flex items-center gap-1.5 sm:gap-2 text-gray-400">
+                      <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-green-400" />
+                      <span className="text-xs sm:text-sm">Гарантия</span>
+                    </div>
+                    <div className="flex items-center gap-1.5 sm:gap-2 text-gray-400">
+                      <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-green-400" />
+                      <span className="text-xs sm:text-sm">По договору</span>
+                    </div>
+                  </motion.div>
+
+                  {/* Mobile Contact Button */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 1.3 }}
+                    className="lg:hidden mt-6"
+                  >
+                    <Link
+                      to="/contacts"
+                      className="group flex items-center justify-center gap-2 w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-4 rounded-xl font-semibold hover:shadow-xl transition-all"
+                    >
+                      <Phone className="w-5 h-5" />
+                      <span>Связаться с нами</span>
                     </Link>
                   </motion.div>
                 </motion.div>
 
-                {/* Right column - Feature cards */}
+                {/* Right Column - Contact Cards */}
                 <motion.div
-                    initial={{ opacity: 0, x: 50 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.8, delay: 0.3 }}
-                    className="space-y-6"
+                  initial={{ opacity: 0, x: 50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.8, delay: 0.5 }}
+                  className="lg:pl-8"
                 >
-                  {[
-                    {
-                      icon: <Building2 className="w-6 h-6" />,
-                      title: "Строительство зданий",
-                      description: "Полный цикл от фундамента до отделки",
-                      color: "from-blue-500 to-cyan-500"
-                    },
-                    {
-                      icon: <Target className="w-6 h-6" />,
-                      title: "Металлоконструкции",
-                      description: "Изготовление и монтаж любой сложности",
-                      color: "from-purple-500 to-pink-500"
-                    },
-                    {
-                      icon: <Shield className="w-6 h-6" />,
-                      title: "Защита от БПЛА",
-                      description: "Современные системы защиты периметра",
-                      color: "from-orange-500 to-red-500"
-                    },
-                    {
-                      icon: <Zap className="w-6 h-6" />,
-                      title: "Скорость",
-                      description: "Оперативное выполнение задач",
-                      color: "from-green-500 to-emerald-500"
-                    }
-                  ].map((feature, i) => (
-                      <motion.div
-                          key={i}
-                          initial={{ opacity: 0, x: 30 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: 0.4 + i * 0.1 }}
-                          whileHover={{ x: -10 }}
-                          className="group bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-all duration-300 cursor-pointer"
-                      >
-                        <div className="flex items-start gap-4">
-                          <div className={`p-3 rounded-xl bg-gradient-to-br ${feature.color}`}>
-                            {feature.icon}
-                          </div>
-                          <div>
-                            <h3 className="text-xl font-bold text-white mb-2">{feature.title}</h3>
-                            <p className="text-gray-400">{feature.description}</p>
-                          </div>
-                        </div>
-                      </motion.div>
-                  ))}
+                  <div className="hidden lg:block">
+                    <HeroContacts
+                      ctaLink="/contacts"
+                      ctaButtonText="Обсудить проект"
+                    />
+                  </div>
                 </motion.div>
-              </div>
+              </motion.div>
             </div>
 
-            {/* Scroll indicator */}
-            <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1 }}
-                className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-            >
-              <motion.div
-                  animate={{ y: [0, 10, 0] }}
-                  transition={{ duration: 1.5, repeat: Infinity }}
-                  className="text-white/50"
-              >
-                <ChevronRight className="w-6 h-6 rotate-90" />
-              </motion.div>
-            </motion.div>
+            {/* Wave Divider - Smooth Transition */}
+            <div className="absolute bottom-0 left-0 right-0">
+              <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto">
+                <path
+                  d="M0 0C48 0 144 0 288 12C432 24 576 48 720 56C864 64 1008 56 1152 48C1296 40 1392 24 1440 12V120H0V0Z"
+                  className="fill-gray-50 dark:fill-gray-950"
+                />
+                <path
+                  d="M0 0C60 8 180 24 300 32C420 40 540 40 660 36C780 32 900 24 1020 20C1140 16 1260 16 1380 12V120H0V0Z"
+                  className="fill-gray-50/70 dark:fill-gray-950/70"
+                />
+                <path
+                  d="M0 0C80 16 240 48 400 56C560 64 720 48 880 40C1040 32 1200 32 1360 24V120H0V0Z"
+                  className="fill-gray-50/40 dark:fill-gray-950/40"
+                />
+              </svg>
+            </div>
           </section>
 
           {/* Why Choose Us Section */}
@@ -310,14 +389,14 @@ export function Welcome() {
                         className="group relative"
                     >
                       <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-300" />
-                      <div className="relative bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300">
+                      <div className="relative bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 h-full flex flex-col">
                         <div className="inline-flex p-4 rounded-xl bg-gradient-to-br from-blue-500 to-purple-500 text-white mb-6">
                           {item.icon}
                         </div>
                         <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
                           {item.title}
                         </h3>
-                        <p className="text-gray-600 dark:text-gray-300">
+                        <p className="text-gray-600 dark:text-gray-300 flex-grow">
                           {item.description}
                         </p>
                       </div>

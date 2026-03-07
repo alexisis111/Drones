@@ -173,7 +173,6 @@ const ContactsPage: React.FC<ContactsPageProps> = ({ breadcrumbs }) => {
                     {value: "24/7", label: "Поддержка"},
                     {value: "12+", label: "Лет опыта"},
                     {value: "100+", label: "Проектов"},
-                    {value: "98%", label: "Удовлетворенность"},
                   ].map((stat, i) => (
                       <div key={i}
                            className="text-center p-4 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10">
