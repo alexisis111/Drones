@@ -306,11 +306,17 @@ const PortfolioGallery: React.FC<PortfolioGalleryProps> = ({ breadcrumbs }) => {
             </motion.div>
           </div>
         </div>
+
+        {/* Bottom Gradient Fade for smooth transition */}
+        <div className="absolute bottom-0 left-0 right-0 h-80 bg-gradient-to-b from-transparent via-gray-900/30 to-gray-50 dark:via-gray-900/50 dark:to-gray-900 pointer-events-none" />
       </section>
 
       {/* Portfolio Section */}
-      <section className="py-24 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-black">
-        <div className="container mx-auto px-4">
+      <section className="relative py-24 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-black">
+        {/* Top gradient overlay for smooth transition */}
+        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-gray-50 dark:from-gray-900 to-transparent pointer-events-none" />
+        
+        <div className="container mx-auto px-4 relative z-10">
           <motion.div
               initial={{opacity: 0, y: 50}}
               whileInView={{opacity: 1, y: 0}}
@@ -409,11 +415,17 @@ const PortfolioGallery: React.FC<PortfolioGalleryProps> = ({ breadcrumbs }) => {
             ))}
           </div>
         </div>
+
+        {/* Bottom Gradient Fade for smooth transition */}
+        <div className="absolute bottom-0 left-0 right-0 h-80 bg-gradient-to-b from-transparent via-white/50 to-gray-50 dark:via-gray-900/30 dark:to-gray-950 pointer-events-none" />
       </section>
 
       {/* Stats Section */}
-      <section className="py-24">
-        <div className="container mx-auto px-4">
+      <section className="relative py-24 bg-gradient-to-b from-white to-gray-50 dark:from-gray-950 dark:to-gray-900">
+        {/* Top gradient overlay for smooth transition */}
+        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-white dark:from-gray-950 to-transparent pointer-events-none" />
+        
+        <div className="container mx-auto px-4 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -428,7 +440,7 @@ const PortfolioGallery: React.FC<PortfolioGalleryProps> = ({ breadcrumbs }) => {
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               {
                 icon: <Shield className="w-8 h-8" />,
@@ -476,11 +488,17 @@ const PortfolioGallery: React.FC<PortfolioGalleryProps> = ({ breadcrumbs }) => {
             ))}
           </div>
         </div>
+
+        {/* Bottom Gradient Fade for smooth transition */}
+        <div className="absolute bottom-0 left-0 right-0 h-80 bg-gradient-to-b from-transparent via-gray-50/50 to-gray-50 dark:via-gray-900/50 dark:to-gray-900 pointer-events-none" />
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600">
-        <div className="container mx-auto px-4">
+      <section className="relative py-24 bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600">
+        {/* Top gradient overlay for smooth transition */}
+        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-gray-50 dark:from-gray-900 to-transparent pointer-events-none" />
+        
+        <div className="container mx-auto px-4 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -516,6 +534,9 @@ const PortfolioGallery: React.FC<PortfolioGalleryProps> = ({ breadcrumbs }) => {
 
           </motion.div>
         </div>
+
+        {/* Bottom Gradient Fade for smooth transition */}
+        <div className="absolute bottom-0 left-0 right-0 h-80 bg-gradient-to-b from-transparent via-purple-900/30 to-white dark:via-gray-900/50 dark:to-gray-950 pointer-events-none" />
       </section>
     </div>
   );

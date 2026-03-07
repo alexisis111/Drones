@@ -23,7 +23,6 @@ import { Link } from 'react-router';
 // import ZOKVisualization from '../components/ZOKVisualization';
 import FullscreenModal from './FullscreenModal';
 import FaqSection from './FaqSection';
-import ContactForm from "~/components/ContactForm";
 import ProjectEstimateModal from './ProjectEstimateModal';
 import Breadcrumbs, { type BreadcrumbItem } from './Breadcrumbs';
 import { useCallbackForm } from '../hooks/useCallbackForm';
@@ -280,173 +279,162 @@ const DroneDefensePage: React.FC<DroneDefensePageProps> = ({ breadcrumbs }) => {
               </motion.div>
             </motion.div>
 
-            {/* Right column - Feature cards / Contact Form */}
-            <ContactForm/>
-          </div>
-
-        </div>
-      </section>
-
-      {/* Regulatory Section */}
-      <section
-          className="py-24 bg-gradient-to-br from-red-50 via-orange-50 to-yellow-50 dark:from-red-950/30 dark:via-orange-950/30 dark:to-yellow-950/30">
-        <div className="container mx-auto px-4">
-          <motion.div
-              initial={{opacity: 0, y: 50}}
-              whileInView={{opacity: 1, y: 0}}
-              viewport={{once: true}}
-              className="text-center mb-16"
-          >
-            <div
-                className="inline-flex items-center gap-2 bg-red-100 dark:bg-red-900/50 text-red-700 dark:text-red-300 px-4 py-2 rounded-full mb-6">
-              <AlertTriangle className="w-5 h-5"/>
-              <span className="font-semibold">Важная информация</span>
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
-              Нормативные требования
-            </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto">
-              Согласно Постановлению Правительства РФ от 05.05.2012 № 460 (в ред. от 2023 г.) и другим нормативным актам
-            </p>
-          </motion.div>
-
-          <div className="max-w-6xl mx-auto">
-            {/* Warning Block */}
+            {/* Right column - Important Info Block */}
             <motion.div
-                initial={{opacity: 0, y: 30}}
-                whileInView={{opacity: 1, y: 0}}
-                viewport={{once: true}}
-                className="bg-gradient-to-br from-red-600 to-orange-600 rounded-3xl p-8 md:p-12 mb-12 shadow-2xl"
+                initial={{ opacity: 0, x: 50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: 0.3 }}
+                className="space-y-4"
             >
-              <div className="grid lg:grid-cols-2 gap-8 items-center">
-                <div>
-                  <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
-                    Обязанности руководителей
-                  </h3>
-                  <p className="text-white/90 text-lg mb-6">
-                    Руководители объектов ТЭК, промышленности и других критически важных
-                    сфер <strong>обязаны</strong> обеспечивать их антитеррористическую защищенность.
-                  </p>
-                  <div className="flex flex-wrap gap-3">
-                    <Link
-                        to="/contacts"
-                        className="inline-flex items-center gap-2 bg-white text-red-600 px-6 py-3 rounded-xl font-semibold hover:shadow-lg hover:scale-105 transition-all duration-300"
-                    >
-                      <span>Получить консультацию</span>
-                      <ChevronRight className="w-5 h-5"/>
-                    </Link>
-                  </div>
+              {/* Warning Block */}
+              <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5 }}
+                  className="bg-gradient-to-br from-red-600 to-orange-600 rounded-3xl p-5 shadow-2xl"
+              >
+                <div className="flex items-center gap-2 mb-3">
+                  <AlertTriangle className="w-5 h-5 text-white" />
+                  <h3 className="text-lg font-bold text-white">Нормативные требования</h3>
                 </div>
-                <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6">
-                  <h4 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                    <Lock className="w-6 h-6"/>
+                
+                <p className="text-white/90 text-xs mb-4">
+                  Согласно Постановлению Правительства РФ от 05.05.2012 № 460 (в ред. от 2023 г.)
+                </p>
+
+                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 mb-4">
+                  <h4 className="text-sm font-bold text-white mb-3">Обязанности руководителей</h4>
+                  <p className="text-white/90 text-xs mb-3">
+                    Руководители объектов ТЭК, промышленности и других критически важных сфер 
+                    <strong> обязаны</strong> обеспечивать их антитеррористическую защищенность
+                  </p>
+                  
+                  <Link
+                      to="/contacts"
+                      className="w-full inline-flex items-center justify-center gap-2 bg-white text-red-600 px-3 py-2 rounded-lg font-semibold hover:shadow-lg hover:scale-105 transition-all duration-300 text-xs"
+                  >
+                    <span>Получить консультацию</span>
+                    <ChevronRight className="w-3 h-3" />
+                  </Link>
+                </div>
+
+                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
+                  <h4 className="text-sm font-bold text-white mb-3 flex items-center gap-2">
+                    <Lock className="w-4 h-4" />
                     Последствия несоответствия
                   </h4>
-                  <ul className="space-y-3">
+                  <ul className="space-y-2">
                     {[
                       "Административные штрафы и приостановку деятельности",
                       "Персональную ответственность руководителей"
                     ].map((item, i) => (
-                        <li key={i} className="flex items-start gap-3 text-white">
-                        <span
-                            className="flex-shrink-0 w-6 h-6 rounded-full bg-white/20 flex items-center justify-center text-sm font-bold">
+                      <li key={i} className="flex items-start gap-2 text-white text-xs">
+                        <span className="flex-shrink-0 w-5 h-5 rounded-full bg-white/20 flex items-center justify-center text-xs font-bold">
                           {i + 1}
                         </span>
-                          <span>{item}</span>
-                        </li>
+                        <span>{item}</span>
+                      </li>
                     ))}
                   </ul>
                 </div>
-              </div>
-            </motion.div>
+              </motion.div>
 
-            {/* Regulatory Cards */}
-            <div className="grid md:grid-cols-2 gap-6">
-              {[
-                {
-                  number: "01",
-                  title: "Постановление Правительства РФ №1046",
-                  date: "от 03.08.2024",
-                  description: "Обязательная защита объектов ТЭК от дронов и БПЛА",
-                  color: "from-blue-500 to-cyan-500"
-                },
-                {
-                  number: "02",
-                  title: "Постановление Правительства РФ №258",
-                  date: "от 03.03.2024",
-                  description: "Обеспечение безопасности предприятий от дронов",
-                  color: "from-purple-500 to-pink-500"
-                },
-                {
-                  number: "03",
-                  title: "Федеральный закон №390-ФЗ",
-                  date: "«О безопасности»",
-                  description: "Усиленные требования к безопасности стратегических объектов",
-                  color: "from-orange-500 to-red-500"
-                },
-                {
-                  number: "04",
-                  title: "СП 542.1325800.2024",
-                  date: "действующий",
-                  description: "Обязательные правила проектирования защитных конструкций от дронов",
-                  color: "from-green-500 to-emerald-500"
-                }
-              ].map((regulation, i) => (
+              {/* Regulatory Cards */}
+              <div className="grid grid-cols-1 gap-3">
+                {[
+                  {
+                    number: "01",
+                    title: "ПП РФ №1046",
+                    date: "от 03.08.2024",
+                    description: "Защита объектов ТЭК от дронов",
+                    color: "from-blue-500 to-cyan-500"
+                  },
+                  {
+                    number: "02",
+                    title: "ПП РФ №258",
+                    date: "от 03.03.2024",
+                    description: "Безопасность предприятий от БПЛА",
+                    color: "from-purple-500 to-pink-500"
+                  },
+                  {
+                    number: "03",
+                    title: "ФЗ №390-ФЗ",
+                    date: "«О безопасности»",
+                    description: "Безопасность стратегических объектов",
+                    color: "from-orange-500 to-red-500"
+                  },
+                  {
+                    number: "04",
+                    title: "СП 542.1325800",
+                    date: "действующий",
+                    description: "Проектирование защитных конструкций",
+                    color: "from-green-500 to-emerald-500"
+                  }
+                ].map((regulation, i) => (
                   <motion.div
                       key={i}
-                      initial={{opacity: 0, y: 30}}
-                      whileInView={{opacity: 1, y: 0}}
-                      viewport={{once: true}}
-                      transition={{delay: i * 0.1}}
-                      className="group relative bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.6 + i * 0.1 }}
+                      className="group relative bg-white dark:bg-gray-800 rounded-xl p-3 shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden"
                   >
-                    <div className={`absolute top-0 left-0 w-2 h-full bg-gradient-to-b ${regulation.color}`}/>
-                    <div className="flex items-start gap-4">
+                    <div className={`absolute top-0 left-0 w-1 h-full bg-gradient-to-b ${regulation.color}`} />
+                    <div className="flex items-start gap-3">
                       <div
-                          className={`flex-shrink-0 w-14 h-14 rounded-xl bg-gradient-to-br ${regulation.color} flex items-center justify-center text-white font-bold text-xl shadow-lg`}>
+                          className={`flex-shrink-0 w-9 h-9 rounded-lg bg-gradient-to-br ${regulation.color} flex items-center justify-center text-white font-bold text-xs shadow-lg`}>
                         {regulation.number}
                       </div>
-                      <div className="flex-1">
-                        <h4 className="text-lg font-bold text-gray-900 dark:text-white mb-1">
-                          {regulation.title}
-                        </h4>
-                        <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
-                          {regulation.date}
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-1">
+                          <p className="text-xs font-bold text-gray-900 dark:text-white">
+                            {regulation.title}
+                          </p>
+                          <span className="text-[10px] text-gray-500 dark:text-gray-400">
+                            {regulation.date}
+                          </span>
+                        </div>
+                        <p className="text-xs text-gray-600 dark:text-gray-300">
+                          {regulation.description}
                         </p>
-                      <p className="text-gray-600 dark:text-gray-300">
-                        {regulation.description}
-                      </p>
+                      </div>
                     </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
+                  </motion.div>
+                ))}
+              </div>
 
-            {/* Info Note */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="mt-12 bg-gradient-to-br from-gray-900 to-gray-800 dark:from-gray-700 dark:to-gray-600 rounded-2xl p-8 text-center"
-            >
-              <p className="text-white text-lg mb-4">
-                <Shield className="w-6 h-6 inline-block mr-2 -mt-1 text-green-400" />
-                Установка защитных конструкций от БПЛА, антидроновой сетки на промышленных объектах и ограждение периметра территории регулируется государственными нормами
-              </p>
-              <Link
-                to="/contacts"
-                className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 font-semibold transition-colors"
+              {/* Info Note */}
+              <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 1 }}
+                  className="bg-gradient-to-br from-gray-900 to-gray-800 dark:from-gray-700 dark:to-gray-600 rounded-xl p-4 text-center"
               >
-                <span>Узнать подробнее о соответствии требованиям</span>
-                <ArrowRight className="w-5 h-5" />
-              </Link>
+                <p className="text-white text-xs mb-2">
+                  <Shield className="w-4 h-4 inline-block mr-1 -mt-0.5 text-green-400" />
+                  Установка ЗОК и ограждение периметра регулируется государством
+                </p>
+                <Link
+                    to="/contacts"
+                    className="text-blue-400 hover:text-blue-300 text-xs font-semibold transition-colors inline-flex items-center gap-1"
+                >
+                  <span>Узнать подробнее о соответствии требованиям</span>
+                  <ArrowRight className="w-3 h-3" />
+                </Link>
+              </motion.div>
             </motion.div>
           </div>
+
         </div>
+
+        {/* Bottom Gradient Fade for smooth transition */}
+        <div className="absolute bottom-0 left-0 right-0 h-[500px] bg-gradient-to-b from-transparent via-red-50/50 to-red-50 dark:via-red-950/60 dark:to-red-950/80 pointer-events-none" />
       </section>
 
       {/* Protection Levels Section - Космическая версия */}
       <section className="relative bg-black py-8 overflow-hidden">
+        {/* Top gradient overlay for smooth transition */}
+        <div className="absolute top-0 left-0 right-0 h-[500px] bg-gradient-to-t from-black via-black/80 to-transparent pointer-events-none" />
+
         {/* Фоновый эффект звездного неба */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-purple-900/20 via-black to-black"></div>
         <div className="absolute inset-0" style={{
@@ -708,6 +696,9 @@ const DroneDefensePage: React.FC<DroneDefensePageProps> = ({ breadcrumbs }) => {
             </div>
           </div>
         </div>
+
+        {/* Bottom Gradient Fade for smooth transition */}
+        <div className="absolute bottom-0 left-0 right-0 h-80 bg-gradient-to-b from-transparent via-black/50 to-gray-50 dark:via-purple-900/30 dark:to-gray-900 pointer-events-none" />
       </section>
 
       <ProjectEstimateModal
@@ -717,8 +708,11 @@ const DroneDefensePage: React.FC<DroneDefensePageProps> = ({ breadcrumbs }) => {
       />
 
       {/* Visualization Section */}
-      <section className="py-24 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-black">
-        <div className="container mx-auto px-4">
+      <section className="relative py-24 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-black">
+        {/* Top gradient overlay for smooth transition */}
+        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-gray-50 dark:from-gray-900 to-transparent pointer-events-none" />
+        
+        <div className="container mx-auto px-4 relative z-10">
           <motion.div
               initial={{opacity: 0, y: 50}}
               whileInView={{opacity: 1, y: 0}}
@@ -758,11 +752,17 @@ const DroneDefensePage: React.FC<DroneDefensePageProps> = ({ breadcrumbs }) => {
           >
           </motion.div>
         </div>
+
+        {/* Bottom Gradient Fade for smooth transition */}
+        <div className="absolute bottom-0 left-0 right-0 h-80 bg-gradient-to-b from-transparent via-white/50 to-gray-50 dark:via-gray-900/30 dark:to-gray-950 pointer-events-none" />
       </section>
 
       {/* Features Section */}
-      <section className="py-24">
-        <div className="container mx-auto px-4">
+      <section className="relative py-24 bg-gradient-to-b from-white to-gray-50 dark:from-gray-950 dark:to-gray-900">
+        {/* Top gradient overlay for smooth transition */}
+        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-white dark:from-gray-950 to-transparent pointer-events-none" />
+        
+        <div className="container mx-auto px-4 relative z-10">
           <motion.div
               initial={{opacity: 0, y: 50}}
               whileInView={{opacity: 1, y: 0}}
@@ -834,11 +834,17 @@ const DroneDefensePage: React.FC<DroneDefensePageProps> = ({ breadcrumbs }) => {
             ))}
           </div>
         </div>
+
+        {/* Bottom Gradient Fade for smooth transition */}
+        <div className="absolute bottom-0 left-0 right-0 h-80 bg-gradient-to-b from-transparent via-gray-50/50 to-gray-50 dark:via-gray-900/50 dark:to-gray-900 pointer-events-none" />
       </section>
 
       {/* Applications Section */}
-      <section className="py-24 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-black">
-        <div className="container mx-auto px-4">
+      <section className="relative py-24 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-black">
+        {/* Top gradient overlay for smooth transition */}
+        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-gray-50 dark:from-gray-900 to-transparent pointer-events-none" />
+        
+        <div className="container mx-auto px-4 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -911,11 +917,17 @@ const DroneDefensePage: React.FC<DroneDefensePageProps> = ({ breadcrumbs }) => {
             ))}
           </div>
         </div>
+
+        {/* Bottom Gradient Fade for smooth transition */}
+        <div className="absolute bottom-0 left-0 right-0 h-80 bg-gradient-to-b from-transparent via-white/50 to-gray-50 dark:via-gray-900/50 dark:to-gray-900 pointer-events-none" />
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600">
-        <div className="container mx-auto px-4">
+      <section className="relative py-24 bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600">
+        {/* Top gradient overlay for smooth transition */}
+        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-gray-50 dark:from-gray-900 to-transparent pointer-events-none" />
+        
+        <div className="container mx-auto px-4 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -943,10 +955,17 @@ const DroneDefensePage: React.FC<DroneDefensePageProps> = ({ breadcrumbs }) => {
 
           </motion.div>
         </div>
+
+        {/* Bottom Gradient Fade for smooth transition */}
+        <div className="absolute bottom-0 left-0 right-0 h-80 bg-gradient-to-b from-transparent via-blue-600/20 to-gray-50 dark:via-purple-900/50 dark:to-gray-950 pointer-events-none" />
       </section>
 
       {/* FAQ Section */}
-      <FaqSection 
+      <div className="relative">
+        {/* Top gradient overlay for smooth transition */}
+        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-gray-50 dark:from-gray-950 to-transparent pointer-events-none" />
+        
+        <FaqSection 
         faqs={[
           {
             question: "Что такое система защиты периметра от БПЛА?",
@@ -986,6 +1005,7 @@ const DroneDefensePage: React.FC<DroneDefensePageProps> = ({ breadcrumbs }) => {
         handlePhoneFocus={handlePhoneFocus}
         handleSubmit={onCallbackSubmit}
       />
+      </div>
     </div>
   );
 };

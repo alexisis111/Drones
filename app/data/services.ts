@@ -17,7 +17,7 @@ export const services: Service[] = [
     id: 1,
     title: "Разборка зданий и сооружений",
     slug: "razborka-zdaniy-i-sooruzheniy",
-    description: "Демонтажные работы любой сложности с соблюдением всех норм безопасности в Санкт-Петербурге и Ленинградской области",
+    description: "Демонтажные работы любой сложности с соблюдением всех норм безопасности в Санкт-Петербурге, Ленинградской области и по всей России",
     category: "Подготовительные работы",
     categoryEn: "Preparatory work",
     details: [
@@ -45,7 +45,7 @@ export const services: Service[] = [
     id: 2,
     title: "Сборка лесов",
     slug: "sborka-lesov",
-    description: "Монтаж инвентарных и неинвентарных наружных и внутренних лесов в Санкт-Петербурге и Ленинградской области",
+    description: "Монтаж инвентарных и неинвентарных наружных и внутренних лесов в Санкт-Петербурге, Ленинградской области и по всей России",
     category: "Подготовительные работы",
     categoryEn: "Preparatory work",
     details: [
@@ -73,7 +73,7 @@ export const services: Service[] = [
     id: 3,
     title: "Подготовка строительного участка",
     slug: "podgotovka-stroitelnogo-uchastka",
-    description: "Комплекс мероприятий по подготовке территории к строительству в Санкт-Петербурге и Ленинградской области",
+    description: "Комплекс мероприятий по подготовке территории к строительству в Санкт-Петербурге, Ленинградской области и по всей России",
     category: "Подготовительные работы",
     categoryEn: "Preparatory work",
     details: [
@@ -101,7 +101,7 @@ export const services: Service[] = [
     id: 4,
     title: "Благоустройство территорий",
     slug: "blagoustroystvo-territoriy",
-    description: "Комплекс работ по обустройству прилегающих территорий в Санкт-Петербурге и Ленинградской области",
+    description: "Комплекс работ по обустройству прилегающих территорий в Санкт-Петербурге, Ленинградской области и по всей России",
     category: "Подготовительные работы",
     categoryEn: "Preparatory work",
     details: [
@@ -129,7 +129,7 @@ export const services: Service[] = [
     id: 5,
     title: "Изготовление металлоконструкций",
     slug: "izgotovlenie-metallokonstruktsiy",
-    description: "Производство металлических конструкций любой сложности в Санкт-Петербурге и Ленинградской области",
+    description: "Производство металлических конструкций любой сложности в Санкт-Петербурге, Ленинградской области и по всей России",
     category: "Монтаж металлических конструкций",
     categoryEn: "Metal structures installation",
     details: [
@@ -157,7 +157,7 @@ export const services: Service[] = [
     id: 6,
     title: "Монтаж технологических трубопроводов",
     slug: "montazh-tekhnologicheskikh-truboprovodov",
-    description: "Установка и ремонт технологических трубопроводов в Санкт-Петербурге и Ленинградской области",
+    description: "Установка и ремонт технологических трубопроводов в Санкт-Петербурге, Ленинградской области и по всей России",
     category: "Монтаж металлических конструкций",
     categoryEn: "Metal structures installation",
     details: [
@@ -179,7 +179,7 @@ export const services: Service[] = [
     id: 7,
     title: "Монтаж технологических площадок",
     slug: "montazh-tekhnologicheskikh-ploshchadok",
-    description: "Устройство площадок для обслуживания технологического оборудования в Санкт-Петербурге и Ленинградской области",
+    description: "Устройство площадок для обслуживания технологического оборудования в Санкт-Петербурге, Ленинградской области и по всей России",
     category: "Монтаж металлических конструкций",
     categoryEn: "Metal structures installation",
     details: [
@@ -201,7 +201,7 @@ export const services: Service[] = [
     id: 8,
     title: "Антикоррозийная защита",
     slug: "antikorroziynaya-zashchita",
-    description: "Защита металлических и бетонных конструкций от коррозии в Санкт-Петербурге и Ленинградской области",
+    description: "Защита металлических и бетонных конструкций от коррозии в Санкт-Петербурге, Ленинградской области и по всей России",
     category: "Монтаж металлических конструкций",
     categoryEn: "Metal structures installation",
     details: [
@@ -223,7 +223,7 @@ export const services: Service[] = [
     id: 9,
     title: "Устройство каменных конструкций",
     slug: "ustroystvo-kamennykh-konstruktsiy",
-    description: "Устройство конструкций из кирпича и строительных блоков в Санкт-Петербурге и Ленинградской области",
+    description: "Устройство конструкций из кирпича и строительных блоков в Санкт-Петербурге, Ленинградской области и по всей России",
     category: "Работы по устройству каменных конструкций и отделочные работы",
     categoryEn: "Masonry and finishing works",
     details: [
@@ -245,7 +245,7 @@ export const services: Service[] = [
     id: 10,
     title: "Устройство фундаментов",
     slug: "ustroystvo-fundamentov",
-    description: "Устройство и ремонт фундаментов зданий, сооружений и оборудования в Санкт-Петербурге и Ленинградской области",
+    description: "Устройство и ремонт фундаментов зданий, сооружений и оборудования в Санкт-Петербурге, Ленинградской области и по всей России",
     category: "Устройство монолитных и сборных бетонных и железобетонных конструкций",
     categoryEn: "Concrete structures installation",
     details: [
@@ -267,7 +267,7 @@ export const services: Service[] = [
     id: 11,
     title: "Монтаж сборного железобетона",
     slug: "montazh-sbornogo-zhelezobetona",
-    description: "Устройство монолитных бетонных и железобетонных конструкций в Санкт-Петербурге и Ленинградской области",
+    description: "Устройство монолитных бетонных и железобетонных конструкций в Санкт-Петербурге, Ленинградской области и по всей России",
     category: "Устройство монолитных и сборных бетонных и железобетонных конструкций",
     categoryEn: "Concrete structures installation",
     details: [
@@ -289,7 +289,7 @@ export const services: Service[] = [
     id: 12,
     title: "Теплоизоляция оборудования",
     slug: "teploizolyatsiya-oborudovaniya",
-    description: "Теплоизоляционные работы для технологического оборудования в Санкт-Петербурге и Ленинградской области",
+    description: "Теплоизоляционные работы для технологического оборудования в Санкт-Петербурге, Ленинградской области и по всей России",
     category: "Теплоизоляционные работы",
     categoryEn: "Thermal insulation works",
     details: [
@@ -311,7 +311,7 @@ export const services: Service[] = [
     id: 13,
     title: "Теплоизоляция трубопроводов",
     slug: "teploizolyatsiya-truboprovodov",
-    description: "Теплоизоляция технологических трубопроводов в Санкт-Петербурге и Ленинградской области",
+    description: "Теплоизоляция технологических трубопроводов в Санкт-Петербурге, Ленинградской области и по всей России",
     category: "Теплоизоляционные работы",
     categoryEn: "Thermal insulation works",
     details: [
@@ -333,7 +333,7 @@ export const services: Service[] = [
     id: 14,
     title: "Земляные работы",
     slug: "zemlyanye-raboty",
-    description: "Земляные работы любой сложности в Санкт-Петербурге и Ленинградской области",
+    description: "Земляные работы любой сложности в Санкт-Петербурге, Ленинградской области и по всей России",
     category: "Дополнительные услуги",
     categoryEn: "Additional services",
     details: [
@@ -355,7 +355,7 @@ export const services: Service[] = [
     id: 15,
     title: "Строительство ангаров",
     slug: "stroitelstvo-angarov",
-    description: "Строительство ангаров для различных целей в Санкт-Петербурге и Ленинградской области",
+    description: "Строительство ангаров для различных целей в Санкт-Петербурге, Ленинградской области и по всей России",
     category: "Дополнительные услуги",
     categoryEn: "Additional services",
     details: [
@@ -377,7 +377,7 @@ export const services: Service[] = [
     id: 16,
     title: "Грузоперевозки",
     slug: "gruzoperevozki",
-    description: "Транспортировка материалов и оборудования в Санкт-Петербурге и Ленинградской области",
+    description: "Транспортировка материалов и оборудования в Санкт-Петербурге, Ленинградской области и по всей России",
     category: "Дополнительные услуги",
     categoryEn: "Additional services",
     details: [
@@ -399,7 +399,7 @@ export const services: Service[] = [
     id: 17,
     title: "Огнезащита конструкций",
     slug: "ognezashchita-konstruktsiy",
-    description: "Огнезащита металлических и деревянных конструкций в Санкт-Петербурге и Ленинградской области",
+    description: "Огнезащита металлических и деревянных конструкций в Санкт-Петербурге, Ленинградской области и по всей России",
     category: "Дополнительные услуги",
     categoryEn: "Additional services",
     details: [

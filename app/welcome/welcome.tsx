@@ -317,28 +317,16 @@ export function Welcome() {
               </motion.div>
             </div>
 
-            {/* Wave Divider - Smooth Transition */}
-            <div className="absolute bottom-0 left-0 right-0">
-              <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto">
-                <path
-                  d="M0 0C48 0 144 0 288 12C432 24 576 48 720 56C864 64 1008 56 1152 48C1296 40 1392 24 1440 12V120H0V0Z"
-                  className="fill-gray-50 dark:fill-gray-950"
-                />
-                <path
-                  d="M0 0C60 8 180 24 300 32C420 40 540 40 660 36C780 32 900 24 1020 20C1140 16 1260 16 1380 12V120H0V0Z"
-                  className="fill-gray-50/70 dark:fill-gray-950/70"
-                />
-                <path
-                  d="M0 0C80 16 240 48 400 56C560 64 720 48 880 40C1040 32 1200 32 1360 24V120H0V0Z"
-                  className="fill-gray-50/40 dark:fill-gray-950/40"
-                />
-              </svg>
-            </div>
+            {/* Bottom Gradient Fade for smooth transition */}
+            <div className="absolute bottom-0 left-0 right-0 h-80 bg-gradient-to-b from-transparent via-gray-900/30 to-gray-50 dark:via-gray-900/50 dark:to-gray-900 pointer-events-none" />
           </section>
 
           {/* Why Choose Us Section */}
-          <section className="py-24 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-black">
-            <div className="container mx-auto px-4">
+          <section className="relative py-24 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-black">
+            {/* Top gradient overlay for smooth transition */}
+            <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-gray-50 dark:from-gray-900 to-transparent pointer-events-none" />
+            
+            <div className="container mx-auto px-4 relative z-10">
               <motion.div
                   initial={{ opacity: 0, y: 50 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -404,11 +392,17 @@ export function Welcome() {
                 ))}
               </div>
             </div>
+
+            {/* Bottom Gradient Fade for smooth transition */}
+            <div className="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-white dark:from-gray-950 via-gray-100/50 dark:via-gray-900/50 to-transparent pointer-events-none" />
           </section>
 
           {/* Services Section */}
-          <section className="py-24">
-            <div className="container mx-auto px-4">
+          <section className="relative py-24 bg-gradient-to-b from-white to-gray-50 dark:from-gray-950 dark:to-gray-900">
+            {/* Top gradient overlay for smooth transition */}
+            <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-white dark:from-gray-950 to-transparent pointer-events-none" />
+            
+            <div className="container mx-auto px-4 relative z-10">
               <motion.div
                   initial={{ opacity: 0, y: 50 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -515,11 +509,17 @@ export function Welcome() {
                 ))}
               </div>
             </div>
+
+            {/* Bottom Gradient Fade for smooth transition */}
+            <div className="absolute bottom-0 left-0 right-0 h-80 bg-gradient-to-b from-transparent via-gray-50/50 to-gray-50 dark:via-gray-900/50 dark:to-gray-900 pointer-events-none" />
           </section>
 
           {/* CTA Section */}
-          <section className="py-24 bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600">
-            <div className="container mx-auto px-4">
+          <section className="relative py-24 bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600">
+            {/* Top gradient overlay for smooth transition */}
+            <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-gray-50 dark:from-gray-900 to-transparent pointer-events-none" />
+            
+            <div className="container mx-auto px-4 relative z-10">
               <motion.div
                   initial={{ opacity: 0, y: 50 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -554,10 +554,17 @@ export function Welcome() {
                 </div>
               </motion.div>
             </div>
+
+            {/* Bottom Gradient Fade for smooth transition */}
+            <div className="absolute bottom-0 left-0 right-0 h-80 bg-gradient-to-b from-transparent via-blue-600/20 to-gray-50 dark:via-purple-900/50 dark:to-gray-950 pointer-events-none" />
           </section>
 
           {/* FAQ Section */}
-          <FaqSection
+          <div className="relative">
+            {/* Top gradient overlay for smooth transition */}
+            <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-gray-50 dark:from-gray-950 to-transparent pointer-events-none" />
+            
+            <FaqSection
             faqs={[
               {
                 question: "Какие услуги вы предоставляете?",
@@ -583,6 +590,7 @@ export function Welcome() {
             title="Часто задаваемые вопросы"
             subtitle="Ответы на вопросы о строительных услугах компании ЛЕГИОН"
           />
+          </div>
 
         </main>
       </div>

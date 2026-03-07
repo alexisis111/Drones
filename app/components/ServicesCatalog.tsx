@@ -4,7 +4,8 @@ import { useTheme } from '../contexts/ThemeContext';
 import {
   Building2,
   ArrowRight,
-  CheckCircle
+  CheckCircle,
+  Package
 } from 'lucide-react';
 import { Link, useSearchParams } from 'react-router';
 import OptimizedImage from './OptimizedImage';
@@ -241,75 +242,88 @@ const ServicesCatalog: React.FC<ServicesCatalogProps> = ({ breadcrumbs }) => {
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
                   whileHover={{ y: -10 }}
-                  className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 shadow-xl hover:shadow-2xl transition-all duration-300"
+                  className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 shadow-xl hover:shadow-2xl transition-all duration-500 border border-gray-100 dark:border-gray-700"
                 >
-                  <div className="relative h-48 overflow-hidden">
+                  {/* Gradient Border Effect */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10 blur-sm" />
+                  
+                  {/* Image Section */}
+                  <div className="relative h-56 overflow-hidden">
                     {service.imageUrl ? (
                       <OptimizedImage
                         src={service.imageUrl}
                         alt={service.title}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                         width={400}
                         height={300}
                       />
                     ) : (
-                      <div className="w-full h-full bg-gradient-to-r from-blue-500 to-indigo-600 flex items-center justify-center">
-                        <Building2 className="w-12 h-12 text-white opacity-50" />
+                      <div className="w-full h-full bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 flex items-center justify-center">
+                        <Building2 className="w-16 h-16 text-white/50" />
                       </div>
                     )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-                    <div className="absolute top-4 right-4">
-                      <span className="bg-white/20 backdrop-blur-sm text-white text-xs font-semibold px-3 py-1 rounded-full">
+                    {/* Overlay with gradient */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+                    
+                    {/* Category Badge */}
+                    <div className="absolute top-4 left-4">
+                      <span className="inline-flex items-center gap-1.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg backdrop-blur-sm">
+                        <Package className="w-3 h-3" />
                         {service.category}
                       </span>
                     </div>
+                    
+                    {/* Price Badge */}
+                    {service.price && (
+                      <div className="absolute top-4 right-4">
+                        <span className="bg-white/95 backdrop-blur-sm text-gray-900 text-xs font-bold px-3 py-1.5 rounded-full shadow-lg">
+                          {service.price}
+                        </span>
+                      </div>
+                    )}
+                    
+                    {/* Bottom gradient info */}
+                    <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/90 to-transparent">
+                      <h3 className="text-xl font-bold text-white line-clamp-2">
+                        {service.title}
+                      </h3>
+                    </div>
                   </div>
 
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
-                      {service.title}
-                    </h3>
-
-                    <p className="text-gray-600 dark:text-gray-300 mb-4">
+                  {/* Content Section */}
+                  <div className="p-6 space-y-5">
+                    {/* Description */}
+                    <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed line-clamp-2">
                       {service.description}
                     </p>
 
-                    <div className="mb-4">
-                      {service.price && (
-                        <div className="rounded-lg p-3 bg-white/10 backdrop-blur-sm">
-                          <div className="flex justify-between items-center">
-                            <span className="text-sm text-gray-500 dark:text-gray-400">Цена:</span>
-                            <span className="font-medium text-gray-900 dark:text-white">{service.price}</span>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-
-                    <div className="mb-6">
-                      <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2 uppercase tracking-wide">
-                        Включает:
+                    {/* Features List */}
+                    <div className="space-y-2">
+                      <h4 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider flex items-center gap-2">
+                        <span className="w-4 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"></span>
+                        Включено в услугу
                       </h4>
-                      <ul className="space-y-1">
+                      <ul className="space-y-2">
                         {service.details.slice(0, 3).map((detail, idx) => (
-                          <li key={idx} className="flex items-start">
-                            <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 mr-2 flex-shrink-0" />
-                            <span className="text-gray-600 dark:text-gray-400 text-sm">{detail}</span>
+                          <li key={idx} className="flex items-start gap-2.5">
+                            <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                            <span className="text-gray-700 dark:text-gray-300 text-sm">{detail}</span>
                           </li>
                         ))}
                       </ul>
                     </div>
 
-                    <div className="flex gap-3">
+                    {/* Action Buttons */}
+                    <div className="flex gap-3 pt-4 border-t border-gray-100 dark:border-gray-700">
                       <Link
                         to={`/service/${service.slug}`}
-                        className="flex-1 text-center py-3 px-4 rounded-lg font-medium transition-all bg-white/10 backdrop-blur-sm text-white border border-white/20 hover:bg-white/20"
+                        className="flex-1 text-center py-3 px-4 rounded-xl font-semibold text-sm transition-all bg-gradient-to-r from-gray-100 to-gray-50 dark:from-gray-700 dark:to-gray-800 text-gray-900 dark:text-white hover:from-gray-200 hover:to-gray-100 dark:hover:from-gray-600 dark:hover:to-gray-700 border border-gray-200 dark:border-gray-600"
                       >
                         Подробнее
                       </Link>
-
                       <button
                         onClick={() => handleOrderService(service)}
-                        className="flex-1 py-3 px-4 rounded-lg font-medium transition-all bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700"
+                        className="flex-1 py-3 px-4 rounded-xl font-semibold text-sm transition-all bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40"
                       >
                         Заказать
                       </button>
@@ -331,8 +345,11 @@ const ServicesCatalog: React.FC<ServicesCatalogProps> = ({ breadcrumbs }) => {
       />
 
       {/* CTA Section */}
-      <section className="py-24 bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600">
-        <div className="container mx-auto px-4">
+      <section className="relative py-24 bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600">
+        {/* Top gradient overlay for smooth transition */}
+        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-white dark:from-gray-950 to-transparent pointer-events-none" />
+
+        <div className="container mx-auto px-4 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -344,7 +361,7 @@ const ServicesCatalog: React.FC<ServicesCatalogProps> = ({ breadcrumbs }) => {
             </h2>
 
             <p className="text-xl opacity-90 max-w-3xl mx-auto mb-12">
-              Мы готовы разработать индивидуальное решение под ваши потребности. 
+              Мы готовы разработать индивидуальное решение под ваши потребности.
               Свяжитесь с нами, и мы предложим оптимальный вариант для вашего проекта.
             </p>
 
@@ -361,6 +378,9 @@ const ServicesCatalog: React.FC<ServicesCatalogProps> = ({ breadcrumbs }) => {
 
           </motion.div>
         </div>
+
+        {/* Bottom Gradient Fade for smooth transition */}
+        <div className="absolute bottom-0 left-0 right-0 h-80 bg-gradient-to-b from-transparent via-purple-900/30 to-white dark:via-gray-900/50 dark:to-gray-950 pointer-events-none" />
       </section>
     </div>
   );
