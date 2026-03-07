@@ -4,13 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fde30c11-94c5-4884-96a6-cf984ad02720" name="Changes" comment="fix">
+    <list default="true" id="fde30c11-94c5-4884-96a6-cf984ad02720" name="Changes" comment="FixWelcome">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.react-router/types/+routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/.react-router/types/+routes.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/ContactsPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ContactsPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/DroneDefensePage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/DroneDefensePage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/PortfolioGallery.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/PortfolioGallery.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/welcome/welcome.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/welcome/welcome.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/ServicesCatalog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ServicesCatalog.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -113,15 +109,7 @@
       <workItem from="1772125309578" duration="4799000" />
       <workItem from="1772131233716" duration="2996000" />
       <workItem from="1772521965770" duration="2088000" />
-      <workItem from="1772901389728" duration="1822000" />
-    </task>
-    <task id="LOCAL-00046" summary="cookiesbannersadd">
-      <option name="closed" value="true" />
-      <created>1770651602586</created>
-      <option name="number" value="00046" />
-      <option name="presentableId" value="LOCAL-00046" />
-      <option name="project" value="LOCAL" />
-      <updated>1770651602586</updated>
+      <workItem from="1772901389728" duration="2645000" />
     </task>
     <task id="LOCAL-00047" summary="fixImgs">
       <option name="closed" value="true" />
@@ -507,7 +495,15 @@
       <option name="project" value="LOCAL" />
       <updated>1772523023027</updated>
     </task>
-    <option name="localTasksCounter" value="95" />
+    <task id="LOCAL-00095" summary="FixWelcome">
+      <option name="closed" value="true" />
+      <created>1772903370186</created>
+      <option name="number" value="00095" />
+      <option name="presentableId" value="LOCAL-00095" />
+      <option name="project" value="LOCAL" />
+      <updated>1772903370186</updated>
+    </task>
+    <option name="localTasksCounter" value="96" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -537,7 +533,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="allFix" />
     <MESSAGE value="fixModallAll" />
     <MESSAGE value="fixModallAllCapcha" />
     <MESSAGE value="fixContactsCapcha" />
@@ -562,6 +557,7 @@
     <MESSAGE value="fixModalPhoneBack" />
     <MESSAGE value="addphoneBackContacts" />
     <MESSAGE value="fixEmailForms" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixEmailForms" />
+    <MESSAGE value="FixWelcome" />
+    <option name="LAST_COMMIT_MESSAGE" value="FixWelcome" />
   </component>
 </project>

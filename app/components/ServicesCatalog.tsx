@@ -2,18 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useTheme } from '../contexts/ThemeContext';
 import {
-  Shield,
   Building2,
-  Target,
-  Zap,
-  Award,
-  Clock,
-  Users,
-  CheckCircle,
-  ChevronRight,
   ArrowRight,
-  Percent,
-  CirclePile, FileText
+  CheckCircle
 } from 'lucide-react';
 import { Link, useSearchParams } from 'react-router';
 import OptimizedImage from './OptimizedImage';
@@ -157,7 +148,7 @@ const ServicesCatalog: React.FC<ServicesCatalogProps> = ({ breadcrumbs }) => {
     <div className="relative overflow-hidden">
       {/* Schema.org structured data for services */}
       {services.map((service) => (
-        <ServiceSchema 
+        <ServiceSchema
           key={service.id}
           name={service.title}
           description={service.description}
@@ -165,221 +156,66 @@ const ServicesCatalog: React.FC<ServicesCatalogProps> = ({ breadcrumbs }) => {
           provider={businessData}
         />
       ))}
-      
-      {/* Hero Section */}
-      <section className="relative min-h-[60vh] flex items-center overflow-hidden">
-        {/* Background with parallax effect */}
-        {/* Optimized background with parallax effect */}
-        <div
-          className="absolute inset-0 bg-gradient-to-br from-blue-900 via-gray-900 to-purple-900"
-        >
-          <div className="absolute inset-0">
-            <div className="absolute inset-0 bg-[url('/img/homesImg/services.jpeg')] bg-cover bg-center mix-blend-overlay opacity-20" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 via-transparent to-purple-600/10" />
-          </div>
-        </div>
 
-        {/* Content */}
-        <div className="relative container mx-auto px-4 z-10">
+      {/* Services Catalog Section */}
+      <section className="pb-16 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-black">
+        <div className="container mx-auto px-4">
           {/* Хлебные крошки */}
           {breadcrumbs && (
             <div className="py-4">
-              <Breadcrumbs breadcrumbs={breadcrumbs} className="text-white/80" />
+              <Breadcrumbs breadcrumbs={breadcrumbs} className="text-gray-600 dark:text-gray-400" />
             </div>
           )}
 
-          <div className="grid lg:grid-cols-2 gap-12 items-center py-8">
-            {/* Left column - Main content */}
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-              className="space-y-8"
-            >
-              {/* Badge */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 border border-white/20"
-              >
-                <Shield className="w-4 h-4" />
-                <span className="text-sm font-medium text-white">Полный спектр услуг</span>
-              </motion.div>
-
-              {/* Main heading */}
-              <motion.h1
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-                className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight text-white"
-              >
-                <span className="block">Наши</span>
-                <span className="block bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                  Услуги
-                </span>
-                <span className="block">и решения</span>
-              </motion.h1>
-
-              {/* Subtitle */}
-              <motion.p
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
-                className="text-xl text-gray-300 max-w-2xl"
-              >
-                Полный спектр строительно-монтажных работ любой сложности. 
-                От подготовительных работ до сдачи объекта "под ключ". 
-                Современные технологии и проверенные материалы.
-              </motion.p>
-
-              {/* Stats */}
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 }}
-                className="grid grid-cols-2 md:grid-cols-4 gap-4"
-              >
-                {[
-                  { value: "17", label: "Услуг" },
-                  { value: "6+", label: "Категорий" },
-                  { value: "100%", label: "Качество" },
-                  { value: "12+", label: "Лет опыта" },
-                ].map((stat, i) => (
-                  <div key={i} className="text-center p-4 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10">
-                    <div className="text-2xl font-bold text-white">{stat.value}</div>
-                    <div className="text-sm text-gray-400">{stat.label}</div>
-                  </div>
-                ))}
-              </motion.div>
-
-              {/* CTA Buttons */}
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6 }}
-                className="flex flex-wrap gap-4"
-              >
-                <Link
-                  to="/contacts"
-                  className="group inline-flex items-center gap-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-xl hover:scale-105 transition-all duration-300"
-                >
-                  <span>Обсудить проект</span>
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </Link>
-
-                <Link
-                  to="/contacts"
-                  className="group inline-flex items-center gap-3 bg-white/10 backdrop-blur-sm text-white px-8 py-4 rounded-xl font-semibold border border-white/20 hover:bg-white/20 transition-all duration-300"
-                >
-                  <span>Оставить заявку</span>
-                  <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </Link>
-              </motion.div>
-            </motion.div>
-
-            {/* Right column - Feature cards */}
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className="space-y-6"
-            >
-              {[
-                {
-                  icon: <Shield className="w-6 h-6" />,
-                  title: "Защита периметра",
-                  description: "Современные системы защиты от БПЛА",
-                  color: "from-blue-500 to-cyan-500"
-                },
-                {
-                  icon: <Building2 className="w-6 h-6" />,
-                  title: "Строительство",
-                  description: "Полный цикл от фундамента до отделки",
-                  color: "from-purple-500 to-pink-500"
-                },
-                {
-                  icon: <Target className="w-6 h-6" />,
-                  title: "Точность работ",
-                  description: "Соблюдение всех нормативов и сроков",
-                  color: "from-orange-500 to-red-500"
-                },
-                {
-                  icon: <Zap className="w-6 h-6" />,
-                  title: "Скорость",
-                  description: "Оперативное выполнение задач",
-                  color: "from-green-500 to-emerald-500"
-                }
-              ].map((feature, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, x: 30 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.4 + i * 0.1 }}
-                  whileHover={{ x: -10 }}
-                  className="group bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-all duration-300 cursor-pointer"
-                >
-                  <div className="flex items-start gap-4">
-                    <div className={`p-3 rounded-xl bg-gradient-to-br ${feature.color}`}>
-                      {feature.icon}
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold text-white mb-2">{feature.title}</h3>
-                      <p className="text-gray-400">{feature.description}</p>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Services Catalog Section */}
-      <section className="py-24 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-black">
-        <div className="container mx-auto px-4">
-          <motion.div
-              initial={{opacity: 0, y: 50}}
-              whileInView={{opacity: 1, y: 0}}
-              viewport={{once: true}}
-              className="text-center mb-16"
-              id="catalog-header"
-          >
-            <div
-                className="inline-flex items-center gap-2 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-full px-4 py-2 mb-4">
-              <FileText className="w-4 h-4"/>
-              <span className="text-sm font-medium">Наши услуги</span>
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
-              Каталог услуг
-            </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-              Выберите интересующую вас категорию услуг. Мы готовы реализовать проекты любой сложности.
-            </p>
-          </motion.div>
-
           {/* Category Filters */}
-          <div className="flex flex-wrap justify-center gap-4 mb-16">
-            {categories.map((category) => (
+          <div className="mb-16">
+            {/* Desktop - обычные кнопки */}
+            <div className="hidden md:flex flex-wrap justify-center gap-4">
+              {categories.map((category) => (
                 <button
+                  key={category}
+                  onClick={() => setSelectedCategory(category)}
+                  className={`px-6 py-3 rounded-full font-medium transition-all ${
+                    selectedCategory === category
+                      ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg'
+                      : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                  }`}
+                >
+                  {category === 'all' ? 'Все услуги' :
+                    category === 'Подготовительные работы' ? 'Подготовительные работы' :
+                    category === 'Монтаж металлических конструкций' ? 'Монтаж конструкций' :
+                    category === 'Работы по устройству каменных конструкций и отделочные работы' ? 'Отделочные работы' :
+                    category === 'Устройство монолитных и сборных бетонных и железобетонных конструкций' ? 'Бетонные работы' :
+                    category === 'Теплоизоляционные работы' ? 'Теплоизоляция' :
+                    category === 'Дополнительные услуги' ? 'Дополнительные услуги' : category}
+                </button>
+              ))}
+            </div>
+
+            {/* Mobile - горизонтальный скролл */}
+            <div className="md:hidden overflow-x-auto pb-4 -mx-4 px-4">
+              <div className="flex gap-2 min-w-max">
+                {categories.map((category) => (
+                  <button
                     key={category}
                     onClick={() => setSelectedCategory(category)}
-                    className={`px-6 py-3 rounded-full font-medium transition-all ${
-                  selectedCategory === category
-                    ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg'
-                    : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
-                }`}
-              >
-                {category === 'all' ? 'Все услуги' :
-                 category === 'Подготовительные работы' ? 'Подготовительные работы' :
-                 category === 'Монтаж металлических конструкций' ? 'Монтаж конструкций' :
-                 category === 'Работы по устройству каменных конструкций и отделочные работы' ? 'Отделочные работы' :
-                 category === 'Устройство монолитных и сборных бетонных и железобетонных конструкций' ? 'Бетонные работы' :
-                 category === 'Теплоизоляционные работы' ? 'Теплоизоляция' :
-                 category === 'Дополнительные услуги' ? 'Дополнительные услуги' : category}
-              </button>
-            ))}
+                    className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all ${
+                      selectedCategory === category
+                        ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg flex-shrink-0'
+                        : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 flex-shrink-0 border border-gray-200 dark:border-gray-700'
+                    }`}
+                  >
+                    {category === 'all' ? 'Все услуги' :
+                      category === 'Подготовительные работы' ? 'Подготовительные' :
+                      category === 'Монтаж металлических конструкций' ? 'Монтаж' :
+                      category === 'Работы по устройству каменных конструкций и отделочные работы' ? 'Отделка' :
+                      category === 'Устройство монолитных и сборных бетонных и железобетонных конструкций' ? 'Бетон' :
+                      category === 'Теплоизоляционные работы' ? 'Теплоизоляция' :
+                      category === 'Дополнительные услуги' ? 'Доп. услуги' : category}
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
 
           {/* Services Grid */}
