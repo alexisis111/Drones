@@ -727,7 +727,14 @@ const DroneDefensePage: React.FC<DroneDefensePageProps> = ({ breadcrumbs }) => {
 
           <div className="max-w-6xl mx-auto rounded-3xl overflow-hidden shadow-2xl relative">
             {/*<ZOKVisualization enableControls={false}/>*/}
-            <img src="/ZOK.gif" alt="#s"/>
+            <img 
+              src="/ZOK.gif" 
+              alt="3D визуализация защитной конструкции"
+              width="1200"
+              height="675"
+              className="w-full h-auto"
+              loading="lazy"
+            />
             <button
                 onClick={() => setIsModalOpen(true)}
                 className="absolute top-4 right-4 z-10 p-3 rounded-full bg-white/80 backdrop-blur-sm text-gray-800 hover:bg-white transition-all shadow-lg"
@@ -738,7 +745,13 @@ const DroneDefensePage: React.FC<DroneDefensePageProps> = ({ breadcrumbs }) => {
 
             <FullscreenModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
               {/*<ZOKVisualization enableControls={true}/>*/}
-              <img src="/ZOK.gif" alt="#s"/>
+              <img 
+                src="/ZOK.gif" 
+                alt="3D визуализация защитной конструкции"
+                width="1200"
+                height="675"
+                className="w-full h-auto"
+              />
             </FullscreenModal>
           </div>
 

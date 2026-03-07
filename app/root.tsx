@@ -33,13 +33,22 @@ export const links: Route.LinksFunction = () => [
     rel: "stylesheet",
     href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
   },
-  // Preload critical image
+  // Preload critical images
   {
     rel: "preload",
     as: "image",
     href: "/Logo-1.png",
     imagesrcset: "/Logo-1.png 2x",
     imagesizes: "128px",
+  },
+  // Preload hero image for LCP
+  {
+    rel: "preload",
+    as: "image",
+    href: "/img/homesImg/home.jpeg",
+    imagesrcset: "/img/homesImg/home.jpeg 1x, /img/homesImg/home.jpeg 2x",
+    imagesizes: "100vw",
+    fetchPriority: "high",
   },
 ];
 
