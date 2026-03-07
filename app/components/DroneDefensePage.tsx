@@ -12,8 +12,6 @@ import {
   CheckCircle,
   ChevronRight,
   ArrowRight,
-  Radio,
-  Eye,
   AlertTriangle,
   Lock,
   Maximize2,

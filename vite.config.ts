@@ -37,9 +37,10 @@ export default defineConfig(({ isSsrBuild }) => {
           ...(isSsrBuild ? {} : {
             // Split bundles for better caching (only for client build)
             manualChunks: {
-              // Separate vendor libraries
-              vendor_react: ['react', 'react-dom'],
-              vendor_ui: ['framer-motion', 'lucide-react'],
+              // Separate vendor libraries for better code splitting
+              vendor_react: ['react', 'react-dom', 'react-router'],
+              vendor_motion: ['framer-motion'],
+              vendor_icons: ['lucide-react'],
               vendor_three: ['@react-three/fiber', '@react-three/drei'],
             },
           }),

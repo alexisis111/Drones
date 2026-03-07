@@ -14,7 +14,7 @@ import {
   ArrowRight,
   MapPin,
   Calendar,
-  FileText, HardHat
+  HardHat
 } from 'lucide-react';
 import { Link } from 'react-router';
 import Breadcrumbs, { type BreadcrumbItem } from './Breadcrumbs';

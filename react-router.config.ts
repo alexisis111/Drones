@@ -6,5 +6,14 @@ export default {
   ssr: true,
   future: {
     v3_singleFetch: true
-  }
+  },
+  // Prerender key pages for faster initial load
+  prerender: [
+    '/',
+    '/drone-defense',
+    '/services',
+    '/contacts',
+    '/company',
+    '/portfolio'
+  ]
 } satisfies Config;

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router';
 import { motion } from 'framer-motion';
 import { useTheme } from '../contexts/ThemeContext';
-import { Menu, X, Sun, Moon, Star, Briefcase, Building2, Users, MapPin, Shield, Gift } from 'lucide-react';
+import { Menu, X, Sun, Moon, Star, Briefcase, Building2, Users, MapPin, Shield } from 'lucide-react';
 import OptimizedImage from './OptimizedImage';
 
 const Header: React.FC = () => {

@@ -34,7 +34,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <meta charSet="utf-8"/>
       <meta name="viewport" content="width=device-width, initial-scale=1"/>
       <meta name="zen-verification" content="DqHQfN8uIAWDflvVe1nrseBbTEEDN94hVguAkw0IB4qnfok5Z5p2m0p7eUlBbyyY"/>
-      <title>Строительная компания ЛЕГИОН</title>
+      <title>Строительная компания ЛЕГИОН | Защита от БПЛА, строительство по всей России</title>
       <link rel="icon" href="/Logo-1.png" sizes="any"/>
       <Meta/>
       <Links/>
