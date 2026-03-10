@@ -146,7 +146,7 @@ const ServicesCatalog: React.FC<ServicesCatalogProps> = ({ breadcrumbs }) => {
   };
 
   return (
-    <div className="relative overflow-hidden">
+    <div className="relative">
       {/* Schema.org structured data for services */}
       {services.map((service) => (
         <ServiceSchema
@@ -168,8 +168,8 @@ const ServicesCatalog: React.FC<ServicesCatalogProps> = ({ breadcrumbs }) => {
             </div>
           )}
 
-          {/* Category Filters */}
-          <div className="mb-16">
+          {/* Category Filters - Sticky */}
+          <div className="sticky top-[70px] md:top-[70px] z-30 mb-16 bg-gradient-to-b from-gray-50 via-gray-50/98 to-transparent dark:from-gray-900 dark:via-gray-900/98 dark:to-transparent backdrop-blur-sm py-4 rounded-2xl">
             {/* Desktop - обычные кнопки */}
             <div className="hidden md:flex flex-wrap justify-center gap-4">
               {categories.map((category) => (
