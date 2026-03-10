@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fde30c11-94c5-4884-96a6-cf984ad02720" name="Changes" comment="Fixxxx">
+    <list default="true" id="fde30c11-94c5-4884-96a6-cf984ad02720" name="Changes" comment="FixxxxLinkServices">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/ServicesCatalog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ServicesCatalog.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/ServiceDetailPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ServiceDetailPage.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -110,14 +110,6 @@
       <workItem from="1772131233716" duration="2996000" />
       <workItem from="1772521965770" duration="2088000" />
       <workItem from="1772901389728" duration="10865000" />
-    </task>
-    <task id="LOCAL-00050" summary="YaMetrics">
-      <option name="closed" value="true" />
-      <created>1770874789986</created>
-      <option name="number" value="00050" />
-      <option name="presentableId" value="LOCAL-00050" />
-      <option name="project" value="LOCAL" />
-      <updated>1770874789987</updated>
     </task>
     <task id="LOCAL-00051" summary="YaMetrics2">
       <option name="closed" value="true" />
@@ -503,7 +495,15 @@
       <option name="project" value="LOCAL" />
       <updated>1772911777613</updated>
     </task>
-    <option name="localTasksCounter" value="99" />
+    <task id="LOCAL-00099" summary="FixxxxLinkServices">
+      <option name="closed" value="true" />
+      <created>1773133835817</created>
+      <option name="number" value="00099" />
+      <option name="presentableId" value="LOCAL-00099" />
+      <option name="project" value="LOCAL" />
+      <updated>1773133835817</updated>
+    </task>
+    <option name="localTasksCounter" value="100" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -533,7 +533,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fixContactsSize" />
     <MESSAGE value="fixSitemap" />
     <MESSAGE value="fix3D" />
     <MESSAGE value="fixContactForm" />
@@ -558,6 +557,7 @@
     <MESSAGE value="FixServices" />
     <MESSAGE value="Fixxxx" />
     <MESSAGE value="FixxxxNavLogo" />
-    <option name="LAST_COMMIT_MESSAGE" value="FixxxxNavLogo" />
+    <MESSAGE value="FixxxxLinkServices" />
+    <option name="LAST_COMMIT_MESSAGE" value="FixxxxLinkServices" />
   </component>
 </project>

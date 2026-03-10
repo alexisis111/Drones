@@ -193,7 +193,7 @@ const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ breadcrumbs, serv
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.6 }}
-                  className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-tight text-white"
+                  className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-black leading-tight text-white"
                 >
                   {service.title}
                 </motion.h1>
@@ -203,7 +203,7 @@ const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ breadcrumbs, serv
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.7 }}
-                  className="text-lg md:text-xl text-gray-300 max-w-xl leading-relaxed"
+                  className="text-base sm:text-lg md:text-xl text-gray-300 max-w-xl leading-relaxed"
                 >
                   {service.description}
                 </motion.p>
@@ -213,33 +213,33 @@ const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ breadcrumbs, serv
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.8 }}
-                  className="flex flex-wrap gap-6 pt-4"
+                  className="flex flex-wrap gap-3 sm:gap-6 pt-4"
                 >
-                  <div className="flex items-center gap-3 bg-white/10 backdrop-blur-sm rounded-2xl px-5 py-3 border border-white/10">
-                    <div className="p-2 rounded-xl bg-gradient-to-br from-blue-500 to-purple-500">
-                      <Clock className="w-5 h-5 text-white" />
+                  <div className="flex items-center gap-2 sm:gap-3 bg-white/10 backdrop-blur-sm rounded-2xl px-3 sm:px-5 py-2 sm:py-3 border border-white/10">
+                    <div className="p-1.5 sm:p-2 rounded-xl bg-gradient-to-br from-blue-500 to-purple-500">
+                      <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                     </div>
                     <div>
                       <div className="text-xs text-gray-400">Сроки</div>
-                      <div className="text-sm font-bold text-white">от 7 дней</div>
+                      <div className="text-xs sm:text-sm font-bold text-white">от 7 дней</div>
                     </div>
                   </div>
-                  <div className="flex items-center gap-3 bg-white/10 backdrop-blur-sm rounded-2xl px-5 py-3 border border-white/10">
-                    <div className="p-2 rounded-xl bg-gradient-to-br from-green-500 to-emerald-500">
-                      <Star className="w-5 h-5 text-white" />
+                  <div className="flex items-center gap-2 sm:gap-3 bg-white/10 backdrop-blur-sm rounded-2xl px-3 sm:px-5 py-2 sm:py-3 border border-white/10">
+                    <div className="p-1.5 sm:p-2 rounded-xl bg-gradient-to-br from-green-500 to-emerald-500">
+                      <Star className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                     </div>
                     <div>
                       <div className="text-xs text-gray-400">Качество</div>
-                      <div className="text-sm font-bold text-white">100%</div>
+                      <div className="text-xs sm:text-sm font-bold text-white">100%</div>
                     </div>
                   </div>
-                  <div className="flex items-center gap-3 bg-white/10 backdrop-blur-sm rounded-2xl px-5 py-3 border border-white/10">
-                    <div className="p-2 rounded-xl bg-gradient-to-br from-orange-500 to-red-500">
-                      <Shield className="w-5 h-5 text-white" />
+                  <div className="flex items-center gap-2 sm:gap-3 bg-white/10 backdrop-blur-sm rounded-2xl px-3 sm:px-5 py-2 sm:py-3 border border-white/10">
+                    <div className="p-1.5 sm:p-2 rounded-xl bg-gradient-to-br from-orange-500 to-red-500">
+                      <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                     </div>
                     <div>
                       <div className="text-xs text-gray-400">Гарантия</div>
-                      <div className="text-sm font-bold text-white">до 5 лет</div>
+                      <div className="text-xs sm:text-sm font-bold text-white">до 5 лет</div>
                     </div>
                   </div>
                 </motion.div>
@@ -249,21 +249,21 @@ const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ breadcrumbs, serv
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.9 }}
-                  className="flex flex-col sm:flex-row gap-4 pt-6 w-full sm:w-auto"
+                  className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-6 w-full sm:w-auto"
                 >
                   <button
                     onClick={() => handleOrderService(service)}
-                    className="w-full sm:w-auto group inline-flex items-center justify-center gap-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 sm:px-8 py-4 rounded-xl font-bold hover:shadow-2xl hover:shadow-blue-500/50 hover:scale-105 transition-all duration-300"
+                    className="w-full sm:w-auto group inline-flex items-center justify-center gap-2 sm:gap-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 sm:px-8 py-3 sm:py-4 rounded-xl font-bold text-sm sm:text-base hover:shadow-2xl hover:shadow-blue-500/50 hover:scale-105 transition-all duration-300"
                   >
                     <span>Заказать услугу</span>
-                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
                   </button>
 
                   <Link
                     to="/contacts"
-                    className="w-full sm:w-auto group inline-flex items-center justify-center gap-3 bg-white/10 backdrop-blur-sm text-white px-6 sm:px-8 py-4 rounded-xl font-bold border border-white/30 hover:bg-white/20 transition-all duration-300"
+                    className="w-full sm:w-auto group inline-flex items-center justify-center gap-2 sm:gap-3 bg-white/10 backdrop-blur-sm text-white px-4 sm:px-8 py-3 sm:py-4 rounded-xl font-bold text-sm sm:text-base border border-white/30 hover:bg-white/20 transition-all duration-300"
                   >
-                    <Phone className="w-5 h-5" />
+                    <Phone className="w-4 h-4 sm:w-5 sm:h-5" />
                     <span>Проконсультироваться</span>
                   </Link>
                 </motion.div>
@@ -325,8 +325,8 @@ const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ breadcrumbs, serv
           </div>
 
           {/* Wave Divider */}
-          <div className="absolute bottom-0 left-0 right-0 z-20 pointer-events-none">
-            <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto">
+          <div className="absolute bottom-0 left-0 right-0 z-20 pointer-events-none -mb-4">
+            <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto block">
               <path
                 d="M0 0C48 0 144 0 288 12C432 24 576 48 720 56C864 64 1008 56 1152 48C1296 40 1392 24 1440 12V120H0V0Z"
                 className="fill-gray-50 dark:fill-gray-900"
