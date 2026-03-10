@@ -85,7 +85,7 @@ const Footer: React.FC = () => {
                                 <MaxIcon className="w-11 h-12"/>
                             </a>
                             <a
-                                href="https://dzen.ru/legion78rf?share_to=link"
+                                href="https://dzen.ru/legion78lo?share_to=link"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className={`p-2 rounded-full ${
