@@ -528,7 +528,7 @@ export function Welcome() {
                 className="max-w-5xl mx-auto"
               >
                 <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6 text-center">
-                  Строительная компания ЛЕГИОН в Светогорске — строительство в СПб, Ленинградской области и по всей России
+                  Строительная компания ЛЕГИОН — строительство в СПб, Ленинградской области и по всей России
                 </h2>
                 
                 <div className="prose prose-lg dark:prose-invert max-w-none">

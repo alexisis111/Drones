@@ -10,6 +10,5 @@ export default [
   route("/service/:slug", "routes/service-detail.tsx"),
   route("/drone-defense", "routes/drone-defense.tsx"),
   route("/privacy", "routes/privacy.tsx"),
-  route("/terms", "routes/terms.tsx"),
-  route("/*", "$.tsx")
+  route("/terms", "routes/terms.tsx")
 ] satisfies RouteConfig;
