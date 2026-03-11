@@ -4,9 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fde30c11-94c5-4884-96a6-cf984ad02720" name="Changes" comment="FixxxxLinkServices">
+    <list default="true" id="fde30c11-94c5-4884-96a6-cf984ad02720" name="Changes" comment="FixxxxWave">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/ServiceDetailPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ServiceDetailPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.qwen/PROJECT_SUMMARY.md" beforeDir="false" afterPath="$PROJECT_DIR$/.qwen/PROJECT_SUMMARY.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/CompanyShowcase.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/CompanyShowcase.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/SchemaOrg.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/SchemaOrg.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/data/services.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/data/services.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/root.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/root.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/company.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/company.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/contacts.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/contacts.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/drone-defense.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/drone-defense.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/home.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/home.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/portfolio.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/portfolio.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/service-detail.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/service-detail.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/services.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/services.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/welcome/welcome.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/welcome/welcome.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/sitemap.xml" beforeDir="false" afterPath="$PROJECT_DIR$/public/sitemap.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -110,14 +123,7 @@
       <workItem from="1772131233716" duration="2996000" />
       <workItem from="1772521965770" duration="2088000" />
       <workItem from="1772901389728" duration="10865000" />
-    </task>
-    <task id="LOCAL-00051" summary="YaMetrics2">
-      <option name="closed" value="true" />
-      <created>1770875262512</created>
-      <option name="number" value="00051" />
-      <option name="presentableId" value="LOCAL-00051" />
-      <option name="project" value="LOCAL" />
-      <updated>1770875262512</updated>
+      <workItem from="1773216700858" duration="7685000" />
     </task>
     <task id="LOCAL-00052" summary="YaMetrics2">
       <option name="closed" value="true" />
@@ -503,7 +509,15 @@
       <option name="project" value="LOCAL" />
       <updated>1773133835817</updated>
     </task>
-    <option name="localTasksCounter" value="100" />
+    <task id="LOCAL-00100" summary="FixxxxWave">
+      <option name="closed" value="true" />
+      <created>1773134487661</created>
+      <option name="number" value="00100" />
+      <option name="presentableId" value="LOCAL-00100" />
+      <option name="project" value="LOCAL" />
+      <updated>1773134487661</updated>
+    </task>
+    <option name="localTasksCounter" value="101" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -533,7 +547,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fixSitemap" />
     <MESSAGE value="fix3D" />
     <MESSAGE value="fixContactForm" />
     <MESSAGE value="fixZOK" />
@@ -558,6 +571,7 @@
     <MESSAGE value="Fixxxx" />
     <MESSAGE value="FixxxxNavLogo" />
     <MESSAGE value="FixxxxLinkServices" />
-    <option name="LAST_COMMIT_MESSAGE" value="FixxxxLinkServices" />
+    <MESSAGE value="FixxxxWave" />
+    <option name="LAST_COMMIT_MESSAGE" value="FixxxxWave" />
   </component>
 </project>

@@ -17,7 +17,7 @@ import {
   Layers,
   Phone
 } from 'lucide-react';
-import { LocalBusinessSchema, ServiceSchema } from "../components/SchemaOrg";
+import { LocalBusinessSchema, ServiceSchema, ConstructionBusinessSchema } from "../components/SchemaOrg";
 import FaqSection from "../components/FaqSection";
 import Breadcrumbs, { type BreadcrumbItem } from "../components/Breadcrumbs";
 import HeroContacts from "../components/HeroContacts";
@@ -43,10 +43,10 @@ export function Welcome() {
   // Данные для схемы
   const businessData = {
     name: "Строительная компания ЛЕГИОН",
-    description: "ООО «ЛЕГИОН» — надёжная строительная компания. Выполняем полный цикл строительных работ: от подготовительных работ до сдачи объекта под ключ. Специализируемся на строительстве зданий, монтаже металлоконструкций, теплоизоляции и комплексных решениях для промышленных и гражданских объектов. Работаем по всей России. Гарантия качества, соблюдение сроков, индивидуальный подход к каждому проекту.",
-    url: "https://xn--78-glchqprh.xn--p1ai/", // https://легион.рф/
+    description: "ООО «ЛЕГИОН» — надёжная строительная компания с 2012 года. Офис в г. Светогорск (Ленинградская область). Выполняем полный цикл строительных работ: от подготовительных работ до сдачи объекта под ключ. Специализируемся на строительстве зданий, монтаже металлоконструкций, теплоизоляции и комплексных решениях для промышленных и гражданских объектов. Работаем по всей России. Гарантия качества, соблюдение сроков, индивидуальный подход к каждому проекту.",
+    url: "https://xn--78-glchqprh.xn--p1ai/",
     logo: "/Logo-1.png",
-    address: "Ленинградская область",
+    address: "Ленинградская область, г. Светогорск, ул. Максима Горького, 7",
     telephone: "+79312470888",
     email: "l-legion@bk.ru",
     openingHours: ["Mo-Fr 09:00-18:00"],
@@ -86,8 +86,9 @@ export function Welcome() {
         <main className="relative">
           {/* Schema.org structured data */}
           <LocalBusinessSchema {...businessData} />
+          <ConstructionBusinessSchema {...businessData} />
           {services.map((service, index) => (
-            <ServiceSchema 
+            <ServiceSchema
               key={index}
               name={service.name}
               description={service.description}
@@ -445,8 +446,8 @@ export function Welcome() {
                   },
                   {
                     title: "Защита от БПЛА",
-                    description: "Монтаж антидрон сетки для защиты промышленных объектов",
-                    features: ["Проектирование защиты", "Монтаж сетки", "Обслуживание систем", "Консультации"],
+                    description: "Монтаж ЗОК для защиты промышленных объектов",
+                    features: ["Проектирование защиты", "Монтаж ЗОК", "Обслуживание систем", "Консультации"],
                     color: "from-indigo-500 to-blue-500"
                   },
                   {
@@ -494,7 +495,7 @@ export function Welcome() {
                               service.title === "Подготовительные работы" ? "/services?category=Подготовительные работы" :
                               service.title === "Металлоконструкции" ? "/services?category=Монтаж металлических конструкций" :
                               service.title === "Теплоизоляция" ? "/services?category=Теплоизоляционные работы" :
-                              service.title === "Защита от БПЛА" ? "/services?category=Дополнительные услуги" :
+                              service.title === "Защита от БПЛА" ? "/drone-defense" :
                               service.title === "Дополнительные услуги" ? "/services?category=Дополнительные услуги" :
                               service.title === "Строительство зданий" ? "/services?category=Устройство монолитных и сборных бетонных и железобетонных конструкций" :
                               "/services"
@@ -512,6 +513,203 @@ export function Welcome() {
 
             {/* Bottom Gradient Fade for smooth transition */}
             <div className="absolute bottom-0 left-0 right-0 h-80 bg-gradient-to-b from-transparent via-gray-50/50 to-gray-50 dark:via-gray-900/50 dark:to-gray-900 pointer-events-none" />
+          </section>
+
+          {/* SEO Text Section */}
+          <section className="relative py-16 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-950">
+            {/* Top gradient overlay for smooth transition */}
+            <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-gray-50 dark:from-gray-900 to-transparent pointer-events-none" />
+            
+            <div className="container mx-auto px-4 relative z-10">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="max-w-5xl mx-auto"
+              >
+                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6 text-center">
+                  Строительная компания ЛЕГИОН в Светогорске — строительство в СПб, Ленинградской области и по всей России
+                </h2>
+                
+                <div className="prose prose-lg dark:prose-invert max-w-none">
+                  <p className="text-gray-700 dark:text-gray-300 mb-6 text-lg leading-relaxed">
+                    <strong>ООО «ЛЕГИОН»</strong> — строительная компания полного цикла, работающая с 2012 года. Офис находится в г. Светогорск (Ленинградская область, ул. Максима Горького, 7). Мы выполняем строительные работы любой сложности для промышленных и гражданских объектов в Санкт-Петербурге, Ленинградской области и по всей территории Российской Федерации. За 12 лет работы реализовано более 100 проектов — от небольших зданий до крупных промышленных комплексов.
+                  </p>
+
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mt-10 mb-5">
+                    Услуги строительной компании — полный цикл работ
+                  </h3>
+                  
+                  <div className="grid md:grid-cols-2 gap-6 mb-8">
+                    <div className="bg-white dark:bg-gray-800 rounded-xl p-5 shadow-sm border border-gray-100 dark:border-gray-700">
+                      <h4 className="text-lg font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+                        <span className="text-2xl">🏗️</span>
+                        Подготовительные работы
+                      </h4>
+                      <ul className="space-y-2 text-gray-700 dark:text-gray-300 text-sm">
+                        <li className="flex items-start gap-2">
+                          <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                          <span><strong>Разборка зданий</strong> — снос и демонтаж с вывозом</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                          <span><strong>Сборка лесов</strong> — для фасадных работ</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                          <span><strong>Подготовка участка</strong> — расчистка и разметка</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                          <span><strong>Благоустройство</strong> — озеленение и мощение</span>
+                        </li>
+                      </ul>
+                    </div>
+
+                    <div className="bg-white dark:bg-gray-800 rounded-xl p-5 shadow-sm border border-gray-100 dark:border-gray-700">
+                      <h4 className="text-lg font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+                        <span className="text-2xl">🏢</span>
+                        Металлоконструкции
+                      </h4>
+                      <ul className="space-y-2 text-gray-700 dark:text-gray-300 text-sm">
+                        <li className="flex items-start gap-2">
+                          <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                          <span><strong>Изготовление</strong> — по чертежам заказчика</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                          <span><strong>Монтаж трубопроводов</strong> — установка и ремонт</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                          <span><strong>Техплощадки</strong> — для обслуживания</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                          <span><strong>Антикоррозия</strong> — защита от ржавчины</span>
+                        </li>
+                      </ul>
+                    </div>
+
+                    <div className="bg-white dark:bg-gray-800 rounded-xl p-5 shadow-sm border border-gray-100 dark:border-gray-700">
+                      <h4 className="text-lg font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+                        <span className="text-2xl">🏗️</span>
+                        Общестроительные работы
+                      </h4>
+                      <ul className="space-y-2 text-gray-700 dark:text-gray-300 text-sm">
+                        <li className="flex items-start gap-2">
+                          <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                          <span><strong>Каменные конструкции</strong> — кладка кирпича и блоков</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                          <span><strong>Фундаменты</strong> — монолитные и сборные</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                          <span><strong>ЖБИ конструкции</strong> — монтаж плит и блоков</span>
+                        </li>
+                      </ul>
+                    </div>
+
+                    <div className="bg-white dark:bg-gray-800 rounded-xl p-5 shadow-sm border border-gray-100 dark:border-gray-700">
+                      <h4 className="text-lg font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+                        <span className="text-2xl">🔥</span>
+                        Теплоизоляция
+                      </h4>
+                      <ul className="space-y-2 text-gray-700 dark:text-gray-300 text-sm">
+                        <li className="flex items-start gap-2">
+                          <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                          <span><strong>Оборудование</strong> — изоляция механизмов</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                          <span><strong>Трубопроводы</strong> — защита от промерзания</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div className="bg-white dark:bg-gray-800 rounded-xl p-5 shadow-sm border border-gray-100 dark:border-gray-700 mb-8">
+                    <h4 className="text-lg font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+                      <span className="text-2xl">🚛</span>
+                      Дополнительные услуги
+                    </h4>
+                    <div className="grid md:grid-cols-2 gap-3 text-gray-700 dark:text-gray-300 text-sm">
+                      <div className="flex items-start gap-2">
+                        <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                        <span><strong>Земляные работы</strong> — котлованы и траншеи</span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                        <span><strong>Строительство ангаров</strong> — под ключ</span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                        <span><strong>Грузоперевозки</strong> — доставка материалов</span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                        <span><strong>Огнезащита</strong> — металла и дерева</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mt-10 mb-5">
+                    Преимущества строительной фирмы ЛЕГИОН
+                  </h3>
+                  <div className="grid md:grid-cols-2 gap-4 mb-8">
+                    <div className="flex items-start gap-3 bg-green-50 dark:bg-green-900/20 rounded-lg p-4">
+                      <CheckCircle className="w-6 h-6 text-green-600 flex-shrink-0 mt-0.5" />
+                      <div>
+                        <p className="font-semibold text-gray-900 dark:text-white">12 лет на рынке</p>
+                        <p className="text-sm text-gray-700 dark:text-gray-300">Более 100 успешных проектов по России</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3 bg-green-50 dark:bg-green-900/20 rounded-lg p-4">
+                      <CheckCircle className="w-6 h-6 text-green-600 flex-shrink-0 mt-0.5" />
+                      <div>
+                        <p className="font-semibold text-gray-900 dark:text-white">Соблюдение сроков</p>
+                        <p className="text-sm text-gray-700 dark:text-gray-300">Работаем строго по договору</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3 bg-green-50 dark:bg-green-900/20 rounded-lg p-4">
+                      <CheckCircle className="w-6 h-6 text-green-600 flex-shrink-0 mt-0.5" />
+                      <div>
+                        <p className="font-semibold text-gray-900 dark:text-white">ГОСТ и СНиП</p>
+                        <p className="text-sm text-gray-700 dark:text-gray-300">Гарантия качества от 2 до 5 лет</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3 bg-green-50 dark:bg-green-900/20 rounded-lg p-4">
+                      <CheckCircle className="w-6 h-6 text-green-600 flex-shrink-0 mt-0.5" />
+                      <div>
+                        <p className="font-semibold text-gray-900 dark:text-white">Своё производство</p>
+                        <p className="text-sm text-gray-700 dark:text-gray-300">Изготовление металлоконструкций</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/30 dark:to-purple-900/20 rounded-xl p-6 mt-8 border border-blue-100 dark:border-blue-800">
+                    <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
+                      📍 Как заказать строительные услуги
+                    </h4>
+                    <p className="text-gray-700 dark:text-gray-300 mb-3">
+                      Офис компании находится по адресу: <strong>Ленинградская область, г. Светогорск, ул. Максима Горького, 7</strong>.
+                    </p>
+                    <p className="text-gray-700 dark:text-gray-300 mb-4">
+                      Работаем со всеми регионами России — от Санкт-Петербурга и Ленинградской области до Дальнего Востока. 
+                      Предоставляем бесплатную консультацию, расчёт сметы и коммерческое предложение для вашего объекта.
+                    </p>
+                    <p className="text-lg font-semibold text-gray-900 dark:text-white">
+                      ☎ <strong>+7 931 247-08-88</strong> — звоните для обсуждения вашего проекта!
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+
+            {/* Bottom Gradient Fade for smooth transition to CTA section */}
+            <div className="absolute bottom-0 left-0 right-0 h-96 bg-gradient-to-t from-blue-600/10 via-white/50 dark:from-blue-900/20 dark:via-gray-950/50 to-transparent pointer-events-none" />
           </section>
 
           {/* CTA Section */}

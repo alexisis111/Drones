@@ -17,7 +17,7 @@ const OrganizationSchema: React.FC<OrganizationSchemaProps> = ({
   description,
   url,
   logo,
-  address,
+  address = "Ленинградская область, г. Светогорск, ул. Максима Горького, 7",
   telephone,
   email,
   openingHours,
@@ -32,10 +32,10 @@ const OrganizationSchema: React.FC<OrganizationSchemaProps> = ({
     "logo": logo,
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": address,
-      "addressLocality": "Санкт-Петербург",
-      "addressRegion": "ЛО",
-      "postalCode": "197101", // Актуальный почтовый индекс для Санкт-Петербурга
+      "streetAddress": "ул. Максима Горького, 7",
+      "addressLocality": "Светогорск",
+      "addressRegion": "Ленинградская область",
+      "postalCode": "188680",
       "addressCountry": "RU"
     },
     "contactPoint": {
@@ -69,7 +69,7 @@ const LocalBusinessSchema: React.FC<LocalBusinessSchemaProps> = ({
   description,
   url,
   logo,
-  address,
+  address = "Ленинградская область, г. Светогорск, ул. Максима Горького, 7",
   telephone,
   email,
   openingHours,
@@ -86,10 +86,10 @@ const LocalBusinessSchema: React.FC<LocalBusinessSchemaProps> = ({
     "image": logo,
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": address,
-      "addressLocality": "Санкт-Петербург",
-      "addressRegion": "ЛО",
-      "postalCode": "197101", // Актуальный почтовый индекс для Санкт-Петербурга
+      "streetAddress": "ул. Максима Горького, 7",
+      "addressLocality": "Светогорск",
+      "addressRegion": "Ленинградская область",
+      "postalCode": "188680",
       "addressCountry": "RU"
     },
     "contactPoint": {
@@ -100,6 +100,64 @@ const LocalBusinessSchema: React.FC<LocalBusinessSchemaProps> = ({
     },
     "openingHours": openingHours,
     "priceRange": priceRange || "$$$",
+    ...(sameAs && {
+      "sameAs": sameAs
+    })
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
+    />
+  );
+};
+
+interface ConstructionBusinessSchemaProps extends LocalBusinessSchemaProps {
+  areaServed?: string[];
+}
+
+const ConstructionBusinessSchema: React.FC<ConstructionBusinessSchemaProps> = ({
+  name,
+  description,
+  url,
+  logo,
+  address = "Ленинградская область, г. Светогорск, ул. Максима Горького, 7",
+  telephone,
+  email,
+  openingHours,
+  sameAs,
+  priceRange,
+  areaServed = ["Санкт-Петербург", "Ленинградская область", "Россия"]
+}) => {
+  const schemaData = {
+    "@context": "https://schema.org",
+    "@type": "ConstructionBusiness",
+    "name": name,
+    "description": description,
+    "url": url,
+    "logo": logo,
+    "image": logo,
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "ул. Максима Горького, 7",
+      "addressLocality": "Светогорск",
+      "addressRegion": "Ленинградская область",
+      "postalCode": "188680",
+      "addressCountry": "RU"
+    },
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": telephone,
+      "contactType": "customer service",
+      ...(email && { "email": email })
+    },
+    "openingHours": openingHours,
+    "priceRange": priceRange || "$$$",
+    "areaServed": areaServed.map(area => ({
+      "@type": "Place",
+      "name": area
+    })),
     ...(sameAs && {
       "sameAs": sameAs
     })
@@ -167,5 +225,5 @@ const ServiceSchema: React.FC<ServiceSchemaProps> = ({
   );
 };
 
-export { OrganizationSchema, LocalBusinessSchema, ServiceSchema };
+export { OrganizationSchema, LocalBusinessSchema, ServiceSchema, ConstructionBusinessSchema };
 export type { BreadcrumbItem } from './BreadcrumbSchema';
