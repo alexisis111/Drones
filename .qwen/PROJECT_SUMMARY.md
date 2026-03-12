@@ -1,136 +1,131 @@
-The user wants me to create a comprehensive project summary in markdown format based on the conversation history. Let me analyze what was accomplished:
+The user wants me to create a comprehensive project summary based on the conversation history. Let me analyze what was done in this session:
 
-1. This is a SEO optimization project for a construction company website (ООО "ЛЕГИОН")
-2. The website is built with React Router v7, Tailwind CSS v4
-3. Main goal was to improve search engine ranking for construction-related queries
-4. Key work included: meta tags optimization, Schema.org markup, SEO text content, separating drone defense topic from construction content
-5. The build was successful at the end
+1. The user is working on a React/React Router website for a construction company called "ЛЕГИОН" (LEGION)
+2. The project is located at D:\DroneSite
+3. Multiple components were modified during this session
 
-Let me create a comprehensive summary following the specified format.# Project Summary
+Key changes made:
+1. Removed "Назад к услугам" (Back to services) button from ServiceDetailPage.tsx
+2. Made the stats badges (Сроки/Качество/Гарантия) display in one line on mobile
+3. Reduced top margin on mobile for better visibility
+4. Added price display to ServiceDetailPage after description
+5. Added prices to all services in services.ts data file
+6. Created a price list table section in welcome.tsx with all 16 services and their prices
+7. Modified FixedMobileTabs to change "Защита от БПЛА" to "Антидрон" with smaller text
+8. Made mobile tabs more compact
+
+The project uses:
+- React Router
+- Framer Motion for animations
+- Tailwind CSS for styling
+- Lucide React for icons
+- TypeScript
+
+Let me create a comprehensive summary.# Project Summary
 
 ## Overall Goal
-Optimize the construction company "ЛЕГИОН" website for search engine ranking (Yandex/Google) with focus on construction services in St. Petersburg, Leningrad Region, and all Russia.
+Разработка и улучшение веб-сайта строительной компании "ЛЕГИОН" на React Router с адаптивным дизайном и прайс-листом услуг.
 
 ## Key Knowledge
 
 ### Technology Stack
-- **Framework**: React Router v7.12.0 with SSR
-- **Styling**: Tailwind CSS v4.1.18
-- **Build Command**: `npm run build`
-- **Dev Command**: `npm run dev`
-- **Start Command**: `npm start` (uses server.js)
+- **Framework:** React Router (v7)
+- **Styling:** Tailwind CSS
+- **Animations:** Framer Motion
+- **Icons:** Lucide React
+- **Language:** TypeScript
+- **Build Command:** `npm run build`
 
 ### Project Structure
+- Root: `D:\DroneSite`
+- Components: `app/components/`
+- Data: `app/data/services.ts` (17 услуг с ценами)
+- Welcome Page: `app/welcome/welcome.tsx`
+- Mobile Tabs: `app/components/FixedMobileTabs.tsx`
+
+### Service Data Structure
+```typescript
+interface Service {
+  id: number;
+  title: string;
+  slug: string;
+  description: string;
+  category: string;
+  details: string[];
+  price?: string; // Формат: "от XXX ₽/ед."
+  imageUrl?: string;
+  // ...其他字段
+}
 ```
-D:\DroneSite\
-├── app/
-│   ├── routes/          # Page routes (home, services, company, contacts, portfolio, drone-defense, etc.)
-│   ├── components/      # Reusable components (SchemaOrg, Header, Footer, etc.)
-│   ├── welcome/         # Home page welcome component
-│   └── data/            # Static data (services.ts with 17 services)
-├── public/
-│   ├── sitemap.xml      # SEO sitemap (26 URLs)
-│   └── robots.txt       # Crawler rules
-└── build/               # Production build output
-```
 
-### Business Information
-- **Company**: ООО «ЛЕГИОН» (Construction Company LEGION)
-- **Address**: Ленинградская область, г. Светогорск, ул. Максима Горького, 7, 188680
-- **Phone**: +7 931 247-08-88
-- **Email**: l-legion@bk.ru
-- **Founded**: 2012 (12+ years experience)
-- **Service Area**: St. Petersburg, Leningrad Region, all Russia
-
-### SEO Strategy Decisions
-1. **Topic Separation**: Drone defense (БПЛА/ЗОК) content isolated to `/drone-defense` page only; all other pages focus purely on construction services
-2. **Geo-Targeting**: All meta tags include "СПб и ЛО" (St. Petersburg & Leningrad Region) + "Работа по РФ" (Work across Russia)
-3. **Schema.org**: Implemented ConstructionBusiness, LocalBusiness, Organization, and Service schemas
-4. **17 Services**: Each service has unique seoTitle and seoDescription optimized for construction keywords
-
-### Target Keywords
-- строительная компания (construction company)
-- строительство в СПб / Ленинградная область (construction in SPb / Leningrad Region)
-- монтаж металлоконструкций (metal structures installation)
-- промышленное строительство (industrial construction)
-- строительство под ключ (turnkey construction)
+### User Preferences
+- Все тексты на русском языке
+- Минимальные отступы на мобильных устройствах
+- Компактный дизайн для мобильных экранов
+- Горизонтальное расположение элементов на мобильных (когда возможно)
 
 ## Recent Actions
 
-### Completed SEO Optimizations
+### [DONE] ServiceDetailPage.tsx Changes
+1. Удалена кнопка "Назад к услугам" из Hero секции
+2. Добавлен блок с ценой после описания услуги (зелёный бейдж с иконкой Tag)
+3. Уменьшены отступы на мобильных:
+   - Hero секция: `min-h-[500px] sm:min-h-[600px]`
+   - Хлебные крошки: `py-2 sm:py-4 mb-4 sm:mb-8`
+   - Статистика (Сроки/Качество/Гарантия): в одну строку на мобильных с `flex-nowrap`
 
-1. **[DONE] Meta Tags for All Pages**
-   - Updated `home.tsx`, `services.tsx`, `company.tsx`, `contacts.tsx`, `portfolio.tsx`
-   - All titles include: Светогорск, СПб, ЛО, работа по РФ
-   - All descriptions include: address, phone, service area
+### [DONE] FixedMobileTabs.tsx Changes
+- Переименована вкладка "Защита от БПЛА" → "Антидрон"
+- Уменьшены отступы табов: `py-2 px-2` вместо `py-3 px-4`
+- Все вкладки теперь имеют одинаковый размер текста `text-xs`
 
-2. **[DONE] 17 Services SEO Tags**
-   - Added `seoTitle` and `seoDescription` to each service in `app/data/services.ts`
-   - Format: "[Service] в СПб и ЛО | [Benefit] | Работа по РФ | ЛЕГИОН"
-   - Updated `service-detail.tsx` to use these custom SEO fields
+### [DONE] welcome.tsx - Price List Section
+- Добавлена секция "Наш прайс-лист (основные позиции)" перед "Наше преимущество"
+- Создан массив `priceList` с 16 позициями услуг и ценами
+- Реализована адаптивная таблица:
+  - **Desktop:** 3 колонки (Наименование, Цена, Действие)
+  - **Mobile:** Карточки с названием, ценой и кнопкой "Перейти"
+- Каждая кнопка ведёт на `/service/{slug}`
 
-3. **[DONE] Schema.org Markup**
-   - Added `ConstructionBusinessSchema` to `SchemaOrg.tsx`
-   - Updated address to: ул. Максима Горького, 7, Светогорск, 188680
-   - Applied to `welcome.tsx` and `root.tsx`
-
-4. **[DONE] SEO Text Content on Homepage**
-   - Added ~1500 character SEO-optimized text section
-   - Structure: H1 → H2 (Services) → 5 service category cards → H2 (Advantages) → 4 advantage cards → CTA block
-   - Includes all 17 services grouped by category
-   - Smooth gradient transitions between sections
-
-5. **[DONE] Topic Separation**
-   - Removed БПЛА/anti-drone mentions from construction pages
-   - Kept drone defense content only on `/drone-defense` route
-   - Navigation links to drone defense preserved in Header/Footer
-
-6. **[DONE] Sitemap Update**
-   - Updated all dates to `2026-03-11`
-   - 26 URLs with proper priorities (homepage: 1.0, services: 0.9)
-
-7. **[DONE] Build Verification**
-   - Successfully built: `npm run build` completed in 11.34s
-   - Exit Code: 0 (no errors)
-   - 6 pages prerendered: /, /drone-defense, /services, /contacts, /company, /portfolio
+### [DONE] services.ts Data Updates
+- Добавлено поле `price` для всех 17 услуг
+- Цены соответствуют прайс-листу (от 150 ₽/м² до 80 000 ₽/т)
 
 ## Current Plan
 
-### Completed Tasks [DONE]
-1. [DONE] Unique title/description for all 17 services
-2. [DONE] SEO text on homepage (~1500 characters with H1-H4)
-3. [DONE] Schema.org markup (ConstructionBusiness)
-4. [DONE] Topic separation (drone defense → /drone-defense only)
-5. [DONE] Update sitemap.xml and robots.txt
-6. [DONE] Final meta-tag review and validation
+### Completed
+1. [DONE] Удаление кнопки "Назад к услугам" из ServiceDetailPage
+2. [DONE] Оптимизация отображения статистики на мобильных
+3. [DONE] Добавление цен в данные услуг
+4. [DONE] Создание прайс-листа в welcome.tsx
+5. [DONE] Обновление мобильного меню (Антидрон)
 
-### Deferred Tasks [TODO]
-1. [TODO] Add alt tags to all images in components
-2. [TODO] Internal linking between service pages
-3. [TODO] Create pricing page (/prices)
-4. [TODO] Create blog with 3-5 construction articles
+### TODO
+- [ ] Проверка работы всех ссылок на услуги
+- [ ] Тестирование на реальных мобильных устройствах
+- [ ] Возможная оптимизация производительности таблицы с 16 строками
 
-### Next Steps for User
-1. Register in **Yandex.Webmaster** (https://webmaster.yandex.ru/)
-2. Register in **Google Search Console** (https://search.google.com/search-console)
-3. Add business to **Yandex.Business** with Svetogorsk address
-4. Monitor search rankings after 2-4 weeks
-5. Expected results: Top-50 for low-frequency queries in 1-3 months
+## Important URLs/Slugs
+| Услуга | Slug |
+|--------|------|
+| Разборка зданий | `razborka-zdaniy-i-sooruzheniy` |
+| Сборка лесов | `sborka-lesov` |
+| Подготовка участка | `podgotovka-stroitelnogo-uchastka` |
+| Благоустройство | `blagoustroystvo-territoriy` |
+| Металлоконструкции | `izgotovlenie-metallokonstruktsiy` |
+| Монтаж трубопроводов | `montazh-tekhnologicheskikh-truboprovodov` |
+| Теплоизоляция | `teploizolyatsiya-truboprovodov` |
+| Земляные работы | `zemlyanye-raboty` |
+| Строительство ангаров | `stroitelstvo-angarov` |
+| Грузоперевозки | `gruzoperevozki` |
+| Огнезащита | `ognezashchita-konstruktsiy` |
 
-### Files Modified
-- `app/routes/home.tsx`
-- `app/routes/services.tsx`
-- `app/routes/company.tsx`
-- `app/routes/contacts.tsx`
-- `app/routes/portfolio.tsx`
-- `app/routes/service-detail.tsx`
-- `app/data/services.ts`
-- `app/components/SchemaOrg.tsx`
-- `app/welcome/welcome.tsx`
-- `app/root.tsx`
-- `public/sitemap.xml`
+## Build & Deployment
+- **Build:** `npm run build`
+- **Output:** `build/client/` и `build/server/`
+- **Docker:** Dockerfile присутствует в проекте
 
 ---
 
 ## Summary Metadata
-**Update time**: 2026-03-11T11:13:09.672Z 
+**Update time**: 2026-03-12T10:58:29.003Z 

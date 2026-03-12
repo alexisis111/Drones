@@ -345,7 +345,7 @@ export function Welcome() {
           </section>
 
           {/* Price List Section */}
-          <section className="relative py-24 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-black overflow-hidden">
+          <section className="relative py-4 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-black overflow-hidden">
             {/* Top gradient overlay for smooth transition */}
             <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-gray-50 dark:from-gray-900 to-transparent pointer-events-none" />
 
@@ -360,12 +360,6 @@ export function Welcome() {
                   <Building2 className="w-5 h-5" />
                   <span className="text-sm font-bold">Прайс-лист</span>
                 </div>
-                <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
-                  Наш прайс-лист (основные позиции)
-                </h2>
-                <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-                  Актуальные цены на строительно-монтажные работы по всей России
-                </p>
               </motion.div>
 
               {/* Price List Table */}
@@ -556,122 +550,6 @@ export function Welcome() {
             <div className="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-white dark:from-gray-950 via-gray-100/50 dark:via-gray-900/50 to-transparent pointer-events-none" />
           </section>
 
-          {/* Services Section */}
-          <section className="relative py-24 bg-gradient-to-b from-white to-gray-50 dark:from-gray-950 dark:to-gray-900">
-            {/* Top gradient overlay for smooth transition */}
-            <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-white dark:from-gray-950 to-transparent pointer-events-none" />
-            
-            <div className="container mx-auto px-4 relative z-10">
-              <motion.div
-                  initial={{ opacity: 0, y: 50 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  className="text-center mb-16"
-              >
-                <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
-                  Наши услуги
-                </h2>
-                <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-                  Полный спектр строительно-монтажных работ для промышленных и гражданских объектов
-                </p>
-              </motion.div>
-
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {[
-                  {
-                    title: "Подготовительные работы",
-                    description: "Полный комплекс подготовительных работ для начала строительства",
-                    features: ["Демонтаж конструкций", "Подготовка участка", "Устройство лесов", "Благоустройство территории"],
-                    color: "from-blue-500 to-cyan-500"
-                  },
-                  {
-                    title: "Строительство зданий",
-                    description: "Возведение промышленных и гражданских объектов под ключ",
-                    features: ["Фундаментные работы", "Монтаж конструкций", "Кровельные работы", "Отделка помещений"],
-                    color: "from-purple-500 to-pink-500"
-                  },
-                  {
-                    title: "Металлоконструкции",
-                    description: "Изготовление и монтаж металлических конструкций любой сложности",
-                    features: ["Проектирование КМ", "Изготовление на заводе", "Монтаж на объекте", "Антикоррозийная защита"],
-                    color: "from-orange-500 to-red-500"
-                  },
-                  {
-                    title: "Теплоизоляция",
-                    description: "Работы по теплоизоляции оборудования, трубопроводов и строительных конструкций",
-                    features: ["Теплоизоляция труб", "Энергосбережение", "Защита оборудования", "Монтаж изоляции"],
-                    color: "from-green-500 to-emerald-500"
-                  },
-                  {
-                    title: "Защита от БПЛА",
-                    description: "Монтаж ЗОК для защиты промышленных объектов",
-                    features: ["Проектирование защиты", "Монтаж ЗОК", "Обслуживание систем", "Консультации"],
-                    color: "from-indigo-500 to-blue-500"
-                  },
-                  {
-                    title: "Дополнительные услуги",
-                    description: "Широкий спектр дополнительных строительных услуг",
-                    features: ["Земляные работы", "Грузоперевозки", "Огнезащита металла", "Ремонтные работы"],
-                    color: "from-yellow-500 to-orange-500"
-                  }
-                ].map((service, i) => (
-                    <motion.div
-                        key={i}
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: i * 0.1 }}
-                        whileHover={{ y: -10 }}
-                        className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 shadow-xl hover:shadow-2xl transition-all duration-300"
-                    >
-                      <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${service.color} opacity-10 group-hover:opacity-20 transition-opacity duration-300 rounded-full -translate-y-16 translate-x-16`} />
-
-                      <div className="relative p-8">
-                        <div className={`inline-flex p-4 rounded-xl bg-gradient-to-br ${service.color} text-white mb-6`}>
-                          <Building2 className="w-6 h-6" />
-                        </div>
-
-                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-                          {service.title}
-                        </h3>
-
-                        <p className="text-gray-600 dark:text-gray-300 mb-6">
-                          {service.description}
-                        </p>
-
-                        <ul className="space-y-3 mb-8">
-                          {service.features.map((feature, j) => (
-                              <li key={j} className="flex items-center gap-3">
-                                <CheckCircle className="w-5 h-5 text-green-500" />
-                                <span className="text-gray-700 dark:text-gray-300">{feature}</span>
-                              </li>
-                          ))}
-                        </ul>
-
-                        <Link
-                            to={
-                              service.title === "Подготовительные работы" ? "/services?category=Подготовительные работы" :
-                              service.title === "Металлоконструкции" ? "/services?category=Монтаж металлических конструкций" :
-                              service.title === "Теплоизоляция" ? "/services?category=Теплоизоляционные работы" :
-                              service.title === "Защита от БПЛА" ? "/drone-defense" :
-                              service.title === "Дополнительные услуги" ? "/services?category=Дополнительные услуги" :
-                              service.title === "Строительство зданий" ? "/services?category=Устройство монолитных и сборных бетонных и железобетонных конструкций" :
-                              "/services"
-                            }
-                            className="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 font-semibold group/link"
-                        >
-                          <span>Подробнее</span>
-                          <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
-                        </Link>
-                      </div>
-                    </motion.div>
-                ))}
-              </div>
-            </div>
-
-            {/* Bottom Gradient Fade for smooth transition */}
-            <div className="absolute bottom-0 left-0 right-0 h-80 bg-gradient-to-b from-transparent via-gray-50/50 to-gray-50 dark:via-gray-900/50 dark:to-gray-900 pointer-events-none" />
-          </section>
 
           {/* SEO Text Section */}
           <section className="relative py-16 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-950">
