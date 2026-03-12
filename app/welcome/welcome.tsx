@@ -34,6 +34,16 @@ export function Welcome() {
   useEffect(() => {
     setIsVisible(true);
 
+    // Прокрутка к прайс-листу если в URL есть якорь #price-list
+    if (window.location.hash === '#price-list') {
+      setTimeout(() => {
+        const element = document.getElementById('price-list');
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 100);
+    }
+
     const handleScroll = () => {
       setScrollY(window.scrollY);
     };
@@ -345,7 +355,7 @@ export function Welcome() {
           </section>
 
           {/* Price List Section */}
-          <section className="relative py-4 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-black overflow-hidden">
+          <section id="price-list" className="relative py-4 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-black overflow-hidden">
             {/* Top gradient overlay for smooth transition */}
             <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-gray-50 dark:from-gray-900 to-transparent pointer-events-none" />
 
