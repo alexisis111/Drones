@@ -43,17 +43,12 @@ type Pages = {
   "/terms": {
     params: {};
   };
-  "/*": {
-    params: {
-      "*": string;
-    };
-  };
 };
 
 type RouteFiles = {
   "root.tsx": {
     id: "root";
-    page: "/" | "/company" | "/portfolio" | "/contacts" | "/vacancies" | "/services" | "/service/:slug" | "/drone-defense" | "/privacy" | "/terms" | "/*";
+    page: "/" | "/company" | "/portfolio" | "/contacts" | "/vacancies" | "/services" | "/service/:slug" | "/drone-defense" | "/privacy" | "/terms";
   };
   "routes/home.tsx": {
     id: "routes/home";
@@ -95,10 +90,6 @@ type RouteFiles = {
     id: "routes/terms";
     page: "/terms";
   };
-  "$.tsx": {
-    id: "$";
-    page: "/*";
-  };
 };
 
 type RouteModules = {
@@ -113,5 +104,4 @@ type RouteModules = {
   "routes/drone-defense": typeof import("./app/routes/drone-defense.tsx");
   "routes/privacy": typeof import("./app/routes/privacy.tsx");
   "routes/terms": typeof import("./app/routes/terms.tsx");
-  "$": typeof import("./app/$.tsx");
 };

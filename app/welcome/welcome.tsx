@@ -21,6 +21,8 @@ import { LocalBusinessSchema, ServiceSchema, ConstructionBusinessSchema } from "
 import FaqSection from "../components/FaqSection";
 import Breadcrumbs, { type BreadcrumbItem } from "../components/Breadcrumbs";
 import HeroContacts from "../components/HeroContacts";
+import { services } from "../data/services";
+import { Tag } from 'lucide-react';
 
 
 
@@ -39,6 +41,26 @@ export function Welcome() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Прайс-лист
+  const priceList = [
+    { name: "Разборка зданий и сооружений", price: "от 180 ₽/м³", slug: "razborka-zdaniy-i-sooruzheniy" },
+    { name: "Сборка лесов", price: "от 150 ₽/м²", slug: "sborka-lesov" },
+    { name: "Подготовка участка", price: "от 12 000 ₽/сотка", slug: "podgotovka-stroitelnogo-uchastka" },
+    { name: "Благоустройство территорий", price: "от 1 100 ₽/м²", slug: "blagoustroystvo-territoriy" },
+    { name: "Изготовление металлоконструкций", price: "от 80 000 ₽/т", slug: "izgotovlenie-metallokonstruktsiy" },
+    { name: "Монтаж тех. трубопроводов", price: "от 450 ₽/п.м.", slug: "montazh-tekhnologicheskikh-truboprovodov" },
+    { name: "Монтаж тех. площадок", price: "от 2 500 ₽/м²", slug: "montazh-tekhnologicheskikh-ploshchadok" },
+    { name: "АКЗ (антикоррозийная защита)", price: "от 250 ₽/м²", slug: "antikorroziynaya-zashchita" },
+    { name: "Устройство каменных конструкций", price: "от 1 800 ₽/м²", slug: "ustroystvo-kamennykh-konstruktsiy" },
+    { name: "Устройство фундаментов", price: "от 4 500 ₽/м³", slug: "ustroystvo-fundamentov" },
+    { name: "Монтаж сборного ЖБИ", price: "от 2 500 ₽/м³", slug: "montazh-sbornogo-zhelezobetona" },
+    { name: "Теплоизоляция оборудования/труб", price: "от 450 ₽/м²", slug: "teploizolyatsiya-truboprovodov" },
+    { name: "Земляные работы", price: "от 350 ₽/м³", slug: "zemlyanye-raboty" },
+    { name: "Строительство ангаров", price: "от 10 000 ₽/м²", slug: "stroitelstvo-angarov" },
+    { name: "Грузоперевозки", price: "от 600 ₽/час", slug: "gruzoperevozki" },
+    { name: "Огнезащита конструкций (МЧС)", price: "от 450 ₽/м²", slug: "ognezashchita-konstruktsiy" }
+  ];
 
   // Данные для схемы
   const businessData = {
@@ -258,7 +280,7 @@ export function Welcome() {
                       className="group inline-flex items-center justify-center gap-2 sm:gap-3 bg-white/10 dark:bg-gray-800/50 backdrop-blur-xl text-white px-4 sm:px-6 md:px-8 py-3 sm:py-4 rounded-lg sm:rounded-xl text-sm sm:text-base font-semibold border border-white/20 dark:border-gray-700 hover:bg-white/20 dark:hover:bg-gray-800/70 hover:border-white/30 transition-all duration-300"
                     >
                       <Layers className="w-4 h-4 sm:w-5 sm:h-5" />
-                      <span>Услуги</span>
+                      <span>Услуги и цены</span>
                       <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
                     </Link>
                   </motion.div>
@@ -321,6 +343,142 @@ export function Welcome() {
             {/* Bottom Gradient Fade for smooth transition */}
             <div className="absolute bottom-0 left-0 right-0 h-80 bg-gradient-to-b from-transparent via-gray-900/30 to-gray-50 dark:via-gray-900/50 dark:to-gray-900 pointer-events-none" />
           </section>
+
+          {/* Price List Section */}
+          <section className="relative py-24 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-black overflow-hidden">
+            {/* Top gradient overlay for smooth transition */}
+            <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-gray-50 dark:from-gray-900 to-transparent pointer-events-none" />
+
+            <div className="container mx-auto px-4 relative z-10">
+              <motion.div
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="text-center mb-16"
+              >
+                <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full px-6 py-2.5 mb-4 shadow-lg shadow-blue-500/30">
+                  <Building2 className="w-5 h-5" />
+                  <span className="text-sm font-bold">Прайс-лист</span>
+                </div>
+                <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+                  Наш прайс-лист (основные позиции)
+                </h2>
+                <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+                  Актуальные цены на строительно-монтажные работы по всей России
+                </p>
+              </motion.div>
+
+              {/* Price List Table */}
+              <div className="max-w-5xl mx-auto">
+                <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl overflow-hidden border border-gray-100 dark:border-gray-700">
+                  {/* Desktop Table */}
+                  <div className="hidden md:block overflow-x-auto">
+                    <table className="w-full">
+                      <thead className="bg-gradient-to-r from-blue-600 to-purple-600">
+                        <tr>
+                          <th className="text-left text-white font-bold py-5 px-6 text-sm">Наименование услуги</th>
+                          <th className="text-right text-white font-bold py-5 px-6 text-sm">Цена</th>
+                          <th className="text-center text-white font-bold py-5 px-6 text-sm">Действие</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {priceList.map((item, index) => (
+                          <motion.tr
+                            key={index}
+                            initial={{ opacity: 0, x: -20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: index * 0.03 }}
+                            className={`border-b border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors ${
+                              index % 2 === 0 ? 'bg-white dark:bg-gray-800' : 'bg-gray-50/50 dark:bg-gray-800/50'
+                            }`}
+                          >
+                            <td className="py-4 px-6">
+                              <div className="flex items-center gap-3">
+                                <div className="w-2 h-2 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 flex-shrink-0" />
+                                <span className="text-gray-900 dark:text-white font-medium text-sm">{item.name}</span>
+                              </div>
+                            </td>
+                            <td className="py-4 px-6 text-right">
+                              <span className="inline-flex items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-lg px-3 py-1.5 text-sm font-bold whitespace-nowrap">
+                                <Tag className="w-3.5 h-3.5" />
+                                {item.price}
+                              </span>
+                            </td>
+                            <td className="py-4 px-6 text-center">
+                              <Link
+                                to={`/service/${item.slug}`}
+                                className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-4 py-2 rounded-lg font-semibold text-sm transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/30 hover:scale-105"
+                              >
+                                <span>Перейти</span>
+                                <ArrowRight className="w-4 h-4" />
+                              </Link>
+                            </td>
+                          </motion.tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+
+                  {/* Mobile Cards */}
+                  <div className="md:hidden divide-y divide-gray-100 dark:divide-gray-700">
+                    {priceList.map((item, index) => (
+                      <motion.div
+                        key={index}
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: index * 0.03 }}
+                        className="p-4 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
+                      >
+                        <div className="flex items-start gap-3 mb-3">
+                          <div className="w-2 h-2 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 flex-shrink-0 mt-2" />
+                          <div className="flex-1">
+                            <h3 className="text-gray-900 dark:text-white font-semibold text-sm leading-snug mb-2">
+                              {item.name}
+                            </h3>
+                            <div className="flex items-center justify-between">
+                              <span className="inline-flex items-center gap-1.5 bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-lg px-2.5 py-1.5 text-xs font-bold whitespace-nowrap">
+                                <Tag className="w-3 h-3" />
+                                {item.price}
+                              </span>
+                              <Link
+                                to={`/service/${item.slug}`}
+                                className="inline-flex items-center gap-1.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-3 py-1.5 rounded-lg font-semibold text-xs transition-all duration-300 active:scale-95"
+                              >
+                                <span>Перейти</span>
+                                <ArrowRight className="w-3.5 h-3.5" />
+                              </Link>
+                            </div>
+                          </div>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* CTA Button */}
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  className="text-center mt-12"
+                >
+                  <Link
+                    to="/services"
+                    className="inline-flex items-center gap-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl font-bold text-lg hover:shadow-2xl hover:shadow-blue-500/50 hover:scale-105 transition-all duration-300"
+                  >
+                    <span>Все услуги</span>
+                    <ArrowRight className="w-5 h-5" />
+                  </Link>
+                </motion.div>
+              </div>
+            </div>
+
+            {/* Bottom Gradient Fade for smooth transition */}
+            <div className="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-white dark:from-gray-950 via-gray-100/50 dark:via-gray-900/50 to-transparent pointer-events-none" />
+          </section>
+
 
           {/* Why Choose Us Section */}
           <section className="relative py-24 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-black">

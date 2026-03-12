@@ -33,7 +33,7 @@ const FixedMobileTabs: React.FC = () => {
       )
     },
     {
-      label: 'БПЛА',
+      label: 'Антидрон',
       path: '/drone-defense',
       icon: <Drone className="h-4 w-4" />
     },
@@ -68,7 +68,7 @@ const FixedMobileTabs: React.FC = () => {
           <Link
             key={tab.path}
             to={tab.path}
-            className={`flex flex-col items-center justify-center py-3 px-4 w-full ${
+            className={`flex flex-col items-center justify-center py-2 px-2 w-full ${
               location.pathname === tab.path
                 ? theme === 'dark'
                   ? 'text-blue-400'
@@ -78,7 +78,7 @@ const FixedMobileTabs: React.FC = () => {
                   : 'text-gray-500'
             }`}
           >
-            <div className="mb-1">{tab.icon}</div>
+            <div className="mb-0.5">{tab.icon}</div>
             <span className="text-xs">{tab.label}</span>
           </Link>
         ))}

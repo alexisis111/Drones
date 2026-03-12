@@ -4,9 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fde30c11-94c5-4884-96a6-cf984ad02720" name="Changes" comment="FixxxxSEOFrendlyMore">
+    <list default="true" id="fde30c11-94c5-4884-96a6-cf984ad02720" name="Changes" comment="Fixx">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.qwen/PROJECT_SUMMARY.md" beforeDir="false" afterPath="$PROJECT_DIR$/.qwen/PROJECT_SUMMARY.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.react-router/types/+routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/.react-router/types/+routes.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.react-router/types/app/+types/$.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/FixedMobileTabs.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/FixedMobileTabs.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/ServiceDetailPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ServiceDetailPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/data/services.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/data/services.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/welcome/welcome.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/welcome/welcome.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -111,14 +116,8 @@
       <workItem from="1772521965770" duration="2088000" />
       <workItem from="1772901389728" duration="10865000" />
       <workItem from="1773216700858" duration="10424000" />
-    </task>
-    <task id="LOCAL-00053" summary="init SEO">
-      <option name="closed" value="true" />
-      <created>1770976311602</created>
-      <option name="number" value="00053" />
-      <option name="presentableId" value="LOCAL-00053" />
-      <option name="project" value="LOCAL" />
-      <updated>1770976311602</updated>
+      <workItem from="1773256288209" duration="1202000" />
+      <workItem from="1773303728871" duration="3092000" />
     </task>
     <task id="LOCAL-00054" summary="init SEO1">
       <option name="closed" value="true" />
@@ -504,7 +503,15 @@
       <option name="project" value="LOCAL" />
       <updated>1773225742450</updated>
     </task>
-    <option name="localTasksCounter" value="102" />
+    <task id="LOCAL-00102" summary="Fixx">
+      <option name="closed" value="true" />
+      <created>1773256893968</created>
+      <option name="number" value="00102" />
+      <option name="presentableId" value="LOCAL-00102" />
+      <option name="project" value="LOCAL" />
+      <updated>1773256893968</updated>
+    </task>
+    <option name="localTasksCounter" value="103" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -534,7 +541,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fixContactForm" />
     <MESSAGE value="fixZOK" />
     <MESSAGE value="fixIcons" />
     <MESSAGE value="metaZen" />
@@ -559,6 +565,7 @@
     <MESSAGE value="FixxxxLinkServices" />
     <MESSAGE value="FixxxxWave" />
     <MESSAGE value="FixxxxSEOFrendlyMore" />
-    <option name="LAST_COMMIT_MESSAGE" value="FixxxxSEOFrendlyMore" />
+    <MESSAGE value="Fixx" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixx" />
   </component>
 </project>

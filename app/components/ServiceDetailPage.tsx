@@ -2,19 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useTheme } from '../contexts/ThemeContext';
-import { 
-  Shield, 
-  CheckCircle, 
-  ChevronRight, 
-  ArrowRight, 
-  Package, 
-  Hammer, 
+import {
+  Shield,
+  CheckCircle,
+  ChevronRight,
+  ArrowRight,
+  Package,
+  Hammer,
   Building2,
   Clock,
   Star,
   TrendingUp,
   Phone,
-  Mail
+  Mail,
+  Tag
 } from 'lucide-react';
 import ServiceOrderModal from './ServiceOrderModal';
 import { services, type Service } from '../data/services';
@@ -109,7 +110,7 @@ const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ breadcrumbs, serv
         />
 
         {/* Hero Section - Full Screen Image with Parallax */}
-        <section className="relative min-h-[600px] flex items-center justify-center overflow-hidden pb-20">
+        <section className="relative min-h-[500px] sm:min-h-[600px] flex items-center justify-center overflow-hidden pb-12 sm:pb-20">
           {/* Background Image with Parallax */}
           <motion.div 
             className="absolute inset-0"
@@ -143,8 +144,8 @@ const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ breadcrumbs, serv
           <div className="relative container mx-auto px-4 z-30">
             {/* Хлебные крошки */}
             {breadcrumbs && (
-              <motion.div 
-                className="py-4 mb-8"
+              <motion.div
+                className="py-2 sm:py-4 mb-4 sm:mb-8"
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
@@ -152,22 +153,6 @@ const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ breadcrumbs, serv
                 <Breadcrumbs breadcrumbs={breadcrumbs} className="text-white/80" />
               </motion.div>
             )}
-
-            {/* Back Button */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.3 }}
-              className="mb-6"
-            >
-              <Link
-                to="/services"
-                className="inline-flex items-center gap-2 text-sm font-medium text-white/80 hover:text-white transition-colors bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full border border-white/20 hover:bg-white/20"
-              >
-                <ChevronRight className="w-4 h-4 rotate-180" />
-                Назад к услугам
-              </Link>
-            </motion.div>
 
             {/* Main Content */}
             <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -203,43 +188,59 @@ const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ breadcrumbs, serv
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.7 }}
-                  className="text-base sm:text-lg md:text-xl text-gray-300 max-w-xl leading-relaxed"
+                  className="text-base sm:text-lg md:text-xl text-gray-300 max-w-xl leading-relaxed mb-3 sm:mb-4"
                 >
                   {service.description}
                 </motion.p>
+
+                {/* Price */}
+                {service.price && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.75 }}
+                    className="inline-flex items-center gap-2 sm:gap-3 bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-xl sm:rounded-2xl px-4 py-2 sm:px-5 sm:py-3 shadow-lg shadow-green-500/30 mb-3 sm:mb-4"
+                  >
+                    <Tag className="w-4 h-4 sm:w-5 sm:h-5" />
+                    <div>
+                      <span className="text-[10px] sm:text-xs text-green-100">Цена:</span>
+                      <span className="text-base sm:text-lg font-bold ml-1 sm:ml-2">{service.price}</span>
+                    </div>
+                  </motion.div>
+                )}
 
                 {/* Stats Row */}
                 <motion.div
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.8 }}
-                  className="flex flex-wrap gap-3 sm:gap-6 pt-4"
+                  className="flex flex-nowrap gap-2 sm:gap-6 pt-0 sm:pt-4 mb-0 sm:mb-6"
                 >
-                  <div className="flex items-center gap-2 sm:gap-3 bg-white/10 backdrop-blur-sm rounded-2xl px-3 sm:px-5 py-2 sm:py-3 border border-white/10">
-                    <div className="p-1.5 sm:p-2 rounded-xl bg-gradient-to-br from-blue-500 to-purple-500">
-                      <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+                  <div className="flex items-center gap-1.5 sm:gap-3 bg-white/10 backdrop-blur-sm rounded-2xl px-2 sm:px-5 py-1.5 sm:py-3 border border-white/10 flex-shrink-0">
+                    <div className="p-1 sm:p-2 rounded-xl bg-gradient-to-br from-blue-500 to-purple-500">
+                      <Clock className="w-3.5 h-3.5 sm:w-5 sm:h-5 text-white" />
                     </div>
                     <div>
-                      <div className="text-xs text-gray-400">Сроки</div>
-                      <div className="text-xs sm:text-sm font-bold text-white">от 7 дней</div>
+                      <div className="text-[10px] sm:text-sm text-gray-400 whitespace-nowrap">Сроки</div>
+                      <div className="text-[10px] sm:text-sm font-bold text-white">от 7 дней</div>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2 sm:gap-3 bg-white/10 backdrop-blur-sm rounded-2xl px-3 sm:px-5 py-2 sm:py-3 border border-white/10">
-                    <div className="p-1.5 sm:p-2 rounded-xl bg-gradient-to-br from-green-500 to-emerald-500">
-                      <Star className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+                  <div className="flex items-center gap-1.5 sm:gap-3 bg-white/10 backdrop-blur-sm rounded-2xl px-2 sm:px-5 py-1.5 sm:py-3 border border-white/10 flex-shrink-0">
+                    <div className="p-1 sm:p-2 rounded-xl bg-gradient-to-br from-green-500 to-emerald-500">
+                      <Star className="w-3.5 h-3.5 sm:w-5 sm:h-5 text-white" />
                     </div>
                     <div>
-                      <div className="text-xs text-gray-400">Качество</div>
-                      <div className="text-xs sm:text-sm font-bold text-white">100%</div>
+                      <div className="text-[10px] sm:text-sm text-gray-400 whitespace-nowrap">Качество</div>
+                      <div className="text-[10px] sm:text-sm font-bold text-white">100%</div>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2 sm:gap-3 bg-white/10 backdrop-blur-sm rounded-2xl px-3 sm:px-5 py-2 sm:py-3 border border-white/10">
-                    <div className="p-1.5 sm:p-2 rounded-xl bg-gradient-to-br from-orange-500 to-red-500">
-                      <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+                  <div className="flex items-center gap-1.5 sm:gap-3 bg-white/10 backdrop-blur-sm rounded-2xl px-2 sm:px-5 py-1.5 sm:py-3 border border-white/10 flex-shrink-0">
+                    <div className="p-1 sm:p-2 rounded-xl bg-gradient-to-br from-orange-500 to-red-500">
+                      <Shield className="w-3.5 h-3.5 sm:w-5 sm:h-5 text-white" />
                     </div>
                     <div>
-                      <div className="text-xs text-gray-400">Гарантия</div>
-                      <div className="text-xs sm:text-sm font-bold text-white">до 5 лет</div>
+                      <div className="text-[10px] sm:text-sm text-gray-400 whitespace-nowrap">Гарантия</div>
+                      <div className="text-[10px] sm:text-sm font-bold text-white">до 5 лет</div>
                     </div>
                   </div>
                 </motion.div>
