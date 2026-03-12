@@ -373,16 +373,16 @@ export function Welcome() {
               </motion.div>
 
               {/* Price List Table */}
-              <div className="max-w-5xl mx-auto">
+              <div className="w-full">
                 <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl overflow-hidden border border-gray-100 dark:border-gray-700">
                   {/* Desktop Table */}
                   <div className="hidden md:block overflow-x-auto">
-                    <table className="w-full">
+                    <table className="w-full table-fixed">
                       <thead className="bg-gradient-to-r from-blue-600 to-purple-600">
                         <tr>
-                          <th className="text-left text-white font-bold py-5 px-6 text-sm">Наименование услуги</th>
-                          <th className="text-right text-white font-bold py-5 px-6 text-sm">Цена</th>
-                          <th className="text-center text-white font-bold py-5 px-6 text-sm">Действие</th>
+                          <th className="text-left text-white font-bold py-5 px-6 text-sm w-[60%]">Наименование услуги</th>
+                          <th className="text-right text-white font-bold py-5 px-6 text-sm w-[20%]">Цена</th>
+                          <th className="text-center text-white font-bold py-5 px-6 text-sm w-[20%]">Действие</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -393,9 +393,10 @@ export function Welcome() {
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: index * 0.03 }}
-                            className={`border-b border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors ${
+                            className={`border-b border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors cursor-pointer ${
                               index % 2 === 0 ? 'bg-white dark:bg-gray-800' : 'bg-gray-50/50 dark:bg-gray-800/50'
                             }`}
+                            onClick={() => window.location.href = `/service/${item.slug}`}
                           >
                             <td className="py-4 px-6">
                               <div className="flex items-center gap-3">
@@ -413,6 +414,7 @@ export function Welcome() {
                               <Link
                                 to={`/service/${item.slug}`}
                                 className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-4 py-2 rounded-lg font-semibold text-sm transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/30 hover:scale-105"
+                                onClick={(e) => e.stopPropagation()}
                               >
                                 <span>Перейти</span>
                                 <ArrowRight className="w-4 h-4" />
@@ -433,7 +435,8 @@ export function Welcome() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: index * 0.03 }}
-                        className="p-4 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
+                        className="p-4 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors cursor-pointer"
+                        onClick={() => window.location.href = `/service/${item.slug}`}
                       >
                         <div className="flex items-start gap-3 mb-3">
                           <div className="w-2 h-2 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 flex-shrink-0 mt-2" />
@@ -449,6 +452,7 @@ export function Welcome() {
                               <Link
                                 to={`/service/${item.slug}`}
                                 className="inline-flex items-center gap-1.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-3 py-1.5 rounded-lg font-semibold text-xs transition-all duration-300 active:scale-95"
+                                onClick={(e) => e.stopPropagation()}
                               >
                                 <span>Перейти</span>
                                 <ArrowRight className="w-3.5 h-3.5" />

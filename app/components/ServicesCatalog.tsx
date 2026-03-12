@@ -242,7 +242,8 @@ const ServicesCatalog: React.FC<ServicesCatalogProps> = ({ breadcrumbs }) => {
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
                   whileHover={{ y: -10 }}
-                  className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 shadow-xl hover:shadow-2xl transition-all duration-500 border border-gray-100 dark:border-gray-700"
+                  onClick={() => window.location.href = `/service/${service.slug}`}
+                  className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 shadow-xl hover:shadow-2xl transition-all duration-500 border border-gray-100 dark:border-gray-700 cursor-pointer"
                 >
                   {/* Gradient Border Effect */}
                   <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10 blur-sm" />
@@ -317,12 +318,16 @@ const ServicesCatalog: React.FC<ServicesCatalogProps> = ({ breadcrumbs }) => {
                     <div className="flex gap-3 pt-4 border-t border-gray-100 dark:border-gray-700">
                       <Link
                         to={`/service/${service.slug}`}
+                        onClick={(e) => e.stopPropagation()}
                         className="flex-1 text-center py-3 px-4 rounded-xl font-semibold text-sm transition-all bg-gradient-to-r from-gray-100 to-gray-50 dark:from-gray-700 dark:to-gray-800 text-gray-900 dark:text-white hover:from-gray-200 hover:to-gray-100 dark:hover:from-gray-600 dark:hover:to-gray-700 border border-gray-200 dark:border-gray-600"
                       >
                         Подробнее
                       </Link>
                       <button
-                        onClick={() => handleOrderService(service)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleOrderService(service);
+                        }}
                         className="flex-1 py-3 px-4 rounded-xl font-semibold text-sm transition-all bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40"
                       >
                         Заказать

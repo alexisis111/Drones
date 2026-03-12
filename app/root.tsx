@@ -113,7 +113,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return <AppWrapper />;
+  return (
+    <AppWrapper>
+      <Outlet />
+    </AppWrapper>
+  );
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {

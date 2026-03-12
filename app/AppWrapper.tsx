@@ -1,5 +1,4 @@
 import React from 'react';
-import { Outlet } from 'react-router';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { LoadingProvider, useLoading } from './contexts/LoadingContext';
 import Header from './components/Header';
@@ -10,7 +9,7 @@ import CookieConsentBanner from '../src/components/CookieConsentBanner';
 import YandexMetrika from './components/YandexMetrika';
 import NavigationLoader from './components/NavigationLoader';
 
-const AppContent: React.FC = () => {
+const AppContent: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { isLoading } = useLoading();
 
   return (
@@ -24,7 +23,7 @@ const AppContent: React.FC = () => {
         <YandexMetrika />
         <Header />
         <main className="flex-grow">
-          <Outlet />
+          {children}
         </main>
         <Footer />
         <FixedMobileTabs />
@@ -33,12 +32,12 @@ const AppContent: React.FC = () => {
   );
 };
 
-const AppWrapper: React.FC = () => {
+const AppWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
       <ThemeProvider>
         <LoadingProvider>
           <div className="min-h-screen flex flex-col">
-            <AppContent />
+            <AppContent>{children}</AppContent>
           </div>
         </LoadingProvider>
       </ThemeProvider>

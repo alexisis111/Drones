@@ -10,26 +10,14 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [theme, setTheme] = useState<Theme>('light');
+  const [theme, setTheme] = useState<Theme>('dark');
 
   useEffect(() => {
-    // Check for saved theme preference or default to system preference
-    const savedTheme = localStorage.getItem('theme') as Theme | null;
-    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    
-    if (savedTheme) {
-      setTheme(savedTheme);
-    } else if (systemPrefersDark) {
-      setTheme('dark');
-    }
-  }, []);
-
-  useEffect(() => {
-    // Apply theme to document
+    // Применяем тёмную тему по умолчанию
     document.documentElement.classList.remove('light', 'dark');
     document.documentElement.classList.add(theme);
-    
-    // Save theme preference
+
+    // Сохраняем предпочтение
     localStorage.setItem('theme', theme);
   }, [theme]);
 
