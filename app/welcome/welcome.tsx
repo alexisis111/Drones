@@ -69,7 +69,7 @@ export function Welcome() {
     { name: "Земляные работы", price: "от 350 ₽/м³", slug: "zemlyanye-raboty" },
     { name: "Строительство ангаров", price: "от 10 000 ₽/м²", slug: "stroitelstvo-angarov" },
     { name: "Грузоперевозки", price: "от 600 ₽/час", slug: "gruzoperevozki" },
-    { name: "Огнезащита конструкций (МЧС)", price: "от 450 ₽/м²", slug: "ognezashchita-konstruktsiy" }
+    { name: "Огнезащита конструкций", price: "от 450 ₽/м²", slug: "ognezashchita-konstruktsiy" }
   ];
 
   // Данные для схемы
