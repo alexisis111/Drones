@@ -245,9 +245,6 @@ const ServicesCatalog: React.FC<ServicesCatalogProps> = ({ breadcrumbs }) => {
                   onClick={() => window.location.href = `/service/${service.slug}`}
                   className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 shadow-xl hover:shadow-2xl transition-all duration-500 border border-gray-100 dark:border-gray-700 cursor-pointer"
                 >
-                  {/* Gradient Border Effect */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10 blur-sm" />
-                  
                   {/* Image Section */}
                   <div className="relative h-56 overflow-hidden">
                     {service.imageUrl ? (
