@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useTheme } from '../contexts/ThemeContext';
+import OptimizedImage from './OptimizedImage';
 import {
   Shield,
   Building2,
@@ -727,13 +728,12 @@ const DroneDefensePage: React.FC<DroneDefensePageProps> = ({ breadcrumbs }) => {
 
           <div className="max-w-6xl mx-auto rounded-3xl overflow-hidden shadow-2xl relative">
             {/*<ZOKVisualization enableControls={false}/>*/}
-            <img 
-              src="/ZOK.gif" 
+            <OptimizedImage
+              src="/ZOK.gif"
               alt="3D визуализация защитной конструкции"
-              width="1200"
-              height="675"
+              width={1200}
+              height={675}
               className="w-full h-auto"
-              loading="lazy"
             />
             <button
                 onClick={() => setIsModalOpen(true)}
@@ -745,12 +745,13 @@ const DroneDefensePage: React.FC<DroneDefensePageProps> = ({ breadcrumbs }) => {
 
             <FullscreenModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
               {/*<ZOKVisualization enableControls={true}/>*/}
-              <img 
-                src="/ZOK.gif" 
+              <OptimizedImage
+                src="/ZOK.gif"
                 alt="3D визуализация защитной конструкции"
-                width="1200"
-                height="675"
+                width={1200}
+                height={675}
                 className="w-full h-auto"
+                priority
               />
             </FullscreenModal>
           </div>
@@ -906,10 +907,12 @@ const DroneDefensePage: React.FC<DroneDefensePageProps> = ({ breadcrumbs }) => {
                 className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 shadow-xl hover:shadow-2xl transition-all duration-300"
               >
                 <div className="relative h-40 overflow-hidden">
-                  <img
+                  <OptimizedImage
                     src={application.imageUrl}
                     alt={application.title}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    width={400}
+                    height={160}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
                 </div>

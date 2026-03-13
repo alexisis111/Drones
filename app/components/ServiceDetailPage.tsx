@@ -20,6 +20,7 @@ import {
 import ServiceOrderModal from './ServiceOrderModal';
 import { services, type Service } from '../data/services';
 import Breadcrumbs, { type BreadcrumbItem } from './Breadcrumbs';
+import OptimizedImage from './OptimizedImage';
 
 interface ServiceDetailPageProps {
   breadcrumbs?: BreadcrumbItem[];
@@ -501,10 +502,13 @@ const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ breadcrumbs, serv
                     <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10 blur-sm" />
                     
                     <div className="relative h-48 overflow-hidden">
-                      <img
+                      <OptimizedImage
                         src={relatedService.imageUrl}
                         alt={relatedService.title}
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                        width={400}
+                        height={200}
+                        loading="lazy"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
                       <div className="absolute bottom-4 left-4">

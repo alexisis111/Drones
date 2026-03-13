@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useTheme } from '../contexts/ThemeContext';
+import OptimizedImage from './OptimizedImage';
 import {
   Shield,
   Building2,
@@ -373,10 +374,13 @@ const PortfolioGallery: React.FC<PortfolioGalleryProps> = ({ breadcrumbs }) => {
               >
                 <div className="relative h-64 overflow-hidden">
                   {project.imageUrl ? (
-                    <img
+                    <OptimizedImage
                       src={project.imageUrl}
                       alt={project.title}
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      width={400}
+                      height={256}
+                      loading="lazy"
                     />
                   ) : (
                     <div className="w-full h-full bg-gradient-to-r from-blue-500 to-indigo-600 flex items-center justify-center">

@@ -260,10 +260,14 @@ const Footer: React.FC = () => {
                             </Link>
 
                             <a href="https://webmaster.yandex.ru/siteinfo/?site=https://легион78.рф">
-                                <img className='w-auto h-8 rounded-lg'
-
-                                     alt="yaMetr"
-                                     src="https://yandex.ru/cycounter?https://легион78.рф&theme=dark&lang=ru"/>
+                                <img
+                                    className='w-auto h-8 rounded-lg'
+                                    alt="yaMetr"
+                                    src="https://yandex.ru/cycounter?https://легион78.рф&theme=dark&lang=ru"
+                                    loading="lazy"
+                                    width="120"
+                                    height="32"
+                                />
                             </a>
                         </div>
                     </div>

@@ -21,8 +21,8 @@ import { LocalBusinessSchema, ServiceSchema, ConstructionBusinessSchema } from "
 import FaqSection from "../components/FaqSection";
 import Breadcrumbs, { type BreadcrumbItem } from "../components/Breadcrumbs";
 import HeroContacts from "../components/HeroContacts";
-import { services } from "../data/services";
 import { Tag } from 'lucide-react';
+import OptimizedImage from "../components/OptimizedImage";
 
 
 
@@ -135,8 +135,17 @@ export function Welcome() {
               className="absolute inset-0 bg-gradient-to-br from-gray-950 via-gray-900 to-black"
               style={{ y: scrollY * 0.5 }}
             >
-              {/* Image Overlay */}
-              <div className="absolute inset-0 bg-[url('/img/homesImg/home.jpeg')] bg-cover bg-center mix-blend-overlay opacity-15" />
+              {/* Image Overlay - Optimized with priority loading */}
+              <div className="absolute inset-0 mix-blend-overlay opacity-15">
+                <OptimizedImage
+                  src="/img/homesImg/home.jpeg"
+                  alt="Строительная компания ЛЕГИОН"
+                  className="w-full h-full"
+                  width={1920}
+                  height={1080}
+                  priority={true}
+                />
+              </div>
 
               {/* Gradient Overlays */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent" />
