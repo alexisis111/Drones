@@ -14,6 +14,7 @@ import { ServiceSchema } from './SchemaOrg';
 import ServiceOrderModal from './ServiceOrderModal';
 import { services as servicesData, type Service } from '../data/services';
 import Breadcrumbs, { type BreadcrumbItem } from './Breadcrumbs';
+import { ServiceBriefSchema } from './ServiceSchema';
 
 interface ServicesCatalogProps {
   breadcrumbs?: BreadcrumbItem[];
@@ -147,7 +148,14 @@ const ServicesCatalog: React.FC<ServicesCatalogProps> = ({ breadcrumbs }) => {
 
   return (
     <div className="relative">
-      {/* Schema.org structured data for services */}
+      {/* Schema.org structured data for services catalog */}
+      <ServiceBriefSchema
+        services={servicesData}
+        organizationName="ООО «ЛЕГИОН»"
+        organizationUrl="https://xn--78-glchqprh.xn--p1ai/"
+      />
+
+      {/* Individual service schemas */}
       {services.map((service) => (
         <ServiceSchema
           key={service.id}

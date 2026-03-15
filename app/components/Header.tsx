@@ -25,7 +25,7 @@ const Header: React.FC = () => {
             <div className="w-auto h-10 flex items-center justify-center">
               <OptimizedImage
                 src="/Logo-1.png"
-                alt="Logo"
+                alt="ООО ЛЕГИОН - строительная компания"
                 className="w-full h-full object-contain"
                 priority={true}
               />

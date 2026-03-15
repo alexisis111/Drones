@@ -21,6 +21,7 @@ import ServiceOrderModal from './ServiceOrderModal';
 import { services, type Service } from '../data/services';
 import Breadcrumbs, { type BreadcrumbItem } from './Breadcrumbs';
 import OptimizedImage from './OptimizedImage';
+import ServiceSchema from './ServiceSchema';
 
 interface ServiceDetailPageProps {
   breadcrumbs?: BreadcrumbItem[];
@@ -103,6 +104,19 @@ const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ breadcrumbs, serv
 
   return (
       <div className="relative overflow-hidden">
+        {/* Service Schema.org Microdata */}
+        <ServiceSchema
+          service={service}
+          organizationName="ООО «ЛЕГИОН»"
+          organizationDescription="Строительная компания с 2012 года. Выполняем полный цикл строительных работ: от проектирования до сдачи объекта под ключ."
+          organizationUrl="https://xn--78-glchqprh.xn--p1ai/"
+          organizationLogo="/Logo-1.png"
+          organizationAddress="Ленинградская область, г. Светогорск, ул. Максима Горького, 7"
+          organizationTelephone="+79312470888"
+          organizationEmail="l-legion@bk.ru"
+          areaServed={["Санкт-Петербург", "Ленинградская область", "Россия"]}
+        />
+
         <ServiceOrderModal
             isOpen={isModalOpen}
             onClose={handleCloseModal}

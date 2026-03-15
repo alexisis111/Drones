@@ -262,7 +262,7 @@ const Footer: React.FC = () => {
                             <a href="https://webmaster.yandex.ru/siteinfo/?site=https://легион78.рф">
                                 <img
                                     className='w-auto h-8 rounded-lg'
-                                    alt="yaMetr"
+                                    alt="Яндекс.Метрика - счётчик посещаемости сайта"
                                     src="https://yandex.ru/cycounter?https://легион78.рф&theme=dark&lang=ru"
                                     loading="lazy"
                                     width="120"
