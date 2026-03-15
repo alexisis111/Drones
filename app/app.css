@@ -8,6 +8,9 @@
 html,
 body {
   @apply bg-white dark:bg-gray-900;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 
   @media (prefers-color-scheme: dark) {
     color-scheme: dark;
