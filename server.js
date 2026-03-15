@@ -3,6 +3,7 @@ import { createRequestListener } from '@react-router/node';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import axios from 'axios';
+import fs from 'fs';
 
 // Load environment variables from .env file
 import dotenv from 'dotenv';
@@ -94,7 +95,33 @@ ${message ? `Сообщение: ${message}` : ''}
   }
 });
 
-// Serve static files from the build/client directory
+// Serve static files from the build/client directory with caching headers
+app.use((req, res, next) => {
+  const staticPath = path.join(__dirname, 'build', 'client');
+  const filePath = path.join(staticPath, req.path);
+  
+  // Check if file exists
+  if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
+    const ext = path.extname(filePath).toLowerCase();
+    
+    // Set cache headers based on file type
+    if (['.jpg', '.jpeg', '.png', '.gif', '.svg', '.webp', '.ico'].includes(ext)) {
+      // Images: cache for 1 year
+      res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+    } else if (['.woff', '.woff2', '.ttf', '.eot'].includes(ext)) {
+      // Fonts: cache for 1 year
+      res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+    } else if (['.css', '.js'].includes(ext)) {
+      // CSS/JS: cache for 1 year (they have hash in filename)
+      res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+    } else if (['.html'].includes(ext)) {
+      // HTML: no cache, always fresh
+      res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+    }
+  }
+  next();
+});
+
 app.use(express.static(path.join(__dirname, 'build', 'client')));
 
 // Serve YML feed for Yandex Direct
