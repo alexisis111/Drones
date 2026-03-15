@@ -9,6 +9,7 @@ interface OptimizedImageProps {
   priority?: boolean; // For images that should load immediately
   fallbackSrc?: string; // Fallback image if the main one fails
   style?: React.CSSProperties;
+  loading?: 'lazy' | 'eager';
 }
 
 const OptimizedImage: React.FC<OptimizedImageProps> = ({
@@ -20,9 +21,20 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
   priority = false,
   fallbackSrc,
   style,
+  loading = 'lazy',
 }) => {
   const [isLoading, setIsLoading] = useState(!priority);
   const [hasError, setHasError] = useState(false);
+  const [currentSrc, setCurrentSrc] = useState<string>(() => {
+    // Try WebP version first if the source is a jpg/jpeg/png
+    if (typeof window !== 'undefined') {
+      const webpSrc = src.replace(/\.(jpg|jpeg|png)$/i, '.webp');
+      if (webpSrc !== src) {
+        return webpSrc;
+      }
+    }
+    return src;
+  });
   const imgRef = useRef<HTMLImageElement>(null);
 
   // Determine if image should be loaded immediately or lazily
@@ -54,25 +66,28 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
   };
 
   const handleError = () => {
-    setHasError(true);
-    setIsLoading(false);
-    
-    // If there's a fallback image, try loading it
-    if (fallbackSrc && imgRef.current) {
-      const imgElement = imgRef.current;
-      imgElement.src = fallbackSrc;
+    // If WebP failed, try original format
+    if (currentSrc !== src) {
+      setCurrentSrc(src);
       setHasError(false);
+    } else if (fallbackSrc) {
+      // If original failed, try fallback
+      setCurrentSrc(fallbackSrc);
+      setHasError(false);
+    } else {
+      setHasError(true);
+      setIsLoading(false);
     }
   };
 
   // Calculate aspect ratio if dimensions are provided
-  const aspectRatioStyle = width && height 
-    ? { aspectRatio: `${width}/${height}`, height: 'auto' } 
+  const aspectRatioStyle = width && height
+    ? { aspectRatio: `${width}/${height}`, height: 'auto' }
     : {};
 
   return (
-    <div 
-      className={`relative overflow-hidden ${className}`} 
+    <div
+      className={`relative overflow-hidden ${className}`}
       style={{ ...style, ...aspectRatioStyle }}
     >
       {(isLoading || hasError) && (
@@ -87,15 +102,15 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
 
       <img
         ref={imgRef}
-        src={src}
+        src={currentSrc}
         alt={alt}
         width={width}
         height={height}
-        loading={priority ? 'eager' : 'lazy'}
+        loading={priority ? 'eager' : loading}
         className={`w-full h-full object-cover ${isLoading ? 'opacity-0' : 'opacity-100'} transition-opacity duration-300`}
         onLoad={handleLoad}
         onError={handleError}
-        style={{ display: hasError ? 'none' : 'block' }}
+        style={{ display: hasError && !fallbackSrc ? 'none' : 'block' }}
       />
     </div>
   );
