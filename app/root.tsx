@@ -52,7 +52,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
     <head>
       <meta charSet="utf-8"/>
       <meta name="viewport" content="width=device-width, initial-scale=1"/>
-      <meta name="zen-verification" content="DqHQfN8uIAWDflvVe1nrseBbTEEDN94hVguAkw0IB4qnfok5Z5p2m0p7eUlBbyyY"/>
+      <meta name="yandex-verification" content="916757bc47a6f80e" />
+      <meta name="google-site-verification" content="YOMSPufmaRHbpdasRrQBskC0PXPHfACqJIn2MBEE80o" />
       <title>Строительная компания ЛЕГИОН | Строительство по всей России</title>
       <link rel="icon" href="/Logo-1.png" sizes="any"/>
       <Meta/>

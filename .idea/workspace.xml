@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fde30c11-94c5-4884-96a6-cf984ad02720" name="Changes" comment="fixOptimization">
+    <list default="true" id="fde30c11-94c5-4884-96a6-cf984ad02720" name="Changes" comment="fixSEONew">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/ServiceDetailPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ServiceDetailPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/ServicesCatalog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ServicesCatalog.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/react-router.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/react-router.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/root.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/root.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -118,15 +116,7 @@
       <workItem from="1773384413812" duration="630000" />
       <workItem from="1773385067258" duration="487000" />
       <workItem from="1773386848639" duration="1698000" />
-      <workItem from="1773571169506" duration="1236000" />
-    </task>
-    <task id="LOCAL-00058" summary="fixContactsForms">
-      <option name="closed" value="true" />
-      <created>1771062690621</created>
-      <option name="number" value="00058" />
-      <option name="presentableId" value="LOCAL-00058" />
-      <option name="project" value="LOCAL" />
-      <updated>1771062690621</updated>
+      <workItem from="1773571169506" duration="4292000" />
     </task>
     <task id="LOCAL-00059" summary="allFix">
       <option name="closed" value="true" />
@@ -512,7 +502,15 @@
       <option name="project" value="LOCAL" />
       <updated>1773387390258</updated>
     </task>
-    <option name="localTasksCounter" value="107" />
+    <task id="LOCAL-00107" summary="fixSEONew">
+      <option name="closed" value="true" />
+      <created>1773573946411</created>
+      <option name="number" value="00107" />
+      <option name="presentableId" value="LOCAL-00107" />
+      <option name="project" value="LOCAL" />
+      <updated>1773573946413</updated>
+    </task>
+    <option name="localTasksCounter" value="108" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -542,7 +540,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="addZokForm" />
     <MESSAGE value="fixZokFormSizeMobile" />
     <MESSAGE value="fixTabsNames" />
     <MESSAGE value="fixSlugServices" />
@@ -567,6 +564,7 @@
     <MESSAGE value="Fixx545422" />
     <MESSAGE value="fixs" />
     <MESSAGE value="fixOptimization" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixOptimization" />
+    <MESSAGE value="fixSEONew" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixSEONew" />
   </component>
 </project>
