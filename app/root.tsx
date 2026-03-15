@@ -21,16 +21,16 @@ export const links: Route.LinksFunction = () => [
     rel: "preload",
     as: "image",
     href: "/Logo-1.png",
-    imagesrcset: "/Logo-1.png 2x",
-    imagesizes: "128px",
+    imageSrcSet: "/Logo-1.png 2x",
+    imageSizes: "128px",
   },
   // Preload hero image for LCP with fetchpriority
   {
     rel: "preload",
     as: "image",
     href: "/img/homesImg/home.jpeg",
-    imagesrcset: "/img/homesImg/home.webp 1x, /img/homesImg/home.webp 2x",
-    imagesizes: "100vw",
+    imageSrcSet: "/img/homesImg/home.webp 1x, /img/homesImg/home.webp 2x",
+    imageSizes: "100vw",
     fetchPriority: "high",
   },
   // Preload hero image WebP version
