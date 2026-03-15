@@ -6,11 +6,16 @@ interface OptimizedImageProps {
   className?: string;
   width?: number;
   height?: number;
-  priority?: boolean; // For images that should load immediately
-  fallbackSrc?: string; // Fallback image if the main one fails
+  priority?: boolean;
+  fallbackSrc?: string;
   style?: React.CSSProperties;
   loading?: 'lazy' | 'eager';
 }
+
+// Helper to get WebP version (works on both server and client)
+const getWebPSrc = (src: string): string => {
+  return src.replace(/\.(jpg|jpeg|png)$/i, '.webp');
+};
 
 const OptimizedImage: React.FC<OptimizedImageProps> = ({
   src,
@@ -25,19 +30,13 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
 }) => {
   const [isLoading, setIsLoading] = useState(!priority);
   const [hasError, setHasError] = useState(false);
-  const [currentSrc, setCurrentSrc] = useState<string>(() => {
-    // Try WebP version first if the source is a jpg/jpeg/png
-    if (typeof window !== 'undefined') {
-      const webpSrc = src.replace(/\.(jpg|jpeg|png)$/i, '.webp');
-      if (webpSrc !== src) {
-        return webpSrc;
-      }
-    }
-    return src;
-  });
+  
+  // Always try WebP first on both server and client
+  const webpSrc = getWebPSrc(src);
+  const [currentSrc, setCurrentSrc] = useState(webpSrc);
+  
   const imgRef = useRef<HTMLImageElement>(null);
 
-  // Determine if image should be loaded immediately or lazily
   const shouldLoadImmediately = priority || typeof window === 'undefined';
 
   useEffect(() => {
@@ -49,7 +48,7 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
           observer.unobserve(imgRef.current!);
         }
       },
-      { threshold: 0.1, rootMargin: '50px' } // Start loading when 10% visible or within 50px of viewport
+      { threshold: 0.1, rootMargin: '50px' }
     );
 
     observer.observe(imgRef.current);
@@ -67,7 +66,7 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
 
   const handleError = () => {
     // If WebP failed, try original format
-    if (currentSrc !== src) {
+    if (currentSrc === webpSrc) {
       setCurrentSrc(src);
       setHasError(false);
     } else if (fallbackSrc) {
@@ -80,7 +79,6 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
     }
   };
 
-  // Calculate aspect ratio if dimensions are provided
   const aspectRatioStyle = width && height
     ? { aspectRatio: `${width}/${height}`, height: 'auto' }
     : {};
