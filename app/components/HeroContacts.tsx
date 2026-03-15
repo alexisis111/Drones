@@ -31,7 +31,7 @@ const HeroContacts: React.FC<HeroContactsProps> = ({
     {
       icon: <MapPin className="w-5 h-5" />,
       label: 'Адрес',
-      value: 'Ленинградская область',
+      value: 'Ленинградская область, г. Светогорск, ул. Максима Горького, 7',
       href: '/contacts'
     },
     {

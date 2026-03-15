@@ -13,20 +13,9 @@ import ErrorPage from "./components/ErrorPage";
 
 import type { Route } from "./+types/root";
 import "./app.css";
+import "./fonts/inter/inter.css";
 
 export const links: Route.LinksFunction = () => [
-  // Preconnect to external domains
-  { rel: "preconnect", href: "https://fonts.googleapis.com" },
-  {
-    rel: "preconnect",
-    href: "https://fonts.gstatic.com",
-    crossOrigin: "anonymous",
-  },
-  // Main stylesheet with display=swap for better FOUT/FOIT behavior
-  {
-    rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
-  },
   // Preload critical images
   {
     rel: "preload",
@@ -35,13 +24,20 @@ export const links: Route.LinksFunction = () => [
     imagesrcset: "/Logo-1.png 2x",
     imagesizes: "128px",
   },
-  // Preload hero image for LCP
+  // Preload hero image for LCP with fetchpriority
   {
     rel: "preload",
     as: "image",
     href: "/img/homesImg/home.jpeg",
-    imagesrcset: "/img/homesImg/home.jpeg 1x, /img/homesImg/home.jpeg 2x",
+    imagesrcset: "/img/homesImg/home.webp 1x, /img/homesImg/home.webp 2x",
     imagesizes: "100vw",
+    fetchPriority: "high",
+  },
+  // Preload hero image WebP version
+  {
+    rel: "preload",
+    as: "image",
+    href: "/img/homesImg/home.webp",
     fetchPriority: "high",
   },
 ];
@@ -56,6 +52,28 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <meta name="google-site-verification" content="YOMSPufmaRHbpdasRrQBskC0PXPHfACqJIn2MBEE80o" />
       <title>Строительная компания ЛЕГИОН | Строительство по всей России</title>
       <link rel="icon" href="/Logo-1.png" sizes="any"/>
+      
+      {/* Critical CSS inline for faster FCP */}
+      <style dangerouslySetInnerHTML={{__html: `
+        /* Critical above-the-fold styles */
+        .min-h-screen{min-height:100vh}
+        .flex{display:flex}
+        .flex-col{flex-direction:column}
+        .flex-grow{flex-grow:1}
+        .relative{position:relative}
+        .absolute{position:absolute}
+        .inset-0{top:0;right:0;bottom:0;left:0}
+        .w-full{width:100%}
+        .h-full{height:100%}
+        .object-cover{object-fit:cover}
+        .bg-gradient-to-br{background-image:linear-gradient(to bottom right,var(--tw-gradient-stops))}
+        .from-gray-950{--tw-gradient-from:#030712 var(--tw-gradient-from-position);--tw-gradient-to:rgb(3 7 18/0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to)}
+        .via-gray-900{--tw-gradient-to:rgb(17 24 39/0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from),#111827 var(--tw-gradient-via-position),var(--tw-gradient-to)}
+        .to-black{--tw-gradient-to:#000 var(--tw-gradient-to-position)}
+        /* Prevent CLS */
+        img{max-width:100%;height:auto;display:block}
+      `}} />
+      
       <Meta/>
       <Links/>
       <OrganizationSchema
