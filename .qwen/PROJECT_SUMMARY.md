@@ -18,11 +18,15 @@ Key accomplishments from this session (2026-03-19):
 15. Added error handling and timeouts for bot (60s proxy + 30s Qwen)
 16. Implemented Telegram chat logging with topics for each session
 17. Fixed issue where server needed restart after .env changes
+18. Implemented cache system for Qwen responses and sentiment analysis
+19. Fixed Telegram logs to use 1 session = 1 topic (with deduplication)
+20. Implemented long-term sessions with localStorage + JSON storage
+21. Started implementing operator modes via Telegram commands but then removed it
 
 Let me create a comprehensive summary following the specified format.# Project Summary
 
 ## Overall Goal
-Redesign and modernize the construction company website (СК ЛЕГИОН) with improved UI/UX, theme support (dark/light mode), enhanced AI chatbot functionality including vacancy management, ZOK (Drone Defense) integration, and Telegram chat logging with session-based topics.
+Redesign and modernize the construction company website (СК ЛЕГИОН) with improved UI/UX, theme support (dark/light mode), enhanced AI chatbot functionality including vacancy management, ZOK (Drone Defense) integration, Telegram chat logging with session-based topics, persistent session storage, and Qwen response caching.
 
 ## Key Knowledge
 
@@ -35,6 +39,8 @@ Redesign and modernize the construction company website (СК ЛЕГИОН) with
 - **AI Assistant:** Custom server with Qwen CLI integration (port 3002)
 - **Telegram Integration:** Bot for lead notifications, vacancy applications, and chat logging
 - **PDF Generation:** pdfkit with Windows fonts (`C:/Windows/Fonts/arial.ttf`)
+- **Session Storage:** localStorage + JSON file (`ai-assistant/sessions/chat-history.json`)
+- **Cache System:** In-memory Map with TTL (1h Qwen, 30min sentiment)
 
 ### Design System Conventions
 - **Gradient colors:** `from-blue-500 to-purple-500` (primary), `from-green-500 to-emerald-500` (success), `from-orange-500 to-red-500` (warning)
@@ -55,9 +61,13 @@ D:\DroneSite/
 │   └── app.css           # Global styles & animations (includes scrollbar styles)
 ├── ai-assistant/
 │   ├── knowledge-base/   # JSON data for services, vacancies, ZOK
-│   ├── server.js         # AI chatbot server with Qwen integration
-│   ├── test-telegram-logs.js  # Telegram logs test script
-│   └── TELEGRAM_LOGS.md  # Telegram logging documentation
+│   ├── server.js         # AI chatbot server with Qwen integration + caching
+│   ├── session-storage.js # Persistent session storage module
+│   ├── test-cache.js     # Cache testing script
+│   ├── CACHE_SYSTEM.md   # Cache documentation
+│   ├── LONG_TERM_SESSIONS.md # Session storage documentation
+│   ├── TESTING_SESSIONS.md # Testing guide
+│   └── sessions/         # JSON storage for chat history
 ├── scripts/
 │   └── generate-price-list-pdf.js  # PDF generation script
 └── public/
@@ -68,8 +78,11 @@ D:\DroneSite/
 ```bash
 npm run dev                    # Start development server
 npm run dev:all                # Start dev + API server concurrently
+npm run build                  # Production build
+npm run start:all              # Production: web + api + AI assistant
+npm run start:ai               # Start AI assistant only
 node scripts/generate-price-list-pdf.js  # Generate price list PDF
-node ai-assistant/test-telegram-logs.js  # Test Telegram logging
+node ai-assistant/test-cache.js  # Test cache system
 ```
 
 ### Important Notes
@@ -81,6 +94,8 @@ node ai-assistant/test-telegram-logs.js  # Test Telegram logging
 - Chat widget uses sessionStorage for history: `legion_chat_history`
 - **ZOK = Защитные Ограждающие Конструкции** (physical barriers with metal mesh, NOT electronic systems)
 - **16 services total** (Благоустройство территорий removed on 2026-03-19)
+- **Session persistence:** localStorage survives browser restart, history restored via API
+- **Cache TTL:** Qwen responses 1h, sentiment analysis 30min, auto-cleanup every 10min
 
 ### Telegram Configuration
 ```env
@@ -90,9 +105,18 @@ TELEGRAM_LOGS_BOT_TOKEN=8564716580:AAEag1otwIvGtoGhGAkR31OKNlJaFOvbYBo
 TELEGRAM_LOGS_GROUP_ID=-1003743767375
 ```
 
+### API Endpoints
+- `GET /api/health` - Health check
+- `GET /api/services` - Get all services
+- `GET /api/cache/stats` - Cache statistics
+- `POST /api/cache/clear` - Clear cache
+- `GET /api/session/:sessionId` - Get session history
+- `POST /api/telegram-webhook` - Telegram webhook
+- `POST /api/assistant/chat` - AI chat proxy
+
 ## Recent Actions
 
-### ✅ Completed Fixes (2026-03-19)
+### ✅ Completed Features (2026-03-19)
 
 1. **Callback Form Validation**
    - Fixed validation in `api-server.js`, `server.js`, and `app/routes/api/telegram-webhook.tsx`
@@ -162,24 +186,39 @@ TELEGRAM_LOGS_GROUP_ID=-1003743767375
     - Topic format: `{ClientName} - {last 8 chars of session_id}`
     - Caches session->topic mapping to avoid duplicate topics
     - Logs user messages, bot responses, and errors
-    - **Critical fix:** Server restart required after `.env` changes
 
 13. **💾 CACHE SYSTEM IMPLEMENTATION**
     - Added in-memory caching for Qwen responses (1 hour TTL)
     - Added caching for sentiment analysis (30 min TTL)
     - Added session data caching (2 hours TTL)
     - Implemented auto-cleanup every 10 minutes
-    - Added API endpoints: GET /api/cache/stats, POST /api/cache/clear
+    - Added API endpoints: `GET /api/cache/stats`, `POST /api/cache/clear`
     - Created test script: `test-cache.js`
     - Created documentation: `CACHE_SYSTEM.md`
-    - **Expected performance:** Cache HIT <100ms vs Qwen 5-30sec (×1000 improvement)
+    - **Performance:** Cache HIT <100ms vs Qwen 5-30sec (×1000 improvement)
 
 14. **🔧 TELEGRAM LOGS FIX: 1 SESSION = 1 TOPIC**
-    - Fixed sessionId persistence in ChatWidget (stored in sessionStorage)
+    - Fixed sessionId persistence in ChatWidget (stored in localStorage)
     - Added sessionId cleanup on clearChatHistory
     - Added deduplication for topic creation (pendingTopicCreations Map)
     - Prevents duplicate Telegram topics for same session
     - Added logging for cache HIT/MISS in topic creation
+
+15. **💾 LONG-TERM SESSIONS: Persistent chat history**
+    - Changed sessionStorage → localStorage (survives browser restart)
+    - Added server-side session storage (`ai-assistant/sessions/chat-history.json`)
+    - Added API endpoint: `GET /api/session/:sessionId`
+    - Auto-restore chat history on page load
+    - 30-day retention with auto-cleanup
+    - Created `session-storage.js` module
+    - Created documentation: `LONG_TERM_SESSIONS.md`, `TESTING_SESSIONS.md`
+
+16. **🚀 PRODUCTION DEPLOYMENT**
+    - Created `PRODUCTION_DEPLOY.md` with full deployment guide
+    - Updated `package.json` with production scripts
+    - Added PM2 and Docker deployment options
+    - Documented firewall requirements (ports 3000, 3001, 3002)
+    - Added health check procedures
 
 ### 🎨 Design Patterns Established
 - **Hero badges:** Light theme `bg-{color}-50 text-{color}-700`, Dark theme `bg-{color}-900/30 text-{color}-400`
@@ -211,13 +250,9 @@ TELEGRAM_LOGS_GROUP_ID=-1003743767375
 17. ✅ Fixed server restart requirement after `.env` changes
 18. ✅ Updated PDF generation script (removed service, fixed layout)
 19. ✅ **Implemented cache system for Qwen responses and sentiment analysis**
-20. ✅ **Fixed Telegram logs: 1 session = 1 topic (sessionId + deduplication)**
+20. ✅ **Fixed Telegram logs: 1 session = 1 topic (localStorage + deduplication)**
 21. ✅ **Long-term sessions: Persistent chat history (localStorage + JSON storage)**
-    - Changed sessionStorage → localStorage (survives browser restart)
-    - Added server-side session storage (`ai-assistant/sessions/chat-history.json`)
-    - Added API endpoint: GET /api/session/:sessionId
-    - Auto-restore chat history on page load
-    - 30-day retention with auto-cleanup
+22. ✅ **Production deployment documentation created**
 
 ### [IN PROGRESS]
 - None
@@ -229,11 +264,12 @@ TELEGRAM_LOGS_GROUP_ID=-1003743767375
 4. **Vacancy Application Flow** - Test end-to-end vacancy application submission via chat
 5. **ZOK Consultation Flow** - Test bot responses for ZOK-related queries
 6. **Telegram Logs Monitoring** - Monitor chat logging in production
-7. **Performance Optimization** - Consider caching Qwen responses for common queries
-8. **Topic Auto-close** - Automatically close topics after N days of inactivity
+7. **Topic Auto-close** - Automatically close topics after N days of inactivity
+8. **Database Migration** - Replace JSON session storage with MongoDB/PostgreSQL for production scale
+9. **Redis Cache** - Replace in-memory cache with Redis for multi-server deployment
 
 ### ⚠️ Important Reminders
-- **CRITICAL:** Always restart server after `.env` changes (`npm run dev:all` or `node ai-assistant/server.js`)
+- **CRITICAL:** Always restart server after `.env` changes (`npm run dev:all` or `node api-server.js`)
 - Light theme requires `text-black` NOT `text-gray-900` for headings
 - Light theme badges need `text-{color}-700` NOT `text-{color}-600` for visibility
 - Chat scrollbar needs explicit white background on light theme
@@ -241,24 +277,28 @@ TELEGRAM_LOGS_GROUP_ID=-1003743767375
 - ZOK = Защитные Ограждающие Конструкции (physical barriers with metal mesh)
 - Bot should NOT mention drone detection or radio suppression for ZOK
 - 16 services total (Благоустройство территорий removed)
-- **Cache system:** Monitor hit rate via GET /api/cache/stats (target >50%)
-- **Telegram logs:** 1 session = 1 topic (sessionId stored in sessionStorage)
+- **Cache system:** Monitor hit rate via `GET /api/cache/stats` (target >50%)
+- **Session persistence:** localStorage survives browser restart, auto-restore via API
+- **Production:** `api-server.js` automatically starts AI Assistant on port 3002
+- **Deployment script:** Uses `nohup` for background processes, logs to `server.log` and `api-server.log`
 
 ---
 
 ## Summary Metadata
-**Update time:** 2026-03-19T21:30:00.000Z
+**Update time:** 2026-03-19T21:45:00.000Z
 **Session Date:** 2026-03-19
 **Total Services:** 16
 **Total Vacancies:** 5
 **AI Assistant Port:** 3002
 **API Server Port:** 3001
+**Web Server Port:** 3000
 **Cache System:** ✅ Enabled (1h Qwen, 30min sentiment, 2h session)
 **Session Storage:** ✅ Persistent (localStorage + JSON, 30 days)
-**New Files:** `ai-assistant/CACHE_SYSTEM.md`, `ai-assistant/test-cache.js`, `ai-assistant/LONG_TERM_SESSIONS.md`, `ai-assistant/session-storage.js`, `ai-assistant/TESTING_SESSIONS.md`
+**New Files:** `ai-assistant/CACHE_SYSTEM.md`, `ai-assistant/test-cache.js`, `ai-assistant/LONG_TERM_SESSIONS.md`, `ai-assistant/session-storage.js`, `ai-assistant/TESTING_SESSIONS.md`, `PRODUCTION_DEPLOY.md`
 **Fixed:** Telegram logs 1-session-1-topic (localStorage + deduplication)
+**Removed:** Operator modes feature (telegram-operator-bot.js, operator-mode.js, etc.)
 
 ---
 
 ## Summary Metadata
-**Update time**: 2026-03-19T11:38:42.041Z 
+**Update time**: 2026-03-19T18:52:44.910Z 
