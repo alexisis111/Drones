@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CheckCircle, X } from 'lucide-react';
+import { useTheme } from '../contexts/ThemeContext';
 
 interface CallbackModalProps {
   isOpen: boolean;
@@ -37,6 +38,8 @@ export const CallbackModal: React.FC<CallbackModalProps> = ({
   handlePhoneFocus,
   handleSubmit
 }) => {
+  const { theme } = useTheme();
+  
   if (!isOpen) return null;
 
   return (
@@ -56,13 +59,21 @@ export const CallbackModal: React.FC<CallbackModalProps> = ({
           initial={{ opacity: 0, scale: 0.95, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
-          className="relative w-full max-w-md bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-6 shadow-2xl border border-white/10"
+          className={`relative w-full max-w-md rounded-2xl p-6 shadow-2xl border ${
+            theme === 'dark'
+              ? 'bg-gradient-to-br from-gray-900 to-gray-800 border-white/10'
+              : 'bg-gradient-to-br from-white to-gray-50 border-gray-200'
+          }`}
         >
           {/* Close Button */}
           {!isCallbackSubmitting && !callbackSuccess && (
             <button
               onClick={onClose}
-              className="absolute top-4 right-4 p-2 rounded-lg hover:bg-white/10 transition-colors text-gray-400 hover:text-white"
+              className={`absolute top-4 right-4 p-2 rounded-lg transition-colors ${
+                theme === 'dark'
+                  ? 'hover:bg-white/10 text-gray-400 hover:text-white'
+                  : 'hover:bg-gray-100 text-gray-500 hover:text-gray-700'
+              }`}
               aria-label="Закрыть"
             >
               <X className="w-5 h-5" />
@@ -79,19 +90,27 @@ export const CallbackModal: React.FC<CallbackModalProps> = ({
               >
                 <CheckCircle className="w-8 h-8 text-green-400" />
               </motion.div>
-              <h3 className="text-xl font-bold text-white mb-2">Заявка отправлена!</h3>
-              <p className="text-gray-400">Мы перезвоним вам в ближайшее время</p>
+              <h3 className={`text-xl font-bold mb-2 ${
+                theme === 'dark' ? 'text-white' : 'text-black'
+              }`}>Заявка отправлена!</h3>
+              <p className={theme === 'dark' ? 'text-gray-400' : 'text-gray-700'}>
+                Мы перезвоним вам в ближайшее время
+              </p>
             </div>
           ) : (
             <>
-              <h3 className="text-2xl font-bold text-white mb-6 text-center">
+              <h3 className={`text-2xl font-bold mb-6 text-center ${
+                theme === 'dark' ? 'text-white' : 'text-black'
+              }`}>
                 Заказать обратный звонок
               </h3>
 
               <form onSubmit={handleSubmit} className="space-y-4">
                 {/* Name Field */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
+                  <label className={`block text-sm font-medium mb-2 ${
+                    theme === 'dark' ? 'text-gray-300' : 'text-black'
+                  }`}>
                     Ваше имя *
                   </label>
                   <input
@@ -99,7 +118,11 @@ export const CallbackModal: React.FC<CallbackModalProps> = ({
                     required
                     value={callbackForm.name}
                     onChange={(e) => handleCallbackChange('name', e.target.value)}
-                    className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                    className={`w-full px-4 py-3 rounded-xl border focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all ${
+                      theme === 'dark'
+                        ? 'bg-white/5 border-white/10 text-white placeholder-gray-500'
+                        : 'bg-gray-50 border-gray-300 text-black placeholder-gray-500'
+                    }`}
                     placeholder="Иван Иванов"
                     disabled={isCallbackSubmitting}
                   />
@@ -107,7 +130,9 @@ export const CallbackModal: React.FC<CallbackModalProps> = ({
 
                 {/* Phone Field */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
+                  <label className={`block text-sm font-medium mb-2 ${
+                    theme === 'dark' ? 'text-gray-300' : 'text-black'
+                  }`}>
                     Телефон *
                   </label>
                   <input
@@ -117,7 +142,13 @@ export const CallbackModal: React.FC<CallbackModalProps> = ({
                     onChange={(e) => handlePhoneChange(e.target.value)}
                     onBlur={(e) => handlePhoneBlur(e.target.value)}
                     onFocus={handlePhoneFocus}
-                    className={`w-full px-4 py-3 rounded-xl bg-white/5 border ${phoneError ? 'border-red-500' : 'border-white/10'} text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all`}
+                    className={`w-full px-4 py-3 rounded-xl border focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all ${
+                      phoneError
+                        ? 'border-red-500 bg-red-50 dark:bg-red-900/20'
+                        : theme === 'dark'
+                          ? 'bg-white/5 border-white/10 text-white placeholder-gray-500'
+                          : 'bg-gray-50 border-gray-300 text-black placeholder-gray-500'
+                    }`}
                     placeholder="+7 (___) ___-__-__"
                     disabled={isCallbackSubmitting}
                   />
@@ -128,14 +159,20 @@ export const CallbackModal: React.FC<CallbackModalProps> = ({
 
                 {/* Message Field */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
+                  <label className={`block text-sm font-medium mb-2 ${
+                    theme === 'dark' ? 'text-gray-300' : 'text-black'
+                  }`}>
                     Дополнительная информация
                   </label>
                   <textarea
                     value={callbackForm.message}
                     onChange={(e) => handleCallbackChange('message', e.target.value)}
                     rows={3}
-                    className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-none"
+                    className={`w-full px-4 py-3 rounded-xl border focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-none ${
+                      theme === 'dark'
+                        ? 'bg-white/5 border-white/10 text-white placeholder-gray-500'
+                        : 'bg-gray-50 border-gray-300 text-black placeholder-gray-500'
+                    }`}
                     placeholder="Расскажите подробнее о вашем объекте..."
                     disabled={isCallbackSubmitting}
                   />
@@ -161,7 +198,9 @@ export const CallbackModal: React.FC<CallbackModalProps> = ({
                 </button>
               </form>
 
-              <p className="text-xs text-gray-500 text-center mt-4">
+              <p className={`text-xs text-center mt-4 ${
+                theme === 'dark' ? 'text-gray-500' : 'text-gray-600'
+              }`}>
                 Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности
               </p>
             </>

@@ -34,18 +34,11 @@ app.post('/api/telegram-webhook', async (req, res) => {
   try {
     const { name, phone, message, objectType, subject } = req.body;
 
-    // Validate required fields - name is always required, and either message or objectType
+    // Validate required fields - only name is required (message is optional)
     if (!name) {
       return res.status(400).json({
         success: false,
         error: 'Имя обязательно для заполнения'
-      });
-    }
-
-    if (!message && !objectType) {
-      return res.status(400).json({
-        success: false,
-        error: 'Сообщение или тип объекта обязательны для заполнения'
       });
     }
 

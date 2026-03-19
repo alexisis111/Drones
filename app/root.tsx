@@ -44,7 +44,7 @@ export const links: Route.LinksFunction = () => [
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ru">
+    <html lang="ru" suppressHydrationWarning>
     <head>
       <meta charSet="utf-8"/>
       <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -52,6 +52,21 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <meta name="google-site-verification" content="YOMSPufmaRHbpdasRrQBskC0PXPHfACqJIn2MBEE80o" />
       <title>Строительная компания ЛЕГИОН | Строительство по всей России</title>
       <link rel="icon" href="/Logo-1.png" sizes="any"/>
+
+      {/* Prevent FOUC - Apply theme before page loads */}
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `
+            (function() {
+              var theme = localStorage.getItem('theme');
+              if (!theme) {
+                theme = 'dark'; // Default theme
+              }
+              document.documentElement.classList.add(theme);
+            })();
+          `
+        }}
+      />
       
       {/* Critical CSS inline for faster FCP */}
       <style dangerouslySetInnerHTML={{__html: `

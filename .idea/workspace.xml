@@ -5,8 +5,46 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fde30c11-94c5-4884-96a6-cf984ad02720" name="Changes" comment="fixSEOADD_finally">
+      <change beforePath="$PROJECT_DIR$/.env.example" beforeDir="false" afterPath="$PROJECT_DIR$/.env.example" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.qwen/PROJECT_SUMMARY.md" beforeDir="false" afterPath="$PROJECT_DIR$/.qwen/PROJECT_SUMMARY.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-server.js" beforeDir="false" afterPath="$PROJECT_DIR$/api-server.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/AppWrapper.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/AppWrapper.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/Breadcrumbs.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/Breadcrumbs.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/CallbackModal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/CallbackModal.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/CompanyShowcase.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/CompanyShowcase.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/ContactForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ContactForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/ContactsPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ContactsPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/DroneDefensePage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/DroneDefensePage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/ErrorPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ErrorPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/FaqSection.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/FaqSection.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/FixedMobileTabs.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/FixedMobileTabs.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/Footer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/Footer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/FullscreenModal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/FullscreenModal.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/Header.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/LoadingScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/LoadingScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/OptimizedImage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/OptimizedImage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/PageNotFound.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/PageNotFound.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/PortfolioGallery.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/PortfolioGallery.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/ProjectEstimateModal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ProjectEstimateModal.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/ServiceDetailPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ServiceDetailPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/ServiceOrderModal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ServiceOrderModal.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/ServicesCatalog.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ServicesCatalog.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/VacanciesGallery.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/VacanciesGallery.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/contexts/ThemeContext.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/contexts/ThemeContext.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/data/services.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/data/services.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/root.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/root.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/api/telegram-webhook.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/api/telegram-webhook.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/privacy.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/privacy.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/terms.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/terms.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/welcome/welcome.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/welcome/welcome.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react-router.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/react-router.config.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/server.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tailwind.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/tailwind.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vite.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/vite.config.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,21 +82,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "D:/DroneSite",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "terminal",
-    "ts.external.directory.path": "D:\\DroneSite\\node_modules\\typescript\\lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/chechlove_admin_copy&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;terminal&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;D:\\DroneSite\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\DroneSite" />
@@ -116,23 +154,22 @@
       <workItem from="1773384413812" duration="630000" />
       <workItem from="1773385067258" duration="487000" />
       <workItem from="1773386848639" duration="1698000" />
-      <workItem from="1773571169506" duration="11875000" />
-    </task>
-    <task id="LOCAL-00063" summary="fixContactsCapcha">
-      <option name="closed" value="true" />
-      <created>1771079636136</created>
-      <option name="number" value="00063" />
-      <option name="presentableId" value="LOCAL-00063" />
-      <option name="project" value="LOCAL" />
-      <updated>1771079636136</updated>
-    </task>
-    <task id="LOCAL-00064" summary="fixContactsCapcha">
-      <option name="closed" value="true" />
-      <created>1771079844278</created>
-      <option name="number" value="00064" />
-      <option name="presentableId" value="LOCAL-00064" />
-      <option name="project" value="LOCAL" />
-      <updated>1771079844278</updated>
+      <workItem from="1773571169506" duration="34057000" />
+      <workItem from="1773606460884" duration="6140000" />
+      <workItem from="1773639129303" duration="13902000" />
+      <workItem from="1773653515748" duration="7605000" />
+      <workItem from="1773686645935" duration="13586000" />
+      <workItem from="1773740659612" duration="8517000" />
+      <workItem from="1773756902438" duration="538000" />
+      <workItem from="1773766947286" duration="9514000" />
+      <workItem from="1773776954440" duration="5297000" />
+      <workItem from="1773819905507" duration="5716000" />
+      <workItem from="1773825791648" duration="243000" />
+      <workItem from="1773835113389" duration="3636000" />
+      <workItem from="1773848736049" duration="19561000" />
+      <workItem from="1773902347785" duration="5399000" />
+      <workItem from="1773913272545" duration="6965000" />
+      <workItem from="1773935034493" duration="10185000" />
     </task>
     <task id="LOCAL-00065" summary="fixContactsSize">
       <option name="closed" value="true" />
@@ -510,7 +547,23 @@
       <option name="project" value="LOCAL" />
       <updated>1773582719365</updated>
     </task>
-    <option name="localTasksCounter" value="112" />
+    <task id="LOCAL-00112" summary="fixSEOADD_finally">
+      <option name="closed" value="true" />
+      <created>1773584190861</created>
+      <option name="number" value="00112" />
+      <option name="presentableId" value="LOCAL-00112" />
+      <option name="project" value="LOCAL" />
+      <updated>1773584190861</updated>
+    </task>
+    <task id="LOCAL-00113" summary="fixSEOADD_finally">
+      <option name="closed" value="true" />
+      <created>1773584434298</created>
+      <option name="number" value="00113" />
+      <option name="presentableId" value="LOCAL-00113" />
+      <option name="project" value="LOCAL" />
+      <updated>1773584434298</updated>
+    </task>
+    <option name="localTasksCounter" value="114" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

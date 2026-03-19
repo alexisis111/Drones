@@ -5,7 +5,6 @@ const serviceUrls = [
   "/service/razborka-zdaniy-i-sooruzheniy",
   "/service/sborka-lesov",
   "/service/podgotovka-stroitelnogo-uchastka",
-  "/service/blagoustroystvo-territoriy",
   "/service/izgotovlenie-metallokonstruktsiy",
   "/service/montazh-tekhnologicheskikh-truboprovodov",
   "/service/montazh-tekhnologicheskikh-ploshchadok",

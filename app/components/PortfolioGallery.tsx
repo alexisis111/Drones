@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useTheme } from '../contexts/ThemeContext';
 import OptimizedImage from './OptimizedImage';
 import {
   Shield,
   Building2,
-  Target,
-  Zap,
   Award,
   Clock,
   Users,
@@ -14,8 +12,7 @@ import {
   ChevronRight,
   ArrowRight,
   MapPin,
-  Calendar,
-  HardHat
+  ArrowUpRight
 } from 'lucide-react';
 import { Link } from 'react-router';
 import Breadcrumbs, { type BreadcrumbItem } from './Breadcrumbs';
@@ -36,18 +33,7 @@ interface PortfolioGalleryProps {
 
 const PortfolioGallery: React.FC<PortfolioGalleryProps> = ({ breadcrumbs }) => {
   const { theme } = useTheme();
-  const [scrollY, setScrollY] = useState(0);
-  const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [activeFilter, setActiveFilter] = useState<'all' | 'construction' | 'maintenance' | 'security'>('all');
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
 
   // Данные для портфолио на основе информации с сайта
@@ -143,28 +129,17 @@ const PortfolioGallery: React.FC<PortfolioGalleryProps> = ({ breadcrumbs }) => {
   return (
     <div className="relative overflow-hidden">
       {/* Hero Section */}
-      <section className="relative min-h-[60vh] flex items-center overflow-hidden">
-        {/* Optimized background with parallax effect */}
-        <div
-          className="absolute inset-0 bg-gradient-to-br from-blue-900 via-gray-900 to-purple-900"
-        >
-          <div className="absolute inset-0">
-            <div className="absolute inset-0 bg-[url('/img/homesImg/portfolio.jpeg')] bg-cover bg-center mix-blend-overlay opacity-20" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 via-transparent to-purple-600/10" />
-          </div>
-        </div>
-
+      <section className="relative w-full flex items-center">
         {/* Content */}
         <div className="relative container mx-auto px-4 z-10">
           {/* Хлебные крошки */}
           {breadcrumbs && (
             <div className="py-4">
-              <Breadcrumbs breadcrumbs={breadcrumbs} className="text-white/80" />
+              <Breadcrumbs breadcrumbs={breadcrumbs} className="text-gray-600 dark:text-gray-400" />
             </div>
           )}
 
-          <div className="grid lg:grid-cols-2 gap-8 md:gap-12 items-center py-4">
+          <div className="grid lg:grid-cols-2 gap-8 md:gap-12 items-center">
             {/* Left column - Main content */}
             <motion.div
               initial={{ opacity: 0, x: -50 }}
@@ -177,10 +152,14 @@ const PortfolioGallery: React.FC<PortfolioGalleryProps> = ({ breadcrumbs }) => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-3 py-1.5 md:px-4 md:py-2 border border-white/20"
+                className={`inline-flex items-center gap-2 rounded-full px-4 py-2 ${
+                  theme === 'dark'
+                    ? 'bg-blue-900/30 text-blue-400 border border-blue-800/50'
+                    : 'bg-blue-50 text-blue-700 border border-blue-200'
+                }`}
               >
-                <Award className="w-3 h-3 md:w-4 md:h-4" />
-                <span className="text-xs md:text-sm font-medium text-white">100+ успешно завершенных проектов</span>
+                <Award className="w-4 h-4" />
+                <span className="text-sm font-medium">100+ успешно завершенных проектов</span>
               </motion.div>
 
               {/* Main heading */}
@@ -188,7 +167,9 @@ const PortfolioGallery: React.FC<PortfolioGalleryProps> = ({ breadcrumbs }) => {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
-                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight text-white"
+                className={`text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black ${
+                  theme === 'dark' ? 'text-white' : 'text-black'
+                }`}
               >
                 <span className="block">Наши</span>
                 <span className="block bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
@@ -202,52 +183,39 @@ const PortfolioGallery: React.FC<PortfolioGalleryProps> = ({ breadcrumbs }) => {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
-                className="text-base md:text-xl text-gray-300 max-w-2xl"
+                className={`text-lg md:text-xl max-w-2xl ${
+                  theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
+                }`}
               >
                 Более 100 успешно реализованных проектов по всей Ленинградской области и Северо-Западному региону.
                 Каждый проект выполнен с соблюдением всех норм и стандартов качества.
               </motion.p>
 
-              {/* Stats */}
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 }}
-                className="grid grid-cols-2 gap-3 md:gap-4"
-              >
-                {[
-                  { value: "100+", label: "Проектов" },
-                  { value: "12+", label: "Лет опыта" },
-                  { value: "2-5 лет", label: "Гарантия" },
-                ].map((stat, i) => (
-                  <div key={i} className="text-center p-3 md:p-4 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10">
-                    <div className="text-xl md:text-2xl font-bold text-white">{stat.value}</div>
-                    <div className="text-xs md:text-sm text-gray-400">{stat.label}</div>
-                  </div>
-                ))}
-              </motion.div>
-
               {/* CTA Buttons */}
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6 }}
-                className="flex flex-col sm:flex-row gap-3 md:gap-4"
+                transition={{ delay: 0.5 }}
+                className="flex flex-col sm:flex-row gap-3"
               >
                 <Link
                   to="/contacts"
-                  className="group inline-flex items-center justify-center gap-2 md:gap-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 md:px-8 md:py-4 rounded-xl font-semibold hover:shadow-xl hover:scale-105 transition-all duration-300 text-sm md:text-base"
+                  className="group inline-flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3.5 rounded-xl font-semibold hover:shadow-xl hover:scale-105 transition-all duration-300"
                 >
                   <span>Обсудить проект</span>
-                  <ArrowRight className="w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
 
                 <Link
                   to="/contacts"
-                  className="group inline-flex items-center justify-center gap-2 md:gap-3 bg-white/10 backdrop-blur-sm text-white px-6 py-3 md:px-8 md:py-4 rounded-xl font-semibold border border-white/20 hover:bg-white/20 transition-all duration-300 text-sm md:text-base"
+                  className={`group inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-semibold border transition-all duration-300 ${
+                    theme === 'dark'
+                      ? 'bg-white/10 backdrop-blur-sm text-white border-white/20 hover:bg-white/20'
+                      : 'bg-white/80 backdrop-blur-sm text-gray-900 border-gray-300 hover:bg-white'
+                  }`}
                 >
                   <span>Оставить заявку</span>
-                  <ChevronRight className="w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" />
+                  <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </motion.div>
             </motion.div>
@@ -257,32 +225,36 @@ const PortfolioGallery: React.FC<PortfolioGalleryProps> = ({ breadcrumbs }) => {
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="hidden lg:block lg:space-y-6"
+              className="hidden lg:block space-y-4"
             >
               {[
                 {
                   icon: <Shield className="w-6 h-6" />,
                   title: "Защита периметра",
                   description: "Современные системы защиты от БПЛА",
-                  color: "from-blue-500 to-cyan-500"
+                  gradient: "from-blue-500 to-cyan-500",
+                  bgGradient: "from-blue-900/30 to-cyan-900/30"
                 },
                 {
                   icon: <Building2 className="w-6 h-6" />,
                   title: "Строительство",
                   description: "Полный цикл от фундамента до отделки",
-                  color: "from-purple-500 to-pink-500"
+                  gradient: "from-purple-500 to-pink-500",
+                  bgGradient: "from-purple-900/30 to-pink-900/30"
                 },
                 {
-                  icon: <Target className="w-6 h-6" />,
-                  title: "Точность работ",
+                  icon: <Award className="w-6 h-6" />,
+                  title: "Качество работ",
                   description: "Соблюдение всех нормативов и сроков",
-                  color: "from-orange-500 to-red-500"
+                  gradient: "from-orange-500 to-red-500",
+                  bgGradient: "from-orange-900/30 to-red-900/30"
                 },
                 {
-                  icon: <Zap className="w-6 h-6" />,
+                  icon: <Clock className="w-6 h-6" />,
                   title: "Скорость",
                   description: "Оперативное выполнение задач",
-                  color: "from-green-500 to-emerald-500"
+                  gradient: "from-green-500 to-emerald-500",
+                  bgGradient: "from-green-900/30 to-emerald-900/30"
                 }
               ].map((feature, i) => (
                 <motion.div
@@ -290,16 +262,42 @@ const PortfolioGallery: React.FC<PortfolioGalleryProps> = ({ breadcrumbs }) => {
                   initial={{ opacity: 0, x: 30 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.4 + i * 0.1 }}
-                  whileHover={{ x: -10 }}
-                  className="group bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-all duration-300 cursor-pointer"
+                  whileHover={{ x: -10, scale: 1.02 }}
+                  className="group relative"
                 >
-                  <div className="flex items-start gap-4">
-                    <div className={`p-3 rounded-xl bg-gradient-to-br ${feature.color}`}>
-                      {feature.icon}
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold text-white mb-2">{feature.title}</h3>
-                      <p className="text-gray-400">{feature.description}</p>
+                  {/* Pulsing glow effect */}
+                  <div
+                      className={`absolute inset-0 rounded-2xl bg-gradient-to-r ${feature.gradient} blur-xl pointer-events-none`}
+                      style={{
+                        opacity: 0.3,
+                        animation: `pulse-fade ${5 + i * 1.5}s ease-in-out infinite`,
+                        animationDelay: `${i * 0.7}s`
+                      }}
+                  />
+
+                  {/* Main card */}
+                  <div className={`relative overflow-hidden rounded-2xl p-5 transition-all duration-700 shadow-lg hover:shadow-xl border hover:border-transparent ${
+                    theme === 'dark'
+                      ? `bg-gradient-to-br ${feature.bgGradient} border-gray-700/50`
+                      : `bg-white border-gray-200`
+                  }`}
+                    style={{
+                      backgroundSize: '200% 200%',
+                      animation: `gradient-shift ${8 + i * 2}s ease infinite`,
+                      animationDelay: `${i * 0.5}s`
+                    }}>
+                    <div className="flex items-start gap-4">
+                      <div className={`p-3 rounded-xl bg-gradient-to-br ${feature.gradient} shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-500`}>
+                        {feature.icon}
+                      </div>
+                      <div>
+                        <h3 className={`text-lg font-bold mb-1 ${
+                          theme === 'dark' ? 'text-white' : 'text-black'
+                        }`}>{feature.title}</h3>
+                        <p className={`text-sm ${
+                          theme === 'dark' ? 'text-gray-400' : 'text-gray-600'
+                        }`}>{feature.description}</p>
+                      </div>
                     </div>
                   </div>
                 </motion.div>
@@ -307,52 +305,28 @@ const PortfolioGallery: React.FC<PortfolioGalleryProps> = ({ breadcrumbs }) => {
             </motion.div>
           </div>
         </div>
-
-        {/* Bottom Gradient Fade for smooth transition */}
-        <div className="absolute bottom-0 left-0 right-0 h-80 bg-gradient-to-b from-transparent via-gray-900/30 to-gray-50 dark:via-gray-900/50 dark:to-gray-900 pointer-events-none" />
       </section>
 
       {/* Portfolio Section */}
-      <section className="relative py-24 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-black">
-        {/* Top gradient overlay for smooth transition */}
-        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-gray-50 dark:from-gray-900 to-transparent pointer-events-none" />
-        
+      <section className="relative py-8">
         <div className="container mx-auto px-4 relative z-10">
-          <motion.div
-              initial={{opacity: 0, y: 50}}
-              whileInView={{opacity: 1, y: 0}}
-              viewport={{once: true}}
-              className="text-center mb-16"
-          >
-            <div
-                className="inline-flex items-center gap-2 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-full px-4 py-2 mb-4">
-              <HardHat className="w-4 h-4"/>
-              <span className="text-sm font-medium">Портфолио</span>
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
-              Наши проекты
-            </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-              Ознакомьтесь с нашими реализованными проектами. Каждый из них является примером
-              высокого качества и профессионального подхода.
-            </p>
-          </motion.div>
-
           {/* Category Filters */}
-          <div className="flex flex-wrap justify-center gap-4 mb-16">
+          <div className="flex flex-wrap justify-center gap-3 mb-12">
             {[
-              {id: 'all', label: 'Все проекты'},
-              {id: 'construction', label: 'Строительство'},
-              {id: 'maintenance', label: 'Обслуживание' },
+              { id: 'all', label: 'Все проекты' },
+              { id: 'construction', label: 'Строительство' },
+              { id: 'maintenance', label: 'Обслуживание' },
               { id: 'security', label: 'Безопасность' }
             ].map((filter) => (
               <button
                 key={filter.id}
                 onClick={() => setActiveFilter(filter.id as any)}
-                className={`px-6 py-3 rounded-full font-medium transition-all ${
+                className={`px-5 py-2.5 rounded-full font-semibold transition-all duration-300 text-sm ${
                   activeFilter === filter.id
-                    ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg'
-                    : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                    ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg scale-105'
+                    : theme === 'dark'
+                    ? 'bg-gray-800/50 text-gray-300 hover:bg-gray-800 border border-gray-700'
+                    : 'bg-white/80 text-gray-700 hover:bg-white border border-gray-300'
                 }`}
               >
                 {filter.label}
@@ -361,186 +335,242 @@ const PortfolioGallery: React.FC<PortfolioGalleryProps> = ({ breadcrumbs }) => {
           </div>
 
           {/* Portfolio Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
             {filteredProjects.map((project, index) => (
               <motion.div
                 key={project.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                whileHover={{ y: -10 }}
-                className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 shadow-xl hover:shadow-2xl transition-all duration-300"
+                transition={{ delay: index * 0.03 }}
+                whileHover={{ y: -4, scale: 1.03 }}
+                className="group relative"
               >
-                <div className="relative h-64 overflow-hidden">
-                  {project.imageUrl ? (
-                    <OptimizedImage
-                      src={project.imageUrl}
-                      alt={project.title}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                      width={400}
-                      height={256}
-                      loading="lazy"
-                    />
-                  ) : (
-                    <div className="w-full h-full bg-gradient-to-r from-blue-500 to-indigo-600 flex items-center justify-center">
-                      <Building2 className="w-12 h-12 text-white opacity-50" />
+                {/* Card */}
+                <div className="relative h-full bg-gradient-to-br from-white to-gray-50 dark:from-gray-800/40 dark:to-gray-800/20 backdrop-blur-md border border-gray-300 dark:border-gray-700/50 rounded-xl overflow-hidden hover:border-blue-400/60 hover:shadow-xl hover:shadow-blue-500/25 transition-all duration-300">
+                  {/* Image */}
+                  <div className="relative h-28 sm:h-32 overflow-hidden">
+                    {project.imageUrl ? (
+                      <OptimizedImage
+                        src={project.imageUrl}
+                        alt={project.title}
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                        width={400}
+                        height={300}
+                        loading="lazy"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gradient-to-r from-blue-500 to-indigo-600 flex items-center justify-center">
+                        <Building2 className="w-12 h-12 text-white opacity-50" />
+                      </div>
+                    )}
+
+                    {/* Category Badge */}
+                    <div className="absolute top-2 left-2 z-20">
+                      <div className="bg-blue-600/90 dark:bg-white/90 backdrop-blur-sm text-white dark:text-gray-900 text-[10px] sm:text-xs font-semibold px-2 py-1 rounded-md border border-white/20 dark:border-gray-300 shadow-lg">
+                        {project.category === 'construction' ? 'Строительство' : 
+                         project.category === 'maintenance' ? 'Обслуживание' : 'Безопасность'}
+                      </div>
                     </div>
-                  )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-                  <div className="absolute top-4 right-4">
-                    <span className="bg-white/20 backdrop-blur-sm text-white text-xs font-semibold px-3 py-1 rounded-full">
-                      {project.year}
-                    </span>
+
+                    {/* Year Badge */}
+                    <div className="absolute top-2 right-2 z-20">
+                      <div className="bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm text-gray-900 dark:text-white text-[10px] sm:text-xs font-semibold px-2 py-1 rounded-md border border-gray-300 dark:border-gray-600 shadow-lg">
+                        {project.year}
+                      </div>
+                    </div>
+
+                    {/* Arrow Icon */}
+                    <div className="absolute top-2 right-2 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform group-hover:rotate-45">
+                      <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg flex items-center justify-center shadow-lg">
+                        <ArrowUpRight className="w-4 h-4 text-white" />
+                      </div>
+                    </div>
                   </div>
-                </div>
 
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
-                    {project.title}
-                  </h3>
+                  {/* Content */}
+                  <div className="p-3 sm:p-3.5 space-y-2">
+                    {/* Title */}
+                    <h3 className="text-xs sm:text-sm font-bold text-gray-800 dark:text-black group-hover:text-blue-600 dark:group-hover:text-blue-400 line-clamp-2 leading-tight transition-colors">
+                      {project.title}
+                    </h3>
 
-                  <p className="text-gray-600 dark:text-gray-300 mb-4">
-                    {project.description}
-                  </p>
-
-                  <div className="flex justify-between items-center mt-6">
-                    <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
-                      <MapPin className="w-4 h-4 mr-1" />
-                      <span>{project.location}</span>
+                    {/* Location */}
+                    <div className="flex items-center gap-1.5 text-gray-500 dark:text-gray-400">
+                      <MapPin className="w-3 h-3" />
+                      <span className="text-[10px] sm:text-xs truncate">{project.location}</span>
                     </div>
-                    <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
-                      <Calendar className="w-4 h-4 mr-1" />
-                      <span>{project.year}</span>
+
+                    {/* Learn More */}
+                    <div className="flex items-center gap-1.5 pt-1">
+                      <span className="text-[10px] sm:text-xs font-semibold text-blue-600 dark:text-blue-400 group-hover:text-blue-700 dark:group-hover:text-blue-300 transition-colors">
+                        Подробнее
+                      </span>
+                      <ChevronRight className="w-3 h-3 text-blue-600 dark:text-blue-400 group-hover:translate-x-0.5 transition-transform" />
                     </div>
                   </div>
+
+                  {/* Hover Glow Effect */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-600/0 via-purple-600/0 to-pink-600/0 group-hover:from-blue-600/15 group-hover:via-purple-600/15 group-hover:to-pink-600/15 transition-all duration-500 pointer-events-none" />
                 </div>
               </motion.div>
             ))}
           </div>
         </div>
-
-        {/* Bottom Gradient Fade for smooth transition */}
-        <div className="absolute bottom-0 left-0 right-0 h-80 bg-gradient-to-b from-transparent via-white/50 to-gray-50 dark:via-gray-900/30 dark:to-gray-950 pointer-events-none" />
       </section>
 
       {/* Stats Section */}
-      <section className="relative py-24 bg-gradient-to-b from-white to-gray-50 dark:from-gray-950 dark:to-gray-900">
-        {/* Top gradient overlay for smooth transition */}
-        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-white dark:from-gray-950 to-transparent pointer-events-none" />
-        
+      <section className="relative py-8">
         <div className="container mx-auto px-4 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
-              Наши достижения
-            </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-              Более 12 лет успешной работы на рынке строительных услуг
-            </p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
             {[
               {
                 icon: <Shield className="w-8 h-8" />,
                 title: "Безопасность",
-                value: "100%",
-                description: "Соблюдение всех норм безопасности"
+                description: "Соблюдение всех норм безопасности",
+                gradient: "from-blue-500 to-cyan-500",
+                bgGradient: "from-blue-900/30 to-cyan-900/30"
               },
               {
                 icon: <Clock className="w-8 h-8" />,
                 title: "Сроки",
-                value: "95%",
-                description: "Соблюдение сроков сдачи"
+                description: "Соблюдение сроков сдачи",
+                gradient: "from-purple-500 to-pink-500",
+                bgGradient: "from-purple-900/30 to-pink-900/30"
               },
               {
                 icon: <Users className="w-8 h-8" />,
                 title: "Команда",
-                value: "50+",
-                description: "Опытных специалистов"
+                description: "Опытных специалистов",
+                gradient: "from-orange-500 to-red-500",
+                bgGradient: "from-orange-900/30 to-red-900/30"
+              },
+              {
+                icon: <CheckCircle className="w-8 h-8" />,
+                title: "Качество",
+                description: "Гарантия на все работы",
+                gradient: "from-green-500 to-emerald-500",
+                bgGradient: "from-green-900/30 to-emerald-900/30"
               }
-            ].map((stat, i) => (
+            ].map((item, i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="group relative text-center"
+                whileHover={{ y: -12, scale: 1.03 }}
+                className="group relative"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-300" />
-                <div className="relative bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300">
-                  <div className="inline-flex p-4 rounded-xl bg-gradient-to-br from-blue-500 to-purple-500 text-white mb-6">
-                    {stat.icon}
+                {/* Pulsing glow effect */}
+                <div
+                  className={`absolute inset-0 rounded-[2rem] bg-gradient-to-r ${item.gradient} opacity-0 group-hover:opacity-30 blur-xl transition-all duration-500 pointer-events-none`}
+                  style={{
+                    animation: `pulse ${2 + i * 0.5}s cubic-bezier(0.4, 0, 0.6, 1) infinite`
+                  }}
+                />
+
+                {/* Main card */}
+                <div className={`relative overflow-hidden rounded-[2rem] p-8 h-full flex flex-col transition-all duration-500 shadow-xl hover:shadow-2xl border hover:border-transparent ${
+                  theme === 'dark'
+                    ? `bg-gradient-to-br ${item.bgGradient} border-gray-700/50`
+                    : `bg-white border-gray-200`
+                }`}
+                  style={{
+                    backgroundSize: '200% 200%',
+                    animation: `gradient-shift ${3 + i * 0.7}s ease infinite`
+                  }}>
+                  {/* Icon container */}
+                  <div className="relative mb-6">
+                    <div className={`inline-flex p-4 rounded-2xl bg-gradient-to-br ${item.gradient} shadow-xl group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 ${
+                      theme === 'dark' ? 'text-white' : 'text-black'
+                    }`}>
+                      {item.icon}
+                    </div>
+                    {/* Small decorative dots */}
+                    <div className="absolute -bottom-2 -right-2 flex gap-1">
+                      <div className={`w-2 h-2 rounded-full bg-gradient-to-r ${item.gradient} opacity-60`} />
+                      <div className={`w-2 h-2 rounded-full bg-gradient-to-r ${item.gradient} opacity-40`} />
+                    </div>
                   </div>
-                  <div className="text-4xl font-bold text-gray-900 dark:text-white mb-2">
-                    {stat.value}
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
-                    {stat.title}
+
+                  {/* Title */}
+                  <h3 className={`text-xl font-black mb-4 tracking-tight ${
+                    theme === 'dark' ? 'text-white' : 'text-black'
+                  }`}>
+                    {item.title}
                   </h3>
-                  <p className="text-gray-600 dark:text-gray-300">
-                    {stat.description}
+
+                  {/* Description */}
+                  <p className={`flex-grow leading-relaxed text-base ${
+                    theme === 'dark' ? 'text-white' : 'text-black'
+                  }`}>
+                    {item.description}
                   </p>
                 </div>
               </motion.div>
             ))}
           </div>
         </div>
-
-        {/* Bottom Gradient Fade for smooth transition */}
-        <div className="absolute bottom-0 left-0 right-0 h-80 bg-gradient-to-b from-transparent via-gray-50/50 to-gray-50 dark:via-gray-900/50 dark:to-gray-900 pointer-events-none" />
       </section>
 
       {/* CTA Section */}
-      <section className="relative py-24 bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600">
-        {/* Top gradient overlay for smooth transition */}
-        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-gray-50 dark:from-gray-900 to-transparent pointer-events-none" />
-        
+      <section className="relative py-24">
         <div className="container mx-auto px-4 relative z-10">
           <motion.div
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center text-white"
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              Готовы реализовать свой проект?
-            </h2>
+            <div className={`relative overflow-hidden rounded-[2rem] p-8 md:p-10 shadow-2xl ${
+              theme === 'dark'
+                ? 'bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 text-white'
+                : 'bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 text-black'
+            }`}>
+              {/* Decorative elements */}
+              <div className="absolute -top-20 -right-20 w-60 h-60 bg-white/10 rounded-full blur-3xl" />
+              <div className="absolute -bottom-20 -left-20 w-60 h-60 bg-white/10 rounded-full blur-3xl" />
 
-            <p className="text-xl opacity-90 max-w-3xl mx-auto mb-12">
-              Обратитесь к нашим специалистам и получите консультацию по реализации вашего проекта. 
-              Мы предложим оптимальное решение с учетом всех ваших требований.
-            </p>
+              {/* Content */}
+              <div className="relative z-10 text-center">
+                <h2 className={`text-3xl sm:text-4xl md:text-5xl font-black mb-6 ${
+                  theme === 'dark' ? 'text-white' : 'text-black'
+                }`}>
+                  Готовы реализовать свой проект?
+                </h2>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                to="/contacts"
-                className="group inline-flex items-center justify-center gap-3 bg-white text-gray-900 px-8 py-4 rounded-xl font-semibold hover:shadow-2xl hover:scale-105 transition-all duration-300"
-              >
-                <span>Начать проект</span>
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </Link>
+                <p className={`text-lg md:text-xl max-w-3xl mx-auto mb-8 ${
+                  theme === 'dark' ? 'text-white/90' : 'text-gray-700'
+                }`}>
+                  Обратитесь к нашим специалистам и получите консультацию по реализации вашего проекта.
+                  Мы предложим оптимальное решение с учетом всех ваших требований.
+                </p>
 
-              <Link
-                to="/contacts"
-                className="group inline-flex items-center justify-center gap-3 bg-transparent text-white px-8 py-4 rounded-xl font-semibold border-2 border-white hover:bg-white/10 transition-all duration-300"
-              >
-                <span>Оставить заявку</span>
-                <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </Link>
+                <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                  <Link
+                    to="/contacts"
+                    className="group inline-flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3.5 rounded-xl font-semibold hover:shadow-xl hover:scale-105 transition-all duration-300"
+                  >
+                    <span>Начать проект</span>
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </Link>
+
+                  <Link
+                    to="/contacts"
+                    className={`group inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-semibold border transition-all duration-300 ${
+                      theme === 'dark'
+                        ? 'bg-white/10 backdrop-blur-sm text-white border-white/20 hover:bg-white/20'
+                        : 'bg-white/80 text-gray-900 border-gray-300 hover:bg-white'
+                    }`}
+                  >
+                    <span>Оставить заявку</span>
+                    <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                </div>
+              </div>
             </div>
-
           </motion.div>
         </div>
-
-        {/* Bottom Gradient Fade for smooth transition */}
-        <div className="absolute bottom-0 left-0 right-0 h-80 bg-gradient-to-b from-transparent via-purple-900/30 to-white dark:via-gray-900/50 dark:to-gray-950 pointer-events-none" />
       </section>
     </div>
   );

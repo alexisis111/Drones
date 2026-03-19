@@ -20,7 +20,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     const { name, email, phone, message, objectType, subject } = formData;
 
     // Validate required fields - name is required for all forms
-    // For contact forms: message is required
+    // For contact forms: message is optional (only name is required)
     // For estimate forms: objectType is required (message is optional)
     if (!name) {
       return json({

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
+import { useTheme } from '../contexts/ThemeContext';
 
 interface FullscreenModalProps {
   isOpen: boolean;
@@ -9,6 +10,8 @@ interface FullscreenModalProps {
 }
 
 const FullscreenModal: React.FC<FullscreenModalProps> = ({ isOpen, onClose, children }) => {
+  const { theme } = useTheme();
+  
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
@@ -40,12 +43,16 @@ const FullscreenModal: React.FC<FullscreenModalProps> = ({ isOpen, onClose, chil
           >
             <button
               onClick={onClose}
-              className="absolute top-4 right-4 z-10 p-2 rounded-full bg-black/50 text-white hover:bg-black/70 transition-colors"
+              className={`absolute top-4 right-4 z-10 p-2 rounded-full transition-colors ${
+                theme === 'dark'
+                  ? 'bg-black/50 text-white hover:bg-black/70'
+                  : 'bg-white/50 text-gray-900 hover:bg-white/70'
+              }`}
               aria-label="Закрыть"
             >
               <X className="w-6 h-6" />
             </button>
-            
+
             <div className="w-full h-full flex items-center justify-center p-4">
               {children}
             </div>

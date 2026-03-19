@@ -5,7 +5,13 @@
   "scripts": {
     "build": "react-router build",
     "dev": "react-router dev",
+    "dev:all": "concurrently \"npm run dev\" \"node api-server.js\"",
     "start": "node server.js",
+    "start:all": "concurrently \"npm run start\" \"node api-server.js\" \"node ai-assistant/server.js\"",
+    "start:web": "node server.js",
+    "start:api": "node api-server.js",
+    "start:ai": "node ai-assistant/server.js",
+    "api": "node api-server.js",
     "typecheck": "react-router typegen && tsc"
   },
   "dependencies": {
@@ -31,7 +37,9 @@
     "@types/node": "^22",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
+    "concurrently": "^9.2.1",
     "globby": "^16.1.1",
+    "pdfkit": "^0.18.0",
     "rollup-plugin-visualizer": "^6.0.5",
     "sharp": "^0.34.5",
     "tailwindcss": "^4.1.18",

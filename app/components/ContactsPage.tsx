@@ -3,23 +3,17 @@ import { motion } from 'framer-motion';
 import { useTheme } from '../contexts/ThemeContext';
 import {
   Shield,
-  Building2,
-  Target,
-  Zap,
-  Award,
-  Clock,
-  Users,
-  CheckCircle,
-  ChevronRight,
-  ArrowRight,
-  Mail,
   Phone,
+  Mail,
   MapPin,
   MessageSquare,
-  Send,
-  RefreshCw, HardHat, Headset
+  ArrowRight,
+  Headset,
+  Clock,
+  CheckCircle,
+  Users,
+  Building2
 } from 'lucide-react';
-import { useFetcher } from 'react-router';
 import ContactForm from "~/components/ContactForm";
 import Breadcrumbs, { type BreadcrumbItem } from './Breadcrumbs';
 import { useCallbackForm } from '../hooks/useCallbackForm';
@@ -69,291 +63,382 @@ const ContactsPage: React.FC<ContactsPageProps> = ({ breadcrumbs }) => {
   return (
       <div className="relative overflow-hidden">
         {/* Hero Section */}
-        <section className="relative min-h-screen md:min-h-[60vh] flex items-center overflow-hidden">
-          {/* Smooth parallax background effect */}
-          <div
-              className="absolute inset-0 bg-gradient-to-br from-blue-900 via-gray-900 to-purple-900"
-          >
-            <div
-                className="absolute inset-0 bg-[url('/img/homesImg/contacts.jpeg')] bg-cover bg-center mix-blend-overlay opacity-20"
-                style={{
-                  transform: 'translateZ(-1px) scale(1.1)',
-                  willChange: 'transform',
-                  transformStyle: 'preserve-3d'
-                }}
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent"/>
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 via-transparent to-purple-600/10"/>
-          </div>
-
+        <section className="relative w-full flex items-center">
           {/* Content */}
           <div className="relative container mx-auto px-4 z-10">
             {/* Хлебные крошки */}
             {breadcrumbs && (
-              <div className="py-4">
-                <Breadcrumbs breadcrumbs={breadcrumbs} className="text-white/80" />
-              </div>
+                <div className="py-4">
+                  <Breadcrumbs breadcrumbs={breadcrumbs} className={
+                    theme === 'dark'
+                        ? 'text-white/80'
+                        : 'text-black'
+                  } />
+                </div>
             )}
 
-            <div className="grid lg:grid-cols-2 gap-8 md:gap-12 items-center py-4">
+            <div className="grid lg:grid-cols-2 gap-8 md:gap-12 items-center">
               {/* Left column - Main content */}
               <motion.div
-                  initial={{opacity: 0, x: -50}}
-                  animate={{opacity: 1, x: 0}}
-                  transition={{duration: 0.8}}
+                  initial={{ opacity: 0, x: -50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.8 }}
                   className="space-y-6 md:space-y-8"
               >
                 {/* Badge */}
                 <motion.div
-                    initial={{opacity: 0, y: 20}}
-                    animate={{opacity: 1, y: 0}}
-                    transition={{delay: 0.2}}
-                    className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-3 py-1.5 md:px-4 md:py-2 border border-white/20"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 }}
+                    className={`inline-flex items-center gap-2 rounded-full px-4 py-2 ${
+                      theme === 'dark'
+                        ? 'bg-blue-900/30 text-blue-400 border border-blue-800/50'
+                        : 'bg-blue-50 text-blue-700 border border-blue-200'
+                    }`}
                 >
-                  <Shield className="w-3 h-3 md:w-4 md:h-4"/>
-                  <span className="text-xs md:text-sm font-medium text-white">Свяжитесь с нами</span>
+                  <Shield className="w-4 h-4" />
+                  <span className="text-sm font-medium">Свяжитесь с нами</span>
                 </motion.div>
 
                 {/* Main heading */}
                 <motion.h1
-                    initial={{opacity: 0, y: 30}}
-                    animate={{opacity: 1, y: 0}}
-                    transition={{delay: 0.3}}
-                    className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight text-white"
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 }}
+                    className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black"
                 >
-                  <span className="block">Свяжитесь</span>
-                  <span className="block bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                  С Нами
-                </span>
-                  <span className="block">Удобным способом</span>
+                  <div className={theme === 'dark' ? 'text-white' : 'text-black'}>Свяжитесь</div>
+                  <div className={theme === 'dark' ? 'text-white' : 'text-black'}>С Нами</div>
+                  <div className="bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent">
+                    Удобным способом
+                  </div>
                 </motion.h1>
-
-                {/* CTA Buttons */}
-                <motion.div
-                    initial={{opacity: 0, y: 30}}
-                    animate={{opacity: 1, y: 0}}
-                    transition={{delay: 0.6}}
-                    className="flex flex-col sm:flex-row gap-3 md:gap-4"
-                >
-                  <a
-                      href="tel:+78137840235"
-                      className="group inline-flex items-center justify-center gap-2 md:gap-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 md:px-8 md:py-4 rounded-xl font-semibold hover:shadow-xl hover:scale-105 transition-all duration-300 text-sm md:text-base"
-                  >
-                    <Phone className="w-4 h-4 md:w-5 md:h-5"/>
-                    <span>Позвонить</span>
-                  </a>
-                  <button
-                      onClick={() => setIsCallbackModalOpen(true)}
-                      className="group inline-flex items-center justify-center gap-2 md:gap-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white px-6 py-3 md:px-8 md:py-4 rounded-xl font-semibold hover:shadow-xl hover:scale-105 transition-all duration-300 text-sm md:text-base"
-                  >
-                    <MessageSquare className="w-4 h-4 md:w-5 md:h-5"/>
-                    <span>Заказать обратный звонок</span>
-                  </button>
-                </motion.div>
 
                 {/* Subtitle */}
                 <motion.p
-                    initial={{opacity: 0, y: 30}}
-                    animate={{opacity: 1, y: 0}}
-                    transition={{delay: 0.4}}
-                    className="text-base md:text-xl text-gray-300 max-w-2xl"
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4 }}
+                    className={`text-sm sm:text-base md:text-lg max-w-xl ${
+                        theme === 'dark' ? 'text-gray-300' : 'text-black/90'
+                    }`}
                 >
-                  Мы всегда на связи и готовы ответить на все ваши вопросы.
-                  Обратитесь к нам любым удобным способом, и мы свяжемся с вами в ближайшее время.
+                  Мы всегда на связи и готовы ответить на все ваши вопросы. Обратитесь к нам любым удобным способом, и мы свяжемся с вами в ближайшее время.
                 </motion.p>
+
+                {/* CTA Buttons */}
+                <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5 }}
+                    className="flex flex-col sm:flex-row gap-2 sm:gap-3 md:gap-4"
+                >
+                  <a
+                      href="tel:+79312470888"
+                      className={`group inline-flex items-center justify-center gap-1.5 sm:gap-2 md:gap-3 text-white px-4 py-2.5 sm:px-6 sm:py-3 md:px-8 md:py-4 rounded-xl font-semibold hover:shadow-xl hover:scale-105 transition-all duration-300 text-xs sm:text-sm md:text-base ${
+                          theme === 'dark'
+                              ? 'bg-gradient-to-r from-blue-500 to-purple-500'
+                              : 'bg-gradient-to-r from-blue-600 to-purple-600'
+                      }`}
+                  >
+                    <span>Позвонить</span>
+                    <Phone className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5" />
+                  </a>
+
+                  <button
+                      onClick={() => setIsCallbackModalOpen(true)}
+                      className={`group inline-flex items-center justify-center gap-1.5 sm:gap-2 md:gap-3 px-4 py-2.5 sm:px-6 sm:py-3 md:px-8 md:py-4 rounded-xl font-semibold border transition-all duration-300 text-xs sm:text-sm md:text-base ${
+                          theme === 'dark'
+                              ? 'bg-gray-800 text-white border-gray-700 hover:bg-gray-700 hover:border-gray-600'
+                              : 'bg-white text-gray-900 border-gray-300 hover:bg-gray-50 hover:border-gray-400'
+                      }`}
+                  >
+                    <span>Заказать звонок</span>
+                    <MessageSquare className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5" />
+                  </button>
+                </motion.div>
 
                 {/* Stats */}
                 <motion.div
-                    initial={{opacity: 0, y: 30}}
-                    animate={{opacity: 1, y: 0}}
-                    transition={{delay: 0.5}}
-                    className="grid grid-cols-2 gap-3 md:gap-4"
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.6 }}
+                    className="grid grid-cols-2 gap-2 sm:gap-3 md:gap-4"
                 >
                   {[
-                    {value: "12+", label: "Лет опыта"},
-                    {value: "100+", label: "Проектов"},
+                    { value: "12+", label: "Лет опыта" },
+                    { value: "100+", label: "Проектов" },
                   ].map((stat, i) => (
-                      <div key={i}
-                           className="text-center p-3 md:p-4 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10">
-                        <div className="text-xl md:text-2xl font-bold text-white">{stat.value}</div>
-                        <div className="text-xs md:text-sm text-gray-400">{stat.label}</div>
+                      <div key={i} className={`text-center p-2 sm:p-3 md:p-4 rounded-xl backdrop-blur-sm shadow-lg transition-all duration-300 ${
+                          theme === 'dark'
+                              ? 'bg-gray-800/50 border border-gray-700 hover:border-blue-500/50'
+                              : 'bg-white border border-gray-200 hover:border-blue-400'
+                      }`}>
+                        <div className={`text-lg sm:text-xl md:text-2xl font-bold ${
+                            theme === 'dark' ? 'text-white' : 'text-black'
+                        }`}>{stat.value}</div>
+                        <div className={`text-[10px] sm:text-xs md:text-sm ${
+                            theme === 'dark' ? 'text-white/90' : 'text-gray-600'
+                        }`}>{stat.label}</div>
                       </div>
                   ))}
                 </motion.div>
-
               </motion.div>
 
               {/* Right column - Contact Form */}
               <motion.div
-                  initial={{opacity: 0, x: 50}}
-                  animate={{opacity: 1, x: 0}}
-                  transition={{duration: 0.8, delay: 0.3}}
+                  initial={{ opacity: 0, x: 50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.8, delay: 0.3 }}
               >
                 <ContactForm theme={theme}/>
               </motion.div>
             </div>
           </div>
-
-          {/* Bottom Gradient Fade for smooth transition */}
-          <div className="absolute bottom-0 left-0 right-0 h-80 bg-gradient-to-b from-transparent via-gray-900/30 to-gray-50 dark:via-gray-900/50 dark:to-gray-900 pointer-events-none" />
         </section>
 
-        {/* Contact Information Section - Now below hero */}
-        <section className="relative py-24 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-black">
-          {/* Top gradient overlay for smooth transition */}
-          <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-gray-50 dark:from-gray-900 to-transparent pointer-events-none" />
-          
+        {/* Contact Cards Section */}
+        <section className={`relative overflow-hidden py-8 ${
+          theme === 'dark'
+              ? 'bg-neutral-900'
+              : 'bg-white '
+        }`}>
+          {/* Decorative elements */}
+          <div className="absolute inset-0 opacity-20">
+            <div className="absolute top-20 right-0 w-80 h-80 rounded-full bg-blue-500/10 blur-3xl" />
+            <div className="absolute bottom-20 left-0 w-80 h-80 rounded-full bg-purple-500/10 blur-3xl" />
+          </div>
+
           <div className="container mx-auto px-4 relative z-10">
             <motion.div
                 initial={{opacity: 0, y: 50}}
                 whileInView={{opacity: 1, y: 0}}
                 viewport={{once: true}}
-                className="text-center mb-16"
+                className="text-center mb-12"
             >
               <div
-                  className="inline-flex items-center gap-2 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-full px-4 py-2 mb-4">
+                  className={`inline-flex items-center gap-2 rounded-full px-4 py-2 mb-4 backdrop-blur-sm ${
+                      theme === 'dark'
+                          ? 'bg-neutral-900'
+                          : 'bg-white border border-gray-200'
+                  }`}>
                 <Headset className="w-4 h-4"/>
-                <span className="text-sm font-medium">Связь</span>
+                <span className="text-sm font-medium">Наши контакты</span>
               </div>
-              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
-                Наши контактные данные
+              <h2 className={`text-3xl md:text-4xl lg:text-5xl font-black mb-6 ${
+                  theme === 'dark' ? 'text-white' : 'text-black'
+              }`}>
+                Свяжитесь с нами
               </h2>
-              <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-                Наши специалисты всегда готовы ответить на ваши вопросы и помочь с любыми задачами
+              <p className={`text-lg md:text-xl max-w-3xl mx-auto ${
+                  theme === 'dark' ? 'text-gray-400' : 'text-gray-600'
+              }`}>
+                Наши специалисты всегда готовы ответить на ваши вопросы
               </p>
             </motion.div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
               {[
                 {
-                  icon: <Phone className="w-8 h-8"/>,
+                  icon: Phone,
                   title: "Телефон/факс",
                   description: "8 (81378) 40-235",
-                  color: "from-blue-500 to-cyan-500",
+                  gradient: "from-blue-500 to-cyan-500",
+                  bgGradient: "from-blue-900/30 to-cyan-900/30",
                   link: "tel:+78137840235"
                 },
                 {
-                  icon: <Phone className="w-8 h-8"/>,
+                  icon: Phone,
                   title: "Генеральный директор",
                   description: "+7 931 247-08-88",
-                  color: "from-purple-500 to-pink-500",
+                  gradient: "from-purple-500 to-pink-500",
+                  bgGradient: "from-purple-900/30 to-pink-900/30",
                   link: "tel:+79312470888"
                 },
                 {
-                  icon: <Phone className="w-8 h-8"/>,
+                  icon: Phone,
                   title: "Отдел снабжения",
                   description: "+7 921 340 36 16",
-                  color: "from-orange-500 to-red-500",
+                  gradient: "from-orange-500 to-red-500",
+                  bgGradient: "from-orange-900/30 to-red-900/30",
                   link: "tel:+79213403616"
                 },
                 {
-                  icon: <Phone className="w-8 h-8"/>,
+                  icon: Phone,
                   title: "Отдел кадров",
                   description: "+7 921 591-65-06",
-                  color: "from-green-500 to-emerald-500",
+                  gradient: "from-green-500 to-emerald-500",
+                  bgGradient: "from-green-900/30 to-emerald-900/30",
                   link: "tel:+79215916506"
                 },
                 {
-                  icon: <Mail className="w-8 h-8"/>,
+                  icon: Mail,
                   title: "Email",
                   description: "l-legion@bk.ru",
-                  color: "from-indigo-500 to-blue-500",
+                  gradient: "from-indigo-500 to-blue-500",
+                  bgGradient: "from-indigo-900/30 to-blue-900/30",
                   link: "mailto:l-legion@bk.ru"
                 },
                 {
-                  icon: <MapPin className="w-8 h-8"/>,
+                  icon: MapPin,
                   title: "Адрес",
-                  description: "188992, Ленинградская обл., Выборгский район, г. Светогорск, ул. Максима Горького, д. 7",
-                  color: "from-yellow-500 to-orange-500",
+                  description: "Ленинградская обл., г. Светогорск, ул. Максима Горького, д. 7",
+                  gradient: "from-amber-500 to-orange-500",
+                  bgGradient: "from-amber-900/30 to-orange-900/30",
                   link: null
                 },
                 {
-                  icon: <Shield className="w-8 h-8"/>,
+                  icon: Shield,
                   title: "Реквизиты",
-                  description: "ИНН 7802808155\nКПП 470401001\nОГРН 1127847628820",
-                  color: "from-indigo-500 to-purple-500",
+                  description: "ИНН 7802808155 | КПП 470401001",
+                  gradient: "from-violet-500 to-purple-500",
+                  bgGradient: "from-violet-900/30 to-purple-900/30",
                   link: null
                 },
                 {
-                  icon: <Users className="w-8 h-8"/>,
+                  icon: Clock,
                   title: "Часы работы",
-                  description: "Пн-Пт: 9:00 - 18:00\nСб-Вс: выходной",
-                  color: "from-pink-500 to-rose-500",
+                  description: "Пн-Пт: 9:00 - 18:00 | Сб-Вс: выходной",
+                  gradient: "from-rose-500 to-pink-500",
+                  bgGradient: "from-rose-900/30 to-pink-900/30",
                   link: null
                 }
-              ].map((contact, i) => (
+              ].map((contact, i) => {
+                const Icon = contact.icon;
+                return (
                   <motion.div
                       key={i}
                       initial={{opacity: 0, y: 30}}
                       whileInView={{opacity: 1, y: 0}}
                       viewport={{once: true}}
                       transition={{delay: i * 0.1}}
+                      whileHover={{ y: -12, scale: 1.03 }}
                       className="group relative"
                   >
+                    {/* Pulsing glow effect */}
                     <div
-                        className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-300"/>
+                        className={`absolute inset-0 rounded-[2rem] bg-gradient-to-r ${contact.gradient} opacity-0 group-hover:opacity-30 blur-xl transition-all duration-500 pointer-events-none`}
+                        style={{
+                          animation: `pulse ${2 + i * 0.5}s cubic-bezier(0.4, 0, 0.6, 1) infinite`
+                        }}
+                    />
+
                     {contact.link ? (
                         <a
                             href={contact.link}
-                            className="relative block bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer"
+                            className={`relative overflow-hidden rounded-[2rem] p-8 h-full flex flex-col transition-all duration-500 shadow-xl hover:shadow-2xl border hover:border-transparent ${
+                              theme === 'dark'
+                                ? `bg-gradient-to-br ${contact.bgGradient} border-gray-700/50`
+                                : `bg-white border-gray-200`
+                            }`}
+                            style={{
+                              backgroundSize: '200% 200%',
+                              animation: `gradient-shift ${3 + i * 0.7}s ease infinite`
+                            }}
                         >
-                          <div
-                              className={`inline-flex p-3 rounded-xl bg-gradient-to-br ${contact.color} text-white mb-4`}>
-                            {contact.icon}
+                          <div className="relative mb-6">
+                            <div className={`inline-flex p-4 rounded-2xl bg-gradient-to-br ${contact.gradient} shadow-xl group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 ${
+                              theme === 'dark' ? 'text-white' : 'text-black'
+                            }`}>
+                              <Icon className="w-8 h-8" />
+                            </div>
+                            {/* Small decorative dots */}
+                            <div className="absolute -bottom-2 -right-2 flex gap-1">
+                              <div className={`w-2 h-2 rounded-full bg-gradient-to-r ${contact.gradient} opacity-60`} />
+                              <div className={`w-2 h-2 rounded-full bg-gradient-to-r ${contact.gradient} opacity-40`} />
+                            </div>
                           </div>
-                          <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">
+
+                          <h3 className={`text-xl font-black mb-4 tracking-tight ${
+                            theme === 'dark' ? 'text-white' : 'text-black'
+                          }`}>
                             {contact.title}
                           </h3>
-                          <p className="text-gray-600 dark:text-gray-300 whitespace-pre-line text-sm">
+
+                          <p className={`flex-grow leading-relaxed text-base ${
+                            theme === 'dark' ? 'text-white/90' : 'text-gray-600'
+                          }`}>
                             {contact.description}
                           </p>
                         </a>
                     ) : (
                         <div
-                            className="relative bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300">
-                          <div
-                              className={`inline-flex p-3 rounded-xl bg-gradient-to-br ${contact.color} text-white mb-4`}>
-                            {contact.icon}
+                            className={`relative overflow-hidden rounded-[2rem] p-8 h-full flex flex-col transition-all duration-500 shadow-xl hover:shadow-2xl border hover:border-transparent ${
+                              theme === 'dark'
+                                ? `bg-gradient-to-br ${contact.bgGradient} border-gray-700/50`
+                                : `bg-white border-gray-200`
+                            }`}
+                            style={{
+                              backgroundSize: '200% 200%',
+                              animation: `gradient-shift ${3 + i * 0.7}s ease infinite`
+                            }}
+                        >
+                          <div className="relative mb-6">
+                            <div className={`inline-flex p-4 rounded-2xl bg-gradient-to-br ${contact.gradient} shadow-xl group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 ${
+                              theme === 'dark' ? 'text-white' : 'text-black'
+                            }`}>
+                              <Icon className="w-8 h-8" />
+                            </div>
+                            {/* Small decorative dots */}
+                            <div className="absolute -bottom-2 -right-2 flex gap-1">
+                              <div className={`w-2 h-2 rounded-full bg-gradient-to-r ${contact.gradient} opacity-60`} />
+                              <div className={`w-2 h-2 rounded-full bg-gradient-to-r ${contact.gradient} opacity-40`} />
+                            </div>
                           </div>
-                          <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">
+
+                          <h3 className={`text-xl font-black mb-4 tracking-tight ${
+                            theme === 'dark' ? 'text-white' : 'text-black'
+                          }`}>
                             {contact.title}
                           </h3>
-                          <p className="text-gray-600 dark:text-gray-300 whitespace-pre-line text-sm">
+
+                          <p className={`flex-grow leading-relaxed text-base ${
+                            theme === 'dark' ? 'text-white/90' : 'text-gray-600'
+                          }`}>
                             {contact.description}
                           </p>
                         </div>
                     )}
                   </motion.div>
-              ))}
+                );
+              })}
             </div>
           </div>
-
-          {/* Bottom Gradient Fade for smooth transition */}
-          <div className="absolute bottom-0 left-0 right-0 h-80 bg-gradient-to-b from-transparent via-white/50 to-gray-50 dark:via-gray-900/30 dark:to-gray-950 pointer-events-none" />
         </section>
 
         {/* Map Section */}
-        <section className="relative py-24 bg-gradient-to-b from-white to-gray-50 dark:from-gray-950 dark:to-gray-900">
-          {/* Top gradient overlay for smooth transition */}
-          <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-white dark:from-gray-950 to-transparent pointer-events-none" />
-          
+        <section className={`relative py-8 overflow-hidden ${
+          theme === 'dark'
+            ? 'bg-neutral-900'
+            : 'bg-white'
+        }`}>
           <div className="container mx-auto px-4 relative z-10">
             <motion.div
                 initial={{opacity: 0, y: 50}}
                 whileInView={{opacity: 1, y: 0}}
                 viewport={{once: true}}
-                className="text-center mb-16"
+                className="text-center mb-12"
             >
-              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
-                Как нас найти
-              </h2>
-              <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-                Наш офис находится в Ленинградской области, Выборгский район, г. Светогорск
-              </p>
+              <div
+                  className={`inline-flex items-center gap-2 rounded-full px-4 py-2 mb-4 backdrop-blur-sm ${
+                      theme === 'dark'
+                          ? 'bg-purple-900/30 text-purple-400 border border-purple-800/30'
+                          : 'bg-purple-100 text-purple-600 border border-purple-200'
+                  }`}>
+                <MapPin className="w-4 h-4"/>
+                <span className="text-sm font-medium">Как нас найти</span>
+              </div>
             </motion.div>
 
-            <div className="max-w-6xl mx-auto rounded-3xl overflow-hidden shadow-2xl">
-              <div className="relative h-[500px] w-full">
+            <motion.div
+                initial={{opacity: 0, y: 50}}
+                whileInView={{opacity: 1, y: 0}}
+                viewport={{once: true}}
+                className="max-w-6xl mx-auto"
+            >
+              <div className={`relative h-[400px] md:h-[500px] rounded-3xl overflow-hidden shadow-2xl border-4 ${
+                theme === 'dark' ? 'border-gray-800' : 'border-white'
+              }`}>
                 <iframe
                     src="https://yandex.ru/map-widget/v1/?ll=28.935041%2C61.109662&z=17&l=map&pt=28.935041%2C61.109662,pm2rdm&mode=search&text=%D0%A1%D1%82%D1%80%D0%BE%D0%B8%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%B0%D1%8F%20%D0%BA%D0%BE%D0%BC%D0%BF%D0%B0%D0%BD%D0%B8%D1%8F%20Legion%2C%20%D0%B3%D0%BE%D1%80%D0%BE%D0%B4%20%D0%A1%D0%B2%D0%B5%D1%82%D0%BE%D0%B3%D0%BE%D1%80%D1%81%D0%BA%2C%20%D1%83%D0%BB%D0%B8%D1%86%D0%B0%20%D0%9C%D0%B0%D0%BA%D1%81%D0%B8%D0%BC%D0%B0%20%D0%93%D0%BE%D1%80%D1%8C%D0%BA%D0%BE%D0%B3%D0%BE%2C%207"
                     width="100%"
@@ -366,80 +451,116 @@ const ContactsPage: React.FC<ContactsPageProps> = ({ breadcrumbs }) => {
                 />
 
                 {/* Overlay with address info */}
-                <div
-                    className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent pointer-events-none">
-                  <div className="p-8">
-                    <div className="flex items-start gap-4 text-white">
-                      <MapPin className="w-8 h-8 text-blue-400 flex-shrink-0 mt-1"/>
-                      <div className="hidden md:block">
-                        <h3 className="text-2xl font-bold mb-2">Наш офис</h3>
-                        <p className="text-lg text-gray-200">188992, Ленинградская обл., Выборгский район, г.
-                          Светогорск, ул. Максима Горького, д. 7</p>
-                        <div className="flex gap-4 mt-3">
-                          <a
-                              href="https://yandex.ru/maps/-/CPUuiH9f"
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-sm text-blue-300 hover:text-blue-200 transition-colors pointer-events-auto underline"
-                          >
-                            Открыть в Яндекс Картах
-                          </a>
-                        </div>
+                <div className="absolute bottom-4 left-4 right-4 md:bottom-8 md:left-8 md:right-8">
+                  <div className={`rounded-2xl p-4 md:p-6 backdrop-blur-md shadow-2xl ${
+                    theme === 'dark'
+                      ? 'bg-gray-900/90 border border-gray-700/50'
+                      : 'bg-white/90 border border-gray-200'
+                  }`}>
+                    <div className="flex items-start gap-3 md:gap-4">
+                      <div className="p-2 md:p-3 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 text-white shadow-lg">
+                        <MapPin className="w-5 h-5 md:w-6 md:h-6" />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className={`text-lg md:text-xl font-bold mb-1 md:mb-2 ${
+                          theme === 'dark' ? 'text-white' : 'text-black'
+                        }`}>Наш офис</h3>
+                        <p className={`text-sm md:text-base mb-2 md:mb-3 ${
+                          theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
+                        }`}>
+                          188992, Ленинградская обл., Выборгский район, г. Светогорск, ул. Максима Горького, д. 7
+                        </p>
+                        <a
+                            href="https://yandex.ru/maps/-/CPUuiH9f"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 text-sm md:text-base font-semibold text-blue-500 hover:text-blue-400 transition-colors"
+                        >
+                          <span>Открыть в Яндекс Картах</span>
+                          <ArrowRight className="w-4 h-4" />
+                        </a>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
-
-          {/* Bottom Gradient Fade for smooth transition */}
-          <div className="absolute bottom-0 left-0 right-0 h-80 bg-gradient-to-b from-transparent via-gray-900/30 to-white dark:via-gray-900/50 dark:to-gray-950 pointer-events-none" />
         </section>
 
         {/* CTA Section */}
-        <section className="relative py-24 bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600">
-          {/* Top gradient overlay for smooth transition */}
-          <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-white dark:from-gray-950 to-transparent pointer-events-none" />
+        <section className={`relative py-24 overflow-hidden ${
+          theme === 'dark'
+            ? 'bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600'
+            : 'bg-gradient-to-br from-blue-400 via-purple-400 to-pink-400'
+        }`}>
+          {/* Animated background elements */}
+          <div className="absolute inset-0 opacity-20 z-0">
+            <div className="absolute top-20 left-20 w-60 h-60 rounded-full bg-white/10 blur-3xl animate-blob" />
+            <div className="absolute bottom-20 right-20 w-60 h-60 rounded-full bg-white/10 blur-3xl animate-blob animation-delay-2000" />
+            <div className="absolute top-1/2 left-1/2 w-60 h-60 rounded-full bg-white/10 blur-3xl animate-blob animation-delay-4000" />
+          </div>
 
           <div className="container mx-auto px-4 relative z-10">
             <motion.div
                 initial={{opacity: 0, y: 50}}
                 whileInView={{opacity: 1, y: 0}}
                 viewport={{once: true}}
-                className="text-center text-white"
+                className="text-center"
             >
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
-                Готовы начать сотрудничество?
+              <div className={`inline-flex items-center gap-2 backdrop-blur-sm rounded-full px-4 py-2 mb-4 border ${
+                theme === 'dark'
+                  ? 'bg-white/20 border-white/30'
+                  : 'bg-black/10 border-black/20'
+              }`}>
+                <Building2 className={`w-4 h-4 ${
+                  theme === 'dark' ? 'text-white' : 'text-gray-900'
+                }`}/>
+                <span className={`text-sm font-medium ${
+                  theme === 'dark' ? 'text-white' : 'text-gray-900'
+                }`}>Начать сотрудничество</span>
+              </div>
+
+              <h2 className={`text-3xl md:text-4xl lg:text-5xl font-black mb-6 ${
+                theme === 'dark' ? 'text-white' : 'text-gray-900'
+              }`}>
+                Готовы начать проект?
               </h2>
 
-              <p className="text-xl opacity-90 max-w-3xl mx-auto mb-12">
+              <p className={`text-lg md:text-xl max-w-3xl mx-auto mb-10 ${
+                theme === 'dark' ? 'text-white/90' : 'text-gray-900'
+              }`}>
                 Свяжитесь с нами прямо сейчас и получите консультацию от наших экспертов.
-                Мы поможем реализовать ваш проект с учетом всех требований и пожеланий.
+                Мы поможем реализовать ваш проект с учетом всех требований.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <a
                     href="tel:+78137840235"
-                    className="group inline-flex items-center justify-center gap-3 bg-white text-gray-900 px-8 py-4 rounded-xl font-semibold hover:shadow-2xl hover:scale-105 transition-all duration-300"
+                    className={`group inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl font-semibold hover:shadow-2xl hover:scale-105 transition-all duration-300 ${
+                      theme === 'dark'
+                        ? 'bg-white text-gray-900'
+                        : 'bg-gray-900 text-white'
+                    }`}
                 >
                   <Phone className="w-5 h-5"/>
-                  <span>Позвонить нам</span>
+                  <span className={theme === 'dark' ? 'text-gray-900' : 'text-white'}>Позвонить нам</span>
                 </a>
 
                 <a
                     href="mailto:l-legion@bk.ru"
-                    className="group inline-flex items-center justify-center gap-3 bg-transparent text-white px-8 py-4 rounded-xl font-semibold border-2 border-white hover:bg-white/10 transition-all duration-300"
+                    className={`group inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl font-semibold border-2 transition-all duration-300 ${
+                      theme === 'dark'
+                        ? 'bg-transparent text-white border-white hover:bg-white/10'
+                        : 'bg-transparent text-gray-900 border-gray-900 hover:bg-gray-900/10'
+                    }`}
                 >
                   <Mail className="w-5 h-5"/>
-                  <span>Написать письмо</span>
+                  <span className={theme === 'dark' ? 'text-white' : 'text-gray-900'}>Написать письмо</span>
                 </a>
               </div>
             </motion.div>
           </div>
-
-          {/* Bottom Gradient Fade for smooth transition */}
-          <div className="absolute bottom-0 left-0 right-0 h-80 bg-gradient-to-b from-transparent via-purple-900/30 to-white dark:via-gray-900/50 dark:to-gray-950 pointer-events-none" />
         </section>
 
         {/* Callback Modal */}

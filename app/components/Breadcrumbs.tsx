@@ -2,6 +2,7 @@ import React from 'react';
 import { ChevronRight } from 'lucide-react';
 import { Link } from 'react-router';
 import BreadcrumbListSchema, { type BreadcrumbItem } from './BreadcrumbSchema';
+import {useTheme} from "~/contexts/ThemeContext";
 
 interface BreadcrumbsProps {
   breadcrumbs: BreadcrumbItem[];
@@ -9,11 +10,16 @@ interface BreadcrumbsProps {
 }
 
 const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ breadcrumbs, className = '' }) => {
+    const { theme } = useTheme();
+    
+    // Определяем цвет текста: если передан className, используем его, иначе определяем по теме
+    const textColor = className || (theme === 'dark' ? 'text-white/80' : 'text-black');
+    
   return (
     <>
       {/* Schema.org разметка */}
       <BreadcrumbListSchema breadcrumbs={breadcrumbs} />
-      
+
       {/* Визуальное отображение */}
       <nav className={`flex items-center space-x-2 text-sm ${className}`} aria-label="Хлебные крошки">
         {breadcrumbs.map((breadcrumb, index) => (
@@ -21,11 +27,11 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ breadcrumbs, className = '' }
             {index > 0 && (
               <ChevronRight className="w-4 h-4 text-gray-400" aria-hidden="true" />
             )}
-            
+
             {index === breadcrumbs.length - 1 ? (
               // Текущая страница (не кликабельная)
               <span
-                className="text-gray-900 dark:text-white font-medium"
+                className={textColor}
                 aria-current="page"
               >
                 {breadcrumb.name}
@@ -34,7 +40,7 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ breadcrumbs, className = '' }
               // Ссылка на предыдущие страницы
               <Link
                 to={breadcrumb.item}
-                className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                className={textColor}
               >
                 {breadcrumb.name}
               </Link>
