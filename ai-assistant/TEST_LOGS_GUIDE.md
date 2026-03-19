@@ -14,9 +14,6 @@ node test-telegram-logs.js
 ```
 🔍 Testing Telegram Logs Configuration...
 
-✅ Environment variables loaded
-   Token: 8564716580:AAEag1otwIv...
-   Group ID: -1003743767375
 
 📋 Test 1: Getting chat info...
 ✅ Chat found:
