@@ -25,7 +25,7 @@ export default function PrivacyPolicy() {
   const { theme } = useTheme();
 
   return (
-    <div className={`min-h-screen py-12 px-4 ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-50'}`}>
+    <div className={`min-h-screen py-12 px-4 ${theme === 'dark' ? 'bg-neutral-900' : 'bg-gray-50'}`}>
       <div className="max-w-4xl mx-auto">
         <div className={`rounded-2xl p-8 shadow-lg ${
           theme === 'dark'

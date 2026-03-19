@@ -82,6 +82,13 @@ export default defineConfig(({ isSsrBuild }) => {
           './app/routes/home.tsx',
         ],
       },
+      // Proxy API requests to the API server
+      proxy: {
+        '/api': {
+          target: 'http://localhost:3001',
+          changeOrigin: true,
+        },
+      },
     },
   };
 });

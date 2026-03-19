@@ -60,7 +60,7 @@ const FixedMobileTabs: React.FC = () => {
   return (
     <div className={`fixed bottom-0 left-0 right-0 z-50 border-t ${
       theme === 'dark'
-        ? 'bg-gray-800 border-gray-700'
+        ? 'bg-neutral-900 border-gray-700'
         : 'bg-white border-gray-200'
     } md:hidden`}>
       <div className="flex justify-around items-center">

@@ -5,16 +5,19 @@
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
-html,
-body {
-  @apply bg-white dark:bg-gray-900;
+/* Базовые стили для html элемента */
+html {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  background-color: rgb(255 255 255);
+}
 
-  @media (prefers-color-scheme: dark) {
-    color-scheme: dark;
-  }
+/* Тёмная тема */
+html.dark {
+  background-color: rgb(23 23 23);
+  color-scheme: dark;
 }
 
 /* Custom scrollbar */
@@ -28,10 +31,27 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-gray-300 dark:bg-gray-600 rounded-full;
+  @apply bg-gray-200 dark:bg-gray-600 rounded-full;
 }
 
 ::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-300 dark:bg-gray-500;
+}
+
+/* Chat widget scrollbar - light track for light theme */
+.chat-widget-messages::-webkit-scrollbar {
+  width: 8px;
+}
+
+.chat-widget-messages::-webkit-scrollbar-track {
+  @apply bg-white dark:bg-gray-800 rounded-full;
+}
+
+.chat-widget-messages::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 dark:bg-gray-600 rounded-full border-2 border-white dark:border-gray-800;
+}
+
+.chat-widget-messages::-webkit-scrollbar-thumb:hover {
   @apply bg-gray-400 dark:bg-gray-500;
 }
 
@@ -49,6 +69,13 @@ a:focus, button:focus {
 h1 { @apply text-3xl sm:text-4xl md:text-5xl; }
 h2 { @apply text-2xl sm:text-3xl; }
 h3 { @apply text-xl sm:text-2xl; }
+
+/* Цвет текста для заголовков в темной теме */
+html.dark h1,
+html.dark h2,
+html.dark h3 {
+  color: white;
+}
 
 /* Animation for hover effects */
 .hover-lift {
@@ -194,6 +221,49 @@ body:not(.no-bottom-nav) {
   100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
 }
 
+/* Pulse animation for opacity (used in feature cards) */
+@keyframes pulse-opacity {
+  0%, 100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+/* Slow smooth pulse animation for gradient backgrounds */
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes pulse-fade {
+  0%, 100% {
+    opacity: 0.2;
+  }
+  25% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 0.3;
+  }
+  75% {
+    opacity: 0.5;
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 4s ease-in-out infinite;
+}
+
+.animate-pulse-fade {
+  animation: pulse-fade 5s ease-in-out infinite;
+}
+
 @keyframes marquee {
   0% {
     transform: translateX(0%);
@@ -206,6 +276,19 @@ body:not(.no-bottom-nav) {
 .animate-marquee {
   animation: marquee 25s linear infinite;
   display: inline-block;
+}
+
+/* Gradient shift animation for cards */
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 

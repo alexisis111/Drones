@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { X, RefreshCw, Shield } from 'lucide-react';
+import { useTheme } from '../contexts/ThemeContext';
 
 interface ProjectEstimateModalProps {
   isOpen: boolean;
@@ -19,6 +20,7 @@ const ProjectEstimateModal: React.FC<ProjectEstimateModalProps> = ({
   onClose,
   onSubmit
 }) => {
+  const { theme } = useTheme();
   const [formData, setFormData] = useState<FormData>({
     name: '',
     phone: '+7',
@@ -331,31 +333,51 @@ const ProjectEstimateModal: React.FC<ProjectEstimateModalProps> = ({
       style={{ pointerEvents: 'auto' }}
     >
       <div
-        className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl max-w-md w-full max-h-[90vh] md:max-h-[60vh] overflow-y-auto"
+        className={`rounded-2xl shadow-xl max-w-md w-full max-h-[90vh] md:max-h-[60vh] overflow-y-auto ${
+          theme === 'dark'
+            ? 'bg-neutral-900'
+            : 'bg-white'
+        }`}
         onClick={(e) => e.stopPropagation()}
         style={{ pointerEvents: 'auto' }}
       >
         {/* Header */}
-        <div className="flex justify-between items-center p-6 border-b border-gray-200 dark:border-gray-700 sticky top-0 bg-white dark:bg-gray-800 z-10">
+        <div className={`flex justify-between items-center p-6 border-b sticky top-0 z-10 ${
+          theme === 'dark'
+            ? 'border-gray-700 bg-gray-800'
+            : 'border-gray-200 bg-white'
+        }`}>
           <div className="flex items-center gap-2">
             <div className="p-2 rounded-xl bg-gradient-to-br from-blue-600 to-purple-600 text-white">
               <Shield className="w-5 h-5" />
             </div>
-            <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+            <h3 className={`text-xl font-bold ${
+              theme === 'dark' ? 'text-white' : 'text-black'
+            }`}>
               Бесплатный расчет
             </h3>
           </div>
           <button
             onClick={onClose}
-            className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors"
+            className={`transition-colors ${
+              theme === 'dark'
+                ? 'text-gray-400 hover:text-gray-200'
+                : 'text-gray-500 hover:text-gray-700'
+            }`}
           >
             <X className="w-6 h-6" />
           </button>
         </div>
 
         {/* Description */}
-        <div className="p-6 border-b border-gray-200 dark:border-gray-700 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-950/20 dark:to-purple-950/20">
-          <p className="text-gray-700 dark:text-gray-300 text-sm">
+        <div className={`p-6 border-b ${
+          theme === 'dark'
+            ? 'border-gray-700 bg-gradient-to-br from-blue-950/20 to-purple-950/20'
+            : 'border-gray-200 bg-gradient-to-br from-blue-50 to-purple-50'
+        }`}>
+          <p className={`text-sm ${
+            theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
+          }`}>
             Получите индивидуальное комплексное решение защиты вашего промышленного объекта от атак БПЛА
           </p>
         </div>
@@ -364,7 +386,9 @@ const ProjectEstimateModal: React.FC<ProjectEstimateModalProps> = ({
         <form onSubmit={handleSubmit} className="p-6">
           <div className="space-y-4">
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              <label htmlFor="name" className={`block text-sm font-medium mb-1 ${
+                theme === 'dark' ? 'text-gray-300' : 'text-black'
+              }`}>
                 Ваше имя *
               </label>
               <input
@@ -373,11 +397,13 @@ const ProjectEstimateModal: React.FC<ProjectEstimateModalProps> = ({
                 value={formData.name}
                 onChange={handleChange}
                 onBlur={() => handleBlur('name')}
-                className={`w-full px-4 py-3 rounded-lg ${
+                className={`w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
                   errors.name
                     ? 'border-red-500 bg-red-50 dark:bg-red-900/20'
-                    : 'border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700'
-                } border focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors`}
+                    : theme === 'dark'
+                      ? 'border-gray-600 bg-gray-700 text-white'
+                      : 'border-gray-300 bg-gray-50 text-black'
+                }`}
                 placeholder="Иван Иванов"
               />
               {errors.name && (
@@ -386,7 +412,9 @@ const ProjectEstimateModal: React.FC<ProjectEstimateModalProps> = ({
             </div>
 
             <div>
-              <label htmlFor="phone" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              <label htmlFor="phone" className={`block text-sm font-medium mb-1 ${
+                theme === 'dark' ? 'text-gray-300' : 'text-black'
+              }`}>
                 Телефон *
               </label>
               <input
@@ -395,11 +423,13 @@ const ProjectEstimateModal: React.FC<ProjectEstimateModalProps> = ({
                 value={formData.phone}
                 onChange={handleChange}
                 onBlur={() => handleBlur('phone')}
-                className={`w-full px-4 py-3 rounded-lg ${
+                className={`w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
                   errors.phone
                     ? 'border-red-500 bg-red-50 dark:bg-red-900/20'
-                    : 'border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700'
-                } border focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors`}
+                    : theme === 'dark'
+                      ? 'border-gray-600 bg-gray-700 text-white'
+                      : 'border-gray-300 bg-gray-50 text-black'
+                }`}
                 placeholder="+7 (___) ___-__-__"
               />
               {errors.phone && (
@@ -408,18 +438,22 @@ const ProjectEstimateModal: React.FC<ProjectEstimateModalProps> = ({
             </div>
 
             <div>
-              <label htmlFor="objectType" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              <label htmlFor="objectType" className={`block text-sm font-medium mb-1 ${
+                theme === 'dark' ? 'text-gray-300' : 'text-black'
+              }`}>
                 Тип объекта *
               </label>
               <select
                 id="objectType"
                 value={formData.objectType}
                 onChange={handleChange}
-                className={`w-full px-4 py-3 rounded-lg ${
+                className={`w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
                   errors.objectType
                     ? 'border-red-500 bg-red-50 dark:bg-red-900/20'
-                    : 'border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700'
-                } border focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors`}
+                    : theme === 'dark'
+                      ? 'border-gray-600 bg-gray-700 text-white'
+                      : 'border-gray-300 bg-gray-50 text-black'
+                }`}
               >
                 <option value="">Выберите тип объекта</option>
                 {objectTypes.map((type) => (
@@ -432,7 +466,9 @@ const ProjectEstimateModal: React.FC<ProjectEstimateModalProps> = ({
             </div>
 
             <div>
-              <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              <label htmlFor="message" className={`block text-sm font-medium mb-1 ${
+                theme === 'dark' ? 'text-gray-300' : 'text-black'
+              }`}>
                 Комментарий (необязательно)
               </label>
               <textarea
@@ -440,28 +476,46 @@ const ProjectEstimateModal: React.FC<ProjectEstimateModalProps> = ({
                 value={formData.message}
                 onChange={handleChange}
                 rows={3}
-                className="w-full px-4 py-3 rounded-lg bg-gray-50 text-gray-900 border-gray-300 dark:bg-gray-700 dark:text-white dark:border-gray-600 border focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+                className={`w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
+                  theme === 'dark'
+                    ? 'border-gray-600 bg-gray-700 text-white'
+                    : 'border-gray-300 bg-gray-50 text-black'
+                }`}
                 placeholder="Дополнительная информация об объекте"
               ></textarea>
             </div>
 
             {/* Капча */}
-            <div className="mt-4 p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <div className={`mt-4 p-4 rounded-lg ${
+              theme === 'dark'
+                ? 'bg-gray-700/50'
+                : 'bg-gray-50'
+            }`}>
+              <label className={`block text-sm font-medium mb-2 ${
+                theme === 'dark' ? 'text-gray-300' : 'text-black'
+              }`}>
                 Проверка (защита от ботов) *
               </label>
 
               <div className="flex items-center gap-3 mb-2">
-                <div className="flex-1 bg-white dark:bg-gray-800 p-3 rounded-lg text-center text-xl font-bold text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600">
+                <div className={`flex-1 p-3 rounded-lg text-center text-xl font-bold border ${
+                  theme === 'dark'
+                    ? 'bg-gray-800 text-white border-gray-600'
+                    : 'bg-white text-black border-gray-300'
+                }`}>
                   {captcha.num1} {captcha.operator} {captcha.num2} = ?
                 </div>
                 <button
                   type="button"
                   onClick={generateCaptcha}
-                  className="p-3 bg-gray-200 dark:bg-gray-600 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-500 transition-colors"
+                  className={`p-3 rounded-lg transition-colors ${
+                    theme === 'dark'
+                      ? 'bg-gray-600 hover:bg-gray-500 text-gray-300'
+                      : 'bg-gray-200 hover:bg-gray-300 text-gray-700'
+                  }`}
                   title="Обновить пример"
                 >
-                  <RefreshCw className="w-5 h-5 text-gray-700 dark:text-gray-300" />
+                  <RefreshCw className="w-5 h-5" />
                 </button>
               </div>
 
@@ -472,11 +526,13 @@ const ProjectEstimateModal: React.FC<ProjectEstimateModalProps> = ({
                   setCaptchaAnswer(e.target.value);
                   setCaptchaError('');
                 }}
-                className={`w-full px-4 py-3 rounded-lg ${
+                className={`w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
                   captchaError
                     ? 'border-red-500 bg-red-50 dark:bg-red-900/20'
-                    : 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800'
-                } border focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors`}
+                    : theme === 'dark'
+                      ? 'border-gray-600 bg-gray-800 text-white'
+                      : 'border-gray-300 bg-white text-black'
+                }`}
                 placeholder="Введите ответ"
               />
 
@@ -498,7 +554,9 @@ const ProjectEstimateModal: React.FC<ProjectEstimateModalProps> = ({
                 }}
                 className="mt-1 mr-2 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
               />
-              <label htmlFor="consent" className="text-sm text-gray-600 dark:text-gray-400">
+              <label htmlFor="consent" className={`text-sm ${
+                theme === 'dark' ? 'text-gray-400' : 'text-gray-700'
+              }`}>
                 Я даю согласие на обработку персональных данных в соответствии с{' '}
                 <a href="/privacy" className="text-blue-600 hover:underline">политикой конфиденциальности</a>
               </label>
@@ -511,22 +569,38 @@ const ProjectEstimateModal: React.FC<ProjectEstimateModalProps> = ({
               <div className="relative overflow-hidden">
                 <div className={`p-4 rounded-lg ${
                   submitStatus.type === 'success'
-                    ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300'
-                    : 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300'
+                    ? theme === 'dark'
+                      ? 'bg-green-900/30 text-green-300'
+                      : 'bg-green-100 text-green-800'
+                    : theme === 'dark'
+                      ? 'bg-red-900/30 text-red-300'
+                      : 'bg-red-100 text-red-800'
                 }`}>
                   <div className="flex items-center justify-between mb-2">
                     <span>{submitStatus.message}</span>
                     {submitStatus.type === 'success' && (
-                      <span className="text-sm font-medium bg-green-200 dark:bg-green-800 px-2 py-1 rounded">
+                      <span className={`text-sm font-medium px-2 py-1 rounded ${
+                        theme === 'dark'
+                          ? 'bg-green-800 text-green-300'
+                          : 'bg-green-200 text-green-800'
+                      }`}>
                         {countdown}с
                       </span>
                     )}
                   </div>
 
                   {submitStatus.type === 'success' && (
-                    <div className="w-full h-1 bg-green-200 dark:bg-green-800 rounded-full overflow-hidden">
+                    <div className={`w-full h-1 rounded-full overflow-hidden ${
+                      theme === 'dark'
+                        ? 'bg-green-800'
+                        : 'bg-green-200'
+                    }`}>
                       <div
-                        className="h-full bg-green-600 dark:bg-green-400 transition-all duration-100 ease-linear"
+                        className={`h-full transition-all duration-100 ease-linear ${
+                          theme === 'dark'
+                            ? 'bg-green-400'
+                            : 'bg-green-600'
+                        }`}
                         style={{ width: `${progress}%` }}
                       />
                     </div>

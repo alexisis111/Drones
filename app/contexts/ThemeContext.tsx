@@ -11,15 +11,27 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [theme, setTheme] = useState<Theme>('dark');
+  const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {
-    // Применяем тёмную тему по умолчанию
+    // Загружаем сохранённую тему из localStorage
+    const savedTheme = localStorage.getItem('theme') as Theme | null;
+    if (savedTheme) {
+      setTheme(savedTheme);
+    }
+    setIsInitialized(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isInitialized) return;
+    
+    // Применяем класс к html элементу
     document.documentElement.classList.remove('light', 'dark');
     document.documentElement.classList.add(theme);
 
     // Сохраняем предпочтение
     localStorage.setItem('theme', theme);
-  }, [theme]);
+  }, [theme, isInitialized]);
 
   const toggleTheme = () => {
     setTheme(prev => prev === 'light' ? 'dark' : 'light');

@@ -24,8 +24,8 @@ const Footer: React.FC = () => {
     return (
         <footer className={`py-16 ${
             theme === 'dark'
-                ? 'bg-gradient-to-br from-gray-900 to-gray-800 text-gray-300'
-                : 'bg-gradient-to-br from-gray-50 to-gray-100 text-gray-700'
+                ? 'bg-neutral-900'
+                : 'bg-white text-gray-700'
         }`}>
             <div className="container mx-auto px-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
@@ -241,7 +241,7 @@ const Footer: React.FC = () => {
                         <div className="mb-4 md:mb-0">
                             <p>&copy; {new Date().getFullYear()} ООО "ЛЕГИОН". Все права защищены.</p>
                         </div>
-                        <div className="flex flex-wrap justify-center gap-4">
+                        <div className="flex flex-wrap justify-center gap-12">
                             <Link
                                 to="/terms"
                                 className={`hover:text-blue-600 transition-colors text-sm ${
@@ -258,17 +258,6 @@ const Footer: React.FC = () => {
                             >
                                 Политика конфиденциальности
                             </Link>
-
-                            <a href="https://webmaster.yandex.ru/siteinfo/?site=https://легион78.рф">
-                                <img
-                                    className='w-auto h-8 rounded-lg'
-                                    alt="Яндекс.Метрика - счётчик посещаемости сайта"
-                                    src="https://yandex.ru/cycounter?https://легион78.рф&theme=dark&lang=ru"
-                                    loading="lazy"
-                                    width="120"
-                                    height="32"
-                                />
-                            </a>
                         </div>
                     </div>
                 </motion.div>

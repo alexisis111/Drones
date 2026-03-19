@@ -16,15 +16,15 @@ const Header: React.FC = () => {
   return (
     <header className={`sticky top-0 z-50 backdrop-blur-md ${
       theme === 'dark'
-        ? 'bg-gray-900/90 border-b border-gray-800'
+        ? 'bg-neutral-900'
         : 'bg-white/90 border-b border-gray-200'
     }`}>
       <div className="container mx-auto px-4 py-4">
         <div className="flex justify-between items-center">
           <Link to="/" className="flex items-center space-x-2">
-            <div className="w-auto h-10 flex items-center justify-center">
+            <div className="w-auto h-8 flex items-center justify-center">
               <OptimizedImage
-                src="/Logo-1.png"
+                src="/Logo-2.png"
                 alt="ООО ЛЕГИОН - строительная компания"
                 className="w-full h-full object-contain"
                 priority={true}

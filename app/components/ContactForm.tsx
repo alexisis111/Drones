@@ -364,21 +364,56 @@ const ContactForm: React.FC<ContactFormProps> = ({
         }
     };
 
-    // Стили в зависимости от варианта
+    // Стили в зависимости от варианта и темы
     const getContainerStyles = () => {
+        const baseStyles = 'rounded-2xl shadow-2xl transition-all duration-500';
+        
         switch (variant) {
             case 'minimal':
-                return 'bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl';
+                return `${baseStyles} ${
+                    theme === 'dark'
+                        ? 'bg-white/5 backdrop-blur-sm border border-white/10'
+                        : 'bg-gray-50 border border-gray-200'
+                }`;
             case 'card':
-                return 'bg-gradient-to-br from-gray-900 to-gray-800 shadow-2xl rounded-2xl';
+                return `${baseStyles} ${
+                    theme === 'dark'
+                        ? 'bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700'
+                        : 'bg-gradient-to-br from-white to-gray-50 border border-gray-200'
+                }`;
             default:
-                return 'bg-gray-800/90 backdrop-blur-sm rounded-2xl shadow-2xl';
+                return `${baseStyles} ${
+                    theme === 'dark'
+                        ? 'bg-neutral-800/90 backdrop-blur-sm border border-gray-700/50'
+                        : 'bg-white border border-gray-200'
+                }`;
         }
     };
 
     const getInputStyles = (hasError: boolean) => {
-        const baseStyles = 'w-full px-3 py-2 text-sm rounded-lg bg-white/10 text-white border focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-white/50';
-        return `${baseStyles} ${hasError ? 'border-red-400' : 'border-white/20'}`;
+        return `w-full px-3 py-2 text-sm rounded-lg border focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 ${
+            theme === 'dark'
+                ? `bg-gray-700/50 text-white placeholder-gray-400 border-gray-600 ${hasError ? 'border-red-400' : ''}`
+                : `bg-gray-50 text-gray-900 placeholder-gray-500 border-gray-300 ${hasError ? 'border-red-400' : ''}`
+        }`;
+    };
+
+    const getLabelStyles = () => {
+        return `block mb-1 text-xs font-medium ${
+            theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
+        }`;
+    };
+
+    const getErrorStyles = () => {
+        return `mt-0.5 text-xs ${
+            theme === 'dark' ? 'text-red-400' : 'text-red-500'
+        }`;
+    };
+
+    const getHintStyles = () => {
+        return `mt-0.5 text-xs ${
+            theme === 'dark' ? 'text-gray-400' : 'text-gray-500'
+        }`;
     };
 
     return (
@@ -390,14 +425,16 @@ const ContactForm: React.FC<ContactFormProps> = ({
                         <div className="p-2 rounded-xl bg-gradient-to-br from-blue-500 to-purple-500 text-white">
                             <MessageSquare className="w-5 h-5" />
                         </div>
-                        <h3 className="text-xl font-bold text-white">{title}</h3>
+                        <h3 className={`text-xl font-bold ${
+                            theme === 'dark' ? 'text-white' : 'text-gray-900'
+                        }`}>{title}</h3>
                     </div>
                 )}
 
                 <form onSubmit={handleSubmit} className="space-y-3">
                     {/* Поле имени */}
                     <div>
-                        <label htmlFor="name" className="block mb-1 text-xs font-medium text-white/80">
+                        <label htmlFor="name" className={getLabelStyles()}>
                             Ваше имя *
                         </label>
                         <input
@@ -411,13 +448,13 @@ const ContactForm: React.FC<ContactFormProps> = ({
                             placeholder={namePlaceholder}
                         />
                         {errors.name && (
-                            <p className="mt-0.5 text-xs text-red-300">{errors.name}</p>
+                            <p className={getErrorStyles()}>{errors.name}</p>
                         )}
                     </div>
 
                     {/* Поле телефона */}
                     <div>
-                        <label htmlFor="phone" className="block mb-1 text-xs font-medium text-white/80">
+                        <label htmlFor="phone" className={getLabelStyles()}>
                             Телефон {phoneRequired && '*'}
                         </label>
                         <input
@@ -430,15 +467,15 @@ const ContactForm: React.FC<ContactFormProps> = ({
                             placeholder={phonePlaceholder}
                         />
                         {errors.phone && (
-                            <p className="mt-0.5 text-xs text-red-300">{errors.phone}</p>
+                            <p className={getErrorStyles()}>{errors.phone}</p>
                         )}
-                        <p className="mt-0.5 text-xs text-white/40">Формат: +7999-999-99-99</p>
+                        <p className={getHintStyles()}>Формат: +7999-999-99-99</p>
                     </div>
 
                     {/* Поле сообщения */}
                     {showMessageField && (
                         <div>
-                            <label htmlFor="message" className="block mb-1 text-xs font-medium text-white/80">
+                            <label htmlFor="message" className={getLabelStyles()}>
                                 Сообщение *
                             </label>
                             <textarea
@@ -447,7 +484,7 @@ const ContactForm: React.FC<ContactFormProps> = ({
                                 onChange={handleChange}
                                 required
                                 rows={3}
-                                className="w-full px-3 py-2 text-sm rounded-lg bg-white/10 text-white border border-white/20 focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-white/50"
+                                className={getInputStyles(false)}
                                 placeholder={messagePlaceholder}
                             ></textarea>
                         </div>
@@ -457,22 +494,34 @@ const ContactForm: React.FC<ContactFormProps> = ({
                     {additionalFields}
 
                     {/* Капча */}
-                    <div className="p-3 bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg">
-                        <label className="block mb-1 text-xs font-medium text-white/80">
+                    <div className={`p-3 rounded-lg ${
+                        theme === 'dark'
+                            ? 'bg-gray-700/50 backdrop-blur-sm border border-gray-600'
+                            : 'bg-gray-100 border border-gray-200'
+                    }`}>
+                        <label className={getLabelStyles()}>
                             Проверка (защита от ботов) *
                         </label>
 
                         <div className="flex items-center gap-2 mb-1">
-                            <div className="flex-1 bg-white/20 backdrop-blur-sm p-2 rounded-lg text-center text-base font-bold text-white border border-white/20">
+                            <div className={`flex-1 p-2 rounded-lg text-center text-base font-bold border ${
+                                theme === 'dark'
+                                    ? 'bg-gray-600 text-white border-gray-500'
+                                    : 'bg-white text-gray-900 border-gray-300'
+                            }`}>
                                 {captcha.num1} {captcha.operator} {captcha.num2} = ?
                             </div>
                             <button
                                 type="button"
                                 onClick={generateCaptcha}
-                                className="p-2 bg-white/10 backdrop-blur-sm rounded-lg hover:bg-white/20 transition-colors border border-white/20"
+                                className={`p-2 rounded-lg transition-colors border ${
+                                    theme === 'dark'
+                                        ? 'bg-gray-600 hover:bg-gray-500 text-white border-gray-500'
+                                        : 'bg-white hover:bg-gray-50 text-gray-700 border-gray-300'
+                                }`}
                                 title="Обновить пример"
                             >
-                                <RefreshCw className="w-4 h-4 text-white" />
+                                <RefreshCw className="w-4 h-4" />
                             </button>
                         </div>
 
@@ -483,14 +532,12 @@ const ContactForm: React.FC<ContactFormProps> = ({
                                 setCaptchaAnswer(e.target.value);
                                 setCaptchaError('');
                             }}
-                            className={`w-full px-3 py-2 text-sm rounded-lg bg-white/10 text-white border ${
-                                captchaError ? 'border-red-400' : 'border-white/20'
-                            } focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-white/50`}
+                            className={getInputStyles(!!captchaError)}
                             placeholder="Введите ответ"
                         />
 
                         {captchaError && (
-                            <p className="mt-1 text-xs text-red-300">{captchaError}</p>
+                            <p className={getErrorStyles()}>{captchaError}</p>
                         )}
                     </div>
 
@@ -501,13 +548,15 @@ const ContactForm: React.FC<ContactFormProps> = ({
                             id="consent"
                             className="mt-0.5 mr-2 h-3.5 w-3.5 text-blue-600 focus:ring-blue-500 border-gray-300 rounded flex-shrink-0"
                         />
-                        <label htmlFor="consent" className="text-xs text-white/70">
+                        <label htmlFor="consent" className={`text-xs ${
+                            theme === 'dark' ? 'text-gray-400' : 'text-gray-600'
+                        }`}>
                             Я даю согласие на обработку персональных данных в соответствии с{' '}
-                            <a href="/privacy" className="text-blue-300 hover:underline">политикой конфиденциальности</a>
+                            <a href="/privacy" className="text-blue-400 hover:underline">политикой конфиденциальности</a>
                         </label>
                     </div>
                     {errors.consent && (
-                        <p className="text-xs text-red-300">{errors.consent}</p>
+                        <p className={getErrorStyles()}>{errors.consent}</p>
                     )}
 
                     {/* Статус отправки с прогресс-баром */}
@@ -515,22 +564,34 @@ const ContactForm: React.FC<ContactFormProps> = ({
                         <div className="relative overflow-hidden">
                             <div className={`p-3 rounded-lg ${
                                 submitStatus.type === 'success'
-                                    ? 'bg-green-500/20 text-green-300'
-                                    : 'bg-red-500/20 text-red-300'
+                                    ? theme === 'dark'
+                                        ? 'bg-green-500/20 text-green-400'
+                                        : 'bg-green-100 text-green-700'
+                                    : theme === 'dark'
+                                        ? 'bg-red-500/20 text-red-400'
+                                        : 'bg-red-100 text-red-700'
                             }`}>
                                 <div className="flex items-center justify-between mb-1">
                                     <p className="text-xs">{submitStatus.message}</p>
                                     {submitStatus.type === 'success' && (
-                                        <span className="text-xs font-medium bg-green-500/30 px-1.5 py-0.5 rounded">
-                      {countdown}с
-                    </span>
+                                        <span className={`text-xs font-medium px-1.5 py-0.5 rounded ${
+                                            theme === 'dark'
+                                                ? 'bg-green-500/30 text-green-400'
+                                                : 'bg-green-200 text-green-700'
+                                        }`}>
+                                            {countdown}с
+                                        </span>
                                     )}
                                 </div>
 
                                 {submitStatus.type === 'success' && (
-                                    <div className="w-full h-1 bg-green-500/30 rounded-full overflow-hidden">
+                                    <div className={`w-full h-1 rounded-full overflow-hidden ${
+                                        theme === 'dark'
+                                            ? 'bg-green-500/30'
+                                            : 'bg-green-200'
+                                    }`}>
                                         <div
-                                            className="h-full bg-green-400 transition-all duration-100 ease-linear"
+                                            className="h-full bg-green-500 transition-all duration-100 ease-linear"
                                             style={{ width: `${progress}%` }}
                                         />
                                     </div>

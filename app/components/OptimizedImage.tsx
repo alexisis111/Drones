@@ -39,12 +39,23 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
 
   const shouldLoadImmediately = priority || typeof window === 'undefined';
 
+  // Сброс состояния при изменении src (важно для SPA с навигацией между страницами)
   useEffect(() => {
-    if (!imgRef.current || shouldLoadImmediately) return;
+    setIsLoading(!priority);
+    setHasError(false);
+    setCurrentSrc(webpSrc);
+  }, [src, priority, webpSrc]);
+
+  useEffect(() => {
+    if (!imgRef.current || shouldLoadImmediately) {
+      if (shouldLoadImmediately) setIsLoading(false);
+      return;
+    }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
+          setIsLoading(false); // Начинаем загрузку
           observer.unobserve(imgRef.current!);
         }
       },
