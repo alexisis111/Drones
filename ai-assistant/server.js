@@ -326,22 +326,28 @@ function isMobilePhone(phone) {
 function extractPhoneNumber(message) {
   if (!message) return null;
 
-  // Паттерны для российских номеров: +7 (XXX) XXX-XX-XX, 8 XXX XXX-XX-XX, и т.д.
+  // Паттерны для российских номеров: +7 (XXX) XXX-XX-XX, 8 XXX XXX-XX-XX, 7XXXXXXXXXX, XXXXXXXXXXX и т.д.
   const phonePatterns = [
     /(\+7|8)\s*\(?(\d{3})\)?\s*(\d{3})\s*[-]?(\d{2})\s*[-]?(\d{2})/g,
     /(\+7|8)\s*[\-\s]?\s*(\d{3})\s*[\-\s]?\s*(\d{3})\s*[\-\s]?\s*(\d{2})\s*[\-\s]?\s*(\d{2})/g,
     /(\+7|8)\s*\((\d{3})\)\s*(\d{3})\s*[-]?(\d{2})\s*[-]?(\d{2})/g,
+    // Pattern for 10 digits starting with 9 (mobile without +7/8)
+    /(^|\s)(9\d{9})(\s|$)/g,
+    // Pattern for 11 digits starting with 7 or 8 (without +)
+    /(^|\s)([78]\d{10})(\s|$)/g,
   ];
 
   for (const pattern of phonePatterns) {
     const match = message.match(pattern);
     if (match) {
-      const rawPhone = match[0];
+      let rawPhone = match[0].trim();
       // Очищаем номер от лишних символов
       let phone = rawPhone.replace(/\D/g, '');
       
       // Нормализуем формат
-      if (phone.startsWith('8') && phone.length === 11) {
+      if (phone.length === 10 && phone.startsWith('9')) {
+        phone = '+7' + phone;
+      } else if (phone.length === 11 && phone.startsWith('8')) {
         phone = '+7' + phone.substring(1);
       } else if (phone.length === 11 && phone.startsWith('7')) {
         phone = '+' + phone;
@@ -388,7 +394,7 @@ function extractName(message, history = []) {
     const match = message.match(pattern);
     if (match && match[1]) {
       const name = match[1].charAt(0).toUpperCase() + match[1].slice(1);
-      console.log('📝 [EXTRACT NAME] Found in current message:', name);
+      console.log('📝 [EXTRACT NAME] Found in pattern:', name);
       return name;
     }
   }
@@ -397,12 +403,11 @@ function extractName(message, history = []) {
   const startNamePattern = /^([А-ЯЁ][а-яё]{2,})[,\s:!-]/i;
   const startMatch = message.match(startNamePattern);
   if (startMatch && startMatch[1]) {
-    // Check if it's not a common word or verb
     const notNameWords = [
       'хочу', 'буду', 'будет', 'спасибо', 'привет', 'здравствуйте', 'пока', 
       'да', 'нет', 'ой', 'ах', 'другой', 'новая', 'новый', 'старый', 'первый',
       'последний', 'какой', 'какая', 'какое', 'какие', 'где', 'когда', 'почему',
-      'зачем', 'как', 'кто', 'что', 'куда', 'откуда', 'сколько'
+      'зачем', 'как', 'кто', 'что', 'куда', 'откуда', 'сколько', 'алло', 'блин'
     ];
     if (!notNameWords.includes(startMatch[1].toLowerCase())) {
       const name = startMatch[1].charAt(0).toUpperCase() + startMatch[1].slice(1);
@@ -410,10 +415,26 @@ function extractName(message, history = []) {
       return name;
     }
   }
+  
+  // Try to find name at the END of message (after phone number)
+  // Pattern: phone number followed by name
+  const endNamePattern = /(\d{10,11})\s+([А-ЯЁ][а-яё]+)(?:\s|$)/i;
+  const endMatch = message.match(endNamePattern);
+  if (endMatch && endMatch[2]) {
+    const notNameWords = [
+      'хочу', 'буду', 'будет', 'спасибо', 'привет', 'здравствуйте', 'пока', 
+      'да', 'нет', 'ой', 'ах', 'другой', 'новая', 'новый', 'старый', 'первый',
+      'последний', 'какой', 'какая', 'какое', 'какие', 'где', 'когда', 'почему',
+      'зачем', 'как', 'кто', 'что', 'куда', 'откуда', 'сколько', 'алло', 'блин'
+    ];
+    if (!notNameWords.includes(endMatch[2].toLowerCase())) {
+      const name = endMatch[2].charAt(0).toUpperCase() + endMatch[2].slice(1);
+      console.log('📝 [EXTRACT NAME] Found at end (after phone):', name);
+      return name;
+    }
+  }
 
   // Don't search in history - use name from current message only
-  // This prevents using outdated names from previous messages
-  
   return null;
 }
 
@@ -572,6 +593,9 @@ async function logChatMessage(sessionId, userName, message, isUser = true) {
   await sendLogToTopic(topicId, `${icon} **${sender}** (${timestamp}):\n\n${truncatedMessage}`);
 }
 
+// Session -> lead ID cache (in-memory to avoid race conditions)
+const sessionLeadCache = new Map();
+
 // Send lead to Telegram
 async function sendLeadToTelegram({ name, phone, message, serviceSlug, serviceName, vacancyPosition, experience, leadId = null, isUpdate = false }) {
   if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
@@ -643,7 +667,7 @@ function getServiceContext(slug) {
 }
 
 // Helper function to build prompt for Qwen
-function buildPrompt(message, serviceContext, conversationHistory = [], suggestLeadForm = false, phoneData = null) {
+function buildPrompt(message, serviceContext, conversationHistory = [], suggestLeadForm = false, phoneData = null, sessionId = null) {
   const companyInfo = knowledgeBase?.company || {};
   const vacanciesContext = getVacanciesContext();
   const zokContext = getZokContext();
@@ -743,16 +767,28 @@ ${vacanciesContext.generalInfo.benefits.join('\n')}
     ? `\n[ИСТОРИЯ ДИАЛОГА]\n${conversationHistory.map(h => `${h.role}: ${h.content}`).join('\n')}`
     : '';
 
-  // Check if lead was already sent in this session
-  const leadAlreadySent = conversationHistory.some(h => h.role === 'SYSTEM' && h.content === 'LEAD_SENT');
+  // Check if lead was already sent in this session (check BOTH history and full session)
+  let leadAlreadySent = conversationHistory.some(h => h.role === 'SYSTEM' && h.content.startsWith('LEAD_SENT:'));
+  
+  // Also check full session if sessionId provided (history may be truncated to 5 messages)
+  if (!leadAlreadySent && sessionId) {
+    try {
+      const session = getSession(sessionId);
+      if (session && session.messages) {
+        leadAlreadySent = session.messages.some(m => m.role === 'SYSTEM' && m.content.startsWith('LEAD_SENT:'));
+      }
+    } catch (e) {
+      // Ignore session check errors
+    }
+  }
 
   const leadFormSuggestion = suggestLeadForm
     ? `\n❗ КЛИЕНТ ЗАИНТЕРЕСОВАН! Обязательно добавь в конце ответа: "или хотите, чтобы я сформировал и отправил вашу заявку руководству? Просто напишите мне тут свою заявку и контактные данные (имя и телефон) — я всё подготовлю и отправлю. Или нажмите кнопку '📋 Заполнить заявку' внизу чата."`
     : '';
 
-  // Contact string - only add if lead was not already sent
+  // Contact string - STRICTLY only add if lead was NOT already sent
   const contactString = leadAlreadySent
-    ? ''
+    ? '\n❗ ЗАПРЕЩЕНО: Клиент УЖЕ оставил контакты/заявку — НЕ добавляй контактную строку, НЕ проси контакты повторно!'
     : '\n✓ ВАЖНО: В КАЖДОМ ответе в конце добавляй: "Или просто напишите свои контактные данные (имя и телефон) или позвоните: +7 (931) 247-08-88. 📞"';
 
   // Phone validation instructions
@@ -898,21 +934,31 @@ app.post('/api/chat', async (req, res) => {
     let leadAlreadySent = false;
     let existingLeadId = null;
     
-    if (session && session.messages) {
+    // First check in-memory cache (fastest, no race conditions)
+    if (sessionLeadCache.has(sessionId)) {
+      leadAlreadySent = true;
+      existingLeadId = sessionLeadCache.get(sessionId);
+      console.log('💾 [CACHE] Found existing lead:', existingLeadId);
+    }
+    
+    // Then check session file
+    if (!leadAlreadySent && session && session.messages) {
       const leadSentMessage = session.messages.findLast(m => m.role === 'SYSTEM' && m.content.startsWith('LEAD_SENT:'));
       if (leadSentMessage) {
         leadAlreadySent = true;
         existingLeadId = leadSentMessage.content.split(':')[1];
+        sessionLeadCache.set(sessionId, existingLeadId); // Update cache
         console.log('💾 [SESSION] Found existing lead:', existingLeadId);
       }
     }
-    
+
     // Also check history (for backward compatibility)
     if (!leadAlreadySent && history.some(h => h.role === 'SYSTEM' && h.content.startsWith('LEAD_SENT:'))) {
       const leadSentMessage = history.findLast(h => h.role === 'SYSTEM' && h.content.startsWith('LEAD_SENT:'));
       if (leadSentMessage) {
         leadAlreadySent = true;
         existingLeadId = leadSentMessage.content.split(':')[1];
+        sessionLeadCache.set(sessionId, existingLeadId); // Update cache
         console.log('📜 [HISTORY] Found existing lead:', existingLeadId);
       }
     }
@@ -946,10 +992,11 @@ app.post('/api/chat', async (req, res) => {
       // Handle mobile numbers - send lead immediately
       else if (phoneType === 'mobile') {
         console.log('📱 [CHAT] Mobile phone detected - sending lead');
+        console.log('📱 [CHAT] leadAlreadySent:', leadAlreadySent, 'existingLeadId:', existingLeadId);
 
         // Use existing lead ID or generate new one
         let leadId = existingLeadId;
-        
+
         if (!leadId) {
           // Generate new lead ID from timestamp
           leadId = Date.now().toString();
@@ -957,10 +1004,12 @@ app.post('/api/chat', async (req, res) => {
         } else {
           console.log('📝 [CHAT] Lead update - using existing ID:', leadId);
         }
-        
+
         const isUpdate = leadAlreadySent;
         const currentName = name || 'Клиент';
         const currentPhone = phoneNumber;
+
+        console.log('📱 [CHAT] Sending to Telegram:', { name: currentName, phone: currentPhone, isUpdate, leadId });
 
         // Send lead to Telegram (async, non-blocking)
         sendLeadToTelegram({
@@ -974,6 +1023,8 @@ app.post('/api/chat', async (req, res) => {
         }).then(sent => {
           if (sent) {
             console.log('✅ [CHAT] Lead successfully sent to Telegram');
+          } else {
+            console.error('❌ [CHAT] sendLeadToTelegram returned false');
           }
         }).catch(err => {
           console.error('❌ [CHAT] Failed to send lead:', err.message);
@@ -982,12 +1033,18 @@ app.post('/api/chat', async (req, res) => {
         // Return immediate response without calling Qwen
         console.log('📞 [CHAT] Mobile detected - returning confirmation');
 
-        // Save leadSent flag with lead ID to session
-        addMessageToSession(sessionId, {
-          role: 'SYSTEM',
-          content: `LEAD_SENT:${leadId}`,
-          timestamp: Date.now()
-        });
+        // Save leadSent flag with lead ID to session (sync style - save BEFORE returning)
+        try {
+          addMessageToSession(sessionId, {
+            role: 'SYSTEM',
+            content: `LEAD_SENT:${leadId}`,
+            timestamp: Date.now()
+          });
+          sessionLeadCache.set(sessionId, leadId); // Update in-memory cache
+          console.log('💾 [SESSION+CACHE] LEAD_SENT saved:', leadId);
+        } catch (e) {
+          console.error('❌ [SESSION] Failed to save LEAD_SENT:', e.message);
+        }
 
         const responseText = isUpdate
           ? `✅ **Номер обновлён!**\n\nЯ обновил ваш номер на **${currentPhone}**. Менеджер свяжется с вами в течение 15 минут. 📞`
@@ -1024,10 +1081,78 @@ app.post('/api/chat', async (req, res) => {
       }
     }
 
-    // Build prompt (pass phoneData if phone was detected but not mobile)
-    const prompt = buildPrompt(message, serviceContext, history, suggestLeadForm, phoneData);
+    // Build prompt (pass phoneData and sessionId for lead tracking)
+    const prompt = buildPrompt(message, serviceContext, history, suggestLeadForm, phoneData, sessionId);
 
     console.log('🤖 [CHAT] Prompt (first 500 chars):', prompt.substring(0, 500) + '...');
+
+    // ============================================
+    // Check for "срочно" (urgent) request - resend lead
+    // ============================================
+    const msgLower = message.toLowerCase();
+    const isUrgentRequest = msgLower.includes('срочно') || 
+                            msgLower.includes('продублируй') || 
+                            msgLower.includes('продублируйте') || 
+                            msgLower.includes('ещё раз') || 
+                            msgLower.includes('еще раз') || 
+                            msgLower.includes('повтори') ||
+                            msgLower.includes('отправь ещё') ||
+                            msgLower.includes('отправьте ещё') ||
+                            msgLower.includes('отправь еще') ||
+                            msgLower.includes('отправьте еще');
+    
+    if (isUrgentRequest && leadAlreadySent && existingLeadId) {
+      console.log('🚨 [CHAT] Urgent lead resend requested - ID:', existingLeadId);
+      
+      // Get current name and phone from session
+      let currentName = 'Клиент';
+      let currentPhone = null;
+      
+      if (session && session.messages) {
+        // Find last mobile phone
+        for (let i = session.messages.length - 1; i >= 0; i--) {
+          const msg = session.messages[i];
+          if (msg.role === 'КЛИЕНТ') {
+            const phoneInMsg = extractPhoneNumber(msg.content);
+            if (phoneInMsg && phoneInMsg.type === 'mobile') {
+              currentPhone = phoneInMsg.number;
+              break;
+            }
+          }
+        }
+        
+        // Find last name
+        for (let i = session.messages.length - 1; i >= 0; i--) {
+          const msg = session.messages[i];
+          if (msg.role === 'КЛИЕНТ') {
+            const nameInMsg = extractName(msg.content);
+            if (nameInMsg) {
+              currentName = nameInMsg;
+              break;
+            }
+          }
+        }
+      }
+      
+      if (currentPhone) {
+        // Send urgent lead to Telegram
+        sendLeadToTelegram({
+          name: currentName,
+          phone: currentPhone,
+          message: '🚨 СРОЧНО! Клиент запросил повторную отправку заявки!',
+          serviceSlug,
+          serviceName,
+          leadId: existingLeadId,
+          isUpdate: true
+        }).then(sent => {
+          if (sent) {
+            console.log('✅ [CHAT] Urgent lead sent to Telegram');
+          }
+        }).catch(err => {
+          console.error('❌ [CHAT] Failed to send urgent lead:', err.message);
+        });
+      }
+    }
 
     // ============================================
     // TRY TO GET CACHED QWEN RESPONSE
