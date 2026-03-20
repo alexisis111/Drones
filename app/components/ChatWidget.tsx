@@ -79,12 +79,22 @@ const formatMessageText = (text: string): string => {
 const ChatWidget: React.FC<ChatWidgetProps> = () => {
   const { theme } = useTheme();
   const location = useLocation();
-  
+
   // Extract serviceSlug and serviceName from URL
-  const serviceSlug = location.pathname.startsWith('/service/') 
-    ? location.pathname.replace('/service/', '')
-    : undefined;
-  
+  const extractServiceSlug = (pathname: string): string | undefined => {
+    if (!pathname.startsWith('/service/')) return undefined;
+    
+    // Remove /service/ prefix and trailing slash
+    const slug = pathname
+      .replace(/^\/service\//, '')
+      .replace(/\/$/, '')
+      .trim();
+    
+    return slug || undefined;
+  };
+
+  const rawServiceSlug = extractServiceSlug(location.pathname);
+
   // Service name mapping
   const SERVICE_NAME_MAP: Record<string, string> = {
     'razborka-zdaniy-i-sooruzheniy': 'Разборка зданий и сооружений',
@@ -104,7 +114,8 @@ const ChatWidget: React.FC<ChatWidgetProps> = () => {
     'gruzoperevozki': 'Грузоперевозки',
     'ognezashchita-konstruktsiy': 'Огнезащита конструкций'
   };
-  
+
+  const serviceSlug = rawServiceSlug && SERVICE_NAME_MAP[rawServiceSlug] ? rawServiceSlug : undefined;
   const serviceName = serviceSlug ? SERVICE_NAME_MAP[serviceSlug] : undefined;
   const [isOpen, setIsOpen] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
@@ -474,6 +485,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = () => {
       isBotTyping,
       pendingRequest,
       serviceName,
+      serviceSlug,
       messagesLength: messages.length,
       userWantsNoContact
     });
@@ -481,13 +493,13 @@ const ChatWidget: React.FC<ChatWidgetProps> = () => {
     // Only add context message if:
     // 1. Bot is NOT typing
     // 2. Service name exists
-    // 3. Has messages
+    // 3. Has messages (history loaded or welcome message created)
     // 4. User has NOT requested no contact
     // 5. NO pending request (wait for previous answer first)
     if (!isBotTyping && !pendingRequest && serviceName && messages.length > 0 && !userWantsNoContact) {
       // Check if context message already exists for THIS service
-      const hasContextMessage = messages.some(m => 
-        m.id.startsWith('service-change-') && 
+      const hasContextMessage = messages.some(m =>
+        m.id.startsWith('service-change-') &&
         m.text.includes(serviceName)
       );
 
@@ -504,7 +516,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = () => {
         console.log('[CHAT] Context message added for:', serviceName);
       }
     }
-  }, [isBotTyping, serviceName, messages.length, userWantsNoContact]);
+  }, [isBotTyping, serviceName, serviceSlug, messages.length, userWantsNoContact]);
 
   // Load history from sessionStorage on mount AND initialize lastReadIndex
   useEffect(() => {

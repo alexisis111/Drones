@@ -3,14 +3,11 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import axios from 'axios';
 import dotenv from 'dotenv';
-import { exec } from 'child_process';
-import { promisify } from 'util';
 
 // Load environment variables from .env file
 dotenv.config();
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const execAsync = promisify(exec);
 
 // Create Express server
 const app = express();
@@ -234,53 +231,18 @@ ID услуги: ${serviceId || 'Не указан'}
 });
 
 // ============================================
-// Start AI Assistant Server from ai-assistant/
-// ============================================
-
-function startAiAssistantServer() {
-  const aiAssistantPath = path.join(__dirname, 'ai-assistant', 'server.js');
-
-  console.log('🤖 [MAIN] Starting AI Assistant Server from:', aiAssistantPath);
-  console.log('🤖 [MAIN] AI Assistant will run on port 3002');
-
-  // Запускаем ai-assistant/server.js как отдельный процесс
-  const aiProcess = exec(`node "${aiAssistantPath}"`, {
-    cwd: path.join(__dirname, 'ai-assistant'),
-    env: { ...process.env, AI_ASSISTANT_PORT: '3002' }
-  });
-
-  aiProcess.stdout.on('data', (data) => {
-    console.log(`🤖 [AI-SERVER] ${data.toString().trim()}`);
-  });
-
-  aiProcess.stderr.on('data', (data) => {
-    console.error(`❌ [AI-SERVER] ${data.toString().trim()}`);
-  });
-
-  aiProcess.on('error', (error) => {
-    console.error('❌ [MAIN] Failed to start AI Assistant Server:', error.message);
-  });
-
-  aiProcess.on('exit', (code) => {
-    console.log(`🤖 [MAIN] AI Assistant Server exited with code ${code}`);
-  });
-
-  return aiProcess;
-}
-
-// ============================================
 // Start Main API Server
 // ============================================
 
-const PORT = process.env.PORT || 3001;
+// Hardcoded port to avoid conflicts with .env and PM2
+const API_PORT = 3001;
 
-app.listen(PORT, () => {
+app.listen(API_PORT, () => {
   console.log(`
 ╔════════════════════════════════════════════════════════╗
-║  🤖 LEGION API Server + AI Assistant                   ║
+║  🤖 LEGION API Server                                  ║
 ╠════════════════════════════════════════════════════════╣
-║  Main API Port: ${PORT}                                    ║
-║  AI Assistant Port: 3002 (ai-assistant/)               ║
+║  Port: ${API_PORT}                                             ║
 ╠════════════════════════════════════════════════════════╣
 ║  Endpoints:                                            ║
 ║  • Telegram Webhook: ✅ /api/telegram-webhook          ║
@@ -289,7 +251,4 @@ app.listen(PORT, () => {
 ║  • AI Health: 📊 /api/assistant/health                 ║
 ╚════════════════════════════════════════════════════════╝
   `);
-
-  // Запускаем AI Assistant сервер из папки ai-assistant/
-  startAiAssistantServer();
 });

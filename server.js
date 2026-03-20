@@ -17,6 +17,17 @@ const app = express();
 // Middleware to parse JSON bodies
 app.use(express.json());
 
+// NOTE: Trailing slash handling is done by nginx to avoid redirect loops
+// The middleware below is disabled to prevent conflicts
+// app.use((req, res, next) => {
+//   if (req.path.length > 1 && req.path.slice(-1) === '/') {
+//     const query = req.url.slice(req.path.length);
+//     res.redirect(307, req.path.slice(0, -1) + query);
+//   } else {
+//     next();
+//   }
+// });
+
 // Telegram bot configuration
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
@@ -123,6 +134,15 @@ app.get('/yml.xml', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'yml.xml'));
 });
 
+// Redirect removed service page to services catalog
+app.use((req, res, next) => {
+  if (req.path === '/service/blagoustroystvo-territoriy') {
+    res.redirect(301, '/services');
+  } else {
+    next();
+  }
+});
+
 // Redirect old domain to new domain
 app.use((req, res, next) => {
   if (req.headers.host.includes('legion78.ru')) {
@@ -141,8 +161,9 @@ app.all(
   })
 );
 
-const port = process.env.PORT || 3000;
+// Hardcoded port to avoid conflicts with .env and PM2
+const WEB_PORT = 3000;
 
-app.listen(port, () => {
-  console.log(`Server listening on port ${port}`);
+app.listen(WEB_PORT, () => {
+  console.log(`🌐 legion-web listening on port ${WEB_PORT}`);
 });

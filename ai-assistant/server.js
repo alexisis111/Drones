@@ -16,7 +16,9 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const execAsync = promisify(exec);
 
 const app = express();
-const PORT = process.env.AI_ASSISTANT_PORT || 3002;
+
+// Hardcoded port to avoid conflicts with .env and PM2
+const AI_PORT = 3002;
 
 // Middleware
 app.use(cors());
@@ -279,40 +281,100 @@ async function analyzeMessageSentiment(message, conversationHistory = []) {
   }
 }
 
-// Extract phone number from message
+/**
+ * Проверка, является ли номер мобильным (российским)
+ * @param {string} phone - Номер телефона в формате +7XXXXXXXXXX
+ * @returns {boolean}
+ */
+function isMobilePhone(phone) {
+  if (!phone) return false;
+  
+  // Очищаем номер от лишних символов
+  const cleanPhone = phone.replace(/\D/g, '');
+  
+  // Российские мобильные номера: 11 цифр, начинаются на 7 или 8, после кода страны идут коды мобильных операторов
+  if (cleanPhone.length !== 11) return false;
+  
+  // Коды мобильных операторов России (основные)
+  const mobileCodes = [
+    '900', '901', '902', '903', '904', '905', '906', '907', '908', '909',
+    '910', '911', '912', '913', '914', '915', '916', '917', '918', '919',
+    '920', '921', '922', '923', '924', '925', '926', '927', '928', '929',
+    '930', '931', '932', '933', '934', '935', '936', '937', '938', '939',
+    '940', '941', '942', '943', '944', '945', '946', '947', '948', '949',
+    '950', '951', '952', '953', '954', '955', '956', '957', '958', '959',
+    '960', '961', '962', '963', '964', '965', '966', '967', '968', '969',
+    '970', '971', '972', '973', '974', '975', '976', '977', '978', '979',
+    '980', '981', '982', '983', '984', '985', '986', '987', '988', '989',
+    '990', '991', '992', '993', '994', '995', '996', '997', '998', '999'
+  ];
+  
+  // Проверяем формат: 7 или 8 в начале
+  if (!cleanPhone.startsWith('7') && !cleanPhone.startsWith('8')) return false;
+  
+  // Получаем код оператора (первые 3 цифры после 7/8)
+  const operatorCode = cleanPhone.substring(1, 4);
+  
+  return mobileCodes.includes(operatorCode);
+}
+
+/**
+ * Извлечь номер телефона из сообщения
+ * @param {string} message - Сообщение пользователя
+ * @returns {object|null} - { number: string, type: 'mobile' | 'city' | 'incomplete', raw: string }
+ */
 function extractPhoneNumber(message) {
   if (!message) return null;
-  
-  // Russian phone patterns: +7 (XXX) XXX-XX-XX, 8 XXX XXX-XX-XX, etc.
+
+  // Паттерны для российских номеров: +7 (XXX) XXX-XX-XX, 8 XXX XXX-XX-XX, и т.д.
   const phonePatterns = [
     /(\+7|8)\s*\(?(\d{3})\)?\s*(\d{3})\s*[-]?(\d{2})\s*[-]?(\d{2})/g,
     /(\+7|8)\s*[\-\s]?\s*(\d{3})\s*[\-\s]?\s*(\d{3})\s*[\-\s]?\s*(\d{2})\s*[\-\s]?\s*(\d{2})/g,
     /(\+7|8)\s*\((\d{3})\)\s*(\d{3})\s*[-]?(\d{2})\s*[-]?(\d{2})/g,
   ];
-  
+
   for (const pattern of phonePatterns) {
     const match = message.match(pattern);
     if (match) {
-      // Clean and format phone number
-      let phone = match[0].replace(/\D/g, '');
+      const rawPhone = match[0];
+      // Очищаем номер от лишних символов
+      let phone = rawPhone.replace(/\D/g, '');
+      
+      // Нормализуем формат
       if (phone.startsWith('8') && phone.length === 11) {
         phone = '+7' + phone.substring(1);
       } else if (phone.length === 11 && phone.startsWith('7')) {
         phone = '+' + phone;
       }
-      if (phone.length >= 11) {
-        return phone;
+      
+      // Определяем тип номера
+      if (phone.length >= 11 && phone.startsWith('+7')) {
+        const type = isMobilePhone(phone) ? 'mobile' : 'city';
+        return {
+          number: phone,
+          type: type,
+          raw: rawPhone
+        };
+      }
+      
+      // Если номер неполный (меньше 11 цифр)
+      if (phone.length >= 5 && phone.length < 11) {
+        return {
+          number: phone,
+          type: 'incomplete',
+          raw: rawPhone
+        };
       }
     }
   }
-  
+
   return null;
 }
 
 // Extract name from message (simple heuristic)
 function extractName(message, history = []) {
   if (!message) return null;
-  
+
   // Look for patterns like "меня зовут X", "я X", "мое имя X"
   const namePatterns = [
     /меня\s+зовут\s+([А-ЯЁ][а-яё]+)/i,
@@ -320,24 +382,37 @@ function extractName(message, history = []) {
     /мое\s+имя\s+([А-ЯЁ][а-яё]+)/i,
     /звоните\s+([А-ЯЁ][а-яё]+)/i,
   ];
-  
+
+  // First try to find name in current message
   for (const pattern of namePatterns) {
     const match = message.match(pattern);
     if (match && match[1]) {
-      return match[1].charAt(0).toUpperCase() + match[1].slice(1);
+      const name = match[1].charAt(0).toUpperCase() + match[1].slice(1);
+      console.log('📝 [EXTRACT NAME] Found in current message:', name);
+      return name;
     }
   }
   
-  // Try to get from history
-  const lastUserMessage = history.filter(h => h.role === 'КЛИЕНТ').pop();
-  if (lastUserMessage) {
-    for (const pattern of namePatterns) {
-      const match = lastUserMessage.content.match(pattern);
-      if (match && match[1]) {
-        return match[1].charAt(0).toUpperCase() + match[1].slice(1);
-      }
+  // Try to find name at the beginning of message followed by common separators
+  const startNamePattern = /^([А-ЯЁ][а-яё]{2,})[,\s:!-]/i;
+  const startMatch = message.match(startNamePattern);
+  if (startMatch && startMatch[1]) {
+    // Check if it's not a common word or verb
+    const notNameWords = [
+      'хочу', 'буду', 'будет', 'спасибо', 'привет', 'здравствуйте', 'пока', 
+      'да', 'нет', 'ой', 'ах', 'другой', 'новая', 'новый', 'старый', 'первый',
+      'последний', 'какой', 'какая', 'какое', 'какие', 'где', 'когда', 'почему',
+      'зачем', 'как', 'кто', 'что', 'куда', 'откуда', 'сколько'
+    ];
+    if (!notNameWords.includes(startMatch[1].toLowerCase())) {
+      const name = startMatch[1].charAt(0).toUpperCase() + startMatch[1].slice(1);
+      console.log('📝 [EXTRACT NAME] Found at start:', name);
+      return name;
     }
   }
+
+  // Don't search in history - use name from current message only
+  // This prevents using outdated names from previous messages
   
   return null;
 }
@@ -498,7 +573,7 @@ async function logChatMessage(sessionId, userName, message, isUser = true) {
 }
 
 // Send lead to Telegram
-async function sendLeadToTelegram({ name, phone, message, serviceSlug, serviceName, vacancyPosition, experience }) {
+async function sendLeadToTelegram({ name, phone, message, serviceSlug, serviceName, vacancyPosition, experience, leadId = null, isUpdate = false }) {
   if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
     console.warn('⚠️  Telegram credentials not set, skipping lead notification');
     return false;
@@ -507,7 +582,7 @@ async function sendLeadToTelegram({ name, phone, message, serviceSlug, serviceNa
   try {
     // Check if it's a vacancy application
     const isVacancyApplication = !!vacancyPosition;
-    
+
     const telegramMessage = isVacancyApplication ? `
 💼 <b>Отклик на вакансию!</b>
 
@@ -518,8 +593,17 @@ async function sendLeadToTelegram({ name, phone, message, serviceSlug, serviceNa
 💬 <b>Сообщение:</b> ${message || 'Не указано'}
 
 ⏰ <b>Время:</b> ${new Date().toLocaleString('ru-RU')}
+    `.trim() : isUpdate ? `
+🔄 <b>ОБНОВЛЕНИЕ ЗАЯВКИ #${leadId}!</b>
+
+👤 <b>Имя:</b> ${name || 'Не указано'}
+📞 <b>Телефон:</b> ${phone || 'Не указан'}
+💬 <b>Уточнение:</b> ${message || 'Не указано'}
+🏗️ <b>Услуга:</b> ${serviceName || serviceSlug || 'Не указана'}
+
+⏰ <b>Время обновления:</b> ${new Date().toLocaleString('ru-RU')}
     `.trim() : `
-🔥 <b>Новая заявка из AI-чата!</b>
+🔥 <b>Новая заявка из AI-чата! #${leadId}</b>
 
 👤 <b>Имя:</b> ${name || 'Не указано'}
 📞 <b>Телефон:</b> ${phone || 'Не указан'}
@@ -537,12 +621,13 @@ async function sendLeadToTelegram({ name, phone, message, serviceSlug, serviceNa
       parse_mode: 'HTML'
     });
 
-    console.log('✅ Lead sent to Telegram:', { 
-      type: isVacancyApplication ? 'vacancy' : 'service',
-      name, 
-      phone, 
+    console.log('✅ Lead sent to Telegram:', {
+      type: isVacancyApplication ? 'vacancy' : isUpdate ? 'update' : 'service',
+      leadId,
+      name,
+      phone,
       serviceSlug,
-      vacancyPosition 
+      vacancyPosition
     });
     return true;
   } catch (error) {
@@ -558,7 +643,7 @@ function getServiceContext(slug) {
 }
 
 // Helper function to build prompt for Qwen
-function buildPrompt(message, serviceContext, conversationHistory = [], suggestLeadForm = false) {
+function buildPrompt(message, serviceContext, conversationHistory = [], suggestLeadForm = false, phoneData = null) {
   const companyInfo = knowledgeBase?.company || {};
   const vacanciesContext = getVacanciesContext();
   const zokContext = getZokContext();
@@ -658,9 +743,35 @@ ${vacanciesContext.generalInfo.benefits.join('\n')}
     ? `\n[ИСТОРИЯ ДИАЛОГА]\n${conversationHistory.map(h => `${h.role}: ${h.content}`).join('\n')}`
     : '';
 
+  // Check if lead was already sent in this session
+  const leadAlreadySent = conversationHistory.some(h => h.role === 'SYSTEM' && h.content === 'LEAD_SENT');
+
   const leadFormSuggestion = suggestLeadForm
     ? `\n❗ КЛИЕНТ ЗАИНТЕРЕСОВАН! Обязательно добавь в конце ответа: "или хотите, чтобы я сформировал и отправил вашу заявку руководству? Просто напишите мне тут свою заявку и контактные данные (имя и телефон) — я всё подготовлю и отправлю. Или нажмите кнопку '📋 Заполнить заявку' внизу чата."`
     : '';
+
+  // Contact string - only add if lead was not already sent
+  const contactString = leadAlreadySent
+    ? ''
+    : '\n✓ ВАЖНО: В КАЖДОМ ответе в конце добавляй: "Или просто напишите свои контактные данные (имя и телефон) или позвоните: +7 (931) 247-08-88. 📞"';
+
+  // Phone validation instructions
+  let phoneValidationText = '';
+  if (phoneData) {
+    if (phoneData.type === 'incomplete') {
+      phoneValidationText = `\n\n[⚠️ ВАЖНО: НЕПОЛНЫЙ НОМЕР]
+Клиент указал номер: ${phoneData.raw} (только ${phoneData.number.length} цифр)
+❌ Это неполный номер! В российском мобильном номере должно быть 11 цифр.
+✅ ТВОЯ ЗАДАЧА: Вежливо попроси клиента перепроверить и указать полный номер телефона (11 цифр).
+Пример: "Вижу, что номер указан не полностью. Пожалуйста, перепроверьте и напишите полный номер телефона (11 цифр)."`;
+    } else if (phoneData.type === 'city') {
+      phoneValidationText = `\n\n[🏙️ ВАЖНО: ГОРОДСКОЙ НОМЕР]
+Клиент указал городской номер: ${phoneData.number}
+✅ ТВОЯ ЗАДАЧА: Вежливо уточни, может ли клиент дать мобильный номер для более оперативной связи.
+Если клиент НЕ может дать мобильный — прими городской номер и подтверди заявку.
+Пример: "Спасибо! Вижу, это городской номер. Для более оперативной связи, могли бы вы также указать ваш мобильный номер? Если нет возможности — оставим городской, менеджер всё равно свяжется."`;
+    }
+  }
 
   return `Ты — дружелюбный консультант строительной компании ООО «ЛЕГИОН». Общайся как живой человек, вежливо и естественно.
 
@@ -682,13 +793,25 @@ ${vacanciesContext.generalInfo.benefits.join('\n')}
 ✓ Задавай уточняющие вопросы если нужно
 ✓ Ссылайся на историю диалога если это уместно
 ✓ Избегай шаблонных фраз вроде "Понял", "Готов отвечать"
-✓ ВАЖНО: После 2-3 сообщений от клиента — в конце ответа предложи оставить заявку ТОЛЬКО если клиент спрашивает про цену, расчет стоимости или хочет заказать. НЕ предлагай если клиент просто смотрит список услуг или спрашивает общую информацию: "Хотите, чтобы я сформировал и отправил вашу заявку руководству? Просто напишите мне тут свою заявку и контактные данные (имя и телефон) — я всё подготовлю и отправлю. Или нажмите кнопку '📋 Заполнить заявку' внизу чата."${leadFormSuggestion}
-✓ ВАЖНО: В КАЖДОМ ответе в конце добавляй: "Просто напишите свои контактные данные (имя и телефон) или позвоните: +7 (931) 247-08-88. 📞"
+✓ ВАЖНО: После 2-3 сообщений от клиента — в конце ответа предложи оставить заявку ТОЛЬКО если клиент спрашивает про цену, расчет стоимости или хочет заказать. НЕ предлагай если клиент просто смотрит список услуг или спрашивает общую информацию: "Хотите, чтобы я сформировал и отправил вашу заявку руководству? Просто напишите мне тут свою заявку и контактные данные (имя и телефон) — я всё подготовлю и отправлю. Или нажмите кнопку '📋 Заполнить заявку' внизу чата."${leadFormSuggestion}${contactString}
 
 [ВАЖНОЕ ПРАВИЛО: ПРЕДСТАВЛЕНИЕ]
 ❌ НИКОГДА не называй себя "Алексей" или любым другим человеческим именем
 ✅ При первом приветствии представляйся ТОЛЬКО так: "виртуальный ИИ-помощник сайта Легион" или "ИИ-помощник" или "виртуальный помощник"
 ✅ Если клиент спрашивает "кто ты?" — отвечай: "Я виртуальный ИИ-помощник сайта строительной компании ЛЕГИОН"
+
+[📞 ВАЛИДАЦИЯ НОМЕРА ТЕЛЕФОНА]
+- Если клиент указал неполный номер (меньше 11 цифр) — вежливо попроси перепроверить и указать полный номер
+- Если клиент указал городской номер — уточни, может ли дать мобильный для оперативной связи
+- Если клиент не может дать мобильный — прими городской номер и подтверди заявку
+- Мобильный номер: 11 цифр, начинается на +7/8, код оператора (9XX)
+
+[🔄 ОБНОВЛЕНИЕ ЗАЯВКИ]
+Если заявка уже была отправлена (в истории есть SYSTEM: LEAD_SENT) и клиент пишет снова:
+- Клиент указал новое имя → подтверди обновление: "✅ Имя обновлено: [новое имя]"
+- Клиент указал новый номер → подтверди обновление: "✅ Телефон обновлён: [новый номер]"
+- Клиент добавил уточнение → подтверди: "✅ Уточнение принято: [текст]"
+- НЕ добавляй контактную строку в конце, если заявка уже отправлена${phoneValidationText}
 
 [🔥 КЛЮЧЕВАЯ УСЛУГА: ЗОК]
 Защита от БПЛА — ключевая услуга компании!
@@ -759,71 +882,150 @@ app.post('/api/chat', async (req, res) => {
     }
 
     // ============================================
-    // Extract phone number and send to Telegram
+    // Extract phone number and validate
     // ============================================
-    const phoneNumber = extractPhoneNumber(message);
+    const phoneData = extractPhoneNumber(message);
+    const phoneNumber = phoneData?.number || null;
+    const phoneType = phoneData?.type || null;
 
     // Extract user name for logging
     const userName = extractName(message, history) || 'Клиент';
+    
+    // ============================================
+    // Check for existing lead in session (not just history)
+    // ============================================
+    const session = getSession(sessionId);
+    let leadAlreadySent = false;
+    let existingLeadId = null;
+    
+    if (session && session.messages) {
+      const leadSentMessage = session.messages.findLast(m => m.role === 'SYSTEM' && m.content.startsWith('LEAD_SENT:'));
+      if (leadSentMessage) {
+        leadAlreadySent = true;
+        existingLeadId = leadSentMessage.content.split(':')[1];
+        console.log('💾 [SESSION] Found existing lead:', existingLeadId);
+      }
+    }
+    
+    // Also check history (for backward compatibility)
+    if (!leadAlreadySent && history.some(h => h.role === 'SYSTEM' && h.content.startsWith('LEAD_SENT:'))) {
+      const leadSentMessage = history.findLast(h => h.role === 'SYSTEM' && h.content.startsWith('LEAD_SENT:'));
+      if (leadSentMessage) {
+        leadAlreadySent = true;
+        existingLeadId = leadSentMessage.content.split(':')[1];
+        console.log('📜 [HISTORY] Found existing lead:', existingLeadId);
+      }
+    }
 
     // Log user message to Telegram (async, non-blocking)
     logChatMessage(sessionId || 'unknown', userName, message, true).catch(err => {
       console.error('❌ [TG-LOGS] Failed to log user message:', err.message);
     });
 
-    // If phone detected - send lead to Telegram immediately
+    // If phone detected - check type and handle accordingly
     if (phoneNumber) {
-      console.log('📞 [CHAT] Phone number detected:', phoneNumber);
+      console.log('📞 [CHAT] Phone number detected:', {
+        number: phoneNumber,
+        type: phoneType,
+        raw: phoneData?.raw
+      });
 
       const name = userName;
       const serviceName = serviceContext?.title || null;
 
-      // Send lead to Telegram (async, non-blocking)
-      sendLeadToTelegram({
-        name: name || 'Клиент из чата',
-        phone: phoneNumber,
-        message,
-        serviceSlug,
-        serviceName
-      }).then(sent => {
-        if (sent) {
-          console.log('✅ [CHAT] Lead successfully sent to Telegram');
+      // Handle incomplete phone numbers
+      if (phoneType === 'incomplete') {
+        console.log('⚠️ [CHAT] Incomplete phone number - asking to verify');
+        // Will pass to Qwen with special instruction via phoneData
+      }
+      // Handle city phone numbers - ask for mobile
+      else if (phoneType === 'city') {
+        console.log('🏙️ [CHAT] City phone detected - asking for mobile');
+        // Will pass to Qwen with special instruction via phoneData
+      }
+      // Handle mobile numbers - send lead immediately
+      else if (phoneType === 'mobile') {
+        console.log('📱 [CHAT] Mobile phone detected - sending lead');
+
+        // Use existing lead ID or generate new one
+        let leadId = existingLeadId;
+        
+        if (!leadId) {
+          // Generate new lead ID from timestamp
+          leadId = Date.now().toString();
+          console.log('🆕 [CHAT] New lead - generated ID:', leadId);
+        } else {
+          console.log('📝 [CHAT] Lead update - using existing ID:', leadId);
         }
-      }).catch(err => {
-        console.error('❌ [CHAT] Failed to send lead:', err.message);
-      });
+        
+        const isUpdate = leadAlreadySent;
+        const currentName = name || 'Клиент';
+        const currentPhone = phoneNumber;
 
-      // Return immediate response without calling Qwen
-      console.log('📞 [CHAT] Phone detected - returning confirmation');
+        // Send lead to Telegram (async, non-blocking)
+        sendLeadToTelegram({
+          name: currentName,
+          phone: currentPhone,
+          message: isUpdate ? 'Обновление номера' : message,
+          serviceSlug,
+          serviceName,
+          leadId,
+          isUpdate
+        }).then(sent => {
+          if (sent) {
+            console.log('✅ [CHAT] Lead successfully sent to Telegram');
+          }
+        }).catch(err => {
+          console.error('❌ [CHAT] Failed to send lead:', err.message);
+        });
 
-      res.json({
-        response: name
-          ? `✅ **${name}, ваша заявка отправлена!**\n\nЯ передал ваш номер **${phoneNumber}** менеджеру.\n\nОн свяжется с вами в течение 15 минут для уточнения деталей. 📞`
-          : `✅ **Ваш номер сохранён!**\n\nЯ передал номер **${phoneNumber}** менеджеру.\n\nОн свяжется с вами в течение 15 минут для уточнения деталей. 📞`,
-        sessionId: sessionId || Date.now().toString(),
-        serviceContext: serviceContext ? {
-          title: serviceContext.title,
-          price: serviceContext.price,
-          url: serviceContext.url
-        } : null,
-        qwenUsed: false,
-        phoneDetected: true,
-        leadSubmitted: true,
-        suggestLeadForm: false
-      });
-      
-      // Log bot response to Telegram (async, non-blocking)
-      logChatMessage(sessionId || 'unknown', userName, name 
-        ? `✅ **${name}, ваша заявка отправлена!**\n\nЯ передал ваш номер **${phoneNumber}** менеджеру.\n\nОн свяжется с вами в течение 15 минут для уточнения деталей. 📞`
-        : `✅ **Ваш номер сохранён!**\n\nЯ передал номер **${phoneNumber}** менеджеру.\n\nОн свяжется с вами в течение 15 минут для уточнения деталей. 📞`, false).catch(err => {
-        console.error('❌ [TG-LOGS] Failed to log bot response:', err.message);
-      });
-      
-      return;
+        // Return immediate response without calling Qwen
+        console.log('📞 [CHAT] Mobile detected - returning confirmation');
+
+        // Save leadSent flag with lead ID to session
+        addMessageToSession(sessionId, {
+          role: 'SYSTEM',
+          content: `LEAD_SENT:${leadId}`,
+          timestamp: Date.now()
+        });
+
+        const responseText = isUpdate
+          ? `✅ **Номер обновлён!**\n\nЯ обновил ваш номер на **${currentPhone}**. Менеджер свяжется с вами в течение 15 минут. 📞`
+          : (name
+              ? `✅ **${name}, ваша заявка отправлена!**\n\nЯ передал ваш номер **${currentPhone}** менеджеру.\n\nОн свяжется с вами в течение 15 минут для уточнения деталей. 📞`
+              : `✅ **Ваш номер сохранён!**\n\nЯ передал номер **${currentPhone}** менеджеру.\n\nОн свяжется с вами в течение 15 минут для уточнения деталей. 📞`);
+
+        res.json({
+          response: responseText,
+          sessionId: sessionId || Date.now().toString(),
+          serviceContext: serviceContext ? {
+            title: serviceContext.title,
+            price: serviceContext.price,
+            url: serviceContext.url
+          } : null,
+          qwenUsed: false,
+          phoneDetected: true,
+          leadSubmitted: true,
+          suggestLeadForm: false,
+          leadId
+        });
+
+        // Log bot response to Telegram (async, non-blocking)
+        logChatMessage(sessionId || 'unknown', userName, responseText, false).catch(err => {
+          console.error('❌ [TG-LOGS] Failed to log bot response:', err.message);
+        });
+
+        return;
+      }
+      // Unknown type - treat as city phone
+      else {
+        console.log('❓ [CHAT] Unknown phone type - treating as city');
+        // Pass to Qwen to handle
+      }
     }
 
-    // Build prompt
-    const prompt = buildPrompt(message, serviceContext, history, suggestLeadForm);
+    // Build prompt (pass phoneData if phone was detected but not mobile)
+    const prompt = buildPrompt(message, serviceContext, history, suggestLeadForm, phoneData);
 
     console.log('🤖 [CHAT] Prompt (first 500 chars):', prompt.substring(0, 500) + '...');
 
@@ -865,21 +1067,18 @@ app.post('/api/chat', async (req, res) => {
     let qwenUsed = false;
 
     try {
-      // Экранируем специальные символы для командной строки Windows
-      const escapedPrompt = prompt.replace(/"/g, '\\"').replace(/\n/g, '\\n');
-
-      // Запускаем Qwen CLI в YOLO режиме (-y) для автоматического выполнения
-      // Используем -p для промпта и -y для автоматического подтверждения
-      const { stdout } = await execAsync(`qwen -y -p "${escapedPrompt}"`, {
+      // Используем stdin для передачи промпта вместо аргумента командной строки
+      // Это надёжнее и избегает проблем с экранированием специальных символов
+      const { stdout } = await execAsync(`echo "${Buffer.from(prompt).toString('base64')}" | base64 -d | qwen -y -p`, {
         cwd: __dirname,
-        timeout: 30000, // Уменьшаем таймаут до 30 секунд
+        timeout: 30000,
         maxBuffer: 2 * 1024 * 1024,
-        env: { ...process.env, FORCE_COLOR: '0' } // Отключаем цвета для чистого вывода
+        env: { ...process.env, FORCE_COLOR: '0' }
       });
       aiResponse = stdout.trim();
       qwenUsed = true;
       console.log('🤖 [CHAT] ✅ Qwen response received:', aiResponse.substring(0, 100));
-      
+
       // Cache the response
       setToCache(qwenResponseCache, cacheKey, aiResponse, CACHE_TTL.QWEN_RESPONSE);
       console.log('💾 [CHAT] Response cached for 1 hour');
@@ -924,21 +1123,41 @@ app.post('/api/chat', async (req, res) => {
     // ============================================
     // Save messages to persistent session storage
     // ============================================
-    
+
     // Save user message
     addMessageToSession(sessionId, {
       role: 'КЛИЕНТ',
       content: message,
       timestamp: Date.now()
     });
-    
+
     // Save bot response
     addMessageToSession(sessionId, {
       role: 'AI',
       content: aiResponse,
       timestamp: Date.now()
     });
-    
+
+    // Save LEAD_SENT marker with lead ID if phone was detected
+    if (phoneType === 'mobile') {
+      // Get lead ID from existing marker or use the one we generated
+      let saveLeadId = leadId;
+      if (!saveLeadId) {
+        const existingLeadSent = history.findLast(h => h.role === 'SYSTEM' && h.content.startsWith('LEAD_SENT:'));
+        if (existingLeadSent) {
+          saveLeadId = existingLeadSent.content.split(':')[1];
+        }
+      }
+      
+      if (saveLeadId) {
+        addMessageToSession(sessionId, {
+          role: 'SYSTEM',
+          content: `LEAD_SENT:${saveLeadId}`,
+          timestamp: Date.now()
+        });
+      }
+    }
+
     console.log('💾 [SESSION] Messages saved to persistent storage');
 
   } catch (error) {
@@ -962,30 +1181,39 @@ function generateFallbackResponse(message, serviceContext, companyInfo, history 
   const isFirstMessage = history.length === 0;
 
   // ============================================
-  // Extract phone number and send to Telegram
+  // Extract phone number and validate type
   // ============================================
-  const phoneNumber = extractPhoneNumber(message);
+  const phoneData = extractPhoneNumber(message);
+  const phoneNumber = phoneData?.number || null;
+  const phoneType = phoneData?.type || null;
 
+  // Handle phone number based on type
   if (phoneNumber) {
-    console.log('📞 [FALLBACK] Phone number detected:', phoneNumber);
+    console.log('📞 [FALLBACK] Phone number detected:', {
+      number: phoneNumber,
+      type: phoneType,
+      raw: phoneData?.raw
+    });
 
     const name = extractName(message, history);
-    const serviceName = serviceContext?.title || null;
 
-    // Send lead to Telegram (async, non-blocking)
-    sendLeadToTelegram({
-      name,
-      phone: phoneNumber,
-      message,
-      serviceSlug: serviceContext?.slug,
-      serviceName
-    }).then(sent => {
-      if (sent) {
-        console.log('✅ [FALLBACK] Lead successfully sent to Telegram');
-      }
-    }).catch(err => {
-      console.error('❌ [FALLBACK] Failed to send lead:', err.message);
-    });
+    // Handle incomplete phone numbers - ask to verify
+    if (phoneType === 'incomplete') {
+      console.log('⚠️ [FALLBACK] Incomplete phone - asking to verify');
+      return `Вижу, что номер указан не полностью (${phoneData.raw}). Пожалуйста, перепроверьте и напишите полный номер телефона (11 цифр для мобильного или городской с кодом города). 📞`;
+    }
+
+    // Handle city phone numbers - ask for mobile
+    if (phoneType === 'city') {
+      console.log('🏙️ [FALLBACK] City phone - asking for mobile');
+      return `Спасибо! Вижу, это городской номер. Для более оперативной связи, могли бы вы также указать ваш мобильный номер? Если нет возможности — оставим городской, менеджер всё равно свяжется. 📞`;
+    }
+
+    // Handle mobile numbers - should be caught by main logic, but just in case
+    if (phoneType === 'mobile') {
+      console.log('📱 [FALLBACK] Mobile phone - this should be handled by main logic');
+      // This case should not happen - mobile numbers are handled before Qwen
+    }
   }
 
   // Greetings - только если это первое сообщение
@@ -1064,6 +1292,16 @@ function generateFallbackResponse(message, serviceContext, companyInfo, history 
     return `Всегда рады помочь! 🤝 Обращайтесь ещё!`;
   }
 
+  // Check if client is asking about mobile phone (after being asked for city number)
+  if (msg.includes('мобильн') && (msg.includes('дам') || msg.includes('дать') || msg.includes('указать') || msg.includes('написать'))) {
+    return `Да, конечно! 📱 Напишите ваш мобильный номер (11 цифр), и я передам его менеджеру. Он свяжется с вами в течение 15 минут!`;
+  }
+
+  // Check if client is confused or asking for clarification
+  if (msg.includes('непонял') || msg.includes('не понимаю') || msg.includes('что?') || msg.includes('почему')) {
+    return `Извините, если запутал вас! 😊 Я ИИ-помощник компании ЛЕГИОН. Могу помочь с:\n• Расчётом стоимости работ\n• Информацией об услугах\n• Консультацией по ЗОК (защита от БПЛА)\n• Вопросами по вакансиям\n\nПросто напишите, что вас интересует, или позвоните: ${companyInfo.phone}. 📞`;
+  }
+
   // Default - с учётом контекста услуги
   if (serviceContext) {
     let response = `${serviceContext.description}\n\nХотите узнать стоимость или задать другой вопрос? 📞 ${companyInfo.phone} — проконсультируем бесплатно!`;
@@ -1073,7 +1311,8 @@ function generateFallbackResponse(message, serviceContext, companyInfo, history 
     return response;
   }
 
-  let response = `Спасибо за вопрос! Для консультации позвоните: ${companyInfo.phone}. Менеджер поможет! 😊`;
+  // Default response with more context awareness
+  let response = `Спасибо за вопрос! 🤝\n\nДля быстрой консультации позвоните: ${companyInfo.phone} (с 9:00 до 18:00).\n\nИли опишите подробнее, что вас интересует — строительство, демонтаж, защита от БПЛА или другая услуга? Могу рассчитать стоимость или ответить на вопросы! 😊`;
   if (suggestLeadForm) {
     response += `\n\n_Или напишите мне свою заявку и контактные данные (имя + телефон) — я отправлю руководству. Можно просто в чат, или нажмите кнопку "📋 Заполнить заявку" внизу._`;
   }
@@ -1207,12 +1446,12 @@ app.post('/api/cache/clear', (req, res) => {
 });
 
 // Start server
-app.listen(PORT, () => {
+app.listen(AI_PORT, () => {
   console.log(`
 ╔════════════════════════════════════════════════════════╗
 ║  🤖 AI Assistant Server (ai-assistant/)                ║
 ╠════════════════════════════════════════════════════════╣
-║  Port: ${PORT}                                            ║
+║  Port: ${AI_PORT}                                            ║
 ║  Services: ${knowledgeBase?.services.length || 0}                                  ║
 ║  Knowledge Base: ✅ Loaded                               ║
 ║  Qwen CLI: 🤖 Available                                 ║

@@ -37,7 +37,7 @@ export default {
     '/vacancies',
     '/privacy',
     '/terms',
-    // All service pages for SEO
+    // All service pages for SEO (already includes all 16 services)
     ...serviceUrls
   ]
 } satisfies Config;

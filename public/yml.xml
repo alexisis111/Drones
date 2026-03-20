@@ -59,19 +59,6 @@
       </offer>
 
       <offer id="4" available="true">
-        <url>https://xn--78-glchqprh.xn--p1ai/service/blagoustroystvo-territoriy</url>
-        <price>1000</price>
-        <currencyId>RUB</currencyId>
-        <categoryId>1</categoryId>
-        <name>Благоустройство территорий</name>
-        <description>Комплекс работ по обустройству прилегающих территорий. Цена по запросу. Звоните!</description>
-        <picture>https://xn--78-glchqprh.xn--p1ai/img/services/img4.jpeg</picture>
-        <vendor>ООО "ЛЕГИОН"</vendor>
-        <delivery>false</delivery>
-        <pickup>false</pickup>
-      </offer>
-
-      <offer id="5" available="true">
         <url>https://xn--78-glchqprh.xn--p1ai/service/izgotovlenie-metallokonstruktsiy</url>
         <price>1000</price>
         <currencyId>RUB</currencyId>
@@ -84,7 +71,7 @@
         <pickup>false</pickup>
       </offer>
 
-      <offer id="6" available="true">
+      <offer id="5" available="true">
         <url>https://xn--78-glchqprh.xn--p1ai/service/montazh-tekhnologicheskikh-truboprovodov</url>
         <price>1000</price>
         <currencyId>RUB</currencyId>
@@ -97,7 +84,7 @@
         <pickup>false</pickup>
       </offer>
 
-      <offer id="7" available="true">
+      <offer id="6" available="true">
         <url>https://xn--78-glchqprh.xn--p1ai/service/montazh-tekhnologicheskikh-ploshchadok</url>
         <price>1000</price>
         <currencyId>RUB</currencyId>
@@ -110,7 +97,7 @@
         <pickup>false</pickup>
       </offer>
 
-      <offer id="8" available="true">
+      <offer id="7" available="true">
         <url>https://xn--78-glchqprh.xn--p1ai/service/antikorroziynaya-zashchita</url>
         <price>1000</price>
         <currencyId>RUB</currencyId>
@@ -123,7 +110,7 @@
         <pickup>false</pickup>
       </offer>
 
-      <offer id="9" available="true">
+      <offer id="8" available="true">
         <url>https://xn--78-glchqprh.xn--p1ai/service/ustroystvo-kamennykh-konstruktsiy</url>
         <price>1000</price>
         <currencyId>RUB</currencyId>
@@ -136,7 +123,7 @@
         <pickup>false</pickup>
       </offer>
 
-      <offer id="10" available="true">
+      <offer id="9" available="true">
         <url>https://xn--78-glchqprh.xn--p1ai/service/ustroystvo-fundamentov</url>
         <price>1000</price>
         <currencyId>RUB</currencyId>
@@ -149,7 +136,7 @@
         <pickup>false</pickup>
       </offer>
 
-      <offer id="11" available="true">
+      <offer id="10" available="true">
         <url>https://xn--78-glchqprh.xn--p1ai/service/montazh-sbornogo-zhelezobetona</url>
         <price>1000</price>
         <currencyId>RUB</currencyId>
@@ -162,7 +149,7 @@
         <pickup>false</pickup>
       </offer>
 
-      <offer id="12" available="true">
+      <offer id="11" available="true">
         <url>https://xn--78-glchqprh.xn--p1ai/service/teploizolyatsiya-oborudovaniya</url>
         <price>1000</price>
         <currencyId>RUB</currencyId>
@@ -175,7 +162,7 @@
         <pickup>false</pickup>
       </offer>
 
-      <offer id="13" available="true">
+      <offer id="12" available="true">
         <url>https://xn--78-glchqprh.xn--p1ai/service/teploizolyatsiya-truboprovodov</url>
         <price>1000</price>
         <currencyId>RUB</currencyId>
@@ -188,7 +175,7 @@
         <pickup>false</pickup>
       </offer>
 
-      <offer id="14" available="true">
+      <offer id="13" available="true">
         <url>https://xn--78-glchqprh.xn--p1ai/service/zemlyanye-raboty</url>
         <price>1000</price>
         <currencyId>RUB</currencyId>
@@ -201,7 +188,7 @@
         <pickup>false</pickup>
       </offer>
 
-      <offer id="15" available="true">
+      <offer id="14" available="true">
         <url>https://xn--78-glchqprh.xn--p1ai/service/stroitelstvo-angarov</url>
         <price>1000</price>
         <currencyId>RUB</currencyId>
@@ -214,7 +201,7 @@
         <pickup>false</pickup>
       </offer>
 
-      <offer id="16" available="true">
+      <offer id="15" available="true">
         <url>https://xn--78-glchqprh.xn--p1ai/service/gruzoperevozki</url>
         <price>1000</price>
         <currencyId>RUB</currencyId>
@@ -227,7 +214,7 @@
         <pickup>false</pickup>
       </offer>
 
-      <offer id="17" available="true">
+      <offer id="16" available="true">
         <url>https://xn--78-glchqprh.xn--p1ai/service/ognezashchita-konstruktsiy</url>
         <price>1000</price>
         <currencyId>RUB</currencyId>

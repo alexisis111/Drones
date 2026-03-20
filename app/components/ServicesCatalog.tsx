@@ -8,7 +8,7 @@ import {
     Package,
     Search
 } from 'lucide-react';
-import {Link, useSearchParams} from 'react-router';
+import {Link, useSearchParams, useNavigate} from 'react-router';
 import OptimizedImage from './OptimizedImage';
 import LazyLoad from './LazyLoad';
 import {ServiceSchema} from './SchemaOrg';
@@ -25,6 +25,7 @@ interface ServicesCatalogProps {
 const ServicesCatalog: React.FC<ServicesCatalogProps> = ({breadcrumbs}) => {
     const {theme} = useTheme();
     const [searchParams, setSearchParams] = useSearchParams();
+    const navigate = useNavigate();
     const [filteredServiceIds, setFilteredServiceIds] = useState<number[] | null>(null);
 
     // State for modal
@@ -203,7 +204,7 @@ const ServicesCatalog: React.FC<ServicesCatalogProps> = ({breadcrumbs}) => {
                                         viewport={{once: true}}
                                         transition={{delay: index * 0.1}}
                                         whileHover={{y: -10}}
-                                        onClick={() => window.location.href = `/service/${service.slug}`}
+                                        onClick={() => navigate(`/service/${service.slug}`)}
                                         className={`group relative overflow-hidden rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 cursor-pointer ${
                                             theme === 'dark'
                                                 ? 'bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700'
@@ -255,7 +256,7 @@ const ServicesCatalog: React.FC<ServicesCatalogProps> = ({breadcrumbs}) => {
                                                 </div>
                                             )}
 
-                                            {/* Bottom gradient info - ИСПРАВЛЕНО: цвет заголовка */}
+                                            {/* Bottom gradient info */}
                                             <div className="absolute bottom-0 left-0 right-0 p-4">
                                                 <h3 className={`text-xl font-bold line-clamp-2 transition-colors duration-300 ${
                                                     theme === 'dark' ? 'text-white' : 'text-white'

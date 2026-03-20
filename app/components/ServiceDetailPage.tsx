@@ -127,7 +127,7 @@ const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ breadcrumbs, serv
         />
 
         {/* Hero Section */}
-        <section className={`relative py-12 overflow-hidden ${
+        <section className={`relative overflow-hidden ${
           theme === 'dark'
             ? 'bg-neutral-900'
             : 'bg-white'
@@ -186,7 +186,7 @@ const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ breadcrumbs, serv
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 }}
-                  className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white leading-tight"
+                  className="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight"
                 >
                   <span className="block">{service.title}</span>
                 </motion.h1>
@@ -213,7 +213,7 @@ const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({ breadcrumbs, serv
                       <Tag className="w-4 h-4 md:w-6 md:h-6" />
                       <div>
                         <span className="text-[10px] md:text-xs text-green-100 block">Стоимость:</span>
-                        <span className="text-base md:text-xl font-black">{service.price}</span>
+                        <span className="text-base md:text-xl font-bold">{service.price}</span>
                       </div>
                     </motion.div>
                   )}

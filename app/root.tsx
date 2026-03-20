@@ -50,7 +50,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <meta name="viewport" content="width=device-width, initial-scale=1"/>
       <meta name="yandex-verification" content="916757bc47a6f80e" />
       <meta name="google-site-verification" content="YOMSPufmaRHbpdasRrQBskC0PXPHfACqJIn2MBEE80o" />
-      <title>Строительная компания ЛЕГИОН | Строительство по всей России</title>
       <link rel="icon" href="/Logo-1.png" sizes="any"/>
 
       {/* Prevent FOUC - Apply theme before page loads */}
@@ -106,28 +105,23 @@ export function Layout({ children }: { children: React.ReactNode }) {
             'https://t.me/+XaGL8WXjVwQwYjVi'
           ]}
       />
-      {/* Yandex.Metrika counter */}
-      <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function(m,e,t,r,i,k,a){
-                m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-                m[i].l=1*new Date();
-                for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-                k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
-              })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=106789634', 'ym');
-
-              ym(106789634, 'init', {defer: true, ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
-
-              // Логирование инициализации для отладки
-              if (typeof console !== 'undefined') {
-                console.log('Yandex Metrika initialized with ID: 106789634');
-              }
-            `
-          }}
-      />
     </head>
     <body>
+    {/* Yandex.Metrika counter */}
+    <script
+      dangerouslySetInnerHTML={{
+        __html: `
+          (function(m,e,t,r,i,k,a){
+            m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+            m[i].l=1*new Date();
+            for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+          })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=106789634', 'ym');
+
+          ym(106789634, 'init', {defer: true, webvisor:true, clickmap:true, ecommerce:"dataLayer", accurateTrackBounce:true, trackLinks:true});
+        `
+      }}
+    />
     <div className="min-h-screen flex flex-col">
       <main className="flex-grow">
       {children}
