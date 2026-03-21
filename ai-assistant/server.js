@@ -326,45 +326,62 @@ function isMobilePhone(phone) {
 function extractPhoneNumber(message) {
   if (!message) return null;
 
+  console.log('📞 [PHONE EXTRACT] Input:', message.substring(0, 100));
+
   // Паттерны для российских номеров: +7 (XXX) XXX-XX-XX, 8 XXX XXX-XX-XX, 7XXXXXXXXXX, XXXXXXXXXXX и т.д.
   const phonePatterns = [
     /(\+7|8)\s*\(?(\d{3})\)?\s*(\d{3})\s*[-]?(\d{2})\s*[-]?(\d{2})/g,
     /(\+7|8)\s*[\-\s]?\s*(\d{3})\s*[\-\s]?\s*(\d{3})\s*[\-\s]?\s*(\d{2})\s*[\-\s]?\s*(\d{2})/g,
     /(\+7|8)\s*\((\d{3})\)\s*(\d{3})\s*[-]?(\d{2})\s*[-]?(\d{2})/g,
-    // Pattern for 10 digits starting with 9 (mobile without +7/8)
+    // Pattern for 10 digits starting with 9 (mobile without +7/8): 9XXXXXXXXX
     /(^|\s)(9\d{9})(\s|$)/g,
-    // Pattern for 11 digits starting with 7 or 8 (without +)
+    // Pattern for 11 digits starting with 7 or 8 (without +): 7XXXXXXXXXX or 8XXXXXXXXXX
     /(^|\s)([78]\d{10})(\s|$)/g,
+    // Pattern for 10 digits starting with 79 (mobile without +7): 79XXXXXXXX
+    /(^|\s)(79\d{8})(\s|$)/g,
   ];
 
   for (const pattern of phonePatterns) {
     const match = message.match(pattern);
     if (match) {
       let rawPhone = match[0].trim();
+      console.log('📞 [PHONE EXTRACT] Pattern matched, raw:', rawPhone);
+      
       // Очищаем номер от лишних символов
       let phone = rawPhone.replace(/\D/g, '');
-      
+      console.log('📞 [PHONE EXTRACT] Cleaned:', phone, 'length:', phone.length);
+
       // Нормализуем формат
       if (phone.length === 10 && phone.startsWith('9')) {
         phone = '+7' + phone;
+        console.log('📞 [PHONE EXTRACT] Normalized 9X→+79X:', phone);
       } else if (phone.length === 11 && phone.startsWith('8')) {
         phone = '+7' + phone.substring(1);
+        console.log('📞 [PHONE EXTRACT] Normalized 8X→+7X:', phone);
       } else if (phone.length === 11 && phone.startsWith('7')) {
         phone = '+' + phone;
+        console.log('📞 [PHONE EXTRACT] Normalized 7X→+7X:', phone);
+      } else if (phone.length === 10 && phone.startsWith('79')) {
+        phone = '+7' + phone.substring(1);
+        console.log('📞 [PHONE EXTRACT] Normalized 79X→+79X:', phone);
       }
-      
+
+      console.log('📞 [PHONE EXTRACT] Final:', phone, 'length:', phone.length);
+
       // Определяем тип номера
       if (phone.length >= 11 && phone.startsWith('+7')) {
         const type = isMobilePhone(phone) ? 'mobile' : 'city';
+        console.log('📞 [PHONE EXTRACT] Type:', type);
         return {
           number: phone,
           type: type,
           raw: rawPhone
         };
       }
-      
+
       // Если номер неполный (меньше 11 цифр)
       if (phone.length >= 5 && phone.length < 11) {
+        console.log('📞 [PHONE EXTRACT] Incomplete');
         return {
           number: phone,
           type: 'incomplete',
@@ -374,6 +391,7 @@ function extractPhoneNumber(message) {
     }
   }
 
+  console.log('📞 [PHONE EXTRACT] No match');
   return null;
 }
 
@@ -1103,11 +1121,11 @@ app.post('/api/chat', async (req, res) => {
     
     if (isUrgentRequest && leadAlreadySent && existingLeadId) {
       console.log('🚨 [CHAT] Urgent lead resend requested - ID:', existingLeadId);
-      
+
       // Get current name and phone from session
       let currentName = 'Клиент';
       let currentPhone = null;
-      
+
       if (session && session.messages) {
         // Find last mobile phone
         for (let i = session.messages.length - 1; i >= 0; i--) {
@@ -1120,7 +1138,7 @@ app.post('/api/chat', async (req, res) => {
             }
           }
         }
-        
+
         // Find last name
         for (let i = session.messages.length - 1; i >= 0; i--) {
           const msg = session.messages[i];
@@ -1133,7 +1151,7 @@ app.post('/api/chat', async (req, res) => {
           }
         }
       }
-      
+
       if (currentPhone) {
         // Send urgent lead to Telegram
         sendLeadToTelegram({
@@ -1151,6 +1169,81 @@ app.post('/api/chat', async (req, res) => {
         }).catch(err => {
           console.error('❌ [CHAT] Failed to send urgent lead:', err.message);
         });
+      }
+    }
+
+    // ============================================
+    // Check for lead update with new information (text only, no phone)
+    // ============================================
+    if (!phoneNumber && leadAlreadySent && existingLeadId) {
+      console.log('🔍 [CHAT] Checking for text update:', { leadAlreadySent, existingLeadId, hasSession: !!session, hasMessages: !!session?.messages });
+
+      if (session && session.messages) {
+        // Check if message contains meaningful information (not just "спасибо", "ок", etc.)
+        const skipWords = ['спасибо', 'ок', 'окей', 'хорошо', 'ладно', 'понятно', 'ясно', 'привет', 'здравствуйте', 'пока', 'до свидания'];
+        const msgLowerTrimmed = message.toLowerCase().trim();
+        const isSkipMessage = skipWords.some(word => msgLowerTrimmed === word || msgLowerTrimmed.startsWith(word + '!') || msgLowerTrimmed.startsWith(word + '?'));
+
+        // Check if message contains service-related keywords
+        const serviceKeywords = ['зок', 'защита', 'бпла', 'дрон', 'расчет', 'стоимость', 'цена', 'услуг', 'монтаж', 'объект', 'площадь', 'кв', 'метр', 'адрес', 'интересует', 'хочу', 'буду', 'нужно', 'требуется', 'важно', 'учти', 'добавь', 'забудь', 'не так', 'другой', 'измени', 'поменять', 'обновить', 'дополнить', 'забыл', 'забыла'];
+        const hasServiceInfo = serviceKeywords.some(keyword => msgLowerTrimmed.includes(keyword));
+
+        console.log('🔍 [CHAT] Text update check:', { isSkipMessage, hasServiceInfo, msgLowerTrimmed });
+
+        if (!isSkipMessage && hasServiceInfo) {
+          console.log('📝 [CHAT] Lead update with text info detected - sending to Telegram');
+
+          // Get current name and phone from session
+          let currentName = 'Клиент';
+          let currentPhone = null;
+
+          // Find last mobile phone
+          for (let i = session.messages.length - 1; i >= 0; i--) {
+            const msg = session.messages[i];
+            if (msg.role === 'КЛИЕНТ') {
+              const phoneInMsg = extractPhoneNumber(msg.content);
+              if (phoneInMsg && phoneInMsg.type === 'mobile') {
+                currentPhone = phoneInMsg.number;
+                console.log('📞 [CHAT] Found phone in session:', currentPhone);
+                break;
+              }
+            }
+          }
+
+          // Find last name
+          for (let i = session.messages.length - 1; i >= 0; i--) {
+            const msg = session.messages[i];
+            if (msg.role === 'КЛИЕНТ') {
+              const nameInMsg = extractName(msg.content);
+              if (nameInMsg) {
+                currentName = nameInMsg;
+                console.log('📝 [CHAT] Found name in session:', currentName);
+                break;
+              }
+            }
+          }
+
+          if (currentPhone) {
+            // Send update to Telegram
+            sendLeadToTelegram({
+              name: currentName,
+              phone: currentPhone,
+              message: `💬 ${message}`,
+              serviceSlug,
+              serviceName,
+              leadId: existingLeadId,
+              isUpdate: true
+            }).then(sent => {
+              if (sent) {
+                console.log('✅ [CHAT] Text update sent to Telegram');
+              }
+            }).catch(err => {
+              console.error('❌ [CHAT] Failed to send text update:', err.message);
+            });
+          } else {
+            console.log('⚠️ [CHAT] No phone in session for text update');
+          }
+        }
       }
     }
 

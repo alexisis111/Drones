@@ -33,22 +33,24 @@ const validateName = (name: string): boolean => {
 const validatePhone = (phone: string): boolean => {
   // Phone should be in format +7XXXXXXXXXX (11 digits after +7)
   const phoneRegex = /^\+7\d{10}$/;
-  return phoneRegex.test(phone.replace(/\s|-|\(|\)/g, ''));
+  // Убираем все нецифровые символы для проверки
+  const cleaned = phone.replace(/[^\d+]/g, '');
+  return phoneRegex.test(cleaned);
 };
 
 const formatPhone = (phone: string): string => {
   // Remove all non-digit characters except +
-  const cleaned = phone.replace(/[^\d+]/g, '');
+  let cleaned = phone.replace(/[^\d+]/g, '');
   
-  // Ensure it starts with +7 or 7
+  // Normalize to +7XXXXXXXXXX
   if (cleaned.startsWith('+7')) {
-    return '+7' + cleaned.slice(2).replace(/\D/g, '');
+    return '+7' + cleaned.slice(2).replace(/\D/g, '').slice(0, 10);
   } else if (cleaned.startsWith('7') && cleaned.length >= 11) {
-    return '+7' + cleaned.slice(1).replace(/\D/g, '');
+    return '+7' + cleaned.slice(1).replace(/\D/g, '').slice(0, 10);
   } else if (cleaned.startsWith('8') && cleaned.length >= 11) {
-    return '+7' + cleaned.slice(1).replace(/\D/g, '');
+    return '+7' + cleaned.slice(1).replace(/\D/g, '').slice(0, 10);
   } else if (cleaned.length >= 10) {
-    return '+7' + cleaned.replace(/\D/g, '');
+    return '+7' + cleaned.replace(/\D/g, '').slice(0, 10);
   }
   
   return cleaned;
@@ -142,54 +144,63 @@ const ChatWidget: React.FC<ChatWidgetProps> = () => {
   const [showAutoOpenAnimation, setShowAutoOpenAnimation] = useState(false); // Show auto-open animation on home page
   const [formErrors, setFormErrors] = useState<{ name?: string; phone?: string }>({}); // Validation errors
   const [showAIDisclaimer, setShowAIDisclaimer] = useState(false); // Show AI disclaimer on first open
+  const [phoneDigits, setPhoneDigits] = useState(''); // Храним ТОЛЬКО 11 цифр
+  const phoneInputRef = useRef<HTMLInputElement>(null); // Ref for uncontrolled input
 
-  // Phone mask handler
-  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = e.target.value;
-    
-    // Remove all non-digit characters except +
-    value = value.replace(/[^\d+]/g, '');
-    
-    // Handle + at the start
-    if (value.startsWith('+')) {
-      value = '+7' + value.slice(1).replace(/\D/g, '');
+  // Форматирование номера для отображения
+  const formatPhoneValue = (digits: string): string => {
+    if (!digits) return '';
+
+    let normalized = digits;
+    if (digits.startsWith('8')) {
+      normalized = '7' + digits.slice(1);
     }
-    
-    // Replace 8 with +7
-    if (value.startsWith('8')) {
-      value = '+7' + value.slice(1);
+    if (!normalized.startsWith('7') && normalized.length > 0) {
+      normalized = '7' + normalized;
     }
-    
-    // Ensure starts with +7
-    if (!value.startsWith('+7') && value.length > 0) {
-      value = '+7' + value.replace(/\D/g, '');
-    }
-    
-    // Limit to +7 + 10 digits
-    if (value.startsWith('+7')) {
-      value = '+7' + value.slice(2).replace(/\D/g, '').slice(0, 10);
-    }
-    
-    // Format as +7 (XXX) XXX-XX-XX
-    if (value.startsWith('+7')) {
-      const digits = value.slice(2);
-      if (digits.length === 0) {
-        value = '+7';
-      } else if (digits.length <= 3) {
-        value = `+7 (${digits}`;
-      } else if (digits.length <= 6) {
-        value = `+7 (${digits.slice(0, 3)}) ${digits.slice(3)}`;
-      } else if (digits.length <= 8) {
-        value = `+7 (${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
-      } else {
-        value = `+7 (${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6, 8)}-${digits.slice(8, 10)}`;
+    normalized = normalized.slice(0, 11);
+
+    let formatted = '';
+    if (normalized.length > 0) {
+      formatted = '+7';
+      if (normalized.length > 1) {
+        const d = normalized.slice(1);
+        if (d.length <= 3) {
+          formatted += ` (${d}`;
+        } else if (d.length <= 6) {
+          formatted += ` (${d.slice(0, 3)}) ${d.slice(3)}`;
+        } else if (d.length <= 8) {
+          formatted += ` (${d.slice(0, 3)}) ${d.slice(3, 6)}-${d.slice(6)}`;
+        } else {
+          formatted += ` (${d.slice(0, 3)}) ${d.slice(3, 6)}-${d.slice(6, 8)}-${d.slice(8, 10)}`;
+        }
       }
     }
+    return formatted;
+  };
+
+  // Обработка изменения - извлекаем цифры из отформатированного значения
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const inputValue = e.target.value;
+    // Extract only digits from the formatted value
+    const digits = inputValue.replace(/\D/g, '');
     
-    setLeadFormData(prev => ({ ...prev, phone: value }));
-    // Clear phone error when user starts typing
-    if (formErrors.phone) {
-      setFormErrors(prev => ({ ...prev, phone: undefined }));
+    // If user is deleting (backspace), allow it
+    if (digits.length < phoneDigits.length) {
+      setPhoneDigits(digits);
+      if (formErrors.phone) {
+        setFormErrors(prev => ({ ...prev, phone: undefined }));
+      }
+      return;
+    }
+    
+    // If adding new digits, only accept up to 11
+    const newDigits = digits.slice(0, 11);
+    if (newDigits !== phoneDigits) {
+      setPhoneDigits(newDigits);
+      if (formErrors.phone) {
+        setFormErrors(prev => ({ ...prev, phone: undefined }));
+      }
     }
   };
 
@@ -1738,16 +1749,14 @@ const ChatWidget: React.FC<ChatWidgetProps> = () => {
       return;
     }
 
-    // Validate phone
-    if (!leadFormData.phone.trim()) {
-      setFormErrors(prev => ({ ...prev, phone: 'Введите номер телефона' }));
-      return;
-    }
-    const formattedPhone = formatPhone(leadFormData.phone);
-    if (!validatePhone(leadFormData.phone)) {
+    // Validate phone - используем phoneDigits
+    if (!phoneDigits || phoneDigits.length !== 11) {
       setFormErrors(prev => ({ ...prev, phone: 'Введите номер в формате +7XXXXXXXXXX (11 цифр)' }));
       return;
     }
+    
+    // Форматируем для отправки
+    const formattedPhone = '+7' + phoneDigits.slice(1);
 
     // Clear errors if validation passed
     setFormErrors({});
@@ -2299,8 +2308,9 @@ const ChatWidget: React.FC<ChatWidgetProps> = () => {
                                 theme === 'dark' ? 'text-gray-300' : 'text-gray-600'
                               }`}>Телефон *</label>
                               <input
+                                ref={phoneInputRef}
                                 type="tel"
-                                value={leadFormData.phone}
+                                value={formatPhoneValue(phoneDigits)}
                                 onChange={handlePhoneChange}
                                 className={`w-full px-3 py-2 rounded-lg border text-sm ${
                                   formErrors.phone
@@ -2309,7 +2319,8 @@ const ChatWidget: React.FC<ChatWidgetProps> = () => {
                                     ? 'bg-gray-800 border-gray-600 text-white placeholder-gray-500'
                                     : 'bg-white border-gray-300 text-gray-900 placeholder-gray-400'
                                 }`}
-                                placeholder="+7 (999) 000-00-00"
+                                placeholder="+7 (___) ___-__-__"
+                                maxLength={18}
                               />
                               {formErrors.phone && (
                                 <p className="text-red-500 text-xs mt-1">{formErrors.phone}</p>

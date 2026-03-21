@@ -28,6 +28,135 @@
 
 ---
 
+## ✅ РЕШЕНО: Поле телефона в форме заявки чата (2026-03-21)
+
+### Описание проблемы
+Поле ввода телефона в форме заявки AI-чата (`app/components/ChatWidget.tsx`) работало **некорректно**:
+- При вводе цифр номер формировался неправильно: `+7 (777) 777-77-79` вместо `+7 (921) 321-32-32`
+- Удаление символов (Backspace/Delete) не работало
+- Каждая введённая цифра интерпретировалась как `7`
+
+### Сценарий воспроизведения (был)
+1. Открыть чат
+2. Нажать "📋 Заполнить заявку"
+3. Начать вводить номер: `9213213232`
+4. **Результат:** `+7 (777) 777-77-79` ❌
+5. Нажать Backspace — не удаляется ❌
+
+### Предпринятые попытки исправления (неудачные)
+
+#### Попытки 1-6: Различные подходы с controlled/uncontrolled inputs
+Все 6 попыток не увенчались успехом из-за проблемы с React controlled input — `e.target.value` содержал уже отформатированное значение.
+
+---
+
+### ✅ Решение (Попытка 7): Упрощённый controlled input с извлечением цифр
+
+**Что сделали:**
+- Добавили состояние для сырых цифр: `const [phoneDigits, setPhoneDigits] = useState('')`
+- Использовали `ref={phoneInputRef}` для доступа к input
+- Создали функцию форматирования `formatPhoneValue(digits)` для отображения
+- В `handlePhoneChange` извлекаем цифры из `e.target.value.replace(/\D/g, '')`
+- Определяем направление изменения (удаление или добавление) по длине
+
+**Код:**
+```typescript
+const [phoneDigits, setPhoneDigits] = useState('');
+const phoneInputRef = useRef<HTMLInputElement>(null);
+
+const formatPhoneValue = (digits: string): string => {
+  if (!digits) return '';
+  let normalized = digits;
+  if (digits.startsWith('8')) {
+    normalized = '7' + digits.slice(1);
+  }
+  if (!normalized.startsWith('7') && normalized.length > 0) {
+    normalized = '7' + normalized;
+  }
+  normalized = normalized.slice(0, 11);
+
+  let formatted = '';
+  if (normalized.length > 0) {
+    formatted = '+7';
+    if (normalized.length > 1) {
+      const d = normalized.slice(1);
+      if (d.length <= 3) {
+        formatted += ` (${d}`;
+      } else if (d.length <= 6) {
+        formatted += ` (${d.slice(0, 3)}) ${d.slice(3)}`;
+      } else if (d.length <= 8) {
+        formatted += ` (${d.slice(0, 3)}) ${d.slice(3, 6)}-${d.slice(6)}`;
+      } else {
+        formatted += ` (${d.slice(0, 3)}) ${d.slice(3, 6)}-${d.slice(6, 8)}-${d.slice(8, 10)}`;
+      }
+    }
+  }
+  return formatted;
+};
+
+const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const inputValue = e.target.value;
+  const digits = inputValue.replace(/\D/g, '');
+  
+  // If user is deleting (backspace), allow it
+  if (digits.length < phoneDigits.length) {
+    setPhoneDigits(digits);
+    if (formErrors.phone) {
+      setFormErrors(prev => ({ ...prev, phone: undefined }));
+    }
+    return;
+  }
+  
+  // If adding new digits, only accept up to 11
+  const newDigits = digits.slice(0, 11);
+  if (newDigits !== phoneDigits) {
+    setPhoneDigits(newDigits);
+    if (formErrors.phone) {
+      setFormErrors(prev => ({ ...prev, phone: undefined }));
+    }
+  }
+};
+```
+
+**Input:**
+```tsx
+<input
+  ref={phoneInputRef}
+  type="tel"
+  value={formatPhoneValue(phoneDigits)}
+  onChange={handlePhoneChange}
+  maxLength={18}
+  placeholder="+7 (___) ___-__-__"
+/>
+```
+
+**Результат:** ✅ **РАБОТАЕТ!**
+
+### Ключевое отличие от предыдущих попыток
+- **Один обработчик `onChange`** вместо комбинации `onKeyDown + onInput`
+- **Извлечение цифр из уже отформатированного значения** — `inputValue.replace(/\D/g, '')`
+- **Определение направления изменения** по сравнению длин (`digits.length < phoneDigits.length`)
+- **`maxLength={18}`** для ограничения длины отформатированного значения
+
+### Изменённые файлы
+| Файл | Изменения |
+|------|-----------|
+| `app/components/ChatWidget.tsx` | ~147-207 (функции форматирования и обработки) |
+| `app/components/ChatWidget.tsx` | ~2307-2327 (input телефона) |
+
+### Рабочие альтернативы
+✅ В других модальных окнах (`ServiceOrderModal.tsx`, `CallbackModal.tsx`) поле телефона работает **корректно** — там используется аналогичная логика, но без проблем
+
+---
+
+**Дата добавления:** 2026-03-21
+**Дата исправления:** 2026-03-21
+**Статус:** ✅ **ИСПРАВЛЕНО**
+**Приоритет:** Критический
+**Влияние:** Пользователи могут отправлять заявки через форму в чате
+
+---
+
 ## 🎨 Редизайн главной страницы: Цветовые акценты для кнопок преимуществ и FAQ (2026-03-17)
 
 ### Описание изменений
