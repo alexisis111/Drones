@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fde30c11-94c5-4884-96a6-cf984ad02720" name="Changes" comment="globalNEW">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ai-assistant/knowledge-base/vacancies.json" beforeDir="false" afterPath="$PROJECT_DIR$/ai-assistant/knowledge-base/vacancies.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/VacanciesGallery.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/VacanciesGallery.tsx" afterDir="false" />
-    </list>
+    <list default="true" id="fde30c11-94c5-4884-96a6-cf984ad02720" name="Changes" comment="newVacancy" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -45,21 +41,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "D:/DroneSite",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "terminal",
-    "ts.external.directory.path": "D:\\DroneSite\\node_modules\\typescript\\lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/DroneSite&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;terminal&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;D:\\DroneSite\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\DroneSite" />
@@ -141,23 +137,7 @@
       <workItem from="1774349453137" duration="1418000" />
       <workItem from="1774365859274" duration="7000" />
       <workItem from="1774502033836" duration="32000" />
-      <workItem from="1775209571636" duration="2883000" />
-    </task>
-    <task id="LOCAL-00068" summary="fix3D">
-      <option name="closed" value="true" />
-      <created>1771168732862</created>
-      <option name="number" value="00068" />
-      <option name="presentableId" value="LOCAL-00068" />
-      <option name="project" value="LOCAL" />
-      <updated>1771168732862</updated>
-    </task>
-    <task id="LOCAL-00069" summary="fixContactForm">
-      <option name="closed" value="true" />
-      <created>1771172853383</created>
-      <option name="number" value="00069" />
-      <option name="presentableId" value="LOCAL-00069" />
-      <option name="project" value="LOCAL" />
-      <updated>1771172853383</updated>
+      <workItem from="1775209571636" duration="3556000" />
     </task>
     <task id="LOCAL-00070" summary="fixZOK">
       <option name="closed" value="true" />
@@ -535,7 +515,23 @@
       <option name="project" value="LOCAL" />
       <updated>1773946434286</updated>
     </task>
-    <option name="localTasksCounter" value="117" />
+    <task id="LOCAL-00117" summary="newVacancy">
+      <option name="closed" value="true" />
+      <created>1775212520880</created>
+      <option name="number" value="00117" />
+      <option name="presentableId" value="LOCAL-00117" />
+      <option name="project" value="LOCAL" />
+      <updated>1775212520880</updated>
+    </task>
+    <task id="LOCAL-00118" summary="newVacancy">
+      <option name="closed" value="true" />
+      <created>1775213177657</created>
+      <option name="number" value="00118" />
+      <option name="presentableId" value="LOCAL-00118" />
+      <option name="project" value="LOCAL" />
+      <updated>1775213177657</updated>
+    </task>
+    <option name="localTasksCounter" value="119" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -565,7 +561,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Breadcrumbs" />
     <MESSAGE value="fix" />
     <MESSAGE value="fixx" />
     <MESSAGE value="ymlFeedYa" />
@@ -590,6 +585,7 @@
     <MESSAGE value="fixSEOWebp" />
     <MESSAGE value="fixSEOADD_finally" />
     <MESSAGE value="globalNEW" />
-    <option name="LAST_COMMIT_MESSAGE" value="globalNEW" />
+    <MESSAGE value="newVacancy" />
+    <option name="LAST_COMMIT_MESSAGE" value="newVacancy" />
   </component>
 </project>
