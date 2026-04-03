@@ -3,11 +3,12 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
-import { exec } from 'child_process';
+import { exec, spawn } from 'child_process';
 import { promisify } from 'util';
 import fs from 'fs';
 import axios from 'axios';
 import crypto from 'crypto';
+import os from 'os';
 import { getSession, saveSession, addMessageToSession, getSessionMessages, getSessionMeta } from './session-storage.js';
 
 dotenv.config();
@@ -1285,15 +1286,53 @@ app.post('/api/chat', async (req, res) => {
     let qwenUsed = false;
 
     try {
-      // Используем stdin для передачи промпта вместо аргумента командной строки
-      // Это надёжнее и избегает проблем с экранированием специальных символов
-      const { stdout } = await execAsync(`echo "${Buffer.from(prompt).toString('base64')}" | base64 -d | qwen -y -p`, {
-        cwd: __dirname,
-        timeout: 30000,
-        maxBuffer: 2 * 1024 * 1024,
-        env: { ...process.env, FORCE_COLOR: '0' }
-      });
-      aiResponse = stdout.trim();
+      // Кроссплатформенный вызов Qwen через stdin
+      const isWindows = os.platform() === 'win32';
+
+      if (isWindows) {
+        // На Windows используем spawn с shell: true для поиска qwen.cmd в PATH
+        aiResponse = await new Promise((resolve, reject) => {
+          const qwen = spawn('qwen', ['-y', '-p'], {
+            cwd: __dirname,
+            env: { ...process.env, FORCE_COLOR: '0' },
+            timeout: 30000,
+            shell: true
+          });
+
+          let stdout = '';
+          let stderr = '';
+
+          qwen.stdout.on('data', (data) => {
+            stdout += data.toString();
+          });
+
+          qwen.stderr.on('data', (data) => {
+            stderr += data.toString();
+          });
+
+          qwen.on('close', (code) => {
+            if (code === 0 && stdout.trim()) {
+              resolve(stdout.trim());
+            } else {
+              reject(new Error(`Qwen exited with code ${code}: ${stderr}`));
+            }
+          });
+
+          // Передаем промпт через stdin
+          qwen.stdin.write(prompt);
+          qwen.stdin.end();
+        });
+      } else {
+        // На Linux используем base64 как раньше
+        const { stdout } = await execAsync(`echo "${Buffer.from(prompt).toString('base64')}" | base64 -d | qwen -y -p`, {
+          cwd: __dirname,
+          timeout: 30000,
+          maxBuffer: 2 * 1024 * 1024,
+          env: { ...process.env, FORCE_COLOR: '0' }
+        });
+        aiResponse = stdout.trim();
+      }
+      
       qwenUsed = true;
       console.log('🤖 [CHAT] ✅ Qwen response received:', aiResponse.substring(0, 100));
 

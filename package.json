@@ -5,7 +5,7 @@
   "scripts": {
     "build": "react-router build",
     "dev": "react-router dev",
-    "dev:all": "concurrently \"npm run dev\" \"node api-server.js\"",
+    "dev:all": "concurrently \"npm run dev\" \"node api-server.js\" \"node ai-assistant/server.js\"",
     "start": "node server.js",
     "start:all": "concurrently \"npm run start\" \"node api-server.js\" \"node ai-assistant/server.js\"",
     "start:web": "node server.js",

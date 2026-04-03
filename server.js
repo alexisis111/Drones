@@ -99,6 +99,33 @@ ${message ? `Сообщение: ${message}` : ''}
   }
 });
 
+// Proxy for AI Assistant server (for production when AI runs on separate port)
+const AI_ASSISTANT_URL = process.env.AI_ASSISTANT_URL || 'http://localhost:3002';
+
+app.all('/api/assistant/*', async (req, res) => {
+  try {
+    const targetPath = req.path.replace('/api/assistant', '');
+    const url = `${AI_ASSISTANT_URL}${targetPath}`;
+    
+    const response = await axios({
+      method: req.method.toLowerCase(),
+      url: url,
+      data: req.body,
+      params: req.query,
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    
+    res.status(response.status).json(response.data);
+  } catch (error) {
+    console.error('Proxy error to AI Assistant:', error.message);
+    res.status(error.response?.status || 502).json({
+      error: 'AI Assistant service unavailable'
+    });
+  }
+});
+
 // Serve static files from the build/client directory with caching headers
 app.use((req, res, next) => {
   const staticPath = path.join(__dirname, 'build', 'client');
