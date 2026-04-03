@@ -760,7 +760,7 @@ ${zokContext.benefits.join('\n')}
   let vacanciesText = '';
   if (vacanciesContext) {
     const vacanciesList = vacanciesContext.vacancies.map(v =>
-      `• ${v.position} (${v.department})`
+      `• ${v.position} (${v.department})${v.salary ? ` — Зарплата: ${v.salary}` : ''}`
     ).join('\n');
 
     vacanciesText = `
@@ -777,7 +777,7 @@ ${vacanciesContext.generalInfo.benefits.join('\n')}
 1. Перечисли доступные вакансии
 2. Расскажи про преимущества (официальное оформление, пятидневка, обучение)
 3. Предложи откликнуться — позвонить или оставить заявку
-4. Зарплата: "По договоренности"
+4. Указывай зарплату из списка вакансий (если указана)
 `;
   }
 
