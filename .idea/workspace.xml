@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fde30c11-94c5-4884-96a6-cf984ad02720" name="Changes" comment="fixPrivacy">
-      <change beforePath="$PROJECT_DIR$/.env.example" beforeDir="false" afterPath="$PROJECT_DIR$/.env.example" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-server.js" beforeDir="false" afterPath="$PROJECT_DIR$/api-server.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/welcome/welcome.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/welcome/welcome.tsx" afterDir="false" />
-    </list>
+    <list default="true" id="fde30c11-94c5-4884-96a6-cf984ad02720" name="Changes" comment="addVKNews" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -142,23 +137,7 @@
       <workItem from="1774349453137" duration="1418000" />
       <workItem from="1774365859274" duration="7000" />
       <workItem from="1774502033836" duration="32000" />
-      <workItem from="1775209571636" duration="8916000" />
-    </task>
-    <task id="LOCAL-00074" summary="addDzen">
-      <option name="closed" value="true" />
-      <created>1771270509522</created>
-      <option name="number" value="00074" />
-      <option name="presentableId" value="LOCAL-00074" />
-      <option name="project" value="LOCAL" />
-      <updated>1771270509522</updated>
-    </task>
-    <task id="LOCAL-00075" summary="addZokForm">
-      <option name="closed" value="true" />
-      <created>1771329398149</created>
-      <option name="number" value="00075" />
-      <option name="presentableId" value="LOCAL-00075" />
-      <option name="project" value="LOCAL" />
-      <updated>1771329398149</updated>
+      <workItem from="1775209571636" duration="9984000" />
     </task>
     <task id="LOCAL-00076" summary="fixZokFormSizeMobile">
       <option name="closed" value="true" />
@@ -536,7 +515,23 @@
       <option name="project" value="LOCAL" />
       <updated>1775215435372</updated>
     </task>
-    <option name="localTasksCounter" value="123" />
+    <task id="LOCAL-00123" summary="addVKNews">
+      <option name="closed" value="true" />
+      <created>1775219409661</created>
+      <option name="number" value="00123" />
+      <option name="presentableId" value="LOCAL-00123" />
+      <option name="project" value="LOCAL" />
+      <updated>1775219409661</updated>
+    </task>
+    <task id="LOCAL-00124" summary="addVKNews">
+      <option name="closed" value="true" />
+      <created>1775219566392</created>
+      <option name="number" value="00124" />
+      <option name="presentableId" value="LOCAL-00124" />
+      <option name="project" value="LOCAL" />
+      <updated>1775219566392</updated>
+    </task>
+    <option name="localTasksCounter" value="125" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -566,7 +561,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fix_ymlFeedYa" />
     <MESSAGE value="fixModalPhoneBack" />
     <MESSAGE value="addphoneBackContacts" />
     <MESSAGE value="fixEmailForms" />
@@ -591,6 +585,7 @@
     <MESSAGE value="newVacancySEO" />
     <MESSAGE value="fixLocalDev" />
     <MESSAGE value="fixPrivacy" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixPrivacy" />
+    <MESSAGE value="addVKNews" />
+    <option name="LAST_COMMIT_MESSAGE" value="addVKNews" />
   </component>
 </project>
