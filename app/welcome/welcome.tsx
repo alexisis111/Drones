@@ -24,6 +24,7 @@ import { LocalBusinessSchema, ServiceSchema, ConstructionBusinessSchema } from "
 import FaqSection from "../components/FaqSection";
 import OptimizedImage from "../components/OptimizedImage";
 import ServiceSearch from "../components/ServiceSearch";
+import VkPostsFeed from "../components/VkPostsFeed";
 import { services as allServices } from '../data/services';
 
 
@@ -435,6 +436,13 @@ export function Welcome() {
                   </a>
                 </div>
               </motion.div>
+            </div>
+          </section>
+
+          {/* VK Posts Feed */}
+          <section className="relative py-8">
+            <div className="container mx-auto px-4 relative z-10">
+              <VkPostsFeed />
             </div>
           </section>
 
