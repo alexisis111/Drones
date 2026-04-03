@@ -4,7 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fde30c11-94c5-4884-96a6-cf984ad02720" name="Changes" comment="newVacancy" />
+    <list default="true" id="fde30c11-94c5-4884-96a6-cf984ad02720" name="Changes" comment="newVacancySEO">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ai-assistant/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/ai-assistant/server.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ai-assistant/sessions/chat-history.json" beforeDir="false" afterPath="$PROJECT_DIR$/ai-assistant/sessions/chat-history.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/server.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -137,15 +143,7 @@
       <workItem from="1774349453137" duration="1418000" />
       <workItem from="1774365859274" duration="7000" />
       <workItem from="1774502033836" duration="32000" />
-      <workItem from="1775209571636" duration="3556000" />
-    </task>
-    <task id="LOCAL-00070" summary="fixZOK">
-      <option name="closed" value="true" />
-      <created>1771187578006</created>
-      <option name="number" value="00070" />
-      <option name="presentableId" value="LOCAL-00070" />
-      <option name="project" value="LOCAL" />
-      <updated>1771187578006</updated>
+      <workItem from="1775209571636" duration="4850000" />
     </task>
     <task id="LOCAL-00071" summary="fixIcons">
       <option name="closed" value="true" />
@@ -531,7 +529,15 @@
       <option name="project" value="LOCAL" />
       <updated>1775213177657</updated>
     </task>
-    <option name="localTasksCounter" value="119" />
+    <task id="LOCAL-00119" summary="newVacancySEO">
+      <option name="closed" value="true" />
+      <created>1775213507809</created>
+      <option name="number" value="00119" />
+      <option name="presentableId" value="LOCAL-00119" />
+      <option name="project" value="LOCAL" />
+      <updated>1775213507809</updated>
+    </task>
+    <option name="localTasksCounter" value="120" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -561,7 +567,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fix" />
     <MESSAGE value="fixx" />
     <MESSAGE value="ymlFeedYa" />
     <MESSAGE value="fix_ymlFeedYa" />
@@ -586,6 +591,7 @@
     <MESSAGE value="fixSEOADD_finally" />
     <MESSAGE value="globalNEW" />
     <MESSAGE value="newVacancy" />
-    <option name="LAST_COMMIT_MESSAGE" value="newVacancy" />
+    <MESSAGE value="newVacancySEO" />
+    <option name="LAST_COMMIT_MESSAGE" value="newVacancySEO" />
   </component>
 </project>
